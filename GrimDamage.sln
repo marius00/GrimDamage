@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrimDawnTestListener", "GrimDawnTestListener\GrimDawnTestListener.csproj", "{5A15361C-AAFE-46CF-81F1-B55A8A485980}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrimDamage", "GrimDamage\GrimDamage.csproj", "{5A15361C-AAFE-46CF-81F1-B55A8A485980}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DllInjector", "DllInjector\DllInjector.csproj", "{2D6C0DC0-2FD0-4C18-9104-4F4689169D88}"
 EndProject

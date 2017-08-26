@@ -7,8 +7,8 @@
     <ProjectGuid>{5A15361C-AAFE-46CF-81F1-B55A8A485980}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GrimDawnTestListener</RootNamespace>
-    <AssemblyName>GrimDawnTestListener</AssemblyName>
+    <RootNamespace>GrimDamage</RootNamespace>
+    <AssemblyName>GrimDamage</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -56,8 +56,13 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="IOHelper.cs" />
+    <Compile Include="Parser\Model\EventType.cs" />
+    <Compile Include="Parser\Service\ParsingService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tracking\Model\DamageEntry.cs" />
+    <Compile Include="Tracking\Model\DamageType.cs" />
+    <Compile Include="Tracking\Model\Entity.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -69,6 +74,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -92,6 +98,7 @@
       <Name>DllInjector</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
