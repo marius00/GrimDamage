@@ -1,0 +1,157 @@
+s
+  *((_DWORD *)this + 14) = seed;
+  *((_DWORD *)this + 13) = prevNumber;
+  
+  
+  char *__thiscall GAME::CombatAttributeAccumulator::operator=(char *this, int a2)
+  it takes seed/prev from a2+56
+  also sets this+15 = a2+60
+  
+  a2 might be itemReplica? item replica has seed at 56 if you ignore the first 4 bytes..
+  dont think so.. 14 and 60==4
+  
+  
+  GAME::CombatAttributeAccumulator *__thiscall GAME::CombatAttributeAccumulator::CombatAttributeAccumulator(GAME::CombatAttributeAccumulator *this)
+{
+  GAME::CombatAttributeAccumulator *result; // eax@1
+
+  *(_DWORD *)this = &GAME::CombatAttributeAccumulator::`vftable';
+  result = this;
+  *((_DWORD *)this + 1) = 0;                    // Damage
+  *((_DWORD *)this + 2) = 0;                    // Damage
+  *((_DWORD *)this + 3) = 0;
+  *((_DWORD *)this + 4) = 0;                    // Damage Modifier
+  *((_DWORD *)this + 5) = 0;                    // Damage Modifier
+  *((_DWORD *)this + 6) = 0;
+  *((_DWORD *)this + 7) = 0;                    // Defense
+  *((_DWORD *)this + 8) = 0;                    // Defense
+  *((_DWORD *)this + 9) = 0;
+  *((_DWORD *)this + 10) = 0;                   // Defense Modifier
+  *((_DWORD *)this + 11) = 0;                   // Defense Modifier
+  *((_DWORD *)this + 12) = 0;
+  *((_DWORD *)this + 13) = 0;                   // Previous random number
+  *((_DWORD *)this + 15) = 0;
+  *((_DWORD *)this + 14) = 0;                   // Seed
+  *((_DWORD *)this + 16) = 0;
+  *((_BYTE *)this + 68) = 0;                    // IsUsedForDisplay
+  return result;
+}
+
+
+unrelated:
+playerInfo has a prevNum/seed at +24
+
+
+ParametersCombatDisplay+8 has prev/seed
+ParametersCombatDisplay+69 has prev
++52 +51	
+
+something has rand at +36 and +40 possibly LoadTable
+
+LoadTable
+func+68		GAME::LoadTable::GetArrayFloat(char const *,mem::vector<float> &), input is (this, DamageAttributeDur+116)("offensiveFireMin" || "offensiveFireMax")
+func+36		GAME::LoadTable::GetFloat(char const *,float)
+	   28		?GetInt@LoadTable@GAME@@UBEHPBDH@Z ; GAME::LoadTable::GetInt(char const *,int)
+	   36		?GetFloat@LoadTable@GAME@@UBEMPBDM@Z ; GAME::LoadTable::GetFloat(char const *,float)
+	   20		?GetValue@LoadTable@GAME@@UBEPBDPBD0@Z ; GAME::LoadTable::GetValue(char const *,char const *)
+================================
+GAME::DamageAttributeDur (in this case DamageAttributeAbsBase_Fire)
+21		= DamageAttributeStore+17
+22.25   some bool (b89)
+23		firstItem
+24		last item
+*((_DWORD *)v10 + 26) = "DamageSingleFormat";
+*((_DWORD *)v10 + 27) = "DamageSingleFormat";
+*((_DWORD *)v10 + 28) = "DamageRangeFormat";
+b89
+these are purecalls, lookup seems to indcate these methods but parameters dont match
+func+116	unknown("DamageRangeFormat")			maybe:	GAME::DamageAttributeAbsBase_Fire::GetLoadChanceTag(void)			// offensiveFireChance
+func+124	GAME::DamageAttributeAbs_Fire::GetLoadGlobalTag(void) => offensiveFireGlobal
+func+144											maybe:	GAME::DamageAttributeAbsBase_Fire::GetLoadValueMinTag(void)			// offensiveFireMin
+func+148											maybe:	GAME::DamageAttributeAbsBase_Fire::GetLoadValueMaxTag(void)			// offensiveFireMax
+
+Item:
++0 		minValue
++4		minValue	
+: Looks like this is all this "item" contains	
+
+
+
+
+void __userpurge GAME::DamageAttributeStore_Equipment::Load(GAME::DamageAttributeStore_Equipment *this@<ecx>, double maxVal@<st0>, const struct GAME::LoadTable *a3, const struct GAME::LoadTable *table01, const struct GAME::LoadTable *table02, const struct GAME::LoadTable *table03, bool a7)
+
+
+
+
+
+
+Class AttributePak:
+
+  *((_DWORD *)this + 11) = a2; where a2 = seed
+  *((_DWORD *)this + 16) = a2;
+  *((_DWORD *)this + 21) = a2;
+  *((_DWORD *)this + 32) = a2;
+  *((_DWORD *)this + 50) = a2;
+  *((_DWORD *)this + 62) = a2;
+  *((_DWORD *)this + 67) = a2;
+  
++8		?LoadFromTable@AttributePak@GAME@@UAEXABVLoadTable@2@MI@Z ; GAME::AttributePak::LoadFromTable(GAME::LoadTable const &,float,uint)
++12 	?SetRandomGen@AttributePak@GAME@@UAEXPAVRandomUniform@2@@Z ; GAME::AttributePak::SetRandomGen(GAME::RandomUniform *)
+
+
+
+DamageAttributeAbs_Pierce
+func+48		AddJitter()
+func+136	GAME::DefenseAttribute::Jitter(float,float,GAME::RandomUniform &)
+
+
+
+
+Class Game::InventorySack
+  _this = this;
+  v2 = (char *)this + 28; // 36b item / inventory
+  *(_DWORD *)this = GAME::InventorySack::`vftable';
+  *((_BYTE *)this + 4) = 0;
+  *((_DWORD *)this + 2) = 1107296256;
+  *((_DWORD *)this + 3) = 1107296256;
+  *((_DWORD *)this + 4) = 0;
+  *((_DWORD *)this + 5) = 0;
+  *((_BYTE *)this + 24) = 0;
+  *(_DWORD *)v2 = 0;
+  *((_DWORD *)v2 + 1) = 0;
+  *(_DWORD *)v2 = sub_100E8D40();
+  result = _this;
+  *((_DWORD *)_this + 9) = 0;
+  *((_DWORD *)_this + 10) = 0;
+  *((_DWORD *)_this + 11) = 0;
+  *((_DWORD *)_this + 12) = 0;
+  *((_DWORD *)_this + 2) = 1107296256;
+  *((_DWORD *)_this + 3) = 1107296256;
+  return result;
+}
+
+
+
+void __thiscall GAME::CharAttributeStore_Equipment::Load(GAME::CharAttributeStore_Equipment *this, const struct GAME::LoadTable *a2,
+const struct GAME::LoadTable *prefixTable, const struct GAME::LoadTable *suffixTable, const struct GAME::LoadTable *modifierTable, bool a6)
+CharAttributeStore_Equipment:
+16:		Seed!?
+
+CharAttribute:
+&GAME::CharAttributeVal_OffensiveAbility::`vftable';
+func+8 GAME::CharAttribute::LoadPrefixTable(GAME::LoadTable const &,float,GAME::RandomUniform *)
+func+12 GAME::CharAttribute::LoadSuffixTable(GAME::LoadTable const &,float,GAME::RandomUniform *)
+func+16 GAME::CharAttribute::LoadModifierTable(GAME::LoadTable const &,float,GAME::RandomUniform *)
+5		prefix calculated
+6		suffix calculated
+7		modifier calculated
+
+
+LoadTable+36
+
+
+CharAttribute:
++8 String used to calculate max value
+  *((_DWORD *)v9 + 8) = "characterOffensiveAbility";
+  *((_DWORD *)v9 + 9) = "tagCharOffensiveAbility";
+  

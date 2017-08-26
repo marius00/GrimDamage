@@ -1,0 +1,1 @@
+copy /y Release\ItemAssistantHook.dll "../../../GrimDawnTestListener/bin/debug/"

@@ -1,0 +1,204 @@
+Item::
+
+func+48			GAME::Item::AppendDetailMapData(mem::vector<GAME::MinimapGameNugget> &)
+func+656		GAME::Item::RandomizeItem(void)
+func+236		GAME::Actor::SetVisibility(bool)
+func+368		GAME::Item::GetGameDescription(bool,bool)
+func+436		GAME::OneShot_Potion::InitializeItem(void)
+func+604		GAME::ItemEquipment::GetItemClassification(void)
+func+452		GAME::Item::PlayDropSound(void)
+LevelRequirement *((_DWORD *)this + 328);
+IsSoulbound		466
+IsTradeable		466+2b
+unknown			254 // This is update when setting stacksize
+I Level:		322
+StackSize:		323
+MaxStacksize?: 	324 // see Item::GetMaxStackSize, may be lower.
+Req Level: 		328
+str:			325
+int: 			327
+unknown			346 // if this is < 0x10u
+some strings	350
+unknown:		644 possibly the ptr or ptr* to something which gets max stacksize (references item replica?)
+canPickup:		439,75 	(1759b)
+animation?		449
+
+				652 // passed to localizer in GetGameDescription
+				648 // if 648(this) <= 1, then simplestring, else tagItemNameAndStack
+itemreplica		784
+itemname		788				
+				
+Item Equipment:
+Most of these strings have the value '15' preceding them
+203				prolly a record
+207				if 207 then record 203 exists
+209				prolly a record
+213				if 213 then record 209 exists
+215				prev random or seed
+216				prolly a record
+220				if this then exists 216
+320				if 320==2 && 651 then bitmap at 647 else 641
+335				= GAME::LoadTable::GetValue(char const *,char const *)
+2120/530		itemStyleTag
+2168/542		itemqualityTag
+2144/536		bitmap
+2564/641		bitmapFemale
+2612/653		itemSetName
+				682 ItemRelic
+				683 ItemEnchant
+528				if this then physical damage only, else has more
+529				unconfirmed: enum GAME::CombatAttributeRegion
+548/2192			attributeScalePercent	-- GAME::ItemEquipment::GetDexterityRequirement(void) ??
+558				&GAME::CharAttributeStore_Equipment::`vftable';
+562				randNum
+563				&GAME::CharAttributeStore_EquipmentPenaltyReduction::`vftable';
+567				randNum
+568				&GAME::SkillAttributeStore_Equipment::`vftable';
+572				randNum
+573				&GAME::DamageAttributeStore_Equipment::`vftable';
+583				randNum
+590				 = GAME::Object::GetObjectId(this) 
+591				&GAME::RetaliationAttributeStore_Equipment::`vftable';
+601				randNum
+608				608 = GAME::Object::GetObjectId(this)
+609				GAME::DefenseAttributeStore_Equipment::`vftable';
+613				randNum
+618				randNum
+639				texture
+640				texture
+641				bitmapFemale
+647				bitmap?
+653				itemSetName
+677				this !?
+681				hasTransmute
+682				hasRelic
+683				hasEnchant
+684,25			hideSuffixName:bool
+686				= GAME::LoadTable::GetInt(char const *,int)
+687				= GAME::LoadTable::GetInt(char const *,int)
+
+445 has a lot of fancy calcs with rand, seed gen?
+
+
+GAME::DefenseAttributeStore_Equipment vtable + 0x10(accumulator, 1)
+
+GAME::ItemRelic +524 (accumulator)
+GAME::ItemEnchant +524 (accumulator)
+
+ItemEnchant+524 appears to call ItemEnchant::GetDefenseAttributes (pure guesswork)
+Which in turn calls GAME::AttributePak::AttributePak((GAME::ItemEnchantment *) + 36
+arguments ->(self, accumulator, ItemEnchant+554/2216) which equals == 1 from constructor
+initializer sets this+554 = this+249 (might come from Item::, seed?)
+
+This eventually leads to:
+ AddToAccumulator@DefenseAttributeStore@GAME@@UBEXAAVCombatAttributeAccumulator@2@I@Z ; GAME::DefenseAttributeStore::AddToAccumulator(GAME::CombatAttribu
+ 
+ This PROBABLY calls GAME::DefenseAttributeAbs::AddToAccumulator(GAME::CombatAttributeAccumulator &,uint,GAME::RandomUniform &,bool)
+ 
+
+what is at GAME::CombatAttributeAccumulator +8 and +12? 
+
++4 GetRandomUniform()
++8 EvaluateChance(this, float) { return p >= rand() % 101; }
++12 RegisterCombatTextHit -- prolly wrong.. are we working on a child object maybe? like CombatAttributeDamage_BasePhysical?
+
+CombatAttributeAccumulator+12(this, LOWORD(a2));
+struct GAME::CombatAttribute { 
+
+};
+ 
+ 
+ After CombatAttributeDamage_BasePhysical::AddToAccumulator, it calls GAME::CombatAttributeAccumulator::AddDefense(accumulator, (struct GAME::CombatAttribute *)attribute);
+ 
+
+
+BOOL __thiscall GAME::Item::IsStackFull(GAME::Item *this)
+{
+  return *((_DWORD *)this + 323) >= (unsigned int)(*(int (**)(void))(*(_DWORD *)this + 644))();
+}
+
+CanBePLacedInStash:
+  return *((_BYTE *)this + 1864) == 0;
+  ~= this + DWORD*466
+  
+  
+  
+  GettingItemReplicaInfo from an item:
+	sub_10079190(out replica, (int) this+784);
+	replica->sub_10079190(this+784);
+	
+	
+	
+inline struct GDString {
+	char* str; // may be char**, can be determined using the extra data
+	//b16 = strlen
+	//b20 = 0x10 || 0x0
+	char extra[20];
+}
+String info:
+0: str (ptr?)
+
+*((_DWORD *)dstObj_ + 5 = 0;
+
++16 should be < 0x10 to avoid a **
+*((_DWORD *)dstObj_ + 4) = strlen;
+*((_BYTE *)dstObj_ + strlen) = 0; // if < 0x10
+
+
+    if ( *((_DWORD *)dstObj_ + 5) < 0x10u )
+      v12 = dstObj_;
+    else
+      v12 = *(void **)dstObj_;
+
+ItemArtifact has randomNum at +215 
+
+struct ItemReplicaInfo {	
+	//Copy strings from [src : dst] at byte: 04, 28, 52, 80*, 104, 128, 156, 188*
+	* Conditionals present when calling ReadProperties
+	
+	uint u0;
+	
+	GDString* str0;	// base
+	GDString* str1;	// prefix
+	GDString* str2; // suffix (at 56b now		)
+	uint item76;	// Seed confirmed
+	GDString* str3; // modifier record (80b)
+	GDString* str4; // materiaRecord
+	GDString* str5;		// relicBonus
+	uint item152;	// Relic/Component seed
+	GDString str6; // 156=>160	
+	uint item180; // unknown
+	uint item184;	// 	enchant seed
+	GDString str7; // 188
+	uint item212;	// MateriaCombines
+	long longItem; //  _mm_storel_epi6	
+	uint item224;
+	uint item228;
+	uint item232*;	// stack count -- conditional
+	uint item236;	// 
+};
+2016-10-26 11:44:47,128 [7] DEBUG IAGrim.UI.MainWindow Replica(159921308, 511351175,   0, 0, 			4, 0, 0, 0, 1, 0)
+2016-10-26 11:47:25,398 [7] DEBUG IAGrim.UI.MainWindow Replica(1357800380, 1352991205, 0, 747285209, 	3, 0, 0, 0, 1, 0)
+	
+	// All 4 byte long:
+	this+76 = item+76
+	this+152 = item+152
+	this+180 = item+180
+	this+184 = item+184
+	this+212 = item+212
+	
+	
+	byte 216 => copy 8 bytes (1:1)
+	
+	DWORD this+56 = item+224	// 224 => 224
+	DWORD this+57 = item+228
+	DWORD this+58 = item+232	// stack count
+	DWORD this+59 = item+236
+	
+	
+	byte[4*55];
+	long a;
+	long b;
+	long c;
+	long d;
+}
