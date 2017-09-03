@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GrimDamage.GUI.Browser;
 using GrimDamage.GUI.Forms;
+using GrimDamage.Tracking.Model;
 
 namespace GrimDamage {
     static class Program {
 
-        class WebViewJsInteractor {
-            
-        }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -27,7 +26,8 @@ namespace GrimDamage {
             }
 
             using (var browser = new CefBrowserHandler()) {
-                browser.InitializeChromium(url, new WebViewJsInteractor(), null);
+                WebViewJsInteractor jsInteractor = new WebViewJsInteractor();
+                browser.InitializeChromium(url, jsInteractor, null);
                 Application.Run(new Form1(browser));
             }
         }

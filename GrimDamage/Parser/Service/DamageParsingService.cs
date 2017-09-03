@@ -21,6 +21,10 @@ namespace GrimDamage.Parser.Service {
             this._names = new Dictionary<int, Entity>();
         }
 
+        public Dictionary<int, Entity> GetNames() {
+            return _names;
+        }
+
         public void Cleanup() {
             var expired = _names.Values.Where(m => (DateTime.UtcNow - m.LastSeen).Minutes > _nameCacheDuration)
                 .Select(m => m.Id)

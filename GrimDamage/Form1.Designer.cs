@@ -27,6 +27,8 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnReadFile = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnShowDevtools = new System.Windows.Forms.Button();
+            this.btnUpdateData = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelHookStatus
@@ -69,11 +71,34 @@
             this.panel1.Size = new System.Drawing.Size(905, 363);
             this.panel1.TabIndex = 3;
             // 
+            // btnShowDevtools
+            // 
+            this.btnShowDevtools.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnShowDevtools.Location = new System.Drawing.Point(858, 12);
+            this.btnShowDevtools.Name = "btnShowDevtools";
+            this.btnShowDevtools.Size = new System.Drawing.Size(75, 23);
+            this.btnShowDevtools.TabIndex = 4;
+            this.btnShowDevtools.Text = "DevTools";
+            this.btnShowDevtools.UseVisualStyleBackColor = true;
+            this.btnShowDevtools.Click += new System.EventHandler(this.btnShowDevtools_Click);
+            // 
+            // btnUpdateData
+            // 
+            this.btnUpdateData.Location = new System.Drawing.Point(759, 12);
+            this.btnUpdateData.Name = "btnUpdateData";
+            this.btnUpdateData.Size = new System.Drawing.Size(93, 23);
+            this.btnUpdateData.TabIndex = 5;
+            this.btnUpdateData.Text = "Update Data";
+            this.btnUpdateData.UseVisualStyleBackColor = true;
+            this.btnUpdateData.Click += new System.EventHandler(this.btnUpdateData_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(945, 481);
+            this.Controls.Add(this.btnUpdateData);
+            this.Controls.Add(this.btnShowDevtools);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnReadFile);
             this.Controls.Add(this.btnSave);
@@ -92,6 +117,8 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnReadFile;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnShowDevtools;
+        private System.Windows.Forms.Button btnUpdateData;
     }
 }
 

@@ -15,6 +15,8 @@ namespace GrimDamage.GUI.Browser {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(CefBrowserHandler));
         private ChromiumWebBrowser _browser;
 
+        public WebViewJsInteractor JsInteractor { get; private set; }
+
         public Control BrowserControl => _browser;
 
         private object _lockObj = new object();
@@ -64,10 +66,12 @@ namespace GrimDamage.GUI.Browser {
         */
 
         public void InitializeChromium(
-            string startPage, 
-            object bindeable, 
+            string startPage,
+            WebViewJsInteractor bindeable, 
             EventHandler<IsBrowserInitializedChangedEventArgs> browserIsBrowserInitializedChanged
             ) {
+            this.JsInteractor = bindeable;
+
             try {
                 Logger.Info("Creating Chromium instance..");
                 Cef.EnableHighDPISupport();
