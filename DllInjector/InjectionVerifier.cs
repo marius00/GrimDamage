@@ -1,5 +1,5 @@
 ﻿using log4net;
-using EvilsoftCommons.Exceptions;
+//using EvilsoftCommons.Exceptions;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -69,7 +69,7 @@ namespace EvilsoftCommons.DllInjector {
                 }
                 catch (Exception ex) {
                     logger.Warn("Exception while attempting to verify injection.. " + ex.Message + ex.StackTrace);
-                    ExceptionReporter.ReportException(ex);
+                    //ExceptionReporter.ReportException(ex);
                 }
             }
             else {

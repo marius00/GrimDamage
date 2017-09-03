@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GrimDawnTestListener.Tracking.Model {
+namespace GrimDamage.Tracking.Model {
     class DamageEntry {
         public int Target { get; set; }
         public float Amount { get; set; }

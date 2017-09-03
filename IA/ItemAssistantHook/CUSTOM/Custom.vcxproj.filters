@@ -36,15 +36,6 @@
     <ClCompile Include="..\Globals.cpp">
       <Filter>HookedMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\SaveTransferStash.cpp">
-      <Filter>HookedMethods</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterSubtractLife.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TakeAttack.cpp">
-      <Filter>HookedMethods</Filter>
-    </ClCompile>
     <ClCompile Include="..\LogHooker.cpp">
       <Filter>HookedMethods</Filter>
     </ClCompile>
@@ -68,17 +59,8 @@
     <ClInclude Include="..\Globals.h">
       <Filter>HookedMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\SaveTransferStash.h">
-      <Filter>HookedMethods</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterSubtractLife.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TakeAttack.h">
-      <Filter>HookedMethods</Filter>
     </ClInclude>
     <ClInclude Include="..\LogHooker.h">
       <Filter>HookedMethods</Filter>

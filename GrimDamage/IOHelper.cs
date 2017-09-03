@@ -201,6 +201,11 @@ namespace EvilsoftCommons {
         }
 
 
+        public static double GetDouble(byte[] data, uint pos) {
+            return BitConverter.ToDouble(data, (int)pos);
+        }
+
+
         public static int GetInt(byte[] data, int pos) {
             byte[] bytes = new byte[] { (byte)data[pos], (byte)data[pos + 1], (byte)data[pos + 2], (byte)data[pos + 3] };
             if (!BitConverter.IsLittleEndian)

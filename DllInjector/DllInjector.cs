@@ -1,5 +1,5 @@
 ﻿using log4net;
-using EvilsoftCommons.Exceptions;
+//using EvilsoftCommons.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -91,7 +91,7 @@ namespace EvilsoftCommons.DllInjector {
             catch (Exception ex) {
                 logger.Warn(ex.Message);
                 logger.Warn(ex.StackTrace);
-                ExceptionReporter.ReportException(ex, "GetProcessPath");
+                //ExceptionReporter.ReportException(ex, "GetProcessPath");
                 return string.Empty;
             }
         }

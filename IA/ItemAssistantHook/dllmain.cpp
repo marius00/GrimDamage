@@ -1,18 +1,14 @@
 #include "stdafx.h"
-#include "dllmain.h"
 #include <shared/aopackets.h>
 #include <windows.h>
 #include <detours.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <set>
-#include <boost/smart_ptr.hpp>
 #include <boost/thread.hpp>
 #include "DataQueue.h"
 #include "MessageType.h"
 #include "Globals.h"
-#include "SaveTransferStash.h"
-#include "CUSTOM/CharacterSubtractLife.h"
 #include "LogHooker.h"
 
 
@@ -69,7 +65,7 @@ void WorkerThreadMethod() {
 
         if ((tick - g_lastThreadTick > 1000) || (g_targetWnd == NULL)) {
             // We either don't have a valid window target OR it has been more than 1 sec since we last update the target.
-            g_targetWnd = FindWindow( "GDTestWindowClass", NULL);
+            g_targetWnd = FindWindow( "GDDamageWindowClass", NULL);
             g_lastThreadTick = GetTickCount();
             LOG("FindWindow returned: " << g_targetWnd);
         }
@@ -129,24 +125,7 @@ void EndWorkerThread() {
 std::vector<BaseMethodHook*> hooks;
 int ProcessAttach(HINSTANCE _hModule) {
 	g_hEvent = CreateEvent(NULL,FALSE,FALSE,"IA_Worker");
-	/*
-	
-	hooks.push_back(new HookWalkTo(&g_dataQueue, g_hEvent));
-	hooks.push_back(new ControllerPlayerStateIdleRequestNpcAction(&g_dataQueue, g_hEvent));
-	hooks.push_back(new ControllerPlayerStateMoveToRequestNpcAction(&g_dataQueue, g_hEvent));
-	hooks.push_back(new ControllerPlayerStateMoveToRequestMoveAction(&g_dataQueue, g_hEvent));
 
-	hooks.push_back(new CloudGetNumFiles(&g_dataQueue, g_hEvent));
-	hooks.push_back(new CloudRead(&g_dataQueue, g_hEvent));
-	hooks.push_back(new CloudWrite(&g_dataQueue, g_hEvent));
-	hooks.push_back(new CreatePlayerItemHook(&g_dataQueue, g_hEvent));
-	
-	hooks.push_back(new SaveTransferStash(&g_dataQueue, g_hEvent));
-	hooks.push_back(new NpcDetectionHook(&g_dataQueue, g_hEvent));
-	*/
-	
-	hooks.push_back(new CharacterSubtractLife(&g_dataQueue, g_hEvent));
-	hooks.push_back(new SaveTransferStash(&g_dataQueue, g_hEvent));
 	hooks.push_back(new LoggerHook(&g_dataQueue, g_hEvent));
 	
 	
@@ -222,31 +201,6 @@ int FindOffset() {
 BOOL APIENTRY DllMain(HINSTANCE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
     switch (ul_reason_for_call) {
 	case DLL_PROCESS_ATTACH:
-		{
-			int offset = FindOffset();
-			if (offset != NULL) {
-
-			}
-		}
-/*
-	{
-		int addressToPatch = 40 + (int)GetProcAddress(::GetModuleHandle("Game.dll"), "?Log@Engine@GAME@@UBAXW4LogPriority@2@IPBDZZ");
-		byte newData[2]{ 0x90, 0x90 };
-		HANDLE hProcess = GetCurrentProcess();
-		WriteProcessMemory(hProcess, (void*)addressToPatch, newData, 2, NULL);
-
-		// +58
-		// ?InternalLog@Engine@GAME@@ABEXW4LogPriority@2@IPBD@Z
-	}
-	{
-		int addressToPatch = 58 + (int)GetProcAddress(::GetModuleHandle("Game.dll"), "?InternalLog@Engine@GAME@@ABEXW4LogPriority@2@IPBD@Z");
-		byte newData[2]{ 0x90, 0x90 };
-		HANDLE hProcess = GetCurrentProcess();
-		WriteProcessMemory(hProcess, (void*)addressToPatch, newData, 2, NULL);
-	}*/
-		// https://wiki.skullsecurity.org/.dll_Injection_and_Patching
-		// Log() + 40
-		// Write 2b "NOP"
         return ProcessAttach( hModule );
 
 	case DLL_PROCESS_DETACH:

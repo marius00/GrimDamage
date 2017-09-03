@@ -1,1 +1,1 @@
-copy /y Release\ItemAssistantHook.dll "../../../GrimDawnTestListener/bin/debug/"
+copy /y Release\Hook.dll "../../../GrimDamage/bin/debug/"

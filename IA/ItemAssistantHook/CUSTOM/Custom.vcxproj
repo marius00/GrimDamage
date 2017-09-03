@@ -117,7 +117,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
-      <OutputFile>$(OutDir)ItemAssistantHook$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)Hook$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Instaloot|Win32'">
@@ -150,10 +150,7 @@
     <ClCompile Include="..\Globals.cpp" />
     <ClCompile Include="..\HookLog.cpp" />
     <ClCompile Include="..\LogHooker.cpp" />
-    <ClCompile Include="..\SaveTransferStash.cpp" />
     <ClCompile Include="..\stdafx.cpp" />
-    <ClCompile Include="CharacterSubtractLife.cpp" />
-    <ClCompile Include="TakeAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\BaseMethodHook.h" />
@@ -162,11 +159,8 @@
     <ClInclude Include="..\Globals.h" />
     <ClInclude Include="..\HookLog.h" />
     <ClInclude Include="..\LogHooker.h" />
-    <ClInclude Include="..\SaveTransferStash.h" />
     <ClInclude Include="..\stdafx.h" />
-    <ClInclude Include="CharacterSubtractLife.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="TakeAttack.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Custom.rc" />

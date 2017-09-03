@@ -4,10 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GrimDawnTestListener.Tracking.Model {
-    enum DamageType {
+namespace GrimDamage.Tracking.Model {
+    public enum DamageType {
         Physical,
+        Lightning,
+        Vitality,
+        Aether,
+        Bleeding,
+        Acid,
         Chaos,
-        Cold
+        Cold,
+        Fire,
+        Unknown
     }
 }

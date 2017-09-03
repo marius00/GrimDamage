@@ -1,5 +1,5 @@
 ﻿using log4net;
-using EvilsoftCommons.Exceptions;
+//using EvilsoftCommons.Exceptions;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -90,7 +90,7 @@ namespace EvilsoftCommons.DllInjector {
             catch (Exception ex) {
                 logger.Fatal(ex.Message);
                 logger.Fatal(ex.StackTrace);
-                ExceptionReporter.ReportException(ex);
+                //ExceptionReporter.ReportException(ex);
                 throw;
             }
         }
@@ -166,7 +166,7 @@ namespace EvilsoftCommons.DllInjector {
                             if (!InjectionVerifier.VerifyInjection(pid, arguments.DllName)) {
                                 if (!dontLog.Contains(pid)) {
                                     logger.Warn("InjectionVerifier reports injection failed.");
-                                    ExceptionReporter.ReportIssue("InjectionVerifier reports injection failed into PID " + pid);
+                                    //ExceptionReporter.ReportIssue("InjectionVerifier reports injection failed into PID " + pid);
                                     worker.ReportProgress(INJECTION_ERROR, string.Format("InjectionVerifier reports injection failed into PID {0}, try running as administrator.", pid));
                                 }
 

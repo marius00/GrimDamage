@@ -18,5 +18,5 @@ private:
 	static DataQueue* m_dataQueue;
 	static MessageType m_message;
 
-	static void __cdecl HookedMethod(void* This, void* priority, char* dummytest, char* str, void* _param0, void* _param1, void* _param2, void* _param3, void* _param4, void* _param5);
+	static void __cdecl HookedMethod(void* This, void* priority, char* dummytest, char* str, void* _param0, void* _param1, void* _param2);
 };

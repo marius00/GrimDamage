@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GrimDawnTestListener.Tracking.Model {
+namespace GrimDamage.Tracking.Model {
     class Entity {
         public bool IsPlayer { get; set; }
         public List<DamageEntry> DamageDealt { get; set; }
