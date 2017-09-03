@@ -58,6 +58,7 @@
     <Compile Include="IOHelper.cs" />
     <Compile Include="Parser\Config\EventMapping.cs" />
     <Compile Include="Parser\Model\EventType.cs" />
+    <Compile Include="Parser\Service\DamageParsingService.cs" />
     <Compile Include="Parser\Service\ParsingService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Tracking\Model\DamageEntry.cs" />
     <Compile Include="Tracking\Model\DamageType.cs" />
     <Compile Include="Tracking\Model\Entity.cs" />
+    <Compile Include="Tracking\Model\NameEntry.cs" />
     <Compile Include="Utility\Timestamp.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

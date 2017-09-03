@@ -24,6 +24,7 @@ namespace GrimDamage {
         private InjectionHelper _injector;
         private ProgressChangedEventHandler _injectorCallbackDelegate;
         private bool _isFirstMessage = true;
+        private DamageParsingService damageParsingService = new DamageParsingService();
 
         private List<string> events = new List<string>();
 
@@ -54,7 +55,7 @@ namespace GrimDamage {
         }
 
         private void AddEvent(string s) {
-            Logger.Debug(s);
+            //Logger.Debug(s);
             events.Add(s);
         }
 
@@ -65,66 +66,71 @@ namespace GrimDamage {
                 AddEvent(message);
             }
             else if (bt.Type == 45001) {
-                float dmg = IOHelper.GetFloat(bt.Data, 0);
-                int victim = IOHelper.GetInt(bt.Data, 4);
-                string dmgType = IOHelper.GetNullString(bt.Data, 8);
+                var dmg = IOHelper.GetDouble(bt.Data, 0);
+                int victim = IOHelper.GetInt(bt.Data, 8);
+                string dmgType = IOHelper.GetNullString(bt.Data, 12);
                 AddEvent($"^y    Damage {dmg} to Defender 0x{victim} ({dmgType})");
+                damageParsingService.ApplyDamage(dmg, victim, dmgType);
             }
             else if (bt.Type == 45002) {
-                float chance = IOHelper.GetFloat(bt.Data, 0);
-                float healed = IOHelper.GetFloat(bt.Data, 4);
+                var chance = IOHelper.GetDouble(bt.Data, 0);
+                var healed = IOHelper.GetDouble(bt.Data, 4);
                 AddEvent($"    ^b{chance}% Life Leech return {healed} Life");
+                damageParsingService.ApplyLifeLeech(chance, healed);
+                
             }
             else if (bt.Type == 45003) {
-                float chance = IOHelper.GetFloat(bt.Data, 0);
-                float healed = IOHelper.GetFloat(bt.Data, 4);
-                AddEvent($"    Total Damage:  Absolute ({chance}), Over Time ({healed})");
+                var amount = IOHelper.GetDouble(bt.Data, 0);
+                var dot = IOHelper.GetDouble(bt.Data, 4);
+                AddEvent($"    Total Damage:  Absolute ({amount}), Over Time ({dot})");
+                damageParsingService.ApplyTotalDamage(amount, dot);
             }
             else if (bt.Type == 45004) {
                 string name = IOHelper.GetNullString(bt.Data, 0);
                 AddEvent($"    attackerName = {name}");
+                damageParsingService.SetAttackerName(name);
             }
             else if (bt.Type == 45005) {
                 string name = IOHelper.GetNullString(bt.Data, 0);
                 AddEvent($"    defenderName = {name}");
+                damageParsingService.SetDefenderName(name);
             }
             else if (bt.Type == 45006) {
                 int id = IOHelper.GetInt(bt.Data, 0);
                 AddEvent($"    attackerID = {id}");
+                damageParsingService.SetAttackerId(id);
             }
             else if (bt.Type == 45007) {
                 int id = IOHelper.GetInt(bt.Data, 0);
                 AddEvent($"    defenderID = {id}");
+                damageParsingService.SetDefenderId(id);
             }
             else if (bt.Type == 45008) { // this is DEFLECT
-                float id = IOHelper.GetFloat(bt.Data, 0);
-                AddEvent($"    ^yDeflect Projectile Chance ({id}) caused prefix deflection");
+                var chance = IOHelper.GetDouble(bt.Data, 0);
+                AddEvent($"    ^yDeflect Projectile Chance ({chance}) caused prefix deflection");
+                damageParsingService.ApplyDeflect(chance);
             }
             else if (bt.Type == 45009) { // this is absorb
-                var id = IOHelper.GetLong(bt.Data, 0);
-                var id2 = IOHelper.GetDouble(bt.Data, 0);
-                var id3 = IOHelper.GetFloat(bt.Data, 0);
-                //var id4 = IOHelper.GetFloat(bt.Data, 4);
-                //var id5 = IOHelper.GetDouble(bt.Data, 4);
-                //var id6 = IOHelper.GetDouble(bt.Data, 8);
-                var id7 = IOHelper.GetNullString(bt.Data, 0);
-                //AddEvent($"    protectionAbsorption = {id7} {id} {id2} {id3} {id4} {id5} {id6}");
-                AddEvent($"    protectionAbsorption = {id7} {id} {id2} {id3}");
+                var amount = IOHelper.GetDouble(bt.Data, 0);
+                AddEvent($"    protectionAbsorption = {amount}");
+                damageParsingService.SetAbsorb(amount);
             }
             else if (bt.Type == 45010) {
-                var id = IOHelper.GetNullString(bt.Data, 0);
-                AddEvent($"    ^str{id}% Damage Reflected");
+                var amount = IOHelper.GetDouble(bt.Data, 0);
+                AddEvent($"    ^str{amount}% Damage Reflected");
+                damageParsingService.ApplyReflect(amount);
             }
             else if (bt.Type == 45011) {
-                float a = IOHelper.GetFloat(bt.Data, 0);
-                float b = IOHelper.GetFloat(bt.Data, 4);
-                float c = IOHelper.GetFloat(bt.Data, 8);
+                var a = IOHelper.GetDouble(bt.Data, 0);
+                var b = IOHelper.GetDouble(bt.Data, 4);
+                var c = IOHelper.GetDouble(bt.Data, 8);
                 AddEvent($"^bShield: Reduced ({a}) Damage by ({b}%) percent, remaining damage ({c})");
+                damageParsingService.ApplyBlock(a, b, c);
             }
             else if (bt.Type == 45000) {
                 //Logger.Debug($"Unrecognized log: {IOHelper.GetNullString(bt.Data, 0)}");
             }
-            
+
             else {
                 Logger.Warn($"Got a message of type {bt.Type}");
             }

@@ -55,7 +55,7 @@ const char* MSG_TOTALDMG = "    Total Damage:  Absolute (%f), Over Time (%f)"; /
 const char* MSG_ATTACKER_NAME = "    attackerName = %s"; // 1
 const char* MSG_ATTACKER_ID = "    attackerID = %d"; // 1
 const char* MSG_DEFENDER_NAME = "    defenderName = %s"; // 1
-const char* MSG_DEFENDER_ID = "    defenderID = %s"; // 1
+const char* MSG_DEFENDER_ID = "    defenderID = %d"; // 1
 const char* MSG_DEFLECT = "    ^yDeflect Projectile Chance (%f) caused prefix deflection"; //1
 const char* MSG_ABSORB = "    protectionAbsorption = %f"; //1
 const char* MSG_REFLECT = "    ^str%f%% Damage Reflected"; //1
@@ -82,7 +82,17 @@ bool startsWith(const char* prefix, char* str) {
 }
 
 // ida pro says str is the 5th param
-void __cdecl LoggerHook::HookedMethod(void* This, void* priority, char* str_, char* str, void* _param0, void* _param1, void* _param2) {
+void __cdecl LoggerHook::HookedMethod(
+	void* This, 
+	void* priority, 
+	char* str_, 
+	char* str, 
+	void* _param0, 
+	void* _param1, 
+	void* _param2,
+	void* _param3,
+	void* _param4,
+	void* _param5) {
 /*
 	{
 		const size_t buffsize = 1 + PointerHelper::size;
@@ -103,36 +113,64 @@ void __cdecl LoggerHook::HookedMethod(void* This, void* priority, char* str_, ch
 
 		if (ReadProcessMemory(hProcess, str, (void*)&logMessage, buffsize, &bytesRead) != 0) {
 
-			if (false && startsWith(MSG_DAMAGE_TO_DEFENDER, logMessage)) {
-				const size_t resultSize = 256 + 8;
+			if (startsWith(MSG_DAMAGE_TO_DEFENDER, logMessage)) {
+				int messageId = 45001;
+				const size_t resultSize = 256 + 8*2 + 4;
 				char result[resultSize] = { 0 };
-				memcpy(&result, &_param0, 4);
-				memcpy(&result + 4, &_param1, 4);
-				ReadProcessMemory(hProcess, _param2, (void*)(&result + 8), 255, &bytesRead);
 
-				DataItemPtr item(new DataItem(45001, resultSize, (char*)&result));
-				m_dataQueue->push(item);
-				SetEvent(m_hEvent);
+				// f x s
+				if (
+					ReadProcessMemory(hProcess, &_param0, (void*)&result, 4, &bytesRead) != 0 // %f
+					&& ReadProcessMemory(hProcess, &_param1, (char*)&result + 4, 4, &bytesRead) != 0 // %f
+
+					&& ReadProcessMemory(hProcess, &_param2, (char*)&result + 8, 4, &bytesRead) != 0 // %x
+
+					&& ReadProcessMemory(hProcess, _param3, (char*)&result + 12, 255, &bytesRead) != 0) {  // %s
+
+					DataItemPtr item(new DataItem(messageId, resultSize, (char*)&result));
+					m_dataQueue->push(item);
+					SetEvent(m_hEvent);
+				}
 			}
 			else if (startsWith(MSG_LIFE_LEECH, logMessage)) {
-				const size_t resultSize = 8;
+				int messageId = 45002;
+				const size_t resultSize = 16;
 				char result[resultSize] = { 0 };
-				memcpy(&result, &_param0, 4);
-				memcpy(&result + 4, &_param1, 4);
-
-				DataItemPtr item(new DataItem(45002, resultSize, (char*)&result));
-				m_dataQueue->push(item);
-				SetEvent(m_hEvent);
+				if (
+					ReadProcessMemory(hProcess, &_param0, (void*)&result, 4, &bytesRead) != 0
+					&& ReadProcessMemory(hProcess, &_param1, (char*)&result + 4, 4, &bytesRead) != 0
+					&& ReadProcessMemory(hProcess, &_param2, (char*)&result + 8, 4, &bytesRead) != 0
+					&& ReadProcessMemory(hProcess, &_param3, (char*)&result + 12, 4, &bytesRead) != 0
+					) {
+					DataItemPtr item(new DataItem(messageId, resultSize, (char*)&result));
+					m_dataQueue->push(item);
+					SetEvent(m_hEvent);
+				}
+				else {
+					DataItemPtr item(new DataItem(messageId, 0, nullptr));
+					m_dataQueue->push(item);
+					SetEvent(m_hEvent);
+				}
 			}
 			else if (startsWith(MSG_TOTALDMG, logMessage)) {
-				const size_t resultSize = 8;
+				int messageId = 45003;
+				const size_t resultSize = 16;
 				char result[resultSize] = { 0 };
-				memcpy(&result, &_param0, 4);
-				memcpy(&result + 4, &_param1, 4);
-
-				DataItemPtr item(new DataItem(45003, resultSize, (char*)&result));
-				m_dataQueue->push(item);
-				SetEvent(m_hEvent);
+				if (
+					ReadProcessMemory(hProcess, &_param0, (void*)&result, 4, &bytesRead) != 0
+					&& ReadProcessMemory(hProcess, &_param1, (char*)&result + 4, 4, &bytesRead) != 0
+					&& ReadProcessMemory(hProcess, &_param2, (char*)&result + 8, 4, &bytesRead) != 0
+					&& ReadProcessMemory(hProcess, &_param3, (char*)&result + 12, 4, &bytesRead) != 0
+					) {
+					DataItemPtr item(new DataItem(messageId, resultSize, (char*)&result));
+					m_dataQueue->push(item);
+					SetEvent(m_hEvent);
+				}
+				else {
+					DataItemPtr item(new DataItem(messageId, 0, nullptr));
+					m_dataQueue->push(item);
+					SetEvent(m_hEvent);
+				}
 			}
 			else if (startsWith(MSG_ATTACKER_NAME, logMessage)) {
 				const size_t resultSize = 256;
@@ -181,13 +219,22 @@ void __cdecl LoggerHook::HookedMethod(void* This, void* priority, char* str_, ch
 				SetEvent(m_hEvent);
 			}
 			else if (startsWith(MSG_DEFLECT, logMessage)) {
-				const size_t resultSize = 4;
+				int messageId = 45008;
+				const size_t resultSize = 8;
 				char result[resultSize] = { 0 };
-				memcpy(&result, &_param0, 4);
-
-				DataItemPtr item(new DataItem(45008, resultSize, (char*)&result));
-				m_dataQueue->push(item);
-				SetEvent(m_hEvent);
+				if (
+					ReadProcessMemory(hProcess, &_param0, (void*)&result, 4, &bytesRead) != 0
+					&& ReadProcessMemory(hProcess, &_param1, (char*)&result + 4, 4, &bytesRead) != 0
+					) {
+					DataItemPtr item(new DataItem(messageId, resultSize, (char*)&result));
+					m_dataQueue->push(item);
+					SetEvent(m_hEvent);
+				}
+				else {
+					DataItemPtr item(new DataItem(messageId, 0, nullptr));
+					m_dataQueue->push(item);
+					SetEvent(m_hEvent);
+				}
 			}
 			else if (startsWith(MSG_ABSORB, logMessage)) {
 				const size_t resultSize = 8;
@@ -205,61 +252,47 @@ void __cdecl LoggerHook::HookedMethod(void* This, void* priority, char* str_, ch
 					m_dataQueue->push(item);
 					SetEvent(m_hEvent);
 				}
-				if (false) {
-					const size_t resultSize2 = 1024;
-					char result2[resultSize2] = { 0 };
-					sprintf_s((char*)&result2, 1023, "%f", _param1);
-
-
-					DataItemPtr item(new DataItem(45009, resultSize2, (char*)&result2));
+			}
+			else if (startsWith(MSG_REFLECT, logMessage)) {
+				const size_t resultSize = 8;
+				char result[resultSize] = { 0 };
+				if (
+					ReadProcessMemory(hProcess, &_param0, (void*)&result, 4, &bytesRead) != 0
+					&& ReadProcessMemory(hProcess, &_param1, (char*)&result + 4, 4, &bytesRead) != 0
+					) {
+					DataItemPtr item(new DataItem(45010, resultSize, (char*)&result));
 					m_dataQueue->push(item);
 					SetEvent(m_hEvent);
 				}
-
-				/*
-				double* dptr = (double*)&_param0;
-				std::string stringified = std::to_string(*dptr);
-				char buffer[1024] = { 0 };
-
-				int len = min(stringified.length(), 1023);
-				memcpy(&buffer, stringified.c_str(), len);
-
-				DataItemPtr item(new DataItem(45009, len, (char*)&buffer));
-				m_dataQueue->push(item);
-				SetEvent(m_hEvent);
-				*/
-
-				/*
-				const size_t resultSize = 4;
-				char result[resultSize] = { 0 };
-				memcpy(&result, &_param0, 4);
-
-				DataItemPtr item(new DataItem(45009, resultSize, (char*)&result));
-				m_dataQueue->push(item);
-				SetEvent(m_hEvent);*/
-			}
-			else if (false && startsWith(MSG_REFLECT, logMessage)) {
-				double* dptr = (double*)&_param0;
-				std::string stringified = std::to_string(*dptr);
-				char buffer[1024] = { 0 };
-
-				int len = min(stringified.length(), 1023);
-				memcpy(&buffer, stringified.c_str(), len);
-
-				DataItemPtr item(new DataItem(45010, len, (char*)&buffer));
-				m_dataQueue->push(item);
-				SetEvent(m_hEvent);
+				else {
+					DataItemPtr item(new DataItem(45010, 0, nullptr));
+					m_dataQueue->push(item);
+					SetEvent(m_hEvent);
+				}
 			}
 			else if (startsWith(MSG_BLOCK, logMessage)) {
-				const size_t resultSize = 12;
+				int messageId = 45011;
+				const size_t resultSize = 8*3;
 				char result[resultSize] = { 0 };
-				memcpy(&result, &_param0, 4);
-				memcpy(&result+4, &_param1, 4);
-				memcpy(&result+8, &_param2, 4);
+				if (
+					ReadProcessMemory(hProcess, &_param0, (void*)&result, 4, &bytesRead) != 0
+					&& ReadProcessMemory(hProcess, &_param1, (char*)&result + 4, 4, &bytesRead) != 0
 
-				DataItemPtr item(new DataItem(45011, resultSize, (char*)&result));
-				m_dataQueue->push(item);
-				SetEvent(m_hEvent);
+					&& ReadProcessMemory(hProcess, &_param2, (char*)&result + 8, 4, &bytesRead) != 0
+					&& ReadProcessMemory(hProcess, &_param3, (char*)&result + 12, 4, &bytesRead) != 0
+
+					&& ReadProcessMemory(hProcess, &_param4, (char*)&result + 16, 4, &bytesRead) != 0
+					&& ReadProcessMemory(hProcess, &_param5, (char*)&result + 20, 4, &bytesRead) != 0
+					) {
+					DataItemPtr item(new DataItem(messageId, resultSize, (char*)&result));
+					m_dataQueue->push(item);
+					SetEvent(m_hEvent);
+				}
+				else {
+					DataItemPtr item(new DataItem(messageId, 0, nullptr));
+					m_dataQueue->push(item);
+					SetEvent(m_hEvent);
+				}
 			}
 			else {
 				DataItemPtr item(new DataItem(45000, buffsize, (char*)&logMessage));

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GrimDamage.Tracking.Model {
-    class DamageEntry {
+    public class DamageEntry {
         public int Target { get; set; }
-        public float Amount { get; set; }
+        public double Amount { get; set; }
         public DamageType Type { get; set; }
         public DateTime Time { get; set; }
 
