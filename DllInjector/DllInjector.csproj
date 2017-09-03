@@ -35,8 +35,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -55,12 +55,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterWindow.cs" />
     <Compile Include="Win32.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EvilsoftCommons.csproj">
-      <Project>{d3336c7f-0dbc-4342-991d-d2c082d7f168}</Project>
-      <Name>EvilsoftCommons</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

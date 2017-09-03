@@ -26,6 +26,7 @@
             this.labelHookStatus = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnReadFile = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // labelHookStatus
@@ -40,7 +41,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(52, 159);
+            this.btnSave.Location = new System.Drawing.Point(12, 42);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 1;
@@ -50,7 +51,7 @@
             // 
             // btnReadFile
             // 
-            this.btnReadFile.Location = new System.Drawing.Point(179, 159);
+            this.btnReadFile.Location = new System.Drawing.Point(139, 42);
             this.btnReadFile.Name = "btnReadFile";
             this.btnReadFile.Size = new System.Drawing.Size(75, 23);
             this.btnReadFile.TabIndex = 2;
@@ -58,11 +59,22 @@
             this.btnReadFile.UseVisualStyleBackColor = true;
             this.btnReadFile.Click += new System.EventHandler(this.btnReadFile_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Location = new System.Drawing.Point(28, 106);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(905, 363);
+            this.panel1.TabIndex = 3;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(945, 481);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnReadFile);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.labelHookStatus);
@@ -79,6 +91,7 @@
         private System.Windows.Forms.Label labelHookStatus;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnReadFile;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
