@@ -14,7 +14,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -66,7 +66,6 @@
     <Compile Include="Tracking\Model\DamageEntry.cs" />
     <Compile Include="Tracking\Model\DamageType.cs" />
     <Compile Include="Tracking\Model\Entity.cs" />
-    <Compile Include="Tracking\Model\NameEntry.cs" />
     <Compile Include="Utility\Timestamp.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
