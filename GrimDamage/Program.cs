@@ -20,6 +20,11 @@ namespace GrimDamage {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            if (!File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Hook.dll"))) {
+                MessageBox.Show("Error - It appears that hook.dll is missing\nMost likely this installation has been corrupted.", "Error");
+                return;
+            }
+
             string url = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "content", "index.html");
             if (!File.Exists(url)) {
                 MessageBox.Show("Error - It appears the stat view is missing", "Error");

@@ -95,9 +95,9 @@ namespace GrimDamage {
                 damageTaken[player.Id] = _statisticsService.GetLatestDamageTaken(player.Id);
             }
 
-            _browser.JsInteractor.Players = players;
-            _browser.JsInteractor.DamageDealt = damageDealt;
-            _browser.JsInteractor.DamageTaken = damageTaken;
+            _browser.JsInteractor.SetPlayers(players);
+            _browser.JsInteractor.SetDamageDealt(damageDealt);
+            _browser.JsInteractor.SetDamageTaken(damageTaken);
 
             _browser.NotifyUpdate();
         }

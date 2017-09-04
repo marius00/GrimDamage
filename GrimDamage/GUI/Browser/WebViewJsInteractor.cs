@@ -19,22 +19,16 @@ namespace GrimDamage.GUI.Browser {
             };
         }
 
-        public Dictionary<int, List<DamageEntryJson>> DamageTaken {
-            set {
-                damageTakenJson = JsonConvert.SerializeObject(value, _settings);
-            }
+        public void SetDamageTaken(Dictionary<int, List<DamageEntryJson>> value) {
+            damageTakenJson = JsonConvert.SerializeObject(value, _settings);
         }
 
-        public Dictionary<int, List<DamageEntryJson>> DamageDealt {
-            set {
-                damageDealtJson = JsonConvert.SerializeObject(value, _settings);
-            }
+        public void SetDamageDealt(Dictionary<int, List<DamageEntryJson>> value) {
+            damageDealtJson = JsonConvert.SerializeObject(value, _settings);
         }
 
-        public List<PlayerJson> Players {
-            set {
-                playersJson = JsonConvert.SerializeObject(value, _settings);
-            }
+        public void SetPlayers(List<PlayerJson> value)  {
+            playersJson = JsonConvert.SerializeObject(value, _settings);
         }
 
         

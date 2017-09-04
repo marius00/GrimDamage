@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 namespace GrimDamage.Tracking.Model {
     public class Entity {
         public Entity() {
-            this.DamageDealt = new List<DamageEntry>();
-            this.DamageTaken = new List<DamageEntry>();
+            this.DamageDealt = new ConcurrentBag<DamageEntry>();
+            this.DamageTaken = new ConcurrentBag<DamageEntry>();
         }
 
         public int Id { get; set; }
@@ -16,8 +17,8 @@ namespace GrimDamage.Tracking.Model {
         public string Name { get; set; }
 
         public bool IsPlayer { get; set; }
-        public List<DamageEntry> DamageDealt { get; set; }
-        public List<DamageEntry> DamageTaken { get; set; }
+        public ConcurrentBag<DamageEntry> DamageDealt { get; }
+        public ConcurrentBag<DamageEntry> DamageTaken { get; }
 
         public DateTime LastSeen {
             get {

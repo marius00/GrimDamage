@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +17,13 @@ namespace GrimDamage.Parser.Service {
         private string _defenderName;
         private string _attackerName;
         private int _attackerId;
-        private readonly Dictionary<int, Entity> _names;
+        private readonly ConcurrentDictionary<int, Entity> _names;
 
         public DamageParsingService() {
-            this._names = new Dictionary<int, Entity>();
+            this._names = new ConcurrentDictionary<int, Entity>();
         }
 
-        public Dictionary<int, Entity>.ValueCollection Values => _names.Values;
+        public ICollection<Entity> Values => _names.Values;
 
         public Entity GetEntity(int id) {
             if (_names.ContainsKey(id))
@@ -38,7 +39,8 @@ namespace GrimDamage.Parser.Service {
                 .ToList();
 
             foreach (var key in expired) {
-                _names.Remove(key);
+                Entity o;
+                _names.TryRemove(key, out o);
             }
         }
 

@@ -60,21 +60,7 @@ const char* MSG_DEFLECT = "    ^yDeflect Projectile Chance (%f) caused prefix de
 const char* MSG_ABSORB = "    protectionAbsorption = %f"; //1
 const char* MSG_REFLECT = "    ^str%f%% Damage Reflected"; //1
 const char* MSG_BLOCK = "^bShield: Reduced (%f) Damage by (%f%) percent, remaining damage (%f)"; //3
-bool isRelevant(char* str) {
-	return strcmp("^y    Damage %f to Defender 0x%x (%s)", str) == 0
-		|| strcmp("    ^str%f%% Life Leech return %f Life", str) == 0
-		|| strcmp("    Total Damage:  Absolute (%f), Over Time (%f)", str) == 0
-		|| strcmp("    attackerName = %s", str) == 0
-		|| strcmp("    attackerID = %d", str) == 0
-		|| strcmp("    defenderName = %s", str) == 0
-		|| strcmp("    defenderID = %s", str) == 0
-		|| strcmp("    ^yDeflect Projectile Chance (%f) caused prefix deflection", str) == 0
-		|| strcmp("    protectionAbsorption = %f", str) == 0
-		|| strcmp("    ^str%f%% Damage Reflected", str) == 0
-		|| strcmp("^bShield: Reduced (%f) Damage by (%f%) percent, remaining damage (%f)", str) == 0
-	;
-	
-}
+
 
 bool startsWith(const char* prefix, char* str) {
 	size_t lenpre = strlen(prefix), lenstr = strlen(str);
