@@ -80,6 +80,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
+    <Compile Include="Statistics\dto\DamageEntryJson.cs" />
+    <Compile Include="Statistics\dto\PlayerJson.cs" />
+    <Compile Include="Statistics\Service\StatisticsService.cs" />
     <Compile Include="Tracking\Model\DamageEntry.cs" />
     <Compile Include="Tracking\Model\DamageType.cs" />
     <Compile Include="Tracking\Model\Entity.cs" />

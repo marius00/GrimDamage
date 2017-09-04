@@ -9,8 +9,9 @@ using log4net;
 using log4net.Repository.Hierarchy;
 
 namespace GrimDamage.Parser.Service {
-    class DamageParsingService {
+    public class DamageParsingService {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(DamageParsingService));
+        private const string PlayerPattern = "/pc/";
         private readonly int _nameCacheDuration = 30;
         private string _defenderName;
         private string _attackerName;
@@ -21,10 +22,16 @@ namespace GrimDamage.Parser.Service {
             this._names = new Dictionary<int, Entity>();
         }
 
-        public Dictionary<int, Entity> GetNames() {
-            return _names;
+        public Dictionary<int, Entity>.ValueCollection Values => _names.Values;
+
+        public Entity GetEntity(int id) {
+            if (_names.ContainsKey(id))
+                return _names[id];
+            else
+                return null;
         }
 
+        // TODO: Call regularly, every minute or so.
         public void Cleanup() {
             var expired = _names.Values.Where(m => (DateTime.UtcNow - m.LastSeen).Minutes > _nameCacheDuration)
                 .Select(m => m.Id)
@@ -74,7 +81,8 @@ namespace GrimDamage.Parser.Service {
             if (!_names.ContainsKey(id)) {
                 _names[id] = new Entity {
                     Id = id,
-                    Name = _attackerName
+                    Name = _attackerName,
+                    IsPlayer = _attackerName.Contains(PlayerPattern)
                 };
             }
 
@@ -89,7 +97,8 @@ namespace GrimDamage.Parser.Service {
             if (!_names.ContainsKey(id)) {
                 _names[id] = new Entity {
                     Id = id,
-                    Name = _defenderName
+                    Name = _defenderName,
+                    IsPlayer = _defenderName.Contains(PlayerPattern)
                 };
             }
         }

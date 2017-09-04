@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GrimDamage.Statistics.dto;
 using GrimDamage.Tracking.Model;
 using Newtonsoft.Json;
 
@@ -18,15 +19,29 @@ namespace GrimDamage.GUI.Browser {
             };
         }
 
-        public Dictionary<int, Entity> Dataset {
+        public Dictionary<int, List<DamageEntryJson>> DamageTaken {
             set {
-                DatasetJson = JsonConvert.SerializeObject(value, _settings);
+                damageTakenJson = JsonConvert.SerializeObject(value, _settings);
             }
         }
 
-        public string DatasetJson { get; set; }
+        public Dictionary<int, List<DamageEntryJson>> DamageDealt {
+            set {
+                damageDealtJson = JsonConvert.SerializeObject(value, _settings);
+            }
+        }
+
+        public List<PlayerJson> Players {
+            set {
+                playersJson = JsonConvert.SerializeObject(value, _settings);
+            }
+        }
+
+        public string damageTakenJson { get; set; }
+        public string damageDealtJson { get; set; }
+        public string playersJson { get; set; }
 
 
-        
+
     }
 }

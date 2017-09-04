@@ -16,12 +16,15 @@ using GrimDamage.GUI.Browser;
 using GrimDamage.GUI.Forms;
 using GrimDamage.Parser.Service;
 using GrimDamage.Settings;
+using GrimDamage.Statistics.dto;
+using GrimDamage.Statistics.Service;
 using log4net;
 
 namespace GrimDamage {
     public partial class Form1 : Form {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Form1));
 
+        private readonly StatisticsService _statisticsService;
         private readonly DamageParsingService _damageParsingService = new DamageParsingService();
         private readonly CefBrowserHandler _browser;
         private readonly MessageProcessorCore _messageProcessorCore;
@@ -31,7 +34,7 @@ namespace GrimDamage {
             InitializeComponent();
             this._browser = browser;
             _messageProcessorCore = new MessageProcessorCore(_damageParsingService);
-            
+            _statisticsService = new StatisticsService(_damageParsingService);
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -43,6 +46,11 @@ namespace GrimDamage {
             webView.TopLevel = false;
             this.panel1.Controls.Add(webView);
             webView.Show();
+
+            _messageProcessorCore.OnHookActivation += (_, __) => {
+                this.labelHookStatus.Text = "Hook activated";
+                this.labelHookStatus.ForeColor = System.Drawing.Color.Green;
+            };
         }
 
         private void Save() {
@@ -76,7 +84,18 @@ namespace GrimDamage {
         }
 
         private void btnUpdateData_Click(object sender, EventArgs e) {
-            _browser.JsInteractor.Dataset = _damageParsingService.GetNames();
+            var players = _statisticsService.GetPlayers();
+
+            Dictionary<int, List<DamageEntryJson>> damageDealt = new Dictionary<int, List<DamageEntryJson>>();
+            Dictionary<int, List<DamageEntryJson>> damageTaken = new Dictionary<int, List<DamageEntryJson>>();
+            foreach (var player in players) {
+                damageDealt[player.Id] = _statisticsService.GetLatestDamageDealt(player.Id);
+                damageTaken[player.Id] = _statisticsService.GetLatestDamageTaken(player.Id);
+            }
+
+            _browser.JsInteractor.Players = players;
+            _browser.JsInteractor.DamageDealt = damageDealt;
+            _browser.JsInteractor.DamageTaken = damageTaken;
         }
     }
 }

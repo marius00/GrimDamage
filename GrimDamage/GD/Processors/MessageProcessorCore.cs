@@ -21,6 +21,11 @@ namespace GrimDamage.GD.Processors {
         private readonly Action<RegisterWindow.DataAndType> _registerWindowDelegate;
         private readonly DamageParsingService _damageParsingService;
 
+
+        public delegate void HookActivationCallback(object sender, EventArgs e);
+
+        public event HookActivationCallback OnHookActivation;
+
         public MessageProcessorCore(DamageParsingService damageParsingService) {
             _damageParsingService = damageParsingService;
 
@@ -114,10 +119,8 @@ namespace GrimDamage.GD.Processors {
 
             if (_isFirstMessage) {
                 Logger.Debug("Window message received");
-                //this.labelHookStatus.Text = "Hook activated";
-                //this.labelHookStatus.ForeColor = System.Drawing.Color.Green;
-                // TODO: Add feedback to the user
                 _isFirstMessage = false;
+                OnHookActivation?.Invoke(null, null);
             }
         }
 
