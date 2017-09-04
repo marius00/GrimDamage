@@ -12,3 +12,5 @@ nice to have:
     attackerName = records/skills/playerclass06/pets/winddevil_05.dbr
 * Detect death and automatically show what killed you
 * How much dps from racial?
+** skip the dots on graph
+** insta update on graph
