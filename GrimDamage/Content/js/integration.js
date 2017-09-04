@@ -7,6 +7,7 @@ function _itemsReceived() {
 }
 
 // TODO: move this to main.js
+var n = 0;
 function itemsReceived(players, damageDealt, damageTaken) {
     if (players.length == 0) {
         console.log("No player yet.. skipping graph..");
@@ -14,6 +15,7 @@ function itemsReceived(players, damageDealt, damageTaken) {
         var id = players[0].id;
         for (var i = 0; i < damageDealt[id].length; i++) {
             console.log("Adding ", damageDealt[id][i].amount, ' to ', damageDealt[id][i].damageType);
+            // TODO: Add series if it doesn't exist, that would resolve the issue with having damage types stored 2 places (js and c#)
             globalChart.series.filter(s => s.name === damageDealt[id][i].damageType)[0].addPoint(damageDealt[id][i].amount, true, true);
         }
         
