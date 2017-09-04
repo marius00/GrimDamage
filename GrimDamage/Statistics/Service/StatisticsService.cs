@@ -27,12 +27,14 @@ namespace GrimDamage.Statistics.Service {
         }
 
         private List<DamageEntryJson> Normalize(List<DamageEntryJson> entries) {
-            foreach (var type in Enum.GetValues(typeof(DamageType))) {
-                if (!entries.Exists(m => m.DamageType == type.ToString())) {
-                    entries.Add(new DamageEntryJson {
-                        Amount = 0,
-                        DamageType = type.ToString()
-                    });
+            foreach (DamageType type in Enum.GetValues(typeof(DamageType))) {
+                if (type != DamageType.Unknown) {
+                    if (!entries.Exists(m => m.DamageType == type.ToString())) {
+                        entries.Add(new DamageEntryJson {
+                            Amount = 0,
+                            DamageType = type.ToString()
+                        });
+                    }
                 }
             }
 
