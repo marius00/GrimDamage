@@ -37,10 +37,19 @@ namespace GrimDamage.GUI.Browser {
             }
         }
 
+        
+        public event EventHandler OnRequestUpdate;
+
+
+
+        // FROM JS ONLY
         public string damageTakenJson { get; set; }
         public string damageDealtJson { get; set; }
         public string playersJson { get; set; }
 
+        public void requestUpdate() {
+            OnRequestUpdate?.Invoke(this, null);
+        }
 
 
     }

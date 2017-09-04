@@ -40,6 +40,10 @@ namespace GrimDamage.GUI.Browser {
         public void ShowDevTools() {
             _browser.ShowDevTools();
         }
+        public void NotifyUpdate() {
+            if (_browser.IsBrowserInitialized)
+                _browser.ExecuteScriptAsync("_itemsReceived();");
+        }
         /*
         public void ShowLoadingAnimation() {
             if (_browser.IsBrowserInitialized)

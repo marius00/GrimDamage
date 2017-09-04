@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,6 +36,7 @@ namespace GrimDamage {
             this._browser = browser;
             _messageProcessorCore = new MessageProcessorCore(_damageParsingService);
             _statisticsService = new StatisticsService(_damageParsingService);
+            _browser.JsInteractor.OnRequestUpdate += btnUpdateData_Click;
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -96,6 +98,8 @@ namespace GrimDamage {
             _browser.JsInteractor.Players = players;
             _browser.JsInteractor.DamageDealt = damageDealt;
             _browser.JsInteractor.DamageTaken = damageTaken;
+
+            _browser.NotifyUpdate();
         }
     }
 }
