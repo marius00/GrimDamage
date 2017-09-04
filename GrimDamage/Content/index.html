@@ -1,16 +1,17 @@
-﻿<script>
-    function _itemsReceived() {
-        itemsReceived(
-            JSON.parse(data.playersJson),
-            JSON.parse(data.damageDealtJson),
-            JSON.parse(data.damageTakenJson));
-    }
+﻿
+<script src="js/highcharts.js"></script>
+<script src="js/integration.js"></script>
+<script src="js/main.js"></script>
 
-    function itemsReceived(players, damageDealt, damageTaken) {
-        console.log(players, damageDealt, damageTaken);
-    }
 
-    var intervalID = window.setInterval(data.requestUpdate, 1000);
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+
+<script type="text/javascript">
+    loadChart();
 </script>
 
 Hello world
+
