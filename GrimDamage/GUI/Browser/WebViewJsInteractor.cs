@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace GrimDamage.GUI.Browser {
     public class WebViewJsInteractor {
-        private JsonSerializerSettings _settings;
+        private readonly JsonSerializerSettings _settings;
 
         public WebViewJsInteractor() {
             _settings = new JsonSerializerSettings {
@@ -37,8 +37,14 @@ namespace GrimDamage.GUI.Browser {
 
 
         // FROM JS ONLY
+        // ReSharper disable once InconsistentNaming
+        // ReSharper disable once MemberCanBePrivate.Global
         public string damageTakenJson { get; set; }
+
+        // ReSharper disable once InconsistentNaming
         public string damageDealtJson { get; set; }
+
+        // ReSharper disable once InconsistentNaming
         public string playersJson { get; set; }
 
         public void requestUpdate() {

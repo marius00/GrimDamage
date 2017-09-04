@@ -48,7 +48,7 @@ namespace GrimDamage.Statistics.Service {
             var player = _damageParsingService.GetEntity(playerId);
 
             if (player == null || player.DamageTaken.Count == 0) {
-                return new List<DamageEntryJson>();
+                return Normalize(new List<DamageEntryJson>());
             }
             else {
                 var result = player.DamageTaken
@@ -61,7 +61,7 @@ namespace GrimDamage.Statistics.Service {
                     .ToList();
 
                 _lastUpdateTimeDamageTaken = player.DamageTaken.Max(m => m.Time);
-                return result;
+                return Normalize(result);
             }
         }
 
@@ -69,7 +69,7 @@ namespace GrimDamage.Statistics.Service {
             var player = _damageParsingService.GetEntity(playerId);
 
             if (player == null || player.DamageDealt.Count == 0) {
-                return new List<DamageEntryJson>();
+                return Normalize(new List<DamageEntryJson>());
             }
             else {
                 var result = player.DamageDealt
@@ -82,7 +82,7 @@ namespace GrimDamage.Statistics.Service {
                     .ToList();
 
                 _lastUpdateTimeDamageDealt = player.DamageDealt.Max(m => m.Time);
-                return result;
+                return Normalize(result);
             }
         }
     }
