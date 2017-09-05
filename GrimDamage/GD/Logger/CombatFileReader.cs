@@ -21,6 +21,21 @@ namespace GrimDamage.GD.Logger {
             _damageParsingService = damageParsingService;
         }
 
+        public static bool IsValid(string[] dataset) {
+            int _;
+            foreach (var line in dataset) {
+                string[] result = Regex.Split(line, @"^(\d+) ");
+                if (result.Length != 3)
+                    return false;
+
+
+                if (!int.TryParse(result[1], out _))
+                    return false;
+            }
+
+            return true;
+        }
+
         public void Next() {
             // Initialize
             if (_processedEvents == null) {

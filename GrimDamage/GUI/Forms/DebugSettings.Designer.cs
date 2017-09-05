@@ -27,6 +27,7 @@
             this.btnLoadLog = new System.Windows.Forms.Button();
             this.radioMockCombatListener = new System.Windows.Forms.RadioButton();
             this.radioLiveCombatListener = new System.Windows.Forms.RadioButton();
+            this.cbEnableInvestigativeLogging = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnStartLogging
@@ -74,11 +75,24 @@
             this.radioLiveCombatListener.UseVisualStyleBackColor = true;
             this.radioLiveCombatListener.CheckedChanged += new System.EventHandler(this.radioLiveCombatListener_CheckedChanged);
             // 
+            // cbEnableInvestigativeLogging
+            // 
+            this.cbEnableInvestigativeLogging.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbEnableInvestigativeLogging.AutoSize = true;
+            this.cbEnableInvestigativeLogging.Location = new System.Drawing.Point(12, 309);
+            this.cbEnableInvestigativeLogging.Name = "cbEnableInvestigativeLogging";
+            this.cbEnableInvestigativeLogging.Size = new System.Drawing.Size(193, 17);
+            this.cbEnableInvestigativeLogging.TabIndex = 4;
+            this.cbEnableInvestigativeLogging.Text = "Log unknown messages to console";
+            this.cbEnableInvestigativeLogging.UseVisualStyleBackColor = true;
+            this.cbEnableInvestigativeLogging.CheckedChanged += new System.EventHandler(this.cbEnableInvestigativeLogging_CheckedChanged);
+            // 
             // DebugSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(652, 338);
+            this.Controls.Add(this.cbEnableInvestigativeLogging);
             this.Controls.Add(this.radioLiveCombatListener);
             this.Controls.Add(this.radioMockCombatListener);
             this.Controls.Add(this.btnLoadLog);
@@ -98,5 +112,6 @@
         private System.Windows.Forms.Button btnLoadLog;
         private System.Windows.Forms.RadioButton radioMockCombatListener;
         private System.Windows.Forms.RadioButton radioLiveCombatListener;
+        private System.Windows.Forms.CheckBox cbEnableInvestigativeLogging;
     }
 }

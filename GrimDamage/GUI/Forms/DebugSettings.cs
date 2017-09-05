@@ -52,14 +52,20 @@ namespace GrimDamage.GUI.Forms {
 
 
             if (ofd.ShowDialog() == DialogResult.OK && File.Exists(ofd.FileName)) {
-                _combatFileReader = new CombatFileReader(
-                    _damageParsingService, 
-                    new List<string>(File.ReadAllLines(ofd.FileName))
-                );
-            }
+                var dataset = File.ReadAllLines(ofd.FileName);
+                if (CombatFileReader.IsValid(dataset)) {
+                    _combatFileReader = new CombatFileReader(
+                        _damageParsingService,
+                        new List<string>(dataset)
+                    );
 
-            if (_isMockCombat)
-                EnableTimer();
+                    if (_isMockCombat)
+                        EnableTimer();
+                }
+                else {
+                    MessageBox.Show("Invalid file format", "Error");
+                }
+            }
 
         }
 
@@ -91,6 +97,12 @@ namespace GrimDamage.GUI.Forms {
         private void DebugSettings_Load(object sender, EventArgs e) {
             this.Dock = DockStyle.Fill;
             radioLiveCombatListener.Checked = true;
+        }
+
+        private void cbEnableInvestigativeLogging_CheckedChanged(object sender, EventArgs e) {
+            if (cbEnableInvestigativeLogging.Checked)
+                MessageBox.Show(
+                    "Sorry, not yet available\n\nLook for the following line in MessageProcessorCore:\n(bt.Type == 45000)", "Sorry!");
         }
     }
 }

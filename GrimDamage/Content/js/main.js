@@ -25,8 +25,11 @@ function loadChart() {
                     text: 'Damage per second'
                 },
                 labels: {
-                    formatter: function() {
-                        return Math.round(this.value / 1000, 1) + 'k';
+                    formatter: function () {
+                        if (this.value > 10000)
+                            return Math.round(this.value / 1000) + 'k';
+                        else
+                            return Math.round(this.value / 1000, 1) + 'k';
                     }
                 }
             },

@@ -1,17 +1,29 @@
-﻿    ^bRacial Bonus Damage:  (0.000000)
+﻿Could these be useful?
+    ^bRacial Bonus Damage:  (0.000000)
     criticalStrike = 1.000000
 
 
+Unmapped / uncharted territory:
+* Get player name from ID [ingame name]
+* Get mob name from record string
+* Get player death from in-game
+* Get player heals from in-game [useful?]
+* Get player class form in-game? [for pets]
 
-
-
-
-nice to have:
-* show stats of enemies, off, def, etc..
-* records/skills/playerclass06/pets/winddevil_05.dbr
-    attackerName = records/skills/playerclass06/pets/winddevil_05.dbr
+TODO:
+* Map pets to players (ex: records/skills/playerclass06/pets/winddevil_05.dbr)
 * Detect death and automatically show what killed you
+* Is the dps correct? verify with dot etc (initial reports says yes, for lowbie toons)
+
+
+Nice to have:
+* show stats of enemies, off, def, etc..
 * How much dps from racial?
-* is the dps correct? verify with dot etc
-* in .js, if you 've gone X updates without doing any damage, might as well tag him as out-of-combat, and stop updating the graph
-* "war cry" reduction % to health does not register at all, should it?
+* In .js, if you 've gone X updates without doing any damage, might as well tag him as out-of-combat, and stop updating the graph
+* "War Cry" reduction % to health does not register at all, should it?
+* Finding a way to show defensive actions like absorbs and heals would be "nice to have"
+
+Graphs planned:
+* What killed me? (area / line graphs?)
+* My damage (aoe/total and single-target)
+* Comparison between players in MP ?
