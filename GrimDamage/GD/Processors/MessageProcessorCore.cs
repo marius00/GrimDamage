@@ -111,7 +111,7 @@ namespace GrimDamage.GD.Processors {
                 _damageParsingService.ApplyBlock(a, b, c);
             }
             else if (bt.Type == 45000) {
-                //Logger.Debug($"Unrecognized log: {IOHelper.GetNullString(bt.Data, 0)}");
+                Logger.Debug($"Unrecognized log: {IOHelper.GetNullString(bt.Data, 0)}");
             }
 
             else {

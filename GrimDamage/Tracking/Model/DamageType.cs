@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace GrimDamage.Tracking.Model {
     public enum DamageType {
         Physical,
+        Pierce,
         Lightning,
         Vitality,
         Aether,

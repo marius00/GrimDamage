@@ -46,6 +46,7 @@ namespace GrimDamage.Parser.Config {
         {
             { "Lightning", DamageType.Lightning },
             { "Physical", DamageType.Physical },
+            { "Pierce", DamageType.Pierce },
             { "Vitality", DamageType.Vitality },
             { "Chaos", DamageType.Chaos },
             { "Aether", DamageType.Aether },

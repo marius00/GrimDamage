@@ -1,8 +1,4 @@
-﻿Could these be useful?
-    ^bRacial Bonus Damage:  (0.000000)
-    criticalStrike = 1.000000
-
-
+﻿
 Unmapped / uncharted territory:
 * Get player name from ID [ingame name]
 * Get mob name from record string
@@ -27,3 +23,15 @@ Graphs planned:
 * What killed me? (area / line graphs?)
 * My damage (aoe/total and single-target)
 * Comparison between players in MP ?
+
+Rant:
+Could these be useful?
+^bRacial Bonus Damage:  (0.000000)
+criticalStrike = 1.000000
+
+What about these? Is dodge useful? Dodge doesn't contain a damage rating, but maybe some builds depends on it? (??)
+2017-09-05 20:39:43,654 [9] DEBUG GrimDamage.GD.Processors.MessageProcessorCore Unrecognized log:     PTH Missed Hit
+2017-09-05 20:39:43,654 [9] DEBUG GrimDamage.GD.Processors.MessageProcessorCore Unrecognized log:     ^Attacker Missed Attack
+
+What about this? It does not show which debuff, but we know "some debuff" has been applied:
+combatType = Debuff Attack
