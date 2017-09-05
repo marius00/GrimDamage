@@ -80,7 +80,7 @@ namespace GrimDamage.Parser.Service {
             _attackerName = name;
         }
         public void SetAttackerId(int id) {
-            if (!_names.ContainsKey(id)) {
+            if (!_names.ContainsKey(id) && _attackerName != null) {
                 _names[id] = new Entity {
                     Id = id,
                     Name = _attackerName,
@@ -96,7 +96,7 @@ namespace GrimDamage.Parser.Service {
         }
 
         public void SetDefenderId(int id) {
-            if (!_names.ContainsKey(id)) {
+            if (!_names.ContainsKey(id) && _defenderName != null) {
                 _names[id] = new Entity {
                     Id = id,
                     Name = _defenderName,

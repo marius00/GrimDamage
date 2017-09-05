@@ -23,11 +23,10 @@ namespace UnitTests.Parser {
                 "^y    Damage 59.653908 to Defender 0x34108 (Lightning)",
                 "^y    Damage 2.341711 to Defender 0x34108 (Vitality)",
                 "^y    Damage 12.937283 to Defender 0x34108 (Lightning)",
-                "^y    Damage 0.507852 to Defender 0x34108 (Vitality)"
+                "^y    Damage 0.507852 to Defender 0x34108 (Vitality)",
+                "^y    Damage 0,507852 to Defender 0x34108 (Vitality)"
             }) {
-                string pattern = EventMapping.PatternMap[EventType.DamageDealt];
-
-                var regex = new Regex(pattern, RegexOptions.Compiled);
+                var regex = EventMapping.RegexMap[EventType.DamageDealt];
                 var match = regex.Match(testData);
 
                 match.Success.Should().Be.True();

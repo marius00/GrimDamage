@@ -24,11 +24,16 @@
         /// </summary>
         private void InitializeComponent() {
             this.labelHookStatus = new System.Windows.Forms.Label();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnReadFile = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnShowDevtools = new System.Windows.Forms.Button();
             this.btnUpdateData = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.panelDebugView = new System.Windows.Forms.Panel();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelHookStatus
@@ -41,34 +46,14 @@
             this.labelHookStatus.TabIndex = 0;
             this.labelHookStatus.Text = "Hook not yet activated";
             // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(12, 42);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 1;
-            this.btnSave.Text = "Save Now";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btnReadFile
-            // 
-            this.btnReadFile.Location = new System.Drawing.Point(139, 42);
-            this.btnReadFile.Name = "btnReadFile";
-            this.btnReadFile.Size = new System.Drawing.Size(75, 23);
-            this.btnReadFile.TabIndex = 2;
-            this.btnReadFile.Text = "Read File";
-            this.btnReadFile.UseVisualStyleBackColor = true;
-            this.btnReadFile.Click += new System.EventHandler(this.btnReadFile_Click);
-            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Location = new System.Drawing.Point(28, 106);
+            this.panel1.Location = new System.Drawing.Point(6, 6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(905, 363);
+            this.panel1.Size = new System.Drawing.Size(921, 446);
             this.panel1.TabIndex = 3;
             // 
             // btnShowDevtools
@@ -92,20 +77,66 @@
             this.btnUpdateData.UseVisualStyleBackColor = true;
             this.btnUpdateData.Click += new System.EventHandler(this.btnUpdateData_Click);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(3, 71);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(941, 484);
+            this.tabControl1.TabIndex = 6;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.panel1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(933, 458);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Main";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.panelDebugView);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(933, 458);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Debug";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // panelDebugView
+            // 
+            this.panelDebugView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelDebugView.Location = new System.Drawing.Point(5, 7);
+            this.panelDebugView.Name = "panelDebugView";
+            this.panelDebugView.Size = new System.Drawing.Size(921, 446);
+            this.panelDebugView.TabIndex = 7;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(945, 481);
+            this.ClientSize = new System.Drawing.Size(945, 558);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnUpdateData);
             this.Controls.Add(this.btnShowDevtools);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.btnReadFile);
-            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.labelHookStatus);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -114,11 +145,13 @@
         #endregion
 
         private System.Windows.Forms.Label labelHookStatus;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnReadFile;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnShowDevtools;
         private System.Windows.Forms.Button btnUpdateData;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Panel panelDebugView;
     }
 }
 

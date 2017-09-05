@@ -12,7 +12,8 @@ namespace GrimDamage.Parser.Config {
 
         public static Dictionary<EventType, Regex> RegexMap = new Dictionary<EventType, Regex>()
         {
-            { EventType.DamageDealt, new Regex(@".*Damage (\d+\.\d+) to Defender 0x([A-Fa-f0-9]+) \(([A-Za-z]+)\)", RegexOptions.Compiled) },
+            //{ EventType.DamageDealt, new Regex(@".*Damage (\d+\.\d+) to Defender 0x([A-Fa-f0-9]+) \(([A-Za-z]+)\)", RegexOptions.Compiled) },
+            { EventType.DamageDealt, new Regex(@".*Damage (\d+[\.\,]\d+) to Defender 0x([A-Fa-f0-9]+) \(([A-Za-z]+)\)", RegexOptions.Compiled) },
             { EventType.LifeLeech, new Regex(@".*Life Leech return (\d+\.\d+) Life", RegexOptions.Compiled) },
             { EventType.SetAttackerName, new Regex(@"\s*attackerName = (.*)", RegexOptions.Compiled) },
             { EventType.SetAttackerId, new Regex(@"\s*attackerID = (\d+)", RegexOptions.Compiled) },
@@ -26,7 +27,7 @@ namespace GrimDamage.Parser.Config {
 
         public static Dictionary<EventType, string> PatternMap = new Dictionary<EventType, string>()
         {
-            { EventType.DamageDealt, @".*Damage (\d+\.\d+) to Defender 0x([A-Za-z0-9]+) \(([A-Za-z]+)\)" },
+            //{ EventType.DamageDealt, @".*Damage (\d+\\.\d+) to Defender 0x([A-Za-z0-9]+) \(([A-Za-z]+)\)" },
             { EventType.LifeLeech, @".*Life Leech return (\d+\.\d+) Life" },
             { EventType.SetAttackerName, @"\s*attackerName = (.*)" },
             { EventType.SetAttackerId, @"\s*attackerID = (\d+)" },

@@ -15,6 +15,7 @@ namespace GrimDamage.GUI.Browser {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(CefBrowserHandler));
         private ChromiumWebBrowser _browser;
 
+        public WebViewJsPojo JsPojo { get; private set; }
         public WebViewJsInteractor JsInteractor { get; private set; }
 
         public Control BrowserControl => _browser;
@@ -71,10 +72,11 @@ namespace GrimDamage.GUI.Browser {
 
         public void InitializeChromium(
             string startPage,
-            WebViewJsInteractor bindeable, 
+            WebViewJsPojo bindeable, 
             EventHandler<IsBrowserInitializedChangedEventArgs> browserIsBrowserInitializedChanged
             ) {
-            this.JsInteractor = bindeable;
+            this.JsPojo = bindeable;
+            this.JsInteractor = new WebViewJsInteractor(bindeable);
 
             try {
                 Logger.Info("Creating Chromium instance..");

@@ -10,6 +10,7 @@ using GrimDamage.Tracking.Model;
 namespace GrimDamage.Statistics.Service {
     public class StatisticsService {
         private DateTime _lastUpdateTimeDamageDealt = DateTime.UtcNow;
+        private DateTime _lastUpdateTimeDamageDealtSingleTarget = DateTime.UtcNow;
         private DateTime _lastUpdateTimeDamageTaken = DateTime.UtcNow;
         private readonly DamageParsingService _damageParsingService;
 
@@ -84,6 +85,35 @@ namespace GrimDamage.Statistics.Service {
                     .ToList();
 
                 _lastUpdateTimeDamageDealt = player.DamageDealt.Max(m => m.Time);
+                return Normalize(result);
+            }
+        }
+        
+        public List<DamageEntryJson> GetLatestDamageDealtToSingleTarget(int playerId) {
+            var player = _damageParsingService.GetEntity(playerId);
+
+            if (player == null || player.DamageDealt.Count == 0) {
+                return Normalize(new List<DamageEntryJson>());
+            }
+            else {
+                var result = player.DamageDealt
+                    .Where(dmg => dmg.Time > _lastUpdateTimeDamageDealtSingleTarget)
+                    .GroupBy(m => m.Target)
+                    .OrderByDescending(m => m.Sum(e => e.Amount))
+                    .FirstOrDefault()
+                    ?.GroupBy(m => m.Type)
+                    .Select(m => new DamageEntryJson {
+                        DamageType = m.Key.ToString(),
+                        Amount = m.Sum(s => s.Amount)
+                        }
+                    )
+                    .ToList();
+
+                _lastUpdateTimeDamageDealtSingleTarget = player.DamageDealt.Max(m => m.Time);
+
+                if (result == null)
+                    return Normalize(new List<DamageEntryJson>());
+
                 return Normalize(result);
             }
         }

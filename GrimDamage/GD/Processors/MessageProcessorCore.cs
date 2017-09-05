@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using EvilsoftCommons;
 using EvilsoftCommons.DllInjector;
+using GrimDamage.GD.Logger;
 using GrimDamage.Parser.Service;
 using log4net;
 using log4net.Repository.Hierarchy;
@@ -20,14 +21,15 @@ namespace GrimDamage.GD.Processors {
         private bool _isFirstMessage = true;
         private readonly Action<RegisterWindow.DataAndType> _registerWindowDelegate;
         private readonly DamageParsingService _damageParsingService;
-
+        private readonly CombatFileLogger _fileLogger;
 
         public delegate void HookActivationCallback(object sender, EventArgs e);
 
         public event HookActivationCallback OnHookActivation;
 
-        public MessageProcessorCore(DamageParsingService damageParsingService) {
+        public MessageProcessorCore(DamageParsingService damageParsingService, CombatFileLogger fileLogger) {
             _damageParsingService = damageParsingService;
+            _fileLogger = fileLogger;
 
             _registerWindowDelegate = CustomWndProc;
             _injectorCallbackDelegate = InjectorCallback;
@@ -37,8 +39,7 @@ namespace GrimDamage.GD.Processors {
 
 
         private void AddEvent(string s) {
-            //Logger.Debug(s);
-            //_events.Add(s);
+            _fileLogger.AddEvent(s);
         }
 
         private void CustomWndProc(RegisterWindow.DataAndType bt) {

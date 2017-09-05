@@ -11,15 +11,15 @@ using GrimDamage.GUI.Browser;
 
 namespace GrimDamage.GUI.Forms {
     public partial class WebView : Form {
-        private readonly CefBrowserHandler browser;
+        private readonly CefBrowserHandler _browser;
         public WebView(CefBrowserHandler browser) {
             InitializeComponent();
-            this.browser = browser;
+            this._browser = browser;
         }
 
         private void WebView_Load(object sender, EventArgs e) {
             this.Dock = DockStyle.Fill;
-            Controls.Add(browser.BrowserControl);
+            Controls.Add(_browser.BrowserControl);
         }
     }
 }

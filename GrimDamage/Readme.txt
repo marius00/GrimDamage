@@ -12,5 +12,6 @@ nice to have:
     attackerName = records/skills/playerclass06/pets/winddevil_05.dbr
 * Detect death and automatically show what killed you
 * How much dps from racial?
-** skip the dots on graph
-** insta update on graph
+* is the dps correct? verify with dot etc
+* in .js, if you 've gone X updates without doing any damage, might as well tag him as out-of-combat, and stop updating the graph
+* "war cry" reduction % to health does not register at all, should it?

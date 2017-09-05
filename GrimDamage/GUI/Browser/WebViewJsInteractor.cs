@@ -4,53 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GrimDamage.Statistics.dto;
-using GrimDamage.Tracking.Model;
 using Newtonsoft.Json;
 
 namespace GrimDamage.GUI.Browser {
     public class WebViewJsInteractor {
         private readonly JsonSerializerSettings _settings;
+        private readonly WebViewJsPojo _js;
 
-        public WebViewJsInteractor() {
+        public WebViewJsInteractor(WebViewJsPojo js) {
             _settings = new JsonSerializerSettings {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Culture = System.Globalization.CultureInfo.InvariantCulture,
                 ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
             };
+
+            _js = js;
         }
 
+
         public void SetDamageTaken(Dictionary<int, List<DamageEntryJson>> value) {
-            damageTakenJson = JsonConvert.SerializeObject(value, _settings);
+            _js.damageTakenJson = JsonConvert.SerializeObject(value, _settings);
         }
 
         public void SetDamageDealt(Dictionary<int, List<DamageEntryJson>> value) {
-            damageDealtJson = JsonConvert.SerializeObject(value, _settings);
+            _js.damageDealtJson = JsonConvert.SerializeObject(value, _settings);
         }
 
-        public void SetPlayers(List<PlayerJson> value)  {
-            playersJson = JsonConvert.SerializeObject(value, _settings);
+        public void SetDamageDealtToSingleTarget(Dictionary<int, List<DamageEntryJson>> value) {
+            _js.damageDealtToSingleTargetJson = JsonConvert.SerializeObject(value, _settings);
         }
 
-        
-        public event EventHandler OnRequestUpdate;
-
-
-
-        // FROM JS ONLY
-        // ReSharper disable once InconsistentNaming
-        // ReSharper disable once MemberCanBePrivate.Global
-        public string damageTakenJson { get; set; }
-
-        // ReSharper disable once InconsistentNaming
-        public string damageDealtJson { get; set; }
-
-        // ReSharper disable once InconsistentNaming
-        public string playersJson { get; set; }
-
-        public void requestUpdate() {
-            OnRequestUpdate?.Invoke(this, null);
+        public void SetPlayers(List<PlayerJson> value) {
+            _js.playersJson = JsonConvert.SerializeObject(value, _settings);
         }
-
 
     }
 }

@@ -31,8 +31,8 @@ namespace GrimDamage {
             }
 
             using (var browser = new CefBrowserHandler()) {
-                WebViewJsInteractor jsInteractor = new WebViewJsInteractor();
-                browser.InitializeChromium(url, jsInteractor, null);
+                WebViewJsPojo jsPojo = new WebViewJsPojo();
+                browser.InitializeChromium(url, jsPojo, null);
                 Application.Run(new Form1(browser));
             }
         }

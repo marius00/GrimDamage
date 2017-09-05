@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using EvilsoftCommons;
 using EvilsoftCommons.DllInjector;
+using GrimDamage.GD.Logger;
 using GrimDamage.GD.Processors;
 using GrimDamage.GUI.Browser;
 using GrimDamage.GUI.Forms;
@@ -29,14 +30,15 @@ namespace GrimDamage {
         private readonly DamageParsingService _damageParsingService = new DamageParsingService();
         private readonly CefBrowserHandler _browser;
         private readonly MessageProcessorCore _messageProcessorCore;
+        private readonly CombatFileLogger _combatFileLogger = new CombatFileLogger();
 
 
         public Form1(CefBrowserHandler browser) {
             InitializeComponent();
             this._browser = browser;
-            _messageProcessorCore = new MessageProcessorCore(_damageParsingService);
+            _messageProcessorCore = new MessageProcessorCore(_damageParsingService, _combatFileLogger);
             _statisticsService = new StatisticsService(_damageParsingService);
-            _browser.JsInteractor.OnRequestUpdate += btnUpdateData_Click;
+            _browser.JsPojo.OnRequestUpdate += btnUpdateData_Click;
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -44,10 +46,18 @@ namespace GrimDamage {
 
             this.Closing += Form1_Closing;
 
-            var webView = new WebView(_browser);
-            webView.TopLevel = false;
-            this.panel1.Controls.Add(webView);
-            webView.Show();
+            {
+                var webView = new WebView(_browser);
+                webView.TopLevel = false;
+                this.panel1.Controls.Add(webView);
+                webView.Show();
+            }
+            {
+                var debugView = new DebugSettings(_combatFileLogger, _damageParsingService);
+                debugView.TopLevel = false;
+                this.panelDebugView.Controls.Add(debugView);
+                debugView.Show();
+            }
 
             _messageProcessorCore.OnHookActivation += (_, __) => {
                 this.labelHookStatus.Text = "Hook activated";
@@ -55,31 +65,12 @@ namespace GrimDamage {
             };
         }
 
-        private void Save() {
-            //string filename = Path.Combine(GlobalSettings.LogPath, DateTime.UtcNow.ToFileTime().ToString() + ".txt");
-            //File.WriteAllLines(filename, _events);
-        }
 
         private void Form1_Closing(object sender, CancelEventArgs e) {
             _messageProcessorCore?.Dispose();
-
-            Save();
         }
 
 
-        private void btnSave_Click(object sender, EventArgs e) {
-            Save();
-        }
-
-        private void btnReadFile_Click(object sender, EventArgs e) {
-            ParsingService parser = new ParsingService();
-            string filename = Path.Combine(GlobalSettings.LogPath, "131482213376447842.txt");
-            string[] dataset = File.ReadAllLines(filename);
-            foreach (var entry in dataset) {
-                parser.Parse(entry);
-            }
-
-        }
 
         private void btnShowDevtools_Click(object sender, EventArgs e) {
             _browser.ShowDevTools();
@@ -89,14 +80,17 @@ namespace GrimDamage {
             var players = _statisticsService.GetPlayers();
 
             Dictionary<int, List<DamageEntryJson>> damageDealt = new Dictionary<int, List<DamageEntryJson>>();
+            Dictionary<int, List<DamageEntryJson>> damageDealtToSingleTarget = new Dictionary<int, List<DamageEntryJson>>();
             Dictionary<int, List<DamageEntryJson>> damageTaken = new Dictionary<int, List<DamageEntryJson>>();
             foreach (var player in players) {
                 damageDealt[player.Id] = _statisticsService.GetLatestDamageDealt(player.Id);
                 damageTaken[player.Id] = _statisticsService.GetLatestDamageTaken(player.Id);
+                damageDealtToSingleTarget[player.Id] = _statisticsService.GetLatestDamageDealtToSingleTarget(player.Id);
             }
 
             _browser.JsInteractor.SetPlayers(players);
             _browser.JsInteractor.SetDamageDealt(damageDealt);
+            _browser.JsInteractor.SetDamageDealtToSingleTarget(damageDealtToSingleTarget);
             _browser.JsInteractor.SetDamageTaken(damageTaken);
 
             _browser.NotifyUpdate();
