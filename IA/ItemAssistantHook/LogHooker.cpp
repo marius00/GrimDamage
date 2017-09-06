@@ -1,18 +1,16 @@
 #include "stdafx.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "MessageType.h"
 #include "LogHooker.h"
 #include "Globals.h"
 
 HANDLE LoggerHook::m_hEvent;
 DataQueue* LoggerHook::m_dataQueue;
 LoggerHook::OriginalMethodPtr LoggerHook::originalMethod;
-MessageType LoggerHook::m_message;
 
 void LoggerHook::EnableHook() {
 	// void GAME::Engine::Log(enum GAME::LogPriority,unsigned int,char const *,...) // most viable
-	HookEngine("?Log@Engine@GAME@@UBAXW4LogPriority@2@IPBDZZ", HookedMethod, m_dataQueue, m_hEvent, Type_LogEvent);
+	HookEngine("?Log@Engine@GAME@@UBAXW4LogPriority@2@IPBDZZ", HookedMethod, m_dataQueue, m_hEvent, 12345);
 
 	// void GAME::Engine::Log(enum GAME::LogPriority,char const *,...)
 	//HookEngine("?Log@Engine@GAME@@UBAXW4LogPriority@2@PBDZZ", HookedMethod, m_dataQueue, m_hEvent, Type_LogEvent);
@@ -21,7 +19,6 @@ void LoggerHook::EnableHook() {
 LoggerHook::LoggerHook(DataQueue* dataQueue, HANDLE hEvent) {
 	m_dataQueue = dataQueue;
 	m_hEvent = hEvent;
-	m_message = Type_LogEvent;
 }
 
 LoggerHook::LoggerHook() {

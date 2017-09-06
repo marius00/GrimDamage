@@ -2,9 +2,9 @@
 #include <set>
 #include <stdio.h>
 #include <stdlib.h>
-#include "MessageType.h"
 #include <detours.h>
 #include "HookWalkTo.h"
+#include "Globals.h"
 
 HANDLE HookWalkTo::m_hEvent;
 DataQueue* HookWalkTo::m_dataQueue;

@@ -1,10 +1,9 @@
 #include "stdafx.h"
-#include <set>
 #include <stdio.h>
 #include <stdlib.h>
-#include "MessageType.h"
 #include <detours.h>
 #include "ControllerPlayerStateIdleRequestInteractableAction.h"
+#include "Globals.h"
 
 HANDLE ControllerPlayerStateIdleRequestInteractableAction::m_hEvent;
 DataQueue* ControllerPlayerStateIdleRequestInteractableAction::m_dataQueue;
@@ -36,7 +35,7 @@ void ControllerPlayerStateIdleRequestInteractableAction::DisableHook() {
 
 void* __fastcall ControllerPlayerStateIdleRequestInteractableAction::HookedMethod(void* This, void* notUsed, bool a, bool b, Vec3f const & xyz, void* actor) {
 
-	const size_t bufflen = sizeof(Vec3f) + sizeof(bool)*2;
+	const size_t bufflen = sizeof(Vec3f) + sizeof(bool) * 2;
 	char buffer[bufflen];
 
 	size_t pos = 0;
@@ -44,15 +43,15 @@ void* __fastcall ControllerPlayerStateIdleRequestInteractableAction::HookedMetho
 	memcpy(buffer + pos, &xyz, sizeof(Vec3f));
 	pos += sizeof(Vec3f);
 
-	memcpy(buffer + pos, &a, sizeof(bool)*1);
+	memcpy(buffer + pos, &a, sizeof(bool) * 1);
 	pos += sizeof(bool);
 
-	memcpy(buffer + pos, &b, sizeof(bool)*1);
+	memcpy(buffer + pos, &b, sizeof(bool) * 1);
 	pos += sizeof(bool);
 
 	DataItemPtr item(new DataItem(TYPE_ControllerPlayerStateIdleRequestInteractableAction, bufflen, (char*)buffer));
 	m_dataQueue->push(item);
-	SetEvent(m_hEvent);	
+	SetEvent(m_hEvent);
 
 	void* v = originalMethod(This, a, b, xyz, actor);
 	return v;

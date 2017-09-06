@@ -1,10 +1,10 @@
+//	HookGame("?RequestMoveAction@ControllerPlayerStateMoveTo@GAME@@MAEX_N0ABVWorldVec3@2@@Z", HookedMethod, m_dataQueue, m_hEvent, TYPE_ControllerPlayerStateMoveToRequestMoveAction);
 #include "stdafx.h"
-#include <set>
 #include <stdio.h>
 #include <stdlib.h>
-#include "MessageType.h"
 #include <detours.h>
 #include "ControllerPlayerStateMoveToRequestMoveAction.h"
+#include "Globals.h"
 
 HANDLE ControllerPlayerStateMoveToRequestMoveAction::m_hEvent;
 DataQueue* ControllerPlayerStateMoveToRequestMoveAction::m_dataQueue;
@@ -16,6 +16,8 @@ void ControllerPlayerStateMoveToRequestMoveAction::EnableHook() {
 	DetourUpdateThread(GetCurrentThread());
 	DetourAttach((PVOID*)&originalMethod, HookedMethod);
 	DetourTransactionCommit();
+
+	HookGame("?RequestMoveAction@ControllerPlayerStateMoveTo@GAME@@MAEX_N0ABVWorldVec3@2@@Z", HookedMethod, m_dataQueue, m_hEvent, TYPE_ControllerPlayerStateMoveToRequestMoveAction);
 }
 
 ControllerPlayerStateMoveToRequestMoveAction::ControllerPlayerStateMoveToRequestMoveAction(DataQueue* dataQueue, HANDLE hEvent) {
@@ -36,7 +38,7 @@ void ControllerPlayerStateMoveToRequestMoveAction::DisableHook() {
 
 void* __fastcall ControllerPlayerStateMoveToRequestMoveAction::HookedMethod(void* This, void* notUsed, bool a, bool b, Vec3f const & xyz) {
 
-	const size_t bufflen = sizeof(Vec3f) + sizeof(bool)*2;
+	const size_t bufflen = sizeof(Vec3f) + sizeof(bool) * 2;
 	char buffer[bufflen];
 
 	size_t pos = 0;
@@ -44,15 +46,15 @@ void* __fastcall ControllerPlayerStateMoveToRequestMoveAction::HookedMethod(void
 	memcpy(buffer + pos, &xyz, sizeof(Vec3f));
 	pos += sizeof(Vec3f);
 
-	memcpy(buffer + pos, &a, sizeof(bool)*1);
+	memcpy(buffer + pos, &a, sizeof(bool) * 1);
 	pos += sizeof(bool);
 
-	memcpy(buffer + pos, &b, sizeof(bool)*1);
+	memcpy(buffer + pos, &b, sizeof(bool) * 1);
 	pos += sizeof(bool);
 
 	DataItemPtr item(new DataItem(TYPE_ControllerPlayerStateMoveToRequestMoveAction, bufflen, (char*)buffer));
 	m_dataQueue->push(item);
-	SetEvent(m_hEvent);	
+	SetEvent(m_hEvent);
 
 	void* v = originalMethod(This, a, b, xyz);
 	return v;

@@ -16,6 +16,9 @@
     <Filter Include="HookedMethods">
       <UniqueIdentifier>{cf078cd9-dce6-4c25-8dab-94cd799c91e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HookedMethods\PositionTrackers">
+      <UniqueIdentifier>{f594c772-64a8-4d22-86da-4d9fc4f201dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\DataQueue.cpp">
@@ -38,6 +41,21 @@
     </ClCompile>
     <ClCompile Include="..\LogHooker.cpp">
       <Filter>HookedMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ControllerPlayerStateMoveToRequestNpcAction.cpp">
+      <Filter>HookedMethods\PositionTrackers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ControllerPlayerStateIdleRequestInteractableAction.cpp">
+      <Filter>HookedMethods\PositionTrackers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ControllerPlayerStateIdleRequestNpcAction.cpp">
+      <Filter>HookedMethods\PositionTrackers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ControllerPlayerStateMoveToRequestMoveAction.cpp">
+      <Filter>HookedMethods\PositionTrackers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HookWalkTo.cpp">
+      <Filter>HookedMethods\PositionTrackers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +82,21 @@
     </ClInclude>
     <ClInclude Include="..\LogHooker.h">
       <Filter>HookedMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ControllerPlayerStateMoveToRequestNpcAction.h">
+      <Filter>HookedMethods\PositionTrackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ControllerPlayerStateIdleRequestInteractableAction.h">
+      <Filter>HookedMethods\PositionTrackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ControllerPlayerStateIdleRequestNpcAction.h">
+      <Filter>HookedMethods\PositionTrackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ControllerPlayerStateMoveToRequestMoveAction.h">
+      <Filter>HookedMethods\PositionTrackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HookWalkTo.h">
+      <Filter>HookedMethods\PositionTrackers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

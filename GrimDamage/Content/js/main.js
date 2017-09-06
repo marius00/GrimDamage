@@ -9,7 +9,7 @@ function loadChart() {
                 text: 'Damage dealt'
             },
             subtitle: {
-                text: 'Lacking stash space? <a href="http://grimdawn.dreamcrash.org/ia">Try item assistant</a>'
+                text: 'Suggestions? Issues? https://discord.gg/PJ87Ewa'
             },
             xAxis: {
                 allowDecimals: false,

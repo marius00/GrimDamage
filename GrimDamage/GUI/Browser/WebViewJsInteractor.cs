@@ -22,9 +22,14 @@ namespace GrimDamage.GUI.Browser {
         }
 
 
+        public void SetPlayerLocation(string location) {
+            _js.playerLocationName = location;
+        }
+
         public void SetDamageTaken(Dictionary<int, List<DamageEntryJson>> value) {
             _js.damageTakenJson = JsonConvert.SerializeObject(value, _settings);
         }
+
 
         public void SetDamageDealt(Dictionary<int, List<DamageEntryJson>> value) {
             _js.damageDealtJson = JsonConvert.SerializeObject(value, _settings);

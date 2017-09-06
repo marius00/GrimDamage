@@ -7,9 +7,13 @@
 #include <set>
 #include <boost/thread.hpp>
 #include "DataQueue.h"
-#include "MessageType.h"
 #include "Globals.h"
 #include "LogHooker.h"
+#include "ControllerPlayerStateMoveToRequestNpcAction.h"
+#include "ControllerPlayerStateMoveToRequestMoveAction.h"
+#include "HookWalkTo.h"
+#include "ControllerPlayerStateIdleRequestNpcAction.h"
+#include "ControllerPlayerStateIdleRequestInteractableAction.h"
 
 
 #pragma region Variables
@@ -99,12 +103,6 @@ void StartWorkerThread() {
 	unsigned int pid;
 	//g_thread = (HANDLE)_beginthread(WorkerThreadMethod,0,0);
 	g_thread = (HANDLE)_beginthreadex(NULL, 0, &WorkerThreadMethodWrap, NULL, 0, &pid);
-	
-
-	int offset = FindOffset();
-	DataItemPtr item(new DataItem(TYPE_REPORT_WORKER_THREAD_LAUNCHED, sizeof(offset), (char*)&offset));
-	g_dataQueue.push(item);
-	SetEvent(g_hEvent);	
 }
 
 
@@ -126,6 +124,15 @@ std::vector<BaseMethodHook*> hooks;
 int ProcessAttach(HINSTANCE _hModule) {
 	g_hEvent = CreateEvent(NULL,FALSE,FALSE,"IA_Worker");
 
+	//hooks.push_back(new ControllerPlayerStateIdleRequestInteractableAction(&g_dataQueue, g_hEvent));
+	/*
+	hooks.push_back(new ControllerPlayerStateIdleRequestNpcAction(&g_dataQueue, g_hEvent));
+	hooks.push_back(new HookWalkTo(&g_dataQueue, g_hEvent));
+	hooks.push_back(new ControllerPlayerStateMoveToRequestNpcAction(&g_dataQueue, g_hEvent));
+	*/
+	hooks.push_back(new ControllerPlayerStateMoveToRequestMoveAction(&g_dataQueue, g_hEvent));
+
+	hooks.push_back(new HookWalkTo(&g_dataQueue, g_hEvent));
 	hooks.push_back(new LoggerHook(&g_dataQueue, g_hEvent));
 	
 	
@@ -167,36 +174,6 @@ int ProcessDetach( HINSTANCE _hModule ) {
     return TRUE;
 }
 
-
-int FindOffset() {
-	const int RETN = 0xC2;
-	const int LEA = 0x8D;
-	const int JNZ = 0x75;
-
-	const size_t scanRange = 100;
-	int addressToRead = (int)GetProcAddress(::GetModuleHandle("Game.dll"), "?QuickDropInTransfer@CursorHandlerItemMove@GAME@@UAE_NI@Z");
-	byte newData[scanRange] = { 0 };
-	HANDLE hProcess = GetCurrentProcess();
-	SIZE_T bytesRead = 0;
-	ReadProcessMemory(hProcess, (void*)addressToRead, newData, scanRange, &bytesRead);
-	for (unsigned int i = 1; i < bytesRead - 5; i++) {
-		if (newData[i] == RETN)
-			return 0;
-
-		// LEA Register+
-		if (newData[i] == JNZ) {
-			int* ptr = (int*)&newData[i];
-
-			byte newData[2]{ 0x90, 0x90 };
-			HANDLE hProcess = GetCurrentProcess();
-			WriteProcessMemory(hProcess, (void*)(addressToRead + i), newData, 2, NULL);
-
-			return *ptr;
-		}
-	}
-
-	return 0;
-}
 
 BOOL APIENTRY DllMain(HINSTANCE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
     switch (ul_reason_for_call) {

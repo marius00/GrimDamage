@@ -16,7 +16,7 @@ private:
 	static HANDLE m_hEvent;
 	static OriginalMethodPtr originalMethod;
 	static DataQueue* m_dataQueue;
-	static MessageType m_message;
+	static int m_message;
 
 	static void __cdecl HookedMethod(
 		void* This, 

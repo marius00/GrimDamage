@@ -30,15 +30,21 @@ namespace GrimDamage {
         private readonly DamageParsingService _damageParsingService = new DamageParsingService();
         private readonly CefBrowserHandler _browser;
         private readonly MessageProcessorCore _messageProcessorCore;
+        private readonly PositionTrackerService _positionTrackerService = new PositionTrackerService();
         private readonly CombatFileLogger _combatFileLogger = new CombatFileLogger();
 
 
         public Form1(CefBrowserHandler browser) {
             InitializeComponent();
             this._browser = browser;
-            _messageProcessorCore = new MessageProcessorCore(_damageParsingService, _combatFileLogger);
+            _messageProcessorCore = new MessageProcessorCore(_damageParsingService, _combatFileLogger, _positionTrackerService);
             _statisticsService = new StatisticsService(_damageParsingService);
             _browser.JsPojo.OnRequestUpdate += btnUpdateData_Click;
+            _browser.JsPojo.OnSuggestLocationName += JsPojoOnOnSuggestLocationName;
+        }
+
+        private void JsPojoOnOnSuggestLocationName(object sender, EventArgs eventArgs) {
+            // TODO:
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -92,6 +98,7 @@ namespace GrimDamage {
             _browser.JsInteractor.SetDamageDealt(damageDealt);
             _browser.JsInteractor.SetDamageDealtToSingleTarget(damageDealtToSingleTarget);
             _browser.JsInteractor.SetDamageTaken(damageTaken);
+            _browser.JsInteractor.SetPlayerLocation(_positionTrackerService.GetPlayerLocation());
 
             _browser.NotifyUpdate();
         }

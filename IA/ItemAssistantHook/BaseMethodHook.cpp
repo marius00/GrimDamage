@@ -1,7 +1,7 @@
 
 #include "BaseMethodHook.h"
-#include "MessageType.h"
 #include <detours.h>
+#include "Globals.h"
 
 BaseMethodHook::BaseMethodHook() {}
 BaseMethodHook::BaseMethodHook(DataQueue* dataQueue, HANDLE hEvent) {}

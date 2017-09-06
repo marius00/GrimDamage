@@ -23,6 +23,14 @@ struct PointerHelper {
 };
 
 
-int FindOffset();
 int CopyGDString(char* srcObj, char* buffer, size_t bufsize);
 PointerHelper readOffset(void* ptr);
+
+#define TYPE_WALKTO 1000
+#define TYPE_ControllerPlayerStateIdleRequestNpcAction 1000
+#define TYPE_ControllerPlayerStateIdleRequestInteractableAction 1000
+#define TYPE_ControllerPlayerStateMoveToRequestMoveAction 1000
+#define TYPE_ControllerPlayerStateMoveToRequestNpcAction 1000
+#define TYPE_ControllerPlayerStateIdleRequestMoveAction 1000
+#define TYPE_ERROR_HOOKING_GENERIC 1
+#define TYPE_HookUnload 3

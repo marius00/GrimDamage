@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GrimDamage.GUI.Browser.dto;
 using GrimDamage.Statistics.dto;
 using GrimDamage.Tracking.Model;
 using Newtonsoft.Json;
@@ -10,7 +11,10 @@ using Newtonsoft.Json;
 namespace GrimDamage.GUI.Browser {
     public class WebViewJsPojo {
         public event EventHandler OnRequestUpdate;
+        public event EventHandler OnSuggestLocationName;
 
+
+        public string playerLocationName { get; set; }
         // FROM JS ONLY
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once MemberCanBePrivate.Global
@@ -26,6 +30,12 @@ namespace GrimDamage.GUI.Browser {
 
         public void requestUpdate() {
             OnRequestUpdate?.Invoke(this, null);
+        }
+
+        public void suggestLocationName(string name) {
+            OnSuggestLocationName?.Invoke(this, new SuggestLocationNameArgument() {
+                Suggestion = name
+            });
         }
 
 

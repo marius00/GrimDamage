@@ -145,19 +145,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\BaseMethodHook.cpp" />
+    <ClCompile Include="..\ControllerPlayerStateIdleRequestInteractableAction.cpp" />
+    <ClCompile Include="..\ControllerPlayerStateIdleRequestNpcAction.cpp" />
+    <ClCompile Include="..\ControllerPlayerStateMoveToRequestMoveAction.cpp" />
+    <ClCompile Include="..\ControllerPlayerStateMoveToRequestNpcAction.cpp" />
     <ClCompile Include="..\DataQueue.cpp" />
     <ClCompile Include="..\dllmain.cpp" />
     <ClCompile Include="..\Globals.cpp" />
     <ClCompile Include="..\HookLog.cpp" />
+    <ClCompile Include="..\HookWalkTo.cpp" />
     <ClCompile Include="..\LogHooker.cpp" />
     <ClCompile Include="..\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\BaseMethodHook.h" />
+    <ClInclude Include="..\ControllerPlayerStateIdleRequestInteractableAction.h" />
+    <ClInclude Include="..\ControllerPlayerStateIdleRequestNpcAction.h" />
+    <ClInclude Include="..\ControllerPlayerStateMoveToRequestMoveAction.h" />
+    <ClInclude Include="..\ControllerPlayerStateMoveToRequestNpcAction.h" />
     <ClInclude Include="..\DataQueue.h" />
     <ClInclude Include="..\dllmain.h" />
     <ClInclude Include="..\Globals.h" />
     <ClInclude Include="..\HookLog.h" />
+    <ClInclude Include="..\HookWalkTo.h" />
     <ClInclude Include="..\LogHooker.h" />
     <ClInclude Include="..\stdafx.h" />
     <ClInclude Include="resource.h" />

@@ -1,10 +1,15 @@
-﻿
+﻿Discord:
+	https://discord.gg/PJ87Ewa
+	Will be used for beta testers, feature suggestions etc.
+	Don't intend to share it widely on the forum until its fleshed out
+
 Unmapped / uncharted territory:
 * Get player name from ID [ingame name]
 * Get mob name from record string
 * Get player death from in-game
 * Get player heals from in-game [useful?]
 * Get player class form in-game? [for pets]
+
 
 TODO:
 * Map pets to players (ex: records/skills/playerclass06/pets/winddevil_05.dbr)
@@ -18,11 +23,13 @@ Nice to have:
 * In .js, if you 've gone X updates without doing any damage, might as well tag him as out-of-combat, and stop updating the graph
 * "War Cry" reduction % to health does not register at all, should it?
 * Finding a way to show defensive actions like absorbs and heals would be "nice to have"
+* Showing which zone the player enters / leaves  ( https://www.highcharts.com/demo/combo-timeline )
 
 Graphs planned:
 * What killed me? (area / line graphs?)
 * My damage (aoe/total and single-target)
 * Comparison between players in MP ?
+
 
 Rant:
 Could these be useful?
