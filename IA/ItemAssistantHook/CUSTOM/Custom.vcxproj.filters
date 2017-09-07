@@ -57,6 +57,15 @@
     <ClCompile Include="..\HookWalkTo.cpp">
       <Filter>HookedMethods\PositionTrackers</Filter>
     </ClCompile>
+    <ClCompile Include="..\PauseGameTime.cpp">
+      <Filter>HookedMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UnpauseGameTime.cpp">
+      <Filter>HookedMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DetectPlayerId.cpp">
+      <Filter>HookedMethods</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DataQueue.h">
@@ -97,6 +106,15 @@
     </ClInclude>
     <ClInclude Include="..\HookWalkTo.h">
       <Filter>HookedMethods\PositionTrackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PauseGameTime.h">
+      <Filter>HookedMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UnpauseGameTime.h">
+      <Filter>HookedMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DetectPlayerId.h">
+      <Filter>HookedMethods</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

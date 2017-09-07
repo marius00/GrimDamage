@@ -18,9 +18,18 @@ namespace GrimDamage.Statistics.Service {
             _damageParsingService = damageParsingService;
         }
 
-        public List<PlayerJson> GetPlayers() {
-            return _damageParsingService.Values.Where(entity => entity.IsPlayer)
-                .Select(m => new PlayerJson {
+        public List<EntityJson> GetPlayers() {
+            return _damageParsingService.Values.Where(entity => entity.Type == EntityType.Player)
+                .Select(m => new EntityJson {
+                    Id = m.Id,
+                    Name = m.Name
+                })
+                .ToList();
+        }
+
+        public List<EntityJson> GetPets() {
+            return _damageParsingService.Values.Where(entity => entity.Type == EntityType.Pet)
+                .Select(m => new EntityJson {
                     Id = m.Id,
                     Name = m.Name
                 })

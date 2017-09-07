@@ -14,6 +14,8 @@ namespace GrimDamage.GUI.Browser {
         public event EventHandler OnSuggestLocationName;
 
 
+        public string stateChangesJson { get; set; }
+
         public string playerLocationName { get; set; }
         // FROM JS ONLY
         // ReSharper disable once InconsistentNaming
@@ -27,6 +29,8 @@ namespace GrimDamage.GUI.Browser {
 
         // ReSharper disable once InconsistentNaming
         public string playersJson { get; set; }
+
+        public string petsJson { get; set; }
 
         public void requestUpdate() {
             OnRequestUpdate?.Invoke(this, null);

@@ -13,6 +13,8 @@ namespace GrimDamage.Parser.Service {
     public class DamageParsingService {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(DamageParsingService));
         private const string PlayerPattern = "/pc/";
+        private const string PetPattern0 = @"/playerclass";
+        private const string PetPattern1 = @"/pets/";
         private readonly int _nameCacheDuration = 30;
         private string _defenderName;
         private string _attackerName;
@@ -84,7 +86,7 @@ namespace GrimDamage.Parser.Service {
                 _names[id] = new Entity {
                     Id = id,
                     Name = _attackerName,
-                    IsPlayer = _attackerName.Contains(PlayerPattern)
+                    Type = Classify(_attackerName)
                 };
             }
 
@@ -100,7 +102,7 @@ namespace GrimDamage.Parser.Service {
                 _names[id] = new Entity {
                     Id = id,
                     Name = _defenderName,
-                    IsPlayer = _defenderName.Contains(PlayerPattern)
+                    Type = Classify(_defenderName)
                 };
             }
         }
@@ -129,6 +131,18 @@ namespace GrimDamage.Parser.Service {
             else {
                 Logger.Warn($"Unknown damage type \"{type}\"");
                 return DamageType.Unknown;
+            }
+        }
+
+        private EntityType Classify(string record) {
+            if (record.Contains(PlayerPattern)) {
+                return EntityType.Player;
+            }
+            else if (record.Contains(PetPattern0) && record.Contains(PetPattern1)) {
+                return EntityType.Pet;
+            }
+            else { 
+                return EntityType.Monster;
             }
         }
     }

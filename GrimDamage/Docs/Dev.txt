@@ -1,0 +1,15 @@
+﻿
+select s.record_name, t.name from databaseitemstat s, itemtag t
+where t.tag = s.val2
+and s.stat_name = 'description'
+and record_name like '%playerclass%/pets/%'
+
+This gets me the pets (OBS: Not players!)
+
+
+select s.record_name, t.name from databaseitemstat s, itemtag t
+where t.tag = s.val2
+and s.stat_name = 'description'
+and record_name like '%records/creatures/%'
+
+This should get monsters and players, but not parsed into IA

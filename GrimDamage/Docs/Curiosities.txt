@@ -20,7 +20,6 @@ void GAME::ControllerPlayerStateDying::OnBegin(void)
 unsigned short const * GAME::Player::GetPlayerName(void)
 void GAME::Player::PostPetSpawn(class GAME::WorldVec3 const &,unsigned int,unsigned int,unsigned int)
 
-
 ::Player::
 ::ControllerPet::
 CharAttributeStore_SkillPenalty

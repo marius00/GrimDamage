@@ -14,6 +14,9 @@
 #include "HookWalkTo.h"
 #include "ControllerPlayerStateIdleRequestNpcAction.h"
 #include "ControllerPlayerStateIdleRequestInteractableAction.h"
+#include "PauseGameTime.h"
+#include "UnpauseGameTime.h"
+#include "DetectPlayerId.h"
 
 
 #pragma region Variables
@@ -124,16 +127,16 @@ std::vector<BaseMethodHook*> hooks;
 int ProcessAttach(HINSTANCE _hModule) {
 	g_hEvent = CreateEvent(NULL,FALSE,FALSE,"IA_Worker");
 
-	//hooks.push_back(new ControllerPlayerStateIdleRequestInteractableAction(&g_dataQueue, g_hEvent));
-	/*
+	hooks.push_back(new ControllerPlayerStateIdleRequestInteractableAction(&g_dataQueue, g_hEvent));
 	hooks.push_back(new ControllerPlayerStateIdleRequestNpcAction(&g_dataQueue, g_hEvent));
-	hooks.push_back(new HookWalkTo(&g_dataQueue, g_hEvent));
 	hooks.push_back(new ControllerPlayerStateMoveToRequestNpcAction(&g_dataQueue, g_hEvent));
-	*/
 	hooks.push_back(new ControllerPlayerStateMoveToRequestMoveAction(&g_dataQueue, g_hEvent));
-
 	hooks.push_back(new HookWalkTo(&g_dataQueue, g_hEvent));
+
+	hooks.push_back(new PauseGameTime(&g_dataQueue, g_hEvent));
+	hooks.push_back(new UnpauseGameTime(&g_dataQueue, g_hEvent));
 	hooks.push_back(new LoggerHook(&g_dataQueue, g_hEvent));
+	hooks.push_back(new DetectPlayerId(&g_dataQueue, g_hEvent));
 	
 	
 	for (unsigned int i = 0; i < hooks.size(); i++) {

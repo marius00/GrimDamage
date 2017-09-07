@@ -28,10 +28,16 @@ namespace GrimDamage.GD.Processors {
 
         public event HookActivationCallback OnHookActivation;
 
-        public MessageProcessorCore(DamageParsingService damageParsingService, CombatFileLogger fileLogger, PositionTrackerService positionTrackerService) {
+        public MessageProcessorCore(
+            DamageParsingService damageParsingService, 
+            CombatFileLogger fileLogger, 
+            PositionTrackerService positionTrackerService,
+            GeneralStateService generalStateService
+        ) {
             _processors = new List<IMessageProcessor> {
                 new GdLogMessageProcessor(fileLogger, damageParsingService),
-                new PlayerPositionTrackerProcessor(positionTrackerService)
+                new PlayerPositionTrackerProcessor(positionTrackerService),
+                new GDPauseGameProcessor(generalStateService)
             };
 
             _registerWindowDelegate = CustomWndProc;
@@ -54,8 +60,13 @@ namespace GrimDamage.GD.Processors {
                 if (processor.Process(type, bt.Data))
                     return;
             }
-            
-            Logger.Warn($"Got a message of type {bt.Type}");
+
+            if (type == MessageType.PlayerIdDetected) {
+                Logger.Debug($"Player created with ID {IOHelper.GetInt(bt.Data, 0)}");
+            }
+            else {
+                Logger.Warn($"Got a message of type {bt.Type}");
+            }
         }
 
         private void InjectorCallback(object sender, ProgressChangedEventArgs e) {

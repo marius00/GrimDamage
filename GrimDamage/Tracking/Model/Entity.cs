@@ -16,7 +16,8 @@ namespace GrimDamage.Tracking.Model {
 
         public string Name { get; set; }
 
-        public bool IsPlayer { get; set; }
+        public EntityType Type { get; set; }
+        public bool IsPet { get; set; }
         public ConcurrentBag<DamageEntry> DamageDealt { get; }
         public ConcurrentBag<DamageEntry> DamageTaken { get; }
 

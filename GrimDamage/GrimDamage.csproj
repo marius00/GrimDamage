@@ -67,6 +67,7 @@
     <Compile Include="GD\Logger\CombatFileLogger.cs" />
     <Compile Include="GD\Logger\CombatFileReader.cs" />
     <Compile Include="GD\Processors\GDLogMessageProcessor.cs" />
+    <Compile Include="GD\Processors\GDPauseGameProcessor.cs" />
     <Compile Include="GD\Processors\IMessageProcessor.cs" />
     <Compile Include="GD\Processors\MessageProcessorCore.cs" />
     <Compile Include="GD\Processors\PlayerPositionTrackerProcessor.cs" />
@@ -89,13 +90,15 @@
     <Compile Include="IOHelper.cs" />
     <Compile Include="Parser\Config\EventMapping.cs" />
     <Compile Include="Parser\Model\EventType.cs" />
+    <Compile Include="Parser\Model\GrimState.cs" />
     <Compile Include="Parser\Service\DamageParsingService.cs" />
+    <Compile Include="Parser\Service\GeneralStateService.cs" />
     <Compile Include="Parser\Service\ParsingService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
     <Compile Include="Statistics\dto\DamageEntryJson.cs" />
-    <Compile Include="Statistics\dto\PlayerJson.cs" />
+    <Compile Include="Statistics\dto\EntityJson.cs" />
     <Compile Include="Statistics\model\PlayerPosition.cs" />
     <Compile Include="Statistics\model\RecognizedPosition.cs" />
     <Compile Include="Statistics\Service\PositionTrackerService.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="Tracking\Model\DamageEntry.cs" />
     <Compile Include="Tracking\Model\DamageType.cs" />
     <Compile Include="Tracking\Model\Entity.cs" />
+    <Compile Include="Tracking\Model\EntityType.cs" />
     <Compile Include="Utility\Timestamp.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -160,6 +164,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Docs\Curiosities.txt" />
+    <Content Include="Docs\Dev.txt" />
     <Content Include="Docs\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

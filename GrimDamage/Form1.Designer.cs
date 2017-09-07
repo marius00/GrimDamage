@@ -31,6 +31,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panelDebugView = new System.Windows.Forms.Panel();
+            this.linkDiscord = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -69,6 +70,7 @@
             // 
             // btnUpdateData
             // 
+            this.btnUpdateData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUpdateData.Location = new System.Drawing.Point(759, 12);
             this.btnUpdateData.Name = "btnUpdateData";
             this.btnUpdateData.Size = new System.Drawing.Size(93, 23);
@@ -122,11 +124,24 @@
             this.panelDebugView.Size = new System.Drawing.Size(921, 446);
             this.panelDebugView.TabIndex = 7;
             // 
+            // linkDiscord
+            // 
+            this.linkDiscord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkDiscord.AutoSize = true;
+            this.linkDiscord.Location = new System.Drawing.Point(835, 38);
+            this.linkDiscord.Name = "linkDiscord";
+            this.linkDiscord.Size = new System.Drawing.Size(98, 13);
+            this.linkDiscord.TabIndex = 7;
+            this.linkDiscord.TabStop = true;
+            this.linkDiscord.Text = "Discuss on Discord";
+            this.linkDiscord.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkDiscord_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(945, 558);
+            this.Controls.Add(this.linkDiscord);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnUpdateData);
             this.Controls.Add(this.btnShowDevtools);
@@ -152,6 +167,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panelDebugView;
+        private System.Windows.Forms.LinkLabel linkDiscord;
     }
 }
 

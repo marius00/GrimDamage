@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GrimDamage.Parser.Model;
 using GrimDamage.Statistics.dto;
 using Newtonsoft.Json;
 
@@ -22,6 +23,10 @@ namespace GrimDamage.GUI.Browser {
         }
 
 
+        public void SetStateChanges(List<GrimState> value) {
+            _js.stateChangesJson = JsonConvert.SerializeObject(value.Select(m => m.ToString()).ToList(), _settings);
+        }
+
         public void SetPlayerLocation(string location) {
             _js.playerLocationName = location;
         }
@@ -39,8 +44,12 @@ namespace GrimDamage.GUI.Browser {
             _js.damageDealtToSingleTargetJson = JsonConvert.SerializeObject(value, _settings);
         }
 
-        public void SetPlayers(List<PlayerJson> value) {
+        public void SetPlayers(List<EntityJson> value) {
             _js.playersJson = JsonConvert.SerializeObject(value, _settings);
+        }
+
+        public void SetPets(List<EntityJson> value) {
+            _js.petsJson = JsonConvert.SerializeObject(value, _settings);
         }
 
     }

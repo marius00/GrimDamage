@@ -20,5 +20,9 @@ namespace GrimDamage.GD.Dto {
         Block = 45011,
         LogUnrecognized = 45000,
 
+        Pause = 20000,
+        Unpause = 20001,
+        PlayerIdDetected = 20002, // TODO: Hopefully this isnt called for both thyself and the host. If it is, hopefully the first call is always thyself. Still an issue when starting a new game though.
+
     }
 }

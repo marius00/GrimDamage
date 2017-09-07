@@ -12,9 +12,15 @@ Unmapped / uncharted territory:
 
 
 TODO:
-* Map pets to players (ex: records/skills/playerclass06/pets/winddevil_05.dbr)
+* Map pets to players (ex: records/skills/playerclass06/pets/winddevil_05.dbr) .. stat name "description"
 * Detect death and automatically show what killed you
 * Is the dps correct? verify with dot etc (initial reports says yes, for lowbie toons)
+<Discord link in form
+<Try to read all bytes from gd.arc and load names on start? FIle.readallbytes -- if not, hardcode?
+<json.pets
+: show one graph with pets? 
+save/load from js, in json format?
+import knockoutjs?
 
 
 Nice to have:

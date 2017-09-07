@@ -150,12 +150,15 @@
     <ClCompile Include="..\ControllerPlayerStateMoveToRequestMoveAction.cpp" />
     <ClCompile Include="..\ControllerPlayerStateMoveToRequestNpcAction.cpp" />
     <ClCompile Include="..\DataQueue.cpp" />
+    <ClCompile Include="..\DetectPlayerId.cpp" />
     <ClCompile Include="..\dllmain.cpp" />
     <ClCompile Include="..\Globals.cpp" />
     <ClCompile Include="..\HookLog.cpp" />
     <ClCompile Include="..\HookWalkTo.cpp" />
     <ClCompile Include="..\LogHooker.cpp" />
+    <ClCompile Include="..\PauseGameTime.cpp" />
     <ClCompile Include="..\stdafx.cpp" />
+    <ClCompile Include="..\UnpauseGameTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\BaseMethodHook.h" />
@@ -164,12 +167,15 @@
     <ClInclude Include="..\ControllerPlayerStateMoveToRequestMoveAction.h" />
     <ClInclude Include="..\ControllerPlayerStateMoveToRequestNpcAction.h" />
     <ClInclude Include="..\DataQueue.h" />
+    <ClInclude Include="..\DetectPlayerId.h" />
     <ClInclude Include="..\dllmain.h" />
     <ClInclude Include="..\Globals.h" />
     <ClInclude Include="..\HookLog.h" />
     <ClInclude Include="..\HookWalkTo.h" />
     <ClInclude Include="..\LogHooker.h" />
+    <ClInclude Include="..\PauseGameTime.h" />
     <ClInclude Include="..\stdafx.h" />
+    <ClInclude Include="..\UnpauseGameTime.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
