@@ -66,6 +66,9 @@
     <ClCompile Include="..\DetectPlayerId.cpp">
       <Filter>HookedMethods</Filter>
     </ClCompile>
+    <ClCompile Include="..\IncrementDeaths.cpp">
+      <Filter>HookedMethods</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DataQueue.h">
@@ -114,6 +117,9 @@
       <Filter>HookedMethods</Filter>
     </ClInclude>
     <ClInclude Include="..\DetectPlayerId.h">
+      <Filter>HookedMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IncrementDeaths.h">
       <Filter>HookedMethods</Filter>
     </ClInclude>
   </ItemGroup>

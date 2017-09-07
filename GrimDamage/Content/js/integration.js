@@ -23,6 +23,8 @@ function itemsReceived(players, damageDealt, damageTaken, damageDealtSingleTarge
         if (total) {
             //console.log("Adding ", damageDealt[id][i].amount, ' to ', damageDealt[id][i].damageType);
             // TODO: Add series if it doesn't exist, that would resolve the issue with having damage types stored 2 places (js and c#)
+            // TODO: This is critical, new damage types are being discovered
+            // TODO: if it does not exist, it needs to be added!
 
             let dmg = total.amount;
             gDamageTakenDone.series.filter(s => s.name === 'Total')[0].addPoint(dmg, totalSingle !== undefined, true);

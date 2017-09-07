@@ -23,6 +23,9 @@ namespace GrimDamage.GD.Processors {
                 _generalStateService.PushState(GrimState.Unpause);
                 return true;
             }
+            else if (type == MessageType.PlayerDied) {
+                _generalStateService.PushState(GrimState.Dying);
+            }
 
             return false;
         }

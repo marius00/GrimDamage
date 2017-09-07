@@ -37,3 +37,4 @@ PointerHelper readOffset(void* ptr);
 #define TYPE_PauseGameTime 20000
 #define TYPE_UnpauseGameTime 20001
 #define TYPE_DetectPlayerId 20002
+#define TYPE_IncrementDeaths 20003

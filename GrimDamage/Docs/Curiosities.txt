@@ -13,9 +13,9 @@ void GAME::ControllerAI::CharacterIsDead(void)
 void GAME::ControllerAI::CharacterIsDying(void)
 void GAME::ControllerPlayer::DeathUpdate(int)
 void GAME::PlayEffectDeathHandler::Execute(bool)
-void GAME::PlayStats::IncrementDeaths(void)
+void GAME::PlayStats::IncrementDeaths(void)			<- Proven to not work
 bool GAME::ControllerPlayerStateDying::RequestReleasePet(unsigned int)		<- does this identify pet?
-void GAME::ControllerPlayerStateDying::OnBegin(void)
+void GAME::ControllerPlayerStateDying::OnBegin(void) <- Proven to not work
 
 unsigned short const * GAME::Player::GetPlayerName(void)
 void GAME::Player::PostPetSpawn(class GAME::WorldVec3 const &,unsigned int,unsigned int,unsigned int)

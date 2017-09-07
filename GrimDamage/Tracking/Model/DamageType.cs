@@ -16,6 +16,8 @@ namespace GrimDamage.Tracking.Model {
         Chaos,
         Cold,
         Fire,
-        Unknown
+        Unknown,
+        PercentCurrentLife,
+        LifeLeech
     }
 }

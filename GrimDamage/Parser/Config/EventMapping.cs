@@ -54,6 +54,8 @@ namespace GrimDamage.Parser.Config {
             { "Acid", DamageType.Acid },
             { "Cold", DamageType.Cold },
             { "Fire", DamageType.Fire },
+            { "PercentCurrentLife", DamageType.PercentCurrentLife },
+            { "LifeLeech", DamageType.LifeLeech },
         };
     }
 }

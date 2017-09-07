@@ -17,6 +17,7 @@
 #include "PauseGameTime.h"
 #include "UnpauseGameTime.h"
 #include "DetectPlayerId.h"
+#include "IncrementDeaths.h"
 
 
 #pragma region Variables
@@ -136,7 +137,8 @@ int ProcessAttach(HINSTANCE _hModule) {
 	hooks.push_back(new PauseGameTime(&g_dataQueue, g_hEvent));
 	hooks.push_back(new UnpauseGameTime(&g_dataQueue, g_hEvent));
 	hooks.push_back(new LoggerHook(&g_dataQueue, g_hEvent));
-	hooks.push_back(new DetectPlayerId(&g_dataQueue, g_hEvent));
+	//hooks.push_back(new DetectPlayerId(&g_dataQueue, g_hEvent));
+	hooks.push_back(new IncrementDeaths(&g_dataQueue, g_hEvent));
 	
 	
 	for (unsigned int i = 0; i < hooks.size(); i++) {

@@ -155,6 +155,7 @@
     <ClCompile Include="..\Globals.cpp" />
     <ClCompile Include="..\HookLog.cpp" />
     <ClCompile Include="..\HookWalkTo.cpp" />
+    <ClCompile Include="..\IncrementDeaths.cpp" />
     <ClCompile Include="..\LogHooker.cpp" />
     <ClCompile Include="..\PauseGameTime.cpp" />
     <ClCompile Include="..\stdafx.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="..\Globals.h" />
     <ClInclude Include="..\HookLog.h" />
     <ClInclude Include="..\HookWalkTo.h" />
+    <ClInclude Include="..\IncrementDeaths.h" />
     <ClInclude Include="..\LogHooker.h" />
     <ClInclude Include="..\PauseGameTime.h" />
     <ClInclude Include="..\stdafx.h" />
