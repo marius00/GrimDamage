@@ -4,22 +4,20 @@
 	Don't intend to share it widely on the forum until its fleshed out
 
 Unmapped / uncharted territory:
-* Get player name from ID [ingame name]
-* Get mob name from record string
-* Get player death from in-game
-* Get player heals from in-game [useful?]
-* Get player class form in-game? [for pets]
+* Get player name from ID [ingame name] -- proving to be tricky
+* Get mob name from record string		-- should be able to pull this from ia an hardcode it, rarely updated.
+* Get player heals from in-game [useful?]		-- unknown
+* Get player class form in-game? [for pets]		-- unknown, suspect very tricky
 
 
 TODO:
-* Map pets to players (ex: records/skills/playerclass06/pets/winddevil_05.dbr) .. stat name "description"
+* Maybe add a list of pets with checkboxes, where the player can choose which are his, and merge those into his aoe/st damage? [obs: per name? pets die pretty often]
 * Detect death and automatically show what killed you
+* Map pets to players (ex: records/skills/playerclass06/pets/winddevil_05.dbr) .. stat name "description"
 * Is the dps correct? verify with dot etc (initial reports says yes, for lowbie toons)
-<Discord link in form
 <Try to read all bytes from gd.arc and load names on start? FIle.readallbytes -- if not, hardcode?
-<json.pets
 : show one graph with pets? 
-save/load from js, in json format?
+* Now possible to save/load parses from .JS
 import knockoutjs?
 
 

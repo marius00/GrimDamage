@@ -45,6 +45,10 @@ namespace GrimDamage.GUI.Browser {
             if (_browser.IsBrowserInitialized)
                 _browser.ExecuteScriptAsync("_itemsReceived();");
         }
+        public void TransferSave(string data) {
+            if (_browser.IsBrowserInitialized)
+                _browser.ExecuteScriptAsync($"_saveReceived({data});");
+        }
         /*
         public void ShowLoadingAnimation() {
             if (_browser.IsBrowserInitialized)

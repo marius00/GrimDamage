@@ -10,17 +10,22 @@ namespace GrimDamage.Settings {
     static class GlobalSettings {
         public static string LogPath => BaseFolder;
 
+        public static string SavedParsePath => CreateAndReturn(Path.Combine(BaseFolder, "SavedParses"));
+
 
         public static string BaseFolder {
             get {
                 string appdata = Environment.GetEnvironmentVariable("LocalAppData");
                 string dir = Path.Combine(appdata, "EvilSoft", "GDDamage");
-                if (!Directory.Exists(dir))
-                    Directory.CreateDirectory(dir);
-
-                return dir;
+                return CreateAndReturn(dir);
             }
         }
 
+        private static string CreateAndReturn(string path) {
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            return path;
+        }
     }
 }

@@ -37,7 +37,8 @@ namespace GrimDamage.GD.Processors {
             _processors = new List<IMessageProcessor> {
                 new GdLogMessageProcessor(fileLogger, damageParsingService),
                 new PlayerPositionTrackerProcessor(positionTrackerService),
-                new GDPauseGameProcessor(generalStateService)
+                new GDPauseGameProcessor(generalStateService),
+                new PlayerDetectionProcessor(damageParsingService)
             };
 
             _registerWindowDelegate = CustomWndProc;
@@ -61,12 +62,7 @@ namespace GrimDamage.GD.Processors {
                     return;
             }
 
-            if (type == MessageType.PlayerIdDetected) {
-                Logger.Debug($"Player created with ID {IOHelper.GetInt(bt.Data, 0)}");
-            }
-            else {
-                Logger.Warn($"Got a message of type {bt.Type}");
-            }
+            Logger.Warn($"Got a message of type {bt.Type}");
         }
 
         private void InjectorCallback(object sender, ProgressChangedEventArgs e) {

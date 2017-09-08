@@ -42,8 +42,28 @@ namespace GrimDamage {
             this._browser = browser;
             _messageProcessorCore = new MessageProcessorCore(_damageParsingService, _combatFileLogger, _positionTrackerService, _generalStateService);
             _statisticsService = new StatisticsService(_damageParsingService);
-            _browser.JsPojo.OnRequestUpdate += btnUpdateData_Click;
+            _browser.JsPojo.OnRequestUpdate += transferStatsToJson;
             _browser.JsPojo.OnSuggestLocationName += JsPojoOnOnSuggestLocationName;
+            _browser.JsPojo.OnSave += JsPojoOnOnSave;
+        }
+
+        private void JsPojoOnOnSave(object sender, EventArgs eventArgs) {
+
+            if (InvokeRequired) {
+                Invoke((MethodInvoker) delegate { JsPojoOnOnSave(sender, eventArgs); });
+            }
+            else {
+                SaveParseArgument args = eventArgs as SaveParseArgument;
+                
+                var ofd = new SaveFileDialog {
+                    InitialDirectory = GlobalSettings.SavedParsePath,
+                    Filter = "Damage logs (*.dmg)|*.dmg|All files (*.*)|*.*"
+                };
+
+                if (ofd.ShowDialog() == DialogResult.OK) {
+                    File.WriteAllText(ofd.FileName, args?.Data);
+                }
+            }
         }
 
         private void JsPojoOnOnSuggestLocationName(object sender, EventArgs eventArgs) {
@@ -63,7 +83,7 @@ namespace GrimDamage {
                 webView.Show();
             }
             {
-                var debugView = new DebugSettings(_combatFileLogger, _damageParsingService);
+                var debugView = new DebugSettings();
                 debugView.TopLevel = false;
                 this.panelDebugView.Controls.Add(debugView);
                 debugView.Show();
@@ -86,17 +106,19 @@ namespace GrimDamage {
             _browser.ShowDevTools();
         }
 
-        private void btnUpdateData_Click(object sender, EventArgs e) {
+        private void transferStatsToJson(object sender, EventArgs e) {
             var players = _statisticsService.GetPlayers();
             var pets = _statisticsService.GetPets();
 
-            Dictionary<int, List<DamageEntryJson>> damageDealt = new Dictionary<int, List<DamageEntryJson>>();
-            Dictionary<int, List<DamageEntryJson>> damageDealtToSingleTarget = new Dictionary<int, List<DamageEntryJson>>();
-            Dictionary<int, List<DamageEntryJson>> damageTaken = new Dictionary<int, List<DamageEntryJson>>();
+            var damageDealt = new Dictionary<int, List<DamageEntryJson>>();
+            var damageDealtToSingleTarget = new Dictionary<int, List<DamageEntryJson>>();
+            var damageTaken = new Dictionary<int, List<DamageEntryJson>>();
+            var detailedDamageTaken = new Dictionary<int, List<DetailedDamageEntryJson>>();
             foreach (var player in players) {
                 damageDealt[player.Id] = _statisticsService.GetLatestDamageDealt(player.Id);
                 damageTaken[player.Id] = _statisticsService.GetLatestDamageTaken(player.Id);
                 damageDealtToSingleTarget[player.Id] = _statisticsService.GetLatestDamageDealtToSingleTarget(player.Id);
+                detailedDamageTaken[player.Id] = _statisticsService.GetDetailedLatestDamageTaken(player.Id);
             }
             foreach (var pet in pets) {
                 damageDealt[pet.Id] = _statisticsService.GetLatestDamageDealt(pet.Id);
@@ -111,12 +133,35 @@ namespace GrimDamage {
             _browser.JsInteractor.SetDamageTaken(damageTaken);
             _browser.JsInteractor.SetPlayerLocation(_positionTrackerService.GetPlayerLocation());
             _browser.JsInteractor.SetStateChanges(_generalStateService.GetAndClearStates());
+            _browser.JsInteractor.SetDetailedDamageTaken(detailedDamageTaken);
 
             _browser.NotifyUpdate();
         }
 
         private void linkDiscord_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             Process.Start("https://discord.gg/PJ87Ewa");
+        }
+
+        private void btnLoadSave_Click(object sender, EventArgs e) {
+            var ofd = new OpenFileDialog {
+                InitialDirectory = GlobalSettings.SavedParsePath,
+                Filter = "Damage logs (*.dmg)|*.dmg|All files (*.*)|*.*"
+            };
+
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                if (File.Exists(ofd.FileName)) {
+                    string data = File.ReadAllText(ofd.FileName);
+                    _browser.TransferSave(data);
+                }
+                else {
+                    MessageBox.Show(
+                        "Could not find the file you requested",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                }
+            }
         }
     }
 }

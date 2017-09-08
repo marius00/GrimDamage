@@ -8,18 +8,22 @@ using System.Threading.Tasks;
 namespace GrimDamage.Tracking.Model {
     public class Entity {
         public Entity() {
-            this.DamageDealt = new ConcurrentBag<DamageEntry>();
-            this.DamageTaken = new ConcurrentBag<DamageEntry>();
+            this.DamageDealt = new ConcurrentBag<DamageDealtEntry>();
+            this.DamageTaken = new ConcurrentBag<DamageTakenEntry>();
         }
 
+
+
         public int Id { get; set; }
+
+        public bool IsPrimary { get; set; }
 
         public string Name { get; set; }
 
         public EntityType Type { get; set; }
-        public bool IsPet { get; set; }
-        public ConcurrentBag<DamageEntry> DamageDealt { get; }
-        public ConcurrentBag<DamageEntry> DamageTaken { get; }
+
+        public ConcurrentBag<DamageDealtEntry> DamageDealt { get; }
+        public ConcurrentBag<DamageTakenEntry> DamageTaken { get; }
 
         public DateTime LastSeen {
             get {

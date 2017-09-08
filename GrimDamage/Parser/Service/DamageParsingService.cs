@@ -19,35 +19,45 @@ namespace GrimDamage.Parser.Service {
         private string _defenderName;
         private string _attackerName;
         private int _attackerId;
-        private readonly ConcurrentDictionary<int, Entity> _names;
+        private int _primaryId;
+        private readonly ConcurrentDictionary<int, Entity> _entities;
 
         public DamageParsingService() {
-            this._names = new ConcurrentDictionary<int, Entity>();
+            this._entities = new ConcurrentDictionary<int, Entity>();
         }
 
-        public ICollection<Entity> Values => _names.Values;
+        public ICollection<Entity> Values => _entities.Values;
 
         public Entity GetEntity(int id) {
-            if (_names.ContainsKey(id))
-                return _names[id];
+            if (_entities.ContainsKey(id))
+                return _entities[id];
             else
                 return null;
         }
 
         // TODO: Call regularly, every minute or so.
         public void Cleanup() {
-            var expired = _names.Values.Where(m => (DateTime.UtcNow - m.LastSeen).Minutes > _nameCacheDuration)
+            var expired = _entities.Values.Where(m => (DateTime.UtcNow - m.LastSeen).Minutes > _nameCacheDuration)
                 .Select(m => m.Id)
                 .ToList();
 
             foreach (var key in expired) {
                 Entity o;
-                _names.TryRemove(key, out o);
+                _entities.TryRemove(key, out o);
             }
         }
 
+        public void SetPlayerInfo(int id, bool isPrimary) {
+            if (isPrimary) {
+                _primaryId = id;
+            }
+
+            if (_entities.ContainsKey(id))
+                _entities[id].IsPrimary = isPrimary;
+        }
+
         public void ApplyDamage(double amount, int victim, string damageType) {
-            var dmg = new DamageEntry {
+            var dmg = new DamageDealtEntry {
                 Amount = amount,
                 Target = victim,
                 Type = convertDamage(damageType),
@@ -55,15 +65,22 @@ namespace GrimDamage.Parser.Service {
             };
 
 
-            if (_names.ContainsKey(victim)) {
-                _names[victim].DamageTaken.Add(dmg);
+            if (_entities.ContainsKey(victim)) {
+                var taken = new DamageTakenEntry {
+                    Amount = amount,
+                    Attacker = _attackerId,
+                    Type = convertDamage(damageType),
+                    Time = DateTime.UtcNow
+                };
+
+                _entities[victim].DamageTaken.Add(taken);
             }
             else {
                 Logger.Warn($"Got a damage entry for victim {victim}, but the entity has not been previously stored");
             }
 
-            if (_names.ContainsKey(_attackerId)) {
-                _names[_attackerId].DamageDealt.Add(dmg);
+            if (_entities.ContainsKey(_attackerId)) {
+                _entities[_attackerId].DamageDealt.Add(dmg);
             }
             else {
                 Logger.Warn($"Got a damage entry for attacker {_attackerId}, but the entity has not been previously stored");
@@ -82,11 +99,12 @@ namespace GrimDamage.Parser.Service {
             _attackerName = name;
         }
         public void SetAttackerId(int id) {
-            if (!_names.ContainsKey(id) && _attackerName != null) {
-                _names[id] = new Entity {
+            if (!_entities.ContainsKey(id) && _attackerName != null) {
+                _entities[id] = new Entity {
                     Id = id,
                     Name = _attackerName,
-                    Type = Classify(_attackerName)
+                    Type = Classify(_attackerName),
+                    IsPrimary = id == _primaryId
                 };
             }
 
@@ -98,11 +116,12 @@ namespace GrimDamage.Parser.Service {
         }
 
         public void SetDefenderId(int id) {
-            if (!_names.ContainsKey(id) && _defenderName != null) {
-                _names[id] = new Entity {
+            if (!_entities.ContainsKey(id) && _defenderName != null) {
+                _entities[id] = new Entity {
                     Id = id,
                     Name = _defenderName,
-                    Type = Classify(_defenderName)
+                    Type = Classify(_defenderName),
+                    IsPrimary = id == _primaryId
                 };
             }
         }

@@ -26,12 +26,12 @@
             this.labelHookStatus = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnShowDevtools = new System.Windows.Forms.Button();
-            this.btnUpdateData = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panelDebugView = new System.Windows.Forms.Panel();
             this.linkDiscord = new System.Windows.Forms.LinkLabel();
+            this.btnLoadSave = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -67,17 +67,6 @@
             this.btnShowDevtools.Text = "DevTools";
             this.btnShowDevtools.UseVisualStyleBackColor = true;
             this.btnShowDevtools.Click += new System.EventHandler(this.btnShowDevtools_Click);
-            // 
-            // btnUpdateData
-            // 
-            this.btnUpdateData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUpdateData.Location = new System.Drawing.Point(759, 12);
-            this.btnUpdateData.Name = "btnUpdateData";
-            this.btnUpdateData.Size = new System.Drawing.Size(93, 23);
-            this.btnUpdateData.TabIndex = 5;
-            this.btnUpdateData.Text = "Update Data";
-            this.btnUpdateData.UseVisualStyleBackColor = true;
-            this.btnUpdateData.Click += new System.EventHandler(this.btnUpdateData_Click);
             // 
             // tabControl1
             // 
@@ -136,14 +125,25 @@
             this.linkDiscord.Text = "Discuss on Discord";
             this.linkDiscord.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkDiscord_LinkClicked);
             // 
+            // btnLoadSave
+            // 
+            this.btnLoadSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLoadSave.Location = new System.Drawing.Point(757, 12);
+            this.btnLoadSave.Name = "btnLoadSave";
+            this.btnLoadSave.Size = new System.Drawing.Size(95, 23);
+            this.btnLoadSave.TabIndex = 8;
+            this.btnLoadSave.Text = "Load Save";
+            this.btnLoadSave.UseVisualStyleBackColor = true;
+            this.btnLoadSave.Click += new System.EventHandler(this.btnLoadSave_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(945, 558);
+            this.Controls.Add(this.btnLoadSave);
             this.Controls.Add(this.linkDiscord);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.btnUpdateData);
             this.Controls.Add(this.btnShowDevtools);
             this.Controls.Add(this.labelHookStatus);
             this.Name = "Form1";
@@ -162,12 +162,12 @@
         private System.Windows.Forms.Label labelHookStatus;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnShowDevtools;
-        private System.Windows.Forms.Button btnUpdateData;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panelDebugView;
         private System.Windows.Forms.LinkLabel linkDiscord;
+        private System.Windows.Forms.Button btnLoadSave;
     }
 }
 

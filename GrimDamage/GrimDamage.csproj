@@ -72,6 +72,7 @@
     <Compile Include="GD\Processors\MessageProcessorCore.cs" />
     <Compile Include="GD\Processors\PlayerPositionTrackerProcessor.cs" />
     <Compile Include="GUI\Browser\CefBrowserHandler.cs" />
+    <Compile Include="GUI\Browser\dto\SaveParseArgument.cs" />
     <Compile Include="GUI\Browser\dto\SuggestLocationNameArgument.cs" />
     <Compile Include="GUI\Browser\WebViewJsInteractor.cs" />
     <Compile Include="GUI\Browser\WebViewJsPojo.cs" />
@@ -98,15 +99,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
     <Compile Include="Statistics\dto\DamageEntryJson.cs" />
+    <Compile Include="Statistics\dto\DetailedDamageEntryJson.cs" />
     <Compile Include="Statistics\dto\EntityJson.cs" />
     <Compile Include="Statistics\model\PlayerPosition.cs" />
     <Compile Include="Statistics\model\RecognizedPosition.cs" />
     <Compile Include="Statistics\Service\PositionTrackerService.cs" />
     <Compile Include="Statistics\Service\StatisticsService.cs" />
-    <Compile Include="Tracking\Model\DamageEntry.cs" />
+    <Compile Include="Tracking\Model\DamageDealtEntry.cs" />
+    <Compile Include="Tracking\Model\DamageTakenEntry.cs" />
     <Compile Include="Tracking\Model\DamageType.cs" />
     <Compile Include="Tracking\Model\Entity.cs" />
     <Compile Include="Tracking\Model\EntityType.cs" />
+    <Compile Include="Tracking\Model\IDamageEntry.cs" />
     <Compile Include="Utility\Timestamp.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -163,6 +167,7 @@
     <Content Include="Content\js\main.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Docs\BetaTesters.txt" />
     <Content Include="Docs\Curiosities.txt" />
     <Content Include="Docs\Dev.txt" />
     <Content Include="Docs\Readme.txt" />

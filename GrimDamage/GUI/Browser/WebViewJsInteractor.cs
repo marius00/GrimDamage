@@ -40,6 +40,10 @@ namespace GrimDamage.GUI.Browser {
             _js.damageDealtJson = JsonConvert.SerializeObject(value, _settings);
         }
 
+        public void SetDetailedDamageTaken(Dictionary<int, List<DetailedDamageEntryJson>> value) {
+            _js.detailedDamageTakenJson = JsonConvert.SerializeObject(value, _settings);
+        }
+
         public void SetDamageDealtToSingleTarget(Dictionary<int, List<DamageEntryJson>> value) {
             _js.damageDealtToSingleTargetJson = JsonConvert.SerializeObject(value, _settings);
         }

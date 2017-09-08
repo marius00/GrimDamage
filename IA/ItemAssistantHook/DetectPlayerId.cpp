@@ -12,7 +12,7 @@ DetectPlayerId::GetObjectIdMethodPtr DetectPlayerId::GetObjectId;
 
 void DetectPlayerId::EnableHook() {
 	GetObjectId = (GetObjectIdMethodPtr)GetProcAddress(::GetModuleHandle("Engine.dll"), "?GetObjectId@Object@GAME@@QBEIXZ");
-	originalMethod = (OriginalMethodPtr)GetProcAddress(::GetModuleHandle("Game.dll"), "??0Player@GAME@@QAE@XZ");
+	originalMethod = (OriginalMethodPtr)GetProcAddress(::GetModuleHandle("Game.dll"), "?SetMainPlayer@Player@GAME@@QAEX_N@Z");
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
 	DetourAttach((PVOID*)&originalMethod, HookedMethod);
@@ -35,13 +35,20 @@ void DetectPlayerId::DisableHook() {
 	DetourTransactionCommit();
 }
 
-void* __fastcall DetectPlayerId::HookedMethod(void* This, void* notUsed) {
-	void* v = originalMethod(This);
+void* __fastcall DetectPlayerId::HookedMethod(void* This, void* notUsed, bool b) {
+	void* v = originalMethod(This, b);
 
-	int id = GetObjectId(This);
-	DataItemPtr item(new DataItem(TYPE_DetectPlayerId, sizeof(id), (char*)&id));
+	const size_t resultSize = sizeof(int) + sizeof(bool);
+	char result[resultSize] = { 0 };
+	result[0] = b ? 1 : 0;
+
+	int id = GetObjectId((void*)This);
+	memcpy(result + 1, &id, sizeof(id));
+
+	DataItemPtr item(new DataItem(TYPE_DetectPlayerId, 5, (char*)&result));
 	m_dataQueue->push(item);
 	SetEvent(m_hEvent);
+
 
 	return v;
 }

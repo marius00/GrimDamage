@@ -9,25 +9,27 @@ using GrimDamage.Tracking.Model;
 using Newtonsoft.Json;
 
 namespace GrimDamage.GUI.Browser {
+    // ReSharper disable InconsistentNaming
+    // ReSharper disable MemberCanBePrivate.Global
+    // ReSharper disable UnusedAutoPropertyAccessor.Global
     public class WebViewJsPojo {
         public event EventHandler OnRequestUpdate;
         public event EventHandler OnSuggestLocationName;
+        public event EventHandler OnSave;
 
 
         public string stateChangesJson { get; set; }
 
         public string playerLocationName { get; set; }
         // FROM JS ONLY
-        // ReSharper disable once InconsistentNaming
-        // ReSharper disable once MemberCanBePrivate.Global
         public string damageTakenJson { get; set; }
 
-        // ReSharper disable once InconsistentNaming
         public string damageDealtJson { get; set; }
+
+        public string detailedDamageTakenJson { get; set; }
 
         public string damageDealtToSingleTargetJson { get; set; }
 
-        // ReSharper disable once InconsistentNaming
         public string playersJson { get; set; }
 
         public string petsJson { get; set; }
@@ -42,6 +44,14 @@ namespace GrimDamage.GUI.Browser {
             });
         }
 
+        public void save(string json) {
+            OnSave?.Invoke(this, new SaveParseArgument() {
+                Data = json
+            });
+        }
 
     }
+    // ReSharper enable InconsistentNaming
+    // ReSharper enable MemberCanBePrivate.Global
+    // ReSharper enable UnusedAutoPropertyAccessor.Global
 }

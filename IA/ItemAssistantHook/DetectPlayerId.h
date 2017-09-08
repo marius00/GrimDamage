@@ -12,11 +12,7 @@ public:
 	void DisableHook();
 
 private:
-	struct Vec3f {
-		float x,y,z,u;
-	};
-
-	typedef void* (__thiscall *OriginalMethodPtr)(void*);
+	typedef void* (__thiscall *OriginalMethodPtr)(void*, bool b);
 	typedef int (__thiscall *GetObjectIdMethodPtr)(void*);
 	static HANDLE m_hEvent;
 	static OriginalMethodPtr originalMethod;
@@ -24,6 +20,6 @@ private:
 	static DataQueue* m_dataQueue;
 
 
-	static void* __fastcall HookedMethod(void* This, void* notUsed);
+	static void* __fastcall HookedMethod(void* This, void* notUsed, bool b);
 	
 };

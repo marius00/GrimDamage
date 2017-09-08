@@ -38,7 +38,7 @@ namespace GrimDamage.Parser.Service {
                 var defender = int.Parse(match.Groups[2].Value, System.Globalization.NumberStyles.HexNumber);
                 var damageType = match.Groups[3].Value;
                 
-                var dmg = new DamageEntry {
+                var dmg = new DamageDealtEntry {
                     Amount = amount,
                     Target = defender,
                     Type = convertDamage(damageType),

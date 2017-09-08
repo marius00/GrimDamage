@@ -22,7 +22,8 @@ namespace GrimDamage.Statistics.Service {
             return _damageParsingService.Values.Where(entity => entity.Type == EntityType.Player)
                 .Select(m => new EntityJson {
                     Id = m.Id,
-                    Name = m.Name
+                    Name = m.Name,
+                    IsPrimary = m.IsPrimary
                 })
                 .ToList();
         }
@@ -31,7 +32,8 @@ namespace GrimDamage.Statistics.Service {
             return _damageParsingService.Values.Where(entity => entity.Type == EntityType.Pet)
                 .Select(m => new EntityJson {
                     Id = m.Id,
-                    Name = m.Name
+                    Name = m.Name,
+                    IsPrimary = false
                 })
                 .ToList();
         }
@@ -54,6 +56,26 @@ namespace GrimDamage.Statistics.Service {
             });
 
             return entries;
+        }
+
+        public List<DetailedDamageEntryJson> GetDetailedLatestDamageTaken(int playerId) {
+            var player = _damageParsingService.GetEntity(playerId);
+            if (player == null || player.DamageTaken.Count == 0) {
+                return new List<DetailedDamageEntryJson>();
+            }
+            else {
+                var result = player.DamageTaken
+                    .Where(dmg => dmg.Time > _lastUpdateTimeDamageTaken)
+                    .Select(m => new DetailedDamageEntryJson {
+                        Attacker = _damageParsingService.GetEntity(m.Attacker)?.Name ?? "Unknown",
+                        DamageType = m.Type.ToString(),
+                        Amount = m.Amount
+                    })
+                    .ToList();
+
+                _lastUpdateTimeDamageTaken = player.DamageTaken.Max(m => m.Time);
+                return result;
+            }
         }
 
         public List<DamageEntryJson> GetLatestDamageTaken(int playerId) {
