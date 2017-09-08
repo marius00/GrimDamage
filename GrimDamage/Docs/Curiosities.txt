@@ -17,6 +17,6 @@ class mem::list<struct GAME::SkillBuffTransfer> const & GAME::SkillServices_Char
 ^y  Racial Bonus Defense (%f) filtered (%f) damage\n
 
 # Engine 
-Curiosities for IA:
+Curiosities for IA: -- Maybe delve into this?
 bool GAME::Steamworks::CloudRead(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,void *,unsigned int)
 bool GAME::Steamworks::CloudWrite(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,void const *,unsigned int,bool)

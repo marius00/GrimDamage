@@ -8,10 +8,12 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EvilsoftCommons;
 using EvilsoftCommons.DllInjector;
+using EvilsoftCommons.Exceptions;
 using GrimDamage.GD.Logger;
 using GrimDamage.GD.Processors;
 using GrimDamage.GUI.Browser;
@@ -73,6 +75,10 @@ namespace GrimDamage {
 
         private void Form1_Load(object sender, EventArgs e) {
             Logger.Debug("Starting..");
+            if (Thread.CurrentThread.Name == null) {
+                Thread.CurrentThread.Name = "UI";
+                ExceptionReporter.EnableLogUnhandledOnThread();
+            }
 
             this.Closing += Form1_Closing;
 

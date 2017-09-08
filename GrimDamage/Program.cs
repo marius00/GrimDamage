@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EvilsoftCommons.Exceptions;
 using GrimDamage.GUI.Browser;
 using GrimDamage.GUI.Forms;
 using GrimDamage.Tracking.Model;
@@ -19,6 +21,17 @@ namespace GrimDamage {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            if (Thread.CurrentThread.Name == null) {
+                Thread.CurrentThread.Name = "Main/UI";
+                ExceptionReporter.EnableLogUnhandledOnThread();
+            }
+
+            ExceptionReporter.UrlCrashreport = "http://ribbs.dreamcrash.org/gddamage/crashreport.php";
+            ExceptionReporter.UrlStats = "http://ribbs.dreamcrash.org/gddamage/stats.php";
+#if !DEBUG
+            ExceptionReporter.LogExceptions = true;
+#endif
 
             if (!File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Hook.dll"))) {
                 MessageBox.Show("Error - It appears that hook.dll is missing\nMost likely this installation has been corrupted.", "Error");

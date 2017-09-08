@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EvilsoftCommons;
 using EvilsoftCommons.DllInjector;
+using EvilsoftCommons.Exceptions;
 using GrimDamage.GD.Dto;
 using GrimDamage.GD.Logger;
 using GrimDamage.Parser.Service;
@@ -49,6 +51,11 @@ namespace GrimDamage.GD.Processors {
 
 
         private void CustomWndProc(RegisterWindow.DataAndType bt) {
+            if (Thread.CurrentThread.Name == null) {
+                Thread.CurrentThread.Name = "Core";
+                ExceptionReporter.EnableLogUnhandledOnThread();
+            }
+
             if (_isFirstMessage) {
                 Logger.Debug("Window message received");
                 _isFirstMessage = false;

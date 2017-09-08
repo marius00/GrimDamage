@@ -70,6 +70,7 @@
     <Compile Include="GD\Processors\GDPauseGameProcessor.cs" />
     <Compile Include="GD\Processors\IMessageProcessor.cs" />
     <Compile Include="GD\Processors\MessageProcessorCore.cs" />
+    <Compile Include="GD\Processors\PlayerDetectionProcessor.cs" />
     <Compile Include="GD\Processors\PlayerPositionTrackerProcessor.cs" />
     <Compile Include="GUI\Browser\CefBrowserHandler.cs" />
     <Compile Include="GUI\Browser\dto\SaveParseArgument.cs" />
@@ -131,6 +132,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Content\js\vendor\knockout.validation.min.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -153,12 +157,16 @@
       <Project>{2D6C0DC0-2FD0-4C18-9104-4F4689169D88}</Project>
       <Name>DllInjector</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EvilsoftCommons\EvilsoftCommons.csproj">
+      <Project>{746523AB-F98D-4AC1-A8BB-468CAEB21F74}</Project>
+      <Name>EvilsoftCommons</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\index.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\js\highcharts.js">
+    <Content Include="Content\js\vendor\highcharts.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\integration.js">
@@ -167,10 +175,31 @@
     <Content Include="Content\js\main.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\js\vendor\knockout-3.4.0.debug.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\js\vendor\knockout-3.4.0.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\js\vendor\knockout.mapping-latest.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\js\vendor\knockout.simpleGrid.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\js\vendor\knockout.validation.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\js\vendor\knockout.validation.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Docs\BetaTesters.txt" />
     <Content Include="Docs\Curiosities.txt" />
     <Content Include="Docs\Dev.txt" />
     <Content Include="Docs\Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\css\vendor\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\cef.redist.x64.3.2704.1432\build\cef.redist.x64.targets" Condition="Exists('..\packages\cef.redist.x64.3.2704.1432\build\cef.redist.x64.targets')" />
