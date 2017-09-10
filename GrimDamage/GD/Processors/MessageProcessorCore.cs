@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using EvilsoftCommons;
 using EvilsoftCommons.DllInjector;
 using EvilsoftCommons.Exceptions;
 using GrimDamage.GD.Dto;
@@ -14,7 +9,7 @@ using GrimDamage.GD.Logger;
 using GrimDamage.Parser.Service;
 using GrimDamage.Statistics.Service;
 using log4net;
-using log4net.Repository.Hierarchy;
+// ReSharper disable NotAccessedField.Local
 
 namespace GrimDamage.GD.Processors {
     class MessageProcessorCore : IDisposable {

@@ -9,9 +9,12 @@ using EvilsoftCommons.Exceptions;
 using GrimDamage.GUI.Browser;
 using GrimDamage.GUI.Forms;
 using GrimDamage.Tracking.Model;
+using log4net;
+using log4net.Repository.Hierarchy;
 
 namespace GrimDamage {
     static class Program {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(Program));
 
 
         /// <summary>
@@ -32,6 +35,8 @@ namespace GrimDamage {
 #if !DEBUG
             ExceptionReporter.LogExceptions = true;
 #endif
+            Logger.Info("Anonymous usage statistics and crash reports will be collected.");
+            Logger.Info("Statistics and crash reports can be found at http://ribbs.dreamcrash.org/gddamage/logs.html");
 
             if (!File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Hook.dll"))) {
                 MessageBox.Show("Error - It appears that hook.dll is missing\nMost likely this installation has been corrupted.", "Error");

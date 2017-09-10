@@ -37,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoUpdater.NET">
+      <HintPath>..\Auto updater\AutoUpdater.NET\bin\Release\AutoUpdater.NET.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\DllInjector\bin\Debug\log4net.dll</HintPath>
     </Reference>
@@ -94,6 +97,7 @@
     <Compile Include="Parser\Model\EventType.cs" />
     <Compile Include="Parser\Model\GrimState.cs" />
     <Compile Include="Parser\Service\DamageParsingService.cs" />
+    <Compile Include="Parser\Service\EntityNamingService.cs" />
     <Compile Include="Parser\Service\GeneralStateService.cs" />
     <Compile Include="Parser\Service\ParsingService.cs" />
     <Compile Include="Program.cs" />
@@ -112,6 +116,7 @@
     <Compile Include="Tracking\Model\Entity.cs" />
     <Compile Include="Tracking\Model\EntityType.cs" />
     <Compile Include="Tracking\Model\IDamageEntry.cs" />
+    <Compile Include="Utilities\AutoUpdateUtility.cs" />
     <Compile Include="Utility\Timestamp.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -136,7 +141,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Log4net.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -166,6 +171,9 @@
     <Content Include="Content\index.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\js\graphs.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\js\vendor\highcharts.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -173,6 +181,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\main.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\js\vendor\highstock.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\vendor\knockout-3.4.0.debug.js">

@@ -7,9 +7,12 @@ and record_name like '%playerclass%/pets/%'
 This gets me the pets (OBS: Not players!)
 
 
-select s.record_name, t.name from databaseitemstat s, itemtag t
-where t.tag = s.val2
-and s.stat_name = 'description'
-and record_name like '%records/creatures/%'
+
+select i.baserecord, t.name from databaseitemstat_v2 s, itemtag t, databaseitem_v2 i
+where t.tag = s.TextValue
+and s.Stat = 'description'
+and s.id_databaseitem = i.id_databaseitem
+and i.baserecord like '%records/creatures/%'
+order by t.name
 
 This should get monsters and players, but not parsed into IA

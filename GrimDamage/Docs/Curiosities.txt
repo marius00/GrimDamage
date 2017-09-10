@@ -16,7 +16,22 @@ DefenseAttributeStore_Skill
 class mem::list<struct GAME::SkillBuffTransfer> const & GAME::SkillServices_Character::GetBuffList(void)
 ^y  Racial Bonus Defense (%f) filtered (%f) damage\n
 
+
+* GAME::Character::GetAngerMultiplier <- Aggro meter??!??
+
+ GAME::ControllerPlayerStateStunned::OnBegin(void) .text 100F2310 000000F0 00000020 00000000 R . . . B T .
+ GAME::ControllerPlayerStateStunned::OnEnd(void) .text 100F2460 000000EA 00000020 00000000 R . . . B T .
+ GAME::Character::DisableMovement(void) .text 10036870 0000000B   R . . . . T .
+ GAME::GameEngine::CreateItem(GAME::WorldCoords const &,GAME::ItemReplicaInfo &)                                                                                              .text 101C2050 00000023 00000004 00000008 R . . . B T .
+GAME::GameEngine::CreateItemForCharacter(uint,GAME::WorldCoords const &,GAME::ItemReplicaInfo &,std::basic_string<ushort,std::char_traits<ushort>,std::allocator<ushort>> *) .text 101C2080 0000001B 00000004 0000000C R . . . B . .
+GAME::Character::BeginTrap(void) .text 10046590 0000003E 00000004 00000000 R . . . . T .
+GAME::Character::EndTrap(void)   .text 100465D0 0000003E 00000004 00000000 R . . . . T .
+GAME::ControllerPlayerStateTrapped::OnBegin(void) .text 100F2B50 000000E3 00000020 00000000 R . . . B T .
+GAME::ControllerPlayerStateTrapped::OnEnd(void)   .text 100F2C40 000000EA 00000020 00000000 R . . . B T .
+
+
 # Engine 
 Curiosities for IA: -- Maybe delve into this?
 bool GAME::Steamworks::CloudRead(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,void *,unsigned int)
 bool GAME::Steamworks::CloudWrite(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,void const *,unsigned int,bool)
+

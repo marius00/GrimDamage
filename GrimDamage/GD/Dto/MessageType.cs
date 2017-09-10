@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 namespace GrimDamage.GD.Dto {
     enum MessageType {
         DamageToVictim = 45001,
-        CharacterMovement = 1000,
+        CharacterMovement1 = 1001,
+        CharacterMovement2 = 1002,
+        CharacterMovement3 = 1003,
+        CharacterMovement4 = 1004,
+        CharacterMovement5 = 1005,
+        CharacterMovement6 = 1006,
         LifeLeech = 45002,
         TotalDamage = 45003,
         SetAttackerName = 45004,

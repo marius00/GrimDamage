@@ -16,15 +16,16 @@ public:
 
 private:
 	struct Vec3f {
-		float x,y,z,u;
+		float x, y, z;
+		void* u;
 	};
 
-	typedef int* (__thiscall *OriginalMethodPtr)(void*, bool, bool, Vec3f const&);
+	typedef int* (__thiscall *OriginalMethodPtr)(void*, bool, bool, Vec3f const & xyz);
 	static HANDLE m_hEvent;
 	static OriginalMethodPtr originalMethod;
 	static DataQueue* m_dataQueue;
 
 
-	static void* __fastcall HookedMethod(void* This, void* notUsed, bool, bool, Vec3f const& xyz);
+	static void* __fastcall HookedMethod(void* This, void* notUsed, bool, bool, Vec3f const & xyz);
 	
 };

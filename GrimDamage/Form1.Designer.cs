@@ -32,6 +32,7 @@
             this.panelDebugView = new System.Windows.Forms.Panel();
             this.linkDiscord = new System.Windows.Forms.LinkLabel();
             this.btnLoadSave = new System.Windows.Forms.Button();
+            this.linkDonate = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -136,11 +137,25 @@
             this.btnLoadSave.UseVisualStyleBackColor = true;
             this.btnLoadSave.Click += new System.EventHandler(this.btnLoadSave_Click);
             // 
+            // linkDonate
+            // 
+            this.linkDonate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkDonate.AutoSize = true;
+            this.linkDonate.Location = new System.Drawing.Point(891, 55);
+            this.linkDonate.Name = "linkDonate";
+            this.linkDonate.Size = new System.Drawing.Size(42, 13);
+            this.linkDonate.TabIndex = 9;
+            this.linkDonate.TabStop = true;
+            this.linkDonate.Text = "Donate";
+            this.linkDonate.Visible = false;
+            this.linkDonate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkDonate_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(945, 558);
+            this.Controls.Add(this.linkDonate);
             this.Controls.Add(this.btnLoadSave);
             this.Controls.Add(this.linkDiscord);
             this.Controls.Add(this.tabControl1);
@@ -168,6 +183,7 @@
         private System.Windows.Forms.Panel panelDebugView;
         private System.Windows.Forms.LinkLabel linkDiscord;
         private System.Windows.Forms.Button btnLoadSave;
+        private System.Windows.Forms.LinkLabel linkDonate;
     }
 }
 

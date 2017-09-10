@@ -38,7 +38,7 @@ void ControllerPlayerStateMoveToRequestMoveAction::DisableHook() {
 
 void* __fastcall ControllerPlayerStateMoveToRequestMoveAction::HookedMethod(void* This, void* notUsed, bool a, bool b, Vec3f const & xyz) {
 
-	const size_t bufflen = sizeof(Vec3f) + sizeof(bool) * 2;
+	const size_t bufflen = sizeof(Vec3f) + sizeof(int) * 4;
 	char buffer[bufflen];
 
 	size_t pos = 0;
@@ -46,16 +46,19 @@ void* __fastcall ControllerPlayerStateMoveToRequestMoveAction::HookedMethod(void
 	memcpy(buffer + pos, &xyz, sizeof(Vec3f));
 	pos += sizeof(Vec3f);
 
-	memcpy(buffer + pos, &a, sizeof(bool) * 1);
-	pos += sizeof(bool);
 
-	memcpy(buffer + pos, &b, sizeof(bool) * 1);
-	pos += sizeof(bool);
+	int* ptr = (int*)&xyz;
+	char* regionId = (char*)ptr[0] + 6 * 4;
 
-	DataItemPtr item(new DataItem(TYPE_ControllerPlayerStateMoveToRequestMoveAction, bufflen, (char*)buffer));
-	m_dataQueue->push(item);
-	SetEvent(m_hEvent);
+	SIZE_T bytesRead = 0;
+	HANDLE hProcess = GetCurrentProcess();
+	if (ReadProcessMemory(hProcess, (void*)regionId, (char*)&buffer + pos, 16, &bytesRead) != 0) {
+		DataItemPtr item(new DataItem(TYPE_ControllerPlayerStateMoveToRequestMoveAction, bufflen, (char*)buffer));
+		m_dataQueue->push(item);
+		SetEvent(m_hEvent);
+	}
 
 	void* v = originalMethod(This, a, b, xyz);
 	return v;
+
 }

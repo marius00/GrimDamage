@@ -14,7 +14,8 @@ public:
 
 private:
 	struct Vec3f {
-		float x,y,z,u;
+		void* u;
+		float x, y, z;
 	};
 
 	typedef int* (__thiscall *OriginalMethodPtr)(void*, bool, bool, Vec3f const&, void*);

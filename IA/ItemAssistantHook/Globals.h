@@ -26,12 +26,12 @@ struct PointerHelper {
 int CopyGDString(char* srcObj, char* buffer, size_t bufsize);
 PointerHelper readOffset(void* ptr);
 
-#define TYPE_WALKTO 1000
-#define TYPE_ControllerPlayerStateIdleRequestNpcAction 1000
-#define TYPE_ControllerPlayerStateIdleRequestInteractableAction 1000
-#define TYPE_ControllerPlayerStateMoveToRequestMoveAction 1000
-#define TYPE_ControllerPlayerStateMoveToRequestNpcAction 1000
-#define TYPE_ControllerPlayerStateIdleRequestMoveAction 1000
+#define TYPE_WALKTO 1001
+#define TYPE_ControllerPlayerStateIdleRequestNpcAction 1002
+#define TYPE_ControllerPlayerStateIdleRequestInteractableAction 1003
+#define TYPE_ControllerPlayerStateMoveToRequestMoveAction 1004
+#define TYPE_ControllerPlayerStateMoveToRequestNpcAction 1005
+#define TYPE_ControllerPlayerStateIdleRequestMoveAction 1006
 #define TYPE_ERROR_HOOKING_GENERIC 1
 #define TYPE_HookUnload 3
 #define TYPE_PauseGameTime 20000

@@ -42,6 +42,7 @@ DisableWelcomePage=Yes
 AlwaysShowDirOnReadyPage=Yes
 DisableDirPage=No
 OutputBaseFilename=GDDamageDetailsBeta
+LicenseFile=license.txt
 
 [UninstallDelete]
 Type: filesandordirs; Name: {app}

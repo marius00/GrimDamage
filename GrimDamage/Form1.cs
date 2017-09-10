@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using EvilsoftCommons;
-using EvilsoftCommons.DllInjector;
 using EvilsoftCommons.Exceptions;
 using GrimDamage.GD.Logger;
 using GrimDamage.GD.Processors;
@@ -23,6 +15,7 @@ using GrimDamage.Parser.Service;
 using GrimDamage.Settings;
 using GrimDamage.Statistics.dto;
 using GrimDamage.Statistics.Service;
+using GrimDamage.Utilities;
 using log4net;
 
 namespace GrimDamage {
@@ -36,15 +29,17 @@ namespace GrimDamage {
         private readonly PositionTrackerService _positionTrackerService = new PositionTrackerService();
         private readonly CombatFileLogger _combatFileLogger = new CombatFileLogger();
         private readonly GeneralStateService _generalStateService = new GeneralStateService();
-        
+        private readonly AutoUpdateUtility _autoUpdateUtility = new AutoUpdateUtility();
+
+
 
 
         public Form1(CefBrowserHandler browser) {
             InitializeComponent();
-            this._browser = browser;
+            _browser = browser;
             _messageProcessorCore = new MessageProcessorCore(_damageParsingService, _combatFileLogger, _positionTrackerService, _generalStateService);
             _statisticsService = new StatisticsService(_damageParsingService);
-            _browser.JsPojo.OnRequestUpdate += transferStatsToJson;
+            _browser.JsPojo.OnRequestUpdate += TransferStatsToJson;
             _browser.JsPojo.OnSuggestLocationName += JsPojoOnOnSuggestLocationName;
             _browser.JsPojo.OnSave += JsPojoOnOnSave;
         }
@@ -70,7 +65,7 @@ namespace GrimDamage {
 
         private void JsPojoOnOnSuggestLocationName(object sender, EventArgs eventArgs) {
             SuggestLocationNameArgument args = eventArgs as SuggestLocationNameArgument;
-            MessageBox.Show($"Upload this: user suggest name for current zone: {args.Suggestion}");
+            MessageBox.Show($"Upload this: user suggest name for current zone: {args?.Suggestion}");
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -99,6 +94,14 @@ namespace GrimDamage {
                 this.labelHookStatus.Text = "Hook activated";
                 this.labelHookStatus.ForeColor = System.Drawing.Color.Green;
             };
+
+            _autoUpdateUtility.StartReportUsageTimer();
+
+            this.FormClosing += OnFormClosing;
+        }
+
+        private void OnFormClosing(object sender, FormClosingEventArgs formClosingEventArgs) {
+            _autoUpdateUtility.Dispose();
         }
 
 
@@ -112,7 +115,7 @@ namespace GrimDamage {
             _browser.ShowDevTools();
         }
 
-        private void transferStatsToJson(object sender, EventArgs e) {
+        private void TransferStatsToJson(object sender, EventArgs e) {
             var players = _statisticsService.GetPlayers();
             var pets = _statisticsService.GetPets();
 
@@ -168,6 +171,10 @@ namespace GrimDamage {
                     );
                 }
             }
+        }
+
+        private void linkDonate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=29J3HM8G3CQSA");
         }
     }
 }

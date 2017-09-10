@@ -12,6 +12,8 @@ using log4net.Repository.Hierarchy;
 namespace GrimDamage.Parser.Service {
     public class DamageParsingService {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(DamageParsingService));
+        private readonly EntityNamingService _entityNamingService;
+
         private const string PlayerPattern = "/pc/";
         private const string PetPattern0 = @"/playerclass";
         private const string PetPattern1 = @"/pets/";
@@ -23,6 +25,7 @@ namespace GrimDamage.Parser.Service {
         private readonly ConcurrentDictionary<int, Entity> _entities;
 
         public DamageParsingService() {
+            _entityNamingService = new EntityNamingService();
             this._entities = new ConcurrentDictionary<int, Entity>();
         }
 
@@ -102,7 +105,7 @@ namespace GrimDamage.Parser.Service {
             if (!_entities.ContainsKey(id) && _attackerName != null) {
                 _entities[id] = new Entity {
                     Id = id,
-                    Name = _attackerName,
+                    Name = _entityNamingService.GetName(_attackerName),
                     Type = Classify(_attackerName),
                     IsPrimary = id == _primaryId
                 };
@@ -119,7 +122,7 @@ namespace GrimDamage.Parser.Service {
             if (!_entities.ContainsKey(id) && _defenderName != null) {
                 _entities[id] = new Entity {
                     Id = id,
-                    Name = _defenderName,
+                    Name = _entityNamingService.GetName(_defenderName),
                     Type = Classify(_defenderName),
                     IsPrimary = id == _primaryId
                 };

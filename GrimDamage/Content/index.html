@@ -1,7 +1,7 @@
-﻿
-<script src="js/vendor/highcharts.js"></script>
+﻿<script src="js/vendor/highstock.js"></script>
 <script src="js/integration.js"></script>
 <script src="js/main.js"></script>
+<script src="js/graphs.js"></script>
 <script src="js/vendor/knockout-3.4.0.js"></script>
 
 
@@ -12,7 +12,12 @@
 
 
 <script type="text/javascript">
-    loadCharts();
+    let chartDamageTaken, chartDamageDealt;
+    [chartDamageTaken, chartDamageDealt] = loadCharts();
+    var p = new DamageParser(chartDamageTaken, chartDamageDealt);
+
+    setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget) => p.tick(players, damageDealt, damageTaken, damageDealtSingleTarget));
+
 </script>
 
 If you're not seeing a graph above, something is wrong.

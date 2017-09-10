@@ -4,21 +4,18 @@
 	Don't intend to share it widely on the forum until its fleshed out
 
 Unmapped / uncharted territory:
-* Get mob name from record string		-- should be able to pull this from ia an hardcode it, rarely updated.
+* Get mob name from record string		-- should be able to pull this from ia and hardcode it, rarely updated.
 * Get player heals from in-game [useful?]		-- unknown
 * Get player class[es] from in-game? [for pets]		-- unknown, suspect very tricky  // mastery
-* GAME::Character::GetAngerMultiplier <- Aggro meter??!??
-
 
 TODO:
 * [PHP/C#] Finish the upload functionality
-* [PHP] Add the logging/stats php files to binero
-* [C#/SQL] Map pets to players (ex: records/skills/playerclass06/pets/winddevil_05.dbr) .. stat name "description"
 * [JS] Maybe add a list of pets with checkboxes, where the player can choose which are his, and merge those into his aoe/st damage? [obs: per name? pets die pretty often]
 * [JS] Automatically show what killed you
 * [JS] show one graph with pets? 
 * [JS] Now possible to save/load parses from .JS ==> Need the JS integration
 * [JS] Use knockout for something? global states?
+* [JS] An issue with switching to NULL for consecutive 0s is that the sequence will start from null, not from 0, creating odd clipped graphs
 
 
 Nice to have:
