@@ -53,9 +53,9 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Location = new System.Drawing.Point(6, 6);
+            this.panel1.Location = new System.Drawing.Point(2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(921, 446);
+            this.panel1.Size = new System.Drawing.Size(931, 456);
             this.panel1.TabIndex = 3;
             // 
             // btnShowDevtools
@@ -109,9 +109,9 @@
             this.panelDebugView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelDebugView.Location = new System.Drawing.Point(5, 7);
+            this.panelDebugView.Location = new System.Drawing.Point(1, 2);
             this.panelDebugView.Name = "panelDebugView";
-            this.panelDebugView.Size = new System.Drawing.Size(921, 446);
+            this.panelDebugView.Size = new System.Drawing.Size(932, 456);
             this.panelDebugView.TabIndex = 7;
             // 
             // linkDiscord
@@ -162,7 +162,7 @@
             this.Controls.Add(this.btnShowDevtools);
             this.Controls.Add(this.labelHookStatus);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Project GD Damage Parser";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

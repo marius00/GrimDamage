@@ -70,7 +70,7 @@
     <Compile Include="GD\Logger\CombatFileLogger.cs" />
     <Compile Include="GD\Logger\CombatFileReader.cs" />
     <Compile Include="GD\Processors\GDLogMessageProcessor.cs" />
-    <Compile Include="GD\Processors\GDPauseGameProcessor.cs" />
+    <Compile Include="GD\Processors\GDGameEventProcessor.cs" />
     <Compile Include="GD\Processors\IMessageProcessor.cs" />
     <Compile Include="GD\Processors\MessageProcessorCore.cs" />
     <Compile Include="GD\Processors\PlayerDetectionProcessor.cs" />

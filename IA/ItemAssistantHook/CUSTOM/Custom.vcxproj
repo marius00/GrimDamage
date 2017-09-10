@@ -149,8 +149,11 @@
     <ClCompile Include="..\ControllerPlayerStateIdleRequestNpcAction.cpp" />
     <ClCompile Include="..\ControllerPlayerStateMoveToRequestMoveAction.cpp" />
     <ClCompile Include="..\ControllerPlayerStateMoveToRequestNpcAction.cpp" />
+    <ClCompile Include="..\ControllerPlayerStateStunned.cpp" />
+    <ClCompile Include="..\ControllerPlayerStateTrapped.cpp" />
     <ClCompile Include="..\DataQueue.cpp" />
     <ClCompile Include="..\DetectPlayerId.cpp" />
+    <ClCompile Include="..\DisableMovement.cpp" />
     <ClCompile Include="..\dllmain.cpp" />
     <ClCompile Include="..\Globals.cpp" />
     <ClCompile Include="..\HookLog.cpp" />
@@ -167,8 +170,11 @@
     <ClInclude Include="..\ControllerPlayerStateIdleRequestNpcAction.h" />
     <ClInclude Include="..\ControllerPlayerStateMoveToRequestMoveAction.h" />
     <ClInclude Include="..\ControllerPlayerStateMoveToRequestNpcAction.h" />
+    <ClInclude Include="..\ControllerPlayerStateStunned.h" />
+    <ClInclude Include="..\ControllerPlayerStateTrapped.h" />
     <ClInclude Include="..\DataQueue.h" />
     <ClInclude Include="..\DetectPlayerId.h" />
+    <ClInclude Include="..\DisableMovement.h" />
     <ClInclude Include="..\dllmain.h" />
     <ClInclude Include="..\Globals.h" />
     <ClInclude Include="..\HookLog.h" />

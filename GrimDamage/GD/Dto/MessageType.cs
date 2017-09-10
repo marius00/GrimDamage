@@ -29,6 +29,11 @@ namespace GrimDamage.GD.Dto {
         Unpause = 20001,
         PlayerIdDetected = 20002, // TODO: Hopefully this isnt called for both thyself and the host. If it is, hopefully the first call is always thyself. Still an issue when starting a new game though.
         PlayerDied = 20003,
+        BeginStun = 2001,
+        EndStun = 2002,
+        BeginTrap = 2003,
+        EndTrap = 2004,
+        DisableMovement = 2005,
 
     }
 }

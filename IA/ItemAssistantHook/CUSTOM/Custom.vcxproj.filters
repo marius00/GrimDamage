@@ -19,6 +19,9 @@
     <Filter Include="HookedMethods\PositionTrackers">
       <UniqueIdentifier>{f594c772-64a8-4d22-86da-4d9fc4f201dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HookedMethods\MovementRestrictions">
+      <UniqueIdentifier>{ba6698d9-338b-40c5-9cd3-24f2fc03253b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\DataQueue.cpp">
@@ -68,6 +71,15 @@
     </ClCompile>
     <ClCompile Include="..\IncrementDeaths.cpp">
       <Filter>HookedMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ControllerPlayerStateStunned.cpp">
+      <Filter>HookedMethods\MovementRestrictions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ControllerPlayerStateTrapped.cpp">
+      <Filter>HookedMethods\MovementRestrictions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DisableMovement.cpp">
+      <Filter>HookedMethods\MovementRestrictions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +133,15 @@
     </ClInclude>
     <ClInclude Include="..\IncrementDeaths.h">
       <Filter>HookedMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ControllerPlayerStateStunned.h">
+      <Filter>HookedMethods\MovementRestrictions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ControllerPlayerStateTrapped.h">
+      <Filter>HookedMethods\MovementRestrictions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DisableMovement.h">
+      <Filter>HookedMethods\MovementRestrictions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

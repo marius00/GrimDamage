@@ -18,6 +18,9 @@
 #include "UnpauseGameTime.h"
 #include "DetectPlayerId.h"
 #include "IncrementDeaths.h"
+#include "ControllerPlayerStateStunned.h"
+#include "ControllerPlayerStateTrapped.h"
+#include "DisableMovement.h"
 
 
 #pragma region Variables
@@ -140,7 +143,10 @@ int ProcessAttach(HINSTANCE _hModule) {
 	hooks.push_back(new DetectPlayerId(&g_dataQueue, g_hEvent));
 	hooks.push_back(new IncrementDeaths(&g_dataQueue, g_hEvent));
 	
-	
+	hooks.push_back(new ControllerPlayerStateStunned(&g_dataQueue, g_hEvent));
+	hooks.push_back(new ControllerPlayerStateTrapped(&g_dataQueue, g_hEvent));
+	hooks.push_back(new DisableMovement(&g_dataQueue, g_hEvent));
+
 	for (unsigned int i = 0; i < hooks.size(); i++) {
 		hooks[i]->EnableHook();
 	}

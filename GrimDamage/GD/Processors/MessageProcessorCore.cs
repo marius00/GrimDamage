@@ -34,7 +34,7 @@ namespace GrimDamage.GD.Processors {
             _processors = new List<IMessageProcessor> {
                 new GdLogMessageProcessor(fileLogger, damageParsingService),
                 new PlayerPositionTrackerProcessor(positionTrackerService),
-                new GDPauseGameProcessor(generalStateService),
+                new GdGameEventProcessor(generalStateService),
                 new PlayerDetectionProcessor(damageParsingService)
             };
 
