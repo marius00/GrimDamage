@@ -1,17 +1,29 @@
 ﻿<script src="js/vendor/highstock.js"></script>
+<script src="js/vendor/knockout-3.4.0.js"></script>
+<script src="js/vendor/jquery-3.2.1.min.js"></script> <!-- Required for impromptu, further use of jQuery functionality is discouraged -->
+<script src="js/vendor/jquery-impromptu.min.js"></script> <!-- Perhaps look into alternatives which does not require jQuery -->
+<link rel="stylesheet" media="all" type="text/css" href="css/vendor/jquery-impromptu.min.css" />
+
+
 <script src="js/integration.js"></script>
 <script src="js/main.js"></script>
+<script src="js/damage-parser.js"></script>
 <script src="js/graphs.js"></script>
-<script src="js/vendor/knockout-3.4.0.js"></script>
 
-
-
+
+<!-- TODO: Bootstrap button maybe? -->
+<div data-bind="visible: IsZoneUnknown">
+    You are in an unmapped area
+    <input type="button" data-bind="click: suggestName" value="Suggest name" />
+</div>
 <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <div id="container-damage-done" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 
 
 <script type="text/javascript">
+    enableLogToCsharp();
+
     let chartDamageTaken, chartDamageDealt;
     [chartDamageTaken, chartDamageDealt] = loadCharts();
     var p = new DamageParser(chartDamageTaken, chartDamageDealt);

@@ -91,11 +91,11 @@ namespace GrimDamage.Parser.Service {
         }
 
         public void ApplyLifeLeech(double chance, double amount) {
-            
+            // Life leech is being removed soon, wasted effort to implement
         }
 
         public void ApplyTotalDamage(double amount, double overTime) {
-
+            // Need to research more on what this data truly means
         }
 
         public void SetAttackerName(string name) {
@@ -142,7 +142,7 @@ namespace GrimDamage.Parser.Service {
         }
 
         public void ApplyBlock(double total, double percentile, double remaining) {
-            
+            // TODO: This damage may be useful if showing HP / Heals
         }
 
 

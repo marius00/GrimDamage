@@ -9,6 +9,11 @@ namespace GrimDamage.Parser.Model {
         Pause, Unpause, Dying,
         BeginStun, EndStun,
         BeginTrap, EndTrap,
-        DisableMovement
+        DisableMovement,
+        Unknown,
+        Initializing,
+        Alive,
+        Dead,
+        Respawning
     }
 }

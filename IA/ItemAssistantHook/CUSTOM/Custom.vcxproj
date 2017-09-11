@@ -161,6 +161,7 @@
     <ClCompile Include="..\IncrementDeaths.cpp" />
     <ClCompile Include="..\LogHooker.cpp" />
     <ClCompile Include="..\PauseGameTime.cpp" />
+    <ClCompile Include="..\SetLifeState.cpp" />
     <ClCompile Include="..\stdafx.cpp" />
     <ClCompile Include="..\UnpauseGameTime.cpp" />
   </ItemGroup>
@@ -182,6 +183,7 @@
     <ClInclude Include="..\IncrementDeaths.h" />
     <ClInclude Include="..\LogHooker.h" />
     <ClInclude Include="..\PauseGameTime.h" />
+    <ClInclude Include="..\SetLifeState.h" />
     <ClInclude Include="..\stdafx.h" />
     <ClInclude Include="..\UnpauseGameTime.h" />
     <ClInclude Include="resource.h" />

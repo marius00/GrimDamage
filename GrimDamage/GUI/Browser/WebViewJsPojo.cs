@@ -16,6 +16,7 @@ namespace GrimDamage.GUI.Browser {
         public event EventHandler OnRequestUpdate;
         public event EventHandler OnSuggestLocationName;
         public event EventHandler OnSave;
+        public event EventHandler OnLog;
 
 
         public string stateChangesJson { get; set; }
@@ -46,6 +47,11 @@ namespace GrimDamage.GUI.Browser {
 
         public void save(string json) {
             OnSave?.Invoke(this, new SaveParseArgument() {
+                Data = json
+            });
+        }
+        public void log(string json) {
+            OnLog?.Invoke(this, new SaveParseArgument() {
                 Data = json
             });
         }

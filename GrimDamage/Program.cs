@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using EvilsoftCommons.Exceptions;
 using GrimDamage.GUI.Browser;
 using GrimDamage.GUI.Forms;
+using GrimDamage.Settings;
 using GrimDamage.Tracking.Model;
 using log4net;
 using log4net.Repository.Hierarchy;
@@ -51,8 +52,14 @@ namespace GrimDamage {
             using (var browser = new CefBrowserHandler()) {
                 WebViewJsPojo jsPojo = new WebViewJsPojo();
                 browser.InitializeChromium(url, jsPojo, null);
-                Application.Run(new Form1(browser));
+                Application.Run(new Form1(browser, GetSettings()));
             }
+        }
+
+        private static AppSettings GetSettings() {
+            return new AppSettings {
+
+            };
         }
     }
 }

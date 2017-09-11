@@ -22,6 +22,9 @@
     <Filter Include="HookedMethods\MovementRestrictions">
       <UniqueIdentifier>{ba6698d9-338b-40c5-9cd3-24f2fc03253b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HookedMethods\GameState">
+      <UniqueIdentifier>{a36d8d98-dce9-4dd7-9a51-0375a40e5992}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\DataQueue.cpp">
@@ -60,16 +63,7 @@
     <ClCompile Include="..\HookWalkTo.cpp">
       <Filter>HookedMethods\PositionTrackers</Filter>
     </ClCompile>
-    <ClCompile Include="..\PauseGameTime.cpp">
-      <Filter>HookedMethods</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UnpauseGameTime.cpp">
-      <Filter>HookedMethods</Filter>
-    </ClCompile>
     <ClCompile Include="..\DetectPlayerId.cpp">
-      <Filter>HookedMethods</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IncrementDeaths.cpp">
       <Filter>HookedMethods</Filter>
     </ClCompile>
     <ClCompile Include="..\ControllerPlayerStateStunned.cpp">
@@ -80,6 +74,18 @@
     </ClCompile>
     <ClCompile Include="..\DisableMovement.cpp">
       <Filter>HookedMethods\MovementRestrictions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IncrementDeaths.cpp">
+      <Filter>HookedMethods\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PauseGameTime.cpp">
+      <Filter>HookedMethods\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UnpauseGameTime.cpp">
+      <Filter>HookedMethods\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SetLifeState.cpp">
+      <Filter>HookedMethods\GameState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,16 +128,7 @@
     <ClInclude Include="..\HookWalkTo.h">
       <Filter>HookedMethods\PositionTrackers</Filter>
     </ClInclude>
-    <ClInclude Include="..\PauseGameTime.h">
-      <Filter>HookedMethods</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UnpauseGameTime.h">
-      <Filter>HookedMethods</Filter>
-    </ClInclude>
     <ClInclude Include="..\DetectPlayerId.h">
-      <Filter>HookedMethods</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IncrementDeaths.h">
       <Filter>HookedMethods</Filter>
     </ClInclude>
     <ClInclude Include="..\ControllerPlayerStateStunned.h">
@@ -142,6 +139,18 @@
     </ClInclude>
     <ClInclude Include="..\DisableMovement.h">
       <Filter>HookedMethods\MovementRestrictions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IncrementDeaths.h">
+      <Filter>HookedMethods\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PauseGameTime.h">
+      <Filter>HookedMethods\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UnpauseGameTime.h">
+      <Filter>HookedMethods\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SetLifeState.h">
+      <Filter>HookedMethods\GameState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

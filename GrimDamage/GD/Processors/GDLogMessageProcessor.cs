@@ -5,25 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using EvilsoftCommons;
 using GrimDamage.GD.Dto;
-using GrimDamage.GD.Logger;
 using GrimDamage.Parser.Service;
+using GrimDamage.Settings;
 using log4net;
 
 namespace GrimDamage.GD.Processors {
     class GdLogMessageProcessor : IMessageProcessor {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(IMessageProcessor));
-        private readonly CombatFileLogger _fileLogger;
+        private readonly AppSettings _appSettings;
         private readonly DamageParsingService _damageParsingService;
-
-        public bool LogUnknownEvents { get; set; }
-
-        public GdLogMessageProcessor(CombatFileLogger fileLogger, DamageParsingService damageParsingService) {
-            _fileLogger = fileLogger;
+        
+        public GdLogMessageProcessor(AppSettings appSettings, DamageParsingService damageParsingService) {
+            _appSettings = appSettings;
             _damageParsingService = damageParsingService;
         }
 
         private void AddEvent(string s) {
-            _fileLogger.AddEvent(s);
+            if (_appSettings.LogAllEvents) {
+                Logger.Debug(s);
+            }
         }
 
         public bool Process(MessageType type, byte[] data) {
@@ -90,8 +90,9 @@ namespace GrimDamage.GD.Processors {
                 _damageParsingService.ApplyBlock(a, b, c);
             }
             else if (type == MessageType.LogUnrecognized) {
-                if (LogUnknownEvents)
+                if (_appSettings.LogUnknownEvents) {
                     Logger.Debug($"Unrecognized log: {IOHelper.GetNullString(data, 0)}");
+                }
             }
             else {
                 return false;

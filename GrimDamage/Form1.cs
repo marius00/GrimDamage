@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using EvilsoftCommons.Exceptions;
-using GrimDamage.GD.Logger;
+using GrimDamage.Crowdsourced.Web;
 using GrimDamage.GD.Processors;
 using GrimDamage.GUI.Browser;
 using GrimDamage.GUI.Browser.dto;
@@ -27,21 +27,31 @@ namespace GrimDamage {
         private readonly CefBrowserHandler _browser;
         private readonly MessageProcessorCore _messageProcessorCore;
         private readonly PositionTrackerService _positionTrackerService = new PositionTrackerService();
-        private readonly CombatFileLogger _combatFileLogger = new CombatFileLogger();
-        private readonly GeneralStateService _generalStateService = new GeneralStateService();
+        private readonly GeneralStateService _generalStateService;
         private readonly AutoUpdateUtility _autoUpdateUtility = new AutoUpdateUtility();
+        private readonly NameSuggestionService _nameSuggestionService;
+        private readonly AppSettings _appSettings;
 
 
 
-
-        public Form1(CefBrowserHandler browser) {
+        public Form1(CefBrowserHandler browser, AppSettings appSettings) {
             InitializeComponent();
             _browser = browser;
-            _messageProcessorCore = new MessageProcessorCore(_damageParsingService, _combatFileLogger, _positionTrackerService, _generalStateService);
+            _appSettings = appSettings;
+            _generalStateService = new GeneralStateService(_appSettings);
+
+            _messageProcessorCore = new MessageProcessorCore(_damageParsingService, _positionTrackerService, _generalStateService, _appSettings);
             _statisticsService = new StatisticsService(_damageParsingService);
             _browser.JsPojo.OnRequestUpdate += TransferStatsToJson;
             _browser.JsPojo.OnSuggestLocationName += JsPojoOnOnSuggestLocationName;
             _browser.JsPojo.OnSave += JsPojoOnOnSave;
+            _browser.JsPojo.OnLog += (sender, args) => {
+                string data = (args as SaveParseArgument)?.Data;
+                Logger.Warn(data);
+                ExceptionReporter.ReportIssue(data);
+            };
+
+            _nameSuggestionService = new NameSuggestionService(GlobalSettings.BineroHost);
         }
 
         private void JsPojoOnOnSave(object sender, EventArgs eventArgs) {
@@ -65,7 +75,9 @@ namespace GrimDamage {
 
         private void JsPojoOnOnSuggestLocationName(object sender, EventArgs eventArgs) {
             SuggestLocationNameArgument args = eventArgs as SuggestLocationNameArgument;
-            MessageBox.Show($"Upload this: user suggest name for current zone: {args?.Suggestion}");
+            if (!_nameSuggestionService.SuggestName(_positionTrackerService.PlayerPosition, args?.Suggestion)) {
+                MessageBox.Show("Suggestion could not be sent due to an unknown error");
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -84,7 +96,7 @@ namespace GrimDamage {
                 webView.Show();
             }
             {
-                var debugView = new DebugSettings();
+                var debugView = new DebugSettings(_appSettings);
                 debugView.TopLevel = false;
                 this.panelDebugView.Controls.Add(debugView);
                 debugView.Show();

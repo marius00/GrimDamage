@@ -4,12 +4,12 @@
 	Don't intend to share it widely on the forum until its fleshed out
 
 Unmapped / uncharted territory:
-* Get mob name from record string		-- should be able to pull this from ia and hardcode it, rarely updated.
+* Player name would be useful if we start saving parses
 * Get player heals from in-game [useful?]		-- unknown
 * Get player class[es] from in-game? [for pets]		-- unknown, suspect very tricky  // mastery
 
 TODO:
-* [PHP/C#] Finish the upload functionality
+* [PHP] Finish the upload functionality
 * [JS] Maybe add a list of pets with checkboxes, where the player can choose which are his, and merge those into his aoe/st damage? [obs: per name? pets die pretty often]
 * [JS] Automatically show what killed you
 * [JS] show one graph with pets? 
@@ -19,6 +19,8 @@ TODO:
 
 
 Nice to have:
+* HP line on damage taken graph, max and current life.
+* Show damage blocked (shield)
 * show stats of enemies, off, def, etc..
 * How much dps from racial?
 * In .js, if you 've gone X updates without doing any damage, might as well tag him as out-of-combat, and stop updating the graph

@@ -34,6 +34,7 @@ namespace GrimDamage.GD.Dto {
         BeginTrap = 2003,
         EndTrap = 2004,
         DisableMovement = 2005,
+        SetLifeState = 2006,
 
     }
 }

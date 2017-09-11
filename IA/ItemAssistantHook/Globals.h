@@ -43,3 +43,4 @@ PointerHelper readOffset(void* ptr);
 #define TYPE_TrapBegin 2003
 #define TYPE_TrapEnd 2004
 #define TYPE_DisableMovement 2005
+#define TYPE_SetLifeState 2006

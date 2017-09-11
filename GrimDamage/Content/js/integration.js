@@ -21,7 +21,13 @@ function _saveReceived(data) {
         saveReceivedCallbackMethod(JSON.parse(data));
 }
 
-
+// This function ensures that JS errors are logged in C#, and reported as an error via the exception reporter
+// So exceptions are reported when users without debug console encounters them
+function enableLogToCsharp() {
+    window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
+        data.log(JSON.stringify([errorMsg, url + ':' + lineNumber + ' at character ' + column, errorObj]));
+    }
+}
 
 function setCsharpTickCallback(method) {
     tickCallbackMethod = method;
@@ -36,4 +42,9 @@ function setCsharpTickInterval(interval) {
 
 function setCsharpLoadHistoryCallback(method) {
     saveReceivedCallbackMethod = method;
+}
+
+function sendCsharpNameSuggestion(suggestion) {
+    if (suggestion)
+        data.suggestLocationName(suggestion);
 }

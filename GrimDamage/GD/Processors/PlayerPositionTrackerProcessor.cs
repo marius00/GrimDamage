@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EvilsoftCommons;
 using GrimDamage.GD.Dto;
+using GrimDamage.Settings;
 using GrimDamage.Statistics.model;
 using GrimDamage.Statistics.Service;
 using log4net;
@@ -13,8 +14,11 @@ namespace GrimDamage.GD.Processors {
     class PlayerPositionTrackerProcessor : IMessageProcessor {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(PlayerPositionTrackerProcessor));
         private readonly PositionTrackerService _positionTrackerService;
-        public PlayerPositionTrackerProcessor(PositionTrackerService positionTrackerService) {
+        private readonly AppSettings _appSettings;
+
+        public PlayerPositionTrackerProcessor(PositionTrackerService positionTrackerService, AppSettings appSettings) {
             _positionTrackerService = positionTrackerService;
+            _appSettings = appSettings;
         }
 
         public bool Process(MessageType type, byte[] data) {
@@ -28,7 +32,6 @@ namespace GrimDamage.GD.Processors {
                     {
 
                         int pos = 16;
-                        int _trash = IOHelper.GetInt(data, pos);
                         pos += 4;
                         int b = IOHelper.GetInt(data, pos);
                         pos += 4;
@@ -43,8 +46,10 @@ namespace GrimDamage.GD.Processors {
                             Zone = b
                         });
 
-                        Logger.Debug($"Received a {type}({b}, {c}, {d} => ({IOHelper.GetFloat(data, 4)}, {IOHelper.GetFloat(data, 8)}, {IOHelper.GetFloat(data, 12)}, {IOHelper.GetInt(data, 0)})");
-                        //Logger.Debug($"Received a TYPE_Move({fb}, {fc}, {fd} =>");
+                        if (_appSettings.LogPlayerMovement) {
+                            Logger.Debug(
+                                $"Received a {type}({b}, {c}, {d} => ({IOHelper.GetFloat(data, 4)}, {IOHelper.GetFloat(data, 8)}, {IOHelper.GetFloat(data, 12)}, {IOHelper.GetInt(data, 0)})");
+                        }
                     }
 
                     

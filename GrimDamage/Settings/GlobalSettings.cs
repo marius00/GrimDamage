@@ -10,6 +10,8 @@ namespace GrimDamage.Settings {
     static class GlobalSettings {
         public static string LogPath => BaseFolder;
 
+        public static string BineroHost => "http://ribbs.dreamcrash.org/gddamage";
+
         public static string SavedParsePath => CreateAndReturn(Path.Combine(BaseFolder, "SavedParses"));
 
 

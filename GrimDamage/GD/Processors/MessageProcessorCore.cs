@@ -5,8 +5,8 @@ using System.Threading;
 using EvilsoftCommons.DllInjector;
 using EvilsoftCommons.Exceptions;
 using GrimDamage.GD.Dto;
-using GrimDamage.GD.Logger;
 using GrimDamage.Parser.Service;
+using GrimDamage.Settings;
 using GrimDamage.Statistics.Service;
 using log4net;
 // ReSharper disable NotAccessedField.Local
@@ -20,6 +20,7 @@ namespace GrimDamage.GD.Processors {
         private bool _isFirstMessage = true;
         private readonly Action<RegisterWindow.DataAndType> _registerWindowDelegate;
         private readonly List<IMessageProcessor> _processors;
+        private readonly AppSettings _appSettings;
 
         public delegate void HookActivationCallback(object sender, EventArgs e);
 
@@ -27,21 +28,22 @@ namespace GrimDamage.GD.Processors {
 
         public MessageProcessorCore(
             DamageParsingService damageParsingService, 
-            CombatFileLogger fileLogger, 
             PositionTrackerService positionTrackerService,
-            GeneralStateService generalStateService
+            GeneralStateService generalStateService,
+            AppSettings appSettings
         ) {
             _processors = new List<IMessageProcessor> {
-                new GdLogMessageProcessor(fileLogger, damageParsingService),
-                new PlayerPositionTrackerProcessor(positionTrackerService),
+                new GdLogMessageProcessor(appSettings, damageParsingService),
+                new PlayerPositionTrackerProcessor(positionTrackerService, appSettings),
                 new GdGameEventProcessor(generalStateService),
-                new PlayerDetectionProcessor(damageParsingService)
+                new PlayerDetectionProcessor(damageParsingService, appSettings)
             };
 
             _registerWindowDelegate = CustomWndProc;
             _injectorCallbackDelegate = InjectorCallback;
             _window = new RegisterWindow("GDDamageWindowClass", _registerWindowDelegate);
             _injector = new InjectionHelper(new BackgroundWorker(), _injectorCallbackDelegate, false, "Grim Dawn", string.Empty, "Hook.dll");
+            _appSettings = appSettings;
         }
 
 
@@ -60,8 +62,12 @@ namespace GrimDamage.GD.Processors {
 
             MessageType type = (MessageType) bt.Type;
             foreach (var processor in _processors) {
-                if (processor.Process(type, bt.Data))
+                if (processor.Process(type, bt.Data)) {
+                    if (_appSettings.LogProcessedMessages) {
+                        Logger.Debug($"Processor {processor.GetType().ToString()} handled message");
+                    }
                     return;
+                }
             }
 
             Logger.Warn($"Got a message of type {bt.Type}");
