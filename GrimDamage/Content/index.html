@@ -13,9 +13,11 @@
 
 
 <!-- TODO: Bootstrap button maybe? -->
-<div data-bind="visible: IsZoneUnknown">
-    You are in an unmapped area
-    <input type="button" data-bind="click: suggestName" value="Suggest name" />
+<div id="name-suggest-ko">
+    <div data-bind="visible: isZoneUnknown">
+        You are in an unmapped area
+        <input type="button" data-bind="click: suggestName" value="Suggest name" />
+    </div>
 </div>
 <div id="container-damage-taken-pie" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -27,13 +29,30 @@
 <script type="text/javascript">
     enableLogToCsharp();
 
+    // KO, move this?
+    function _VM() {
+        this.suggestName = triggerSuggestNameDialog;
+        this.isZoneUnknown = ko.observable(false);
+    }
+    var VM = new _VM();
+    ko.applyBindings(VM, document.getElementById('name-suggest-ko'));
+
+
+    // Chart and parsing
     let chartDamageTaken, chartDamageDealt;
     [chartDamageTaken, chartDamageDealt, chartDamageTakenPie] = loadCharts();
     var p = new DamageParser(chartDamageTaken, chartDamageDealt, chartDamageTakenPie);
 
-    setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget) => p.tick(players, damageDealt, damageTaken, damageDealtSingleTarget));
+    setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName) => {
+        p.tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName);
+        VM.isZoneUnknown(playerLocationName === 'Unknown');
+
+    });
+
     setCsharpTickInterval(1000);
     setCsharpLoadHistoryCallback((dataset) => { console.log("Load:", dataset); });
+
+
 </script>
 
 If you're not seeing a graph above, something is wrong.
