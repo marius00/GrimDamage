@@ -33,8 +33,8 @@ namespace GrimDamage {
 
             ExceptionReporter.UrlCrashreport = "http://ribbs.dreamcrash.org/gddamage/crashreport.php";
             ExceptionReporter.UrlStats = "http://ribbs.dreamcrash.org/gddamage/stats.php";
-#if !DEBUG
             ExceptionReporter.LogExceptions = true;
+#if !DEBUG
 #endif
             Logger.Info("Anonymous usage statistics and crash reports will be collected.");
             Logger.Info("Statistics and crash reports can be found at http://ribbs.dreamcrash.org/gddamage/logs.html");

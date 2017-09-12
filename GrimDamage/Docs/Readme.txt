@@ -16,7 +16,8 @@ TODO:
 * [JS] Now possible to save/load parses from .JS ==> Need the JS integration
 * [JS] Use knockout for something? global states?
 * [JS] An issue with switching to NULL for consecutive 0s is that the sequence will start from null, not from 0, creating odd clipped graphs
-
+* [C#] Linklabel to download IA, if its not already installed.
+* [C#/PHP] Was thinking maybe a news thing, just a link to gog/steam when there's a sale or wtv.. unsure if it provides any value, but being able to announce stuff to users (while being non intrusive) might be nice.
 
 Nice to have:
 * HP line on damage taken graph, max and current life.
