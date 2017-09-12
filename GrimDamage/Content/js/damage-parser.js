@@ -1,12 +1,14 @@
 ﻿// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 class DamageParser {
-    constructor(damageTakenGraph, damageDealtGraph) {
+    constructor(damageTakenGraph, damageDealtGraph, damageTakenPie) {
         this.lastPlayerLocation = '';
         this.currentXAxis = 100;
         this.previousDamageTaken = {};
         this.damageDealtGraph = damageDealtGraph;
         this.damageTakenGraph = damageTakenGraph;
+        this.damageTakenPie = damageTakenPie;
         this.players = [];
+        this.totalDamageTaken = [];
     }
 
     tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName) {
@@ -51,6 +53,20 @@ class DamageParser {
     addDamageTaken(elem, shouldRender) {
         const dmg = elem.amount;
         const type = elem.damageType;
+
+        /* Pie chart of total damage recieved */
+        if (!isNaN(dmg) && type != "Total" && dmg > 0) {
+            if (!this.totalDamageTaken.hasOwnProperty(type)) {
+                this.totalDamageTaken[type] = 0;
+            }
+            this.totalDamageTaken[type] += Math.round(dmg);
+            var temp = this.totalDamageTaken; //this.totalDamageTaken[data] wouldn't work two lines down
+            var out = Object.keys(this.totalDamageTaken).map(function (data) {
+                return [data, temp[data]];
+            });
+            this.damageTakenPie.series[0].setData(out);
+        }
+        /* Pie chart end */
 
         const chart = this.damageTakenGraph.series.filter(s => s.name === type)[0];
         if (dmg > 2) {

@@ -222,5 +222,33 @@
             ]
         });
 
-    return [damageTakenChart, damageDealtChart];
+    let damageTakenPie = Highcharts.chart('container-damage-taken-pie',
+        {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Total damage taken'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Damage taken',
+                colorByPoint: true,
+                data: []
+            }]
+        });
+
+    return [damageTakenChart, damageDealtChart, damageTakenPie];
 }

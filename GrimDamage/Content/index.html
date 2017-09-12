@@ -10,14 +10,17 @@
 <script src="js/damage-parser.js"></script>
 <script src="js/graphs.js"></script>
 
-
+
+
 <!-- TODO: Bootstrap button maybe? -->
 <div data-bind="visible: IsZoneUnknown">
     You are in an unmapped area
     <input type="button" data-bind="click: suggestName" value="Suggest name" />
 </div>
+<div id="container-damage-taken-pie" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <div id="container-damage-done" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
 
 
 
@@ -25,8 +28,8 @@
     enableLogToCsharp();
 
     let chartDamageTaken, chartDamageDealt;
-    [chartDamageTaken, chartDamageDealt] = loadCharts();
-    var p = new DamageParser(chartDamageTaken, chartDamageDealt);
+    [chartDamageTaken, chartDamageDealt, chartDamageTakenPie] = loadCharts();
+    var p = new DamageParser(chartDamageTaken, chartDamageDealt, chartDamageTakenPie);
 
     setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget) => p.tick(players, damageDealt, damageTaken, damageDealtSingleTarget));
     setCsharpTickInterval(1000);
