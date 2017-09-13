@@ -163,6 +163,18 @@ namespace GrimDamage.Parser.Service {
             else if (record.Contains(PetPattern0) && record.Contains(PetPattern1)) {
                 return EntityType.Pet;
             }
+            else if (record.Contains("/nemesis/")) {
+                return EntityType.Nemsis;
+            }
+            else if (record.Contains("/hero/")) {
+                return EntityType.Hero;
+            }
+            else if (record.Contains("/boss&quest/")) {
+                return EntityType.Boss;
+            }
+            else if (record.Contains("/bounties/")) {
+                return EntityType.Bounty;
+            }
             else { 
                 return EntityType.Monster;
             }

@@ -14,6 +14,7 @@ namespace GrimDamage.Parser.Service {
                 return "Unknown";
             }
         }
+
 		
         private Dictionary<string, string> _entityMap = new Dictionary<string, string> {
 			// NPCs
