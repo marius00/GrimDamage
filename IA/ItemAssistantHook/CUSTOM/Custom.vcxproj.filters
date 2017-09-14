@@ -87,6 +87,9 @@
     <ClCompile Include="..\SetLifeState.cpp">
       <Filter>HookedMethods\GameState</Filter>
     </ClCompile>
+    <ClCompile Include="..\HitpointMonitor.cpp">
+      <Filter>HookedMethods</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DataQueue.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="..\SetLifeState.h">
       <Filter>HookedMethods\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HitpointMonitor.h">
+      <Filter>HookedMethods</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

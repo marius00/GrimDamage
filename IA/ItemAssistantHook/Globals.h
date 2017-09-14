@@ -44,3 +44,6 @@ PointerHelper readOffset(void* ptr);
 #define TYPE_TrapEnd 2004
 #define TYPE_DisableMovement 2005
 #define TYPE_SetLifeState 2006
+#define TYPE_PlayerHealthOffsetDetected 100
+#define TYPE_ErrorDetectingPlayerHealthOffset 404
+#define TYPE_HitpointMonitor 1007

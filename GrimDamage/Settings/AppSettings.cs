@@ -12,5 +12,6 @@ namespace GrimDamage.Settings {
         public bool LogUnknownEvents { get; set; }
         public bool LogAllEvents { get; set; }
         public bool LogPlayerDetection { get; set; }
+        public bool LogEntityHitpointEvent { get; set; }
     }
 }

@@ -35,6 +35,8 @@ namespace GrimDamage.GUI.Browser {
 
         public string petsJson { get; set; }
 
+        public string entitiesJson { get; set; }
+
         public void requestUpdate() {
             OnRequestUpdate?.Invoke(this, null);
         }

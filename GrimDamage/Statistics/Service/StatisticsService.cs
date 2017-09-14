@@ -19,24 +19,26 @@ namespace GrimDamage.Statistics.Service {
             _damageParsingService = damageParsingService;
         }
 
+        private EntityJson toJson(Entity m) {
+            return new EntityJson {
+                Id = m.Id,
+                Name = m.Name,
+                IsPrimary = m.IsPrimary,
+                Type = m.Type.ToString(),
+                Health = m.Health
+            };
+        }
+
+        public List<EntityJson> GetEntities() {
+            return _damageParsingService.Values.Select(toJson).ToList();
+        }
+
         public List<EntityJson> GetPlayers() {
-            return _damageParsingService.Values.Where(entity => entity.Type == EntityType.Player)
-                .Select(m => new EntityJson {
-                    Id = m.Id,
-                    Name = m.Name,
-                    IsPrimary = m.IsPrimary
-                })
-                .ToList();
+            return _damageParsingService.Values.Where(entity => entity.Type == EntityType.Player).Select(toJson).ToList();
         }
 
         public List<EntityJson> GetPets() {
-            return _damageParsingService.Values.Where(entity => entity.Type == EntityType.Pet)
-                .Select(m => new EntityJson {
-                    Id = m.Id,
-                    Name = m.Name,
-                    IsPrimary = false
-                })
-                .ToList();
+            return _damageParsingService.Values.Where(entity => entity.Type == EntityType.Pet).Select(toJson).ToList();
         }
 
         private List<DamageEntryJson> Normalize(List<DamageEntryJson> entries) {

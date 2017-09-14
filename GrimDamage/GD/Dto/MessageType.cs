@@ -36,5 +36,8 @@ namespace GrimDamage.GD.Dto {
         DisableMovement = 2005,
         SetLifeState = 2006,
 
+        TYPE_PlayerHealthOffsetDetected = 100,
+        TYPE_ErrorDetectingPlayerHealthOffset = 404,
+        TYPE_HitpointMonitor = 1007
     }
 }

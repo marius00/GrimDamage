@@ -147,6 +147,7 @@ namespace GrimDamage {
                 damageDealtToSingleTarget[pet.Id] = _statisticsService.GetLatestDamageDealtToSingleTarget(pet.Id);
             }
 
+            _browser.JsInteractor.SetEntities(_statisticsService.GetEntities());
             _browser.JsInteractor.SetPets(pets);
             _browser.JsInteractor.SetPlayers(players);
             _browser.JsInteractor.SetDamageDealt(damageDealt);

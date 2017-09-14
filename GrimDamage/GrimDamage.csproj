@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Crowdsourced\Web\NameSuggestionService.cs" />
+    <Compile Include="Experimenting\ReadGameDll.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +69,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GD\Dto\MessageType.cs" />
+    <Compile Include="GD\Processors\DetectPlayerHitpointsProcessor.cs" />
     <Compile Include="GD\Processors\GDLogMessageProcessor.cs" />
     <Compile Include="GD\Processors\GDGameEventProcessor.cs" />
     <Compile Include="GD\Processors\IMessageProcessor.cs" />

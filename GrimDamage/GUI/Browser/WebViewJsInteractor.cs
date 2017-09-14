@@ -52,6 +52,10 @@ namespace GrimDamage.GUI.Browser {
             _js.playersJson = JsonConvert.SerializeObject(value, _settings);
         }
 
+        public void SetEntities(List<EntityJson> value) {
+            _js.entitiesJson = JsonConvert.SerializeObject(value, _settings);
+        }
+
         public void SetPets(List<EntityJson> value) {
             _js.petsJson = JsonConvert.SerializeObject(value, _settings);
         }

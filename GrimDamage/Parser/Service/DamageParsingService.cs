@@ -38,6 +38,12 @@ namespace GrimDamage.Parser.Service {
                 return null;
         }
 
+        public void SetHealth(int id, float amount) {
+            if (_entities.ContainsKey(id)) {
+                _entities[id].Health = amount;
+            }
+        }
+
         // TODO: Call regularly, every minute or so.
         public void Cleanup() {
             var expired = _entities.Values.Where(m => (DateTime.UtcNow - m.LastSeen).Minutes > _nameCacheDuration)

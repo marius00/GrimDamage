@@ -156,6 +156,7 @@
     <ClCompile Include="..\DisableMovement.cpp" />
     <ClCompile Include="..\dllmain.cpp" />
     <ClCompile Include="..\Globals.cpp" />
+    <ClCompile Include="..\HitpointMonitor.cpp" />
     <ClCompile Include="..\HookLog.cpp" />
     <ClCompile Include="..\HookWalkTo.cpp" />
     <ClCompile Include="..\IncrementDeaths.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="..\DisableMovement.h" />
     <ClInclude Include="..\dllmain.h" />
     <ClInclude Include="..\Globals.h" />
+    <ClInclude Include="..\HitpointMonitor.h" />
     <ClInclude Include="..\HookLog.h" />
     <ClInclude Include="..\HookWalkTo.h" />
     <ClInclude Include="..\IncrementDeaths.h" />
