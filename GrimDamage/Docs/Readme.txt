@@ -29,7 +29,6 @@ Nice to have:
 * show stats of enemies, off, def, etc..
 * How much dps from racial?
 * In .js, if you 've gone X updates without doing any damage, might as well tag him as out-of-combat, and stop updating the graph
-* "War Cry" reduction % to health does not register at all, should it?
 * Finding a way to show defensive actions like absorbs and heals would be "nice to have"
 * Showing which zone the player enters / leaves  ( https://www.highcharts.com/demo/combo-timeline )
 

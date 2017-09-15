@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GrimDamage.Parser.Model;
 using GrimDamage.Statistics.dto;
+using GrimDamage.Tracking.Model;
 using Newtonsoft.Json;
 
 namespace GrimDamage.GUI.Browser {
@@ -37,7 +38,7 @@ namespace GrimDamage.GUI.Browser {
 
             List<string> documentation = new List<string>();
             documentation.Add($"Example values for {nameof(_js.stateChangesJson)}:");
-            documentation.Add(Serialize(new List<string> { GrimState.Unpause.ToString(), GrimState.BeginStun.ToString() }));
+            documentation.Add(Serialize(Enum.GetValues(typeof(GrimState)).Cast<GrimState>().Select(m => m.ToString()).ToList()));
             documentation.Add("");
 
 
@@ -110,6 +111,11 @@ namespace GrimDamage.GUI.Browser {
 
             documentation.Add($"Example values for {nameof(_js.petsJson)}:");
             documentation.Add(Serialize(new List<EntityJson> { docEntity }));
+            documentation.Add("");
+
+
+            documentation.Add($"The possible values for entity type are:");
+            documentation.Add(Serialize(Enum.GetValues(typeof(GrimState)).Cast<EntityType>().Select(m => m.ToString())));
             documentation.Add("");
 
 
