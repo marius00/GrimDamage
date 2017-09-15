@@ -115,7 +115,12 @@ namespace GrimDamage.GUI.Browser {
 
 
             documentation.Add($"The possible values for entity type are:");
-            documentation.Add(Serialize(Enum.GetValues(typeof(GrimState)).Cast<EntityType>().Select(m => m.ToString())));
+            documentation.Add(Serialize(Enum.GetValues(typeof(EntityType)).Cast<EntityType>().Select(m => m.ToString())));
+            documentation.Add("");
+
+
+            documentation.Add($"The possible values for damage type are:");
+            documentation.Add(Serialize(Enum.GetValues(typeof(DamageType)).Cast<DamageType>().Select(m => m.ToString())));
             documentation.Add("");
 
 
