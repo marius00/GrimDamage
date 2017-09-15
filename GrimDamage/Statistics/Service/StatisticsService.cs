@@ -60,6 +60,28 @@ namespace GrimDamage.Statistics.Service {
 
             return entries;
         }
+        
+
+        public List<DetailedDamageDealtEntryJson> GetDetailedLatestDamageDealt(int playerId) {
+            var player = _damageParsingService.GetEntity(playerId);
+            if (player == null || player.DamageDealt.Count == 0) {
+                return new List<DetailedDamageDealtEntryJson>();
+            }
+            else {
+                var result = player.DamageDealt
+                    .Where(dmg => dmg.Time > _lastUpdateTimeDetailedDamageTaken)
+                    .Select(m => new DetailedDamageDealtEntryJson {
+                        VictimId = m.Target,
+                        DamageType = m.Type.ToString(),
+                        Amount = m.Amount
+                    })
+                    .ToList();
+
+                _lastUpdateTimeDetailedDamageTaken = player.DamageDealt.Max(m => m.Time);
+                return result;
+            }
+        }
+
 
         public List<DetailedDamageEntryJson> GetDetailedLatestDamageTaken(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);

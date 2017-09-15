@@ -40,9 +40,11 @@ namespace GrimDamage.GUI.Browser {
             documentation.Add(Serialize(new List<string> { GrimState.Unpause.ToString(), GrimState.BeginStun.ToString() }));
             documentation.Add("");
 
+
             documentation.Add($"Example values for {nameof(_js.playerLocationName)}:");
             documentation.Add(Serialize("Peter fucking griffin"));
             documentation.Add("");
+
 
             documentation.Add($"Example values for {nameof(_js.damageTakenJson)}:");
             documentation.Add(Serialize(
@@ -51,6 +53,7 @@ namespace GrimDamage.GUI.Browser {
             }));
             documentation.Add("");
 
+
             documentation.Add($"Example values for {nameof(_js.damageDealtJson)}:");
             documentation.Add(Serialize(
                 new Dictionary<int, List<DamageEntryJson>> {
@@ -58,6 +61,7 @@ namespace GrimDamage.GUI.Browser {
                 })
             );
             documentation.Add("");
+
 
             documentation.Add($"Example values for {nameof(_js.detailedDamageTakenJson)}:");
             documentation.Add(Serialize(
@@ -71,6 +75,20 @@ namespace GrimDamage.GUI.Browser {
             );
             documentation.Add("");
 
+
+            documentation.Add($"Example values for {nameof(_js.detailedDamageDealtJson)}:");
+            documentation.Add(Serialize(
+                new Dictionary<int, List<DetailedDamageDealtEntryJson>> {
+                    {default(int), new List<DetailedDamageDealtEntryJson> { new DetailedDamageDealtEntryJson {
+                        DamageType = "Fire",
+                        Amount = 123,
+                        VictimId = 222
+                    } } }
+                })
+            );
+            documentation.Add("");
+
+            
             documentation.Add($"Example values for {nameof(_js.damageDealtToSingleTargetJson)}:");
             documentation.Add(Serialize(
                 new Dictionary<int, List<DamageEntryJson>> {
@@ -79,17 +97,21 @@ namespace GrimDamage.GUI.Browser {
             );
             documentation.Add("");
 
+
             documentation.Add($"Example values for {nameof(_js.playersJson)}:");
             documentation.Add(Serialize(new List<EntityJson> { docEntity }));
             documentation.Add("");
+
 
             documentation.Add($"Example values for {nameof(_js.entitiesJson)}:");
             documentation.Add(Serialize(new List<EntityJson> { docEntity }));
             documentation.Add("");
 
+
             documentation.Add($"Example values for {nameof(_js.petsJson)}:");
             documentation.Add(Serialize(new List<EntityJson> { docEntity }));
             documentation.Add("");
+
 
             documentation.Add("\r\n\r\nThe following methods are exposed:");
             MethodInfo[] methodInfos = typeof(WebViewJsPojo).GetMethods(BindingFlags.Public | BindingFlags.Instance);
@@ -100,7 +122,7 @@ namespace GrimDamage.GUI.Browser {
                     .Select(x => x.ParameterType + " " + x.Name)
                     .ToArray());
 
-                if (!method.Name.Contains('_')) {
+                if (!method.Name.Contains('_') && !"ToString".Equals(method.Name) && !"Equals".Equals(method.Name) && !"GetHashCode".Equals(method.Name) && !"GetType".Equals(method.Name)) {
                     documentation.Add($"{method.ReturnType} {method.Name}({parameterDescriptions})");
                 }
             }
@@ -135,6 +157,10 @@ namespace GrimDamage.GUI.Browser {
             _js.detailedDamageTakenJson = JsonConvert.SerializeObject(value, _settings);
         }
 
+        public void SetDetailedDamageDealt(Dictionary<int, List<DetailedDamageDealtEntryJson>> value) {
+            _js.detailedDamageDealtJson = JsonConvert.SerializeObject(value, _settings);
+        }
+        
         public void SetDamageDealtToSingleTarget(Dictionary<int, List<DamageEntryJson>> value) {
             _js.damageDealtToSingleTargetJson = JsonConvert.SerializeObject(value, _settings);
         }

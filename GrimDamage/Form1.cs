@@ -135,11 +135,13 @@ namespace GrimDamage {
             var damageDealtToSingleTarget = new Dictionary<int, List<DamageEntryJson>>();
             var damageTaken = new Dictionary<int, List<DamageEntryJson>>();
             var detailedDamageTaken = new Dictionary<int, List<DetailedDamageEntryJson>>();
+            var detailedDamageDealt = new Dictionary<int, List<DetailedDamageDealtEntryJson>>();
             foreach (var player in players) {
                 damageDealt[player.Id] = _statisticsService.GetLatestDamageDealt(player.Id);
                 damageTaken[player.Id] = _statisticsService.GetLatestDamageTaken(player.Id);
                 damageDealtToSingleTarget[player.Id] = _statisticsService.GetLatestDamageDealtToSingleTarget(player.Id);
                 detailedDamageTaken[player.Id] = _statisticsService.GetDetailedLatestDamageTaken(player.Id);
+                detailedDamageDealt[player.Id] = _statisticsService.GetDetailedLatestDamageDealt(player.Id);
             }
             foreach (var pet in pets) {
                 damageDealt[pet.Id] = _statisticsService.GetLatestDamageDealt(pet.Id);
@@ -156,7 +158,8 @@ namespace GrimDamage {
             _browser.JsInteractor.SetPlayerLocation(_positionTrackerService.GetPlayerLocation());
             _browser.JsInteractor.SetStateChanges(_generalStateService.GetAndClearStates());
             _browser.JsInteractor.SetDetailedDamageTaken(detailedDamageTaken);
-
+            _browser.JsInteractor.SetDetailedDamageDealt(detailedDamageDealt);
+            
             _browser.NotifyUpdate();
         }
 

@@ -31,6 +31,8 @@ namespace GrimDamage.GUI.Browser {
 
         public string damageDealtToSingleTargetJson { get; set; }
 
+        public string detailedDamageDealtJson { get; set; }
+
         public string playersJson { get; set; }
 
         public string petsJson { get; set; }
