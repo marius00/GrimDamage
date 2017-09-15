@@ -105,9 +105,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
-    <Compile Include="Statistics\dto\DamageEntryJson.cs" />
-    <Compile Include="Statistics\dto\DetailedDamageDealtEntryJson.cs" />
-    <Compile Include="Statistics\dto\DetailedDamageEntryJson.cs" />
+    <Compile Include="Statistics\dto\SimpleDamageEntryJson.cs" />
+    <Compile Include="Statistics\dto\DetailedDamageDealtJson.cs" />
+    <Compile Include="Statistics\dto\DetailedDamageTakenJson.cs" />
     <Compile Include="Statistics\dto\EntityJson.cs" />
     <Compile Include="Statistics\model\PlayerPosition.cs" />
     <Compile Include="Statistics\model\RecognizedPosition.cs" />

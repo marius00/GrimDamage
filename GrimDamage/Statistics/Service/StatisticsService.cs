@@ -41,11 +41,11 @@ namespace GrimDamage.Statistics.Service {
             return _damageParsingService.Values.Where(entity => entity.Type == EntityType.Pet).Select(toJson).ToList();
         }
 
-        private List<DamageEntryJson> Normalize(List<DamageEntryJson> entries) {
+        private List<SimpleDamageEntryJson> Normalize(List<SimpleDamageEntryJson> entries) {
             foreach (DamageType type in Enum.GetValues(typeof(DamageType))) {
                 if (type != DamageType.Unknown) {
                     if (!entries.Exists(m => m.DamageType == type.ToString())) {
-                        entries.Add(new DamageEntryJson {
+                        entries.Add(new SimpleDamageEntryJson {
                             Amount = 0,
                             DamageType = type.ToString()
                         });
@@ -53,7 +53,7 @@ namespace GrimDamage.Statistics.Service {
                 }
             }
 
-            entries.Add(new DamageEntryJson {
+            entries.Add(new SimpleDamageEntryJson {
                 Amount = entries.Sum(m => m.Amount),
                 DamageType = "Total"
             });
@@ -62,15 +62,15 @@ namespace GrimDamage.Statistics.Service {
         }
         
 
-        public List<DetailedDamageDealtEntryJson> GetDetailedLatestDamageDealt(int playerId) {
+        public List<DetailedDamageDealtJson> GetDetailedLatestDamageDealt(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);
             if (player == null || player.DamageDealt.Count == 0) {
-                return new List<DetailedDamageDealtEntryJson>();
+                return new List<DetailedDamageDealtJson>();
             }
             else {
                 var result = player.DamageDealt
                     .Where(dmg => dmg.Time > _lastUpdateTimeDetailedDamageTaken)
-                    .Select(m => new DetailedDamageDealtEntryJson {
+                    .Select(m => new DetailedDamageDealtJson {
                         VictimId = m.Target,
                         DamageType = m.Type.ToString(),
                         Amount = m.Amount
@@ -83,15 +83,15 @@ namespace GrimDamage.Statistics.Service {
         }
 
 
-        public List<DetailedDamageEntryJson> GetDetailedLatestDamageTaken(int playerId) {
+        public List<DetailedDamageTakenJson> GetDetailedLatestDamageTaken(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);
             if (player == null || player.DamageTaken.Count == 0) {
-                return new List<DetailedDamageEntryJson>();
+                return new List<DetailedDamageTakenJson>();
             }
             else {
                 var result = player.DamageTaken
                     .Where(dmg => dmg.Time > _lastUpdateTimeDetailedDamageTaken)
-                    .Select(m => new DetailedDamageEntryJson {
+                    .Select(m => new DetailedDamageTakenJson {
                         AttackerId = m.Attacker,
                         DamageType = m.Type.ToString(),
                         Amount = m.Amount
@@ -103,17 +103,17 @@ namespace GrimDamage.Statistics.Service {
             }
         }
 
-        public List<DamageEntryJson> GetLatestDamageTaken(int playerId) {
+        public List<SimpleDamageEntryJson> GetLatestDamageTaken(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);
 
             if (player == null || player.DamageTaken.Count == 0) {
-                return Normalize(new List<DamageEntryJson>());
+                return Normalize(new List<SimpleDamageEntryJson>());
             }
             else {
                 var result = player.DamageTaken
                     .Where(dmg => dmg.Time > _lastUpdateTimeDamageTaken)
                     .GroupBy(m => m.Type)
-                    .Select(m => new DamageEntryJson {
+                    .Select(m => new SimpleDamageEntryJson {
                         DamageType = m.Key.ToString(),
                         Amount = m.Sum(s => s.Amount)
                     })
@@ -124,17 +124,17 @@ namespace GrimDamage.Statistics.Service {
             }
         }
 
-        public List<DamageEntryJson> GetLatestDamageDealt(int playerId) {
+        public List<SimpleDamageEntryJson> GetLatestDamageDealt(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);
 
             if (player == null || player.DamageDealt.Count == 0) {
-                return Normalize(new List<DamageEntryJson>());
+                return Normalize(new List<SimpleDamageEntryJson>());
             }
             else {
                 var result = player.DamageDealt
                     .Where(dmg => dmg.Time > _lastUpdateTimeDamageDealt)
                     .GroupBy(m => m.Type)
-                    .Select(m => new DamageEntryJson {
+                    .Select(m => new SimpleDamageEntryJson {
                         DamageType = m.Key.ToString(),
                         Amount = m.Sum(s => s.Amount)
                     })
@@ -145,11 +145,11 @@ namespace GrimDamage.Statistics.Service {
             }
         }
         
-        public List<DamageEntryJson> GetLatestDamageDealtToSingleTarget(int playerId) {
+        public List<SimpleDamageEntryJson> GetLatestDamageDealtToSingleTarget(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);
 
             if (player == null || player.DamageDealt.Count == 0) {
-                return Normalize(new List<DamageEntryJson>());
+                return Normalize(new List<SimpleDamageEntryJson>());
             }
             else {
                 var result = player.DamageDealt
@@ -158,7 +158,7 @@ namespace GrimDamage.Statistics.Service {
                     .OrderByDescending(m => m.Sum(e => e.Amount))
                     .FirstOrDefault()
                     ?.GroupBy(m => m.Type)
-                    .Select(m => new DamageEntryJson {
+                    .Select(m => new SimpleDamageEntryJson {
                         DamageType = m.Key.ToString(),
                         Amount = m.Sum(s => s.Amount)
                         }
@@ -168,7 +168,7 @@ namespace GrimDamage.Statistics.Service {
                 _lastUpdateTimeDamageDealtSingleTarget = player.DamageDealt.Max(m => m.Time);
 
                 if (result == null)
-                    return Normalize(new List<DamageEntryJson>());
+                    return Normalize(new List<SimpleDamageEntryJson>());
 
                 return Normalize(result);
             }

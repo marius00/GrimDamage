@@ -30,7 +30,7 @@ namespace GrimDamage.GUI.Browser {
                 IsPrimary = false
             };
 
-            var docDamageEntryJson = new DamageEntryJson {
+            var docDamageEntryJson = new SimpleDamageEntryJson {
                 DamageType = "Lightning",
                 Amount = 9381
             };
@@ -48,16 +48,16 @@ namespace GrimDamage.GUI.Browser {
 
             documentation.Add($"Example values for {nameof(_js.damageTakenJson)}:");
             documentation.Add(Serialize(
-                new Dictionary<int, List<DamageEntryJson>> {
-                {default(int), new List<DamageEntryJson> { docDamageEntryJson } }
+                new Dictionary<int, List<SimpleDamageEntryJson>> {
+                {default(int), new List<SimpleDamageEntryJson> { docDamageEntryJson } }
             }));
             documentation.Add("");
 
 
             documentation.Add($"Example values for {nameof(_js.damageDealtJson)}:");
             documentation.Add(Serialize(
-                new Dictionary<int, List<DamageEntryJson>> {
-                    {default(int), new List<DamageEntryJson> { docDamageEntryJson } }
+                new Dictionary<int, List<SimpleDamageEntryJson>> {
+                    {default(int), new List<SimpleDamageEntryJson> { docDamageEntryJson } }
                 })
             );
             documentation.Add("");
@@ -65,8 +65,8 @@ namespace GrimDamage.GUI.Browser {
 
             documentation.Add($"Example values for {nameof(_js.detailedDamageTakenJson)}:");
             documentation.Add(Serialize(
-                new Dictionary<int, List<DetailedDamageEntryJson>> {
-                    {default(int), new List<DetailedDamageEntryJson> { new DetailedDamageEntryJson {
+                new Dictionary<int, List<DetailedDamageTakenJson>> {
+                    {default(int), new List<DetailedDamageTakenJson> { new DetailedDamageTakenJson {
                         DamageType = "Chaos",
                         Amount = 123,
                         AttackerId = 555
@@ -78,8 +78,8 @@ namespace GrimDamage.GUI.Browser {
 
             documentation.Add($"Example values for {nameof(_js.detailedDamageDealtJson)}:");
             documentation.Add(Serialize(
-                new Dictionary<int, List<DetailedDamageDealtEntryJson>> {
-                    {default(int), new List<DetailedDamageDealtEntryJson> { new DetailedDamageDealtEntryJson {
+                new Dictionary<int, List<DetailedDamageDealtJson>> {
+                    {default(int), new List<DetailedDamageDealtJson> { new DetailedDamageDealtJson {
                         DamageType = "Fire",
                         Amount = 123,
                         VictimId = 222
@@ -91,8 +91,8 @@ namespace GrimDamage.GUI.Browser {
             
             documentation.Add($"Example values for {nameof(_js.damageDealtToSingleTargetJson)}:");
             documentation.Add(Serialize(
-                new Dictionary<int, List<DamageEntryJson>> {
-                    {default(int), new List<DamageEntryJson> { docDamageEntryJson } }
+                new Dictionary<int, List<SimpleDamageEntryJson>> {
+                    {default(int), new List<SimpleDamageEntryJson> { docDamageEntryJson } }
                 })
             );
             documentation.Add("");
@@ -144,24 +144,24 @@ namespace GrimDamage.GUI.Browser {
             _js.playerLocationName = location;
         }
 
-        public void SetDamageTaken(Dictionary<int, List<DamageEntryJson>> value) {
+        public void SetDamageTaken(Dictionary<int, List<SimpleDamageEntryJson>> value) {
             _js.damageTakenJson = JsonConvert.SerializeObject(value, _settings);
         }
 
 
-        public void SetDamageDealt(Dictionary<int, List<DamageEntryJson>> value) {
+        public void SetDamageDealt(Dictionary<int, List<SimpleDamageEntryJson>> value) {
             _js.damageDealtJson = JsonConvert.SerializeObject(value, _settings);
         }
 
-        public void SetDetailedDamageTaken(Dictionary<int, List<DetailedDamageEntryJson>> value) {
+        public void SetDetailedDamageTaken(Dictionary<int, List<DetailedDamageTakenJson>> value) {
             _js.detailedDamageTakenJson = JsonConvert.SerializeObject(value, _settings);
         }
 
-        public void SetDetailedDamageDealt(Dictionary<int, List<DetailedDamageDealtEntryJson>> value) {
+        public void SetDetailedDamageDealt(Dictionary<int, List<DetailedDamageDealtJson>> value) {
             _js.detailedDamageDealtJson = JsonConvert.SerializeObject(value, _settings);
         }
         
-        public void SetDamageDealtToSingleTarget(Dictionary<int, List<DamageEntryJson>> value) {
+        public void SetDamageDealtToSingleTarget(Dictionary<int, List<SimpleDamageEntryJson>> value) {
             _js.damageDealtToSingleTargetJson = JsonConvert.SerializeObject(value, _settings);
         }
 

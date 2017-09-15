@@ -131,11 +131,11 @@ namespace GrimDamage {
             var players = _statisticsService.GetPlayers();
             var pets = _statisticsService.GetPets();
 
-            var damageDealt = new Dictionary<int, List<DamageEntryJson>>();
-            var damageDealtToSingleTarget = new Dictionary<int, List<DamageEntryJson>>();
-            var damageTaken = new Dictionary<int, List<DamageEntryJson>>();
-            var detailedDamageTaken = new Dictionary<int, List<DetailedDamageEntryJson>>();
-            var detailedDamageDealt = new Dictionary<int, List<DetailedDamageDealtEntryJson>>();
+            var damageDealt = new Dictionary<int, List<SimpleDamageEntryJson>>();
+            var damageDealtToSingleTarget = new Dictionary<int, List<SimpleDamageEntryJson>>();
+            var damageTaken = new Dictionary<int, List<SimpleDamageEntryJson>>();
+            var detailedDamageTaken = new Dictionary<int, List<DetailedDamageTakenJson>>();
+            var detailedDamageDealt = new Dictionary<int, List<DetailedDamageDealtJson>>();
             foreach (var player in players) {
                 damageDealt[player.Id] = _statisticsService.GetLatestDamageDealt(player.Id);
                 damageTaken[player.Id] = _statisticsService.GetLatestDamageTaken(player.Id);

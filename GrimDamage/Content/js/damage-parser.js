@@ -110,7 +110,7 @@ class DamageParser {
         this.damageDealtGraph.series.filter(s => s.name === 'EventLine')[0].addPoint({
             text: this.lastPlayerLocation,
             title: this.lastPlayerLocation,
-            x: currentXAxis
+            x: this.currentXAxis
         });
     }
 }

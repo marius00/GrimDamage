@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GrimDamage.Statistics.dto {
-    public class DetailedDamageEntryJson {
-        public int AttackerId { get; set; }
+    public class SimpleDamageEntryJson {
         public string DamageType { get; set; }
         public double Amount { get; set; }
     }
