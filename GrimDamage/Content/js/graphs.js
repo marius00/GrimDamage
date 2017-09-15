@@ -1,4 +1,7 @@
 ﻿function loadCharts() {
+    /* Setup the boss table */
+    let dataTable = $('#bosstable').DataTable();
+
     let damageTakenChart = Highcharts.chart('container-damage-taken',
         {
             chart: {
@@ -250,5 +253,5 @@
             }]
         });
 
-    return [damageTakenChart, damageDealtChart, damageTakenPie];
+    return [damageTakenChart, damageDealtChart, dataTable];
 }

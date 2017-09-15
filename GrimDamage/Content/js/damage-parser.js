@@ -1,30 +1,55 @@
 ﻿// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 class DamageParser {
-    constructor(damageTakenGraph, damageDealtGraph, damageTakenPie) {
+    constructor(damageTakenGraph, damageDealtGraph, dataTable) {
         this.lastPlayerLocation = '';
         this.currentXAxis = 100;
         this.previousDamageTaken = {};
         this.damageDealtGraph = damageDealtGraph;
         this.damageTakenGraph = damageTakenGraph;
-        this.damageTakenPie = damageTakenPie;
+        this.dataTable = dataTable;
+        console.log(this.dataTable);
         this.players = [];
         this.totalDamageTaken = [];
+        this.bosses = [];
     }
 
-    tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName) {
+    tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) {
         this.players = players; // Just a convinience so we don't need to call getMainPlayerId(players)
 
         this.currentXAxis++;
         this.dataReceived(players, damageDealt, damageTaken, damageDealtSingleTarget);
+
+        this.handleEntitiesList(entitiesList);
+        this.handleDetailedDamageTaken(detailedDamageTaken);
+        this.handleDetailedDamageDealt(detailedDamageDealt);
 
         if (this.lastPlayerLocation !== playerLocationName && playerLocationName !== undefined && playerLocationName !== 'Unknown') {
             this.updatePlayerLocation(playerLocationName);
         }
     }
 
+    /*
+     * When a new entitiy is found, and it's a boss type we need to do:
+     * 1. Add row to the database
+     * 2. Add entry in this.boss
+     * 3. Sum data for this.boss
+     */
+    handleEntitiesList(list) {
+        let length = list.length;
+        for (let c = 0; c < length; c++) {
+            /* check if id is already set */
+        }
+    }
+
+    handleDetailedDamageTaken(data) {
+    }
+    handleDetailedDamageDealt(data) {
+    }
+
     get mainPlayerId() {
         return this.players.filter(p => p.isPrimary).map(p => p.id)[0] || this.players.map(p => p.id)[0];
     }
+
 
 
     addDamageDealt(id, damageDealt, damageDealtSingleTarget) {
@@ -55,7 +80,7 @@ class DamageParser {
         const type = elem.damageType;
 
         /* Pie chart of total damage recieved */
-        if (!isNaN(dmg) && type != "Total" && dmg > 0) {
+        if (!isNaN(dmg) && type != "Total" && dmg > 0 && false) {
             if (!this.totalDamageTaken.hasOwnProperty(type)) {
                 this.totalDamageTaken[type] = 0;
             }

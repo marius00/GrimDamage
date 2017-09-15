@@ -10,7 +10,10 @@ function _itemsReceived() {
             JSON.parse(data.damageDealtJson),
             JSON.parse(data.damageTakenJson),
             JSON.parse(data.damageDealtToSingleTargetJson),
-            data.playerLocationName
+            data.playerLocationName,
+            JSON.parse(data.detailedDamageDealtJson),
+            JSON.parse(data.detailedDamageTakenJson),
+            JSON.parse(data.entitiesJson)
         );
     }
 }
