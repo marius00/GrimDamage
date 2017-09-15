@@ -13,6 +13,7 @@ namespace GrimDamage.Statistics.Service {
         private DateTime _lastUpdateTimeDamageDealtSingleTarget = DateTime.UtcNow;
         private DateTime _lastUpdateTimeDamageTaken = DateTime.UtcNow;
         private DateTime _lastUpdateTimeDetailedDamageTaken = DateTime.UtcNow;
+        private DateTime _lastUpdateTimeDetailedDamageDealt = DateTime.UtcNow;
         private readonly DamageParsingService _damageParsingService;
 
         public StatisticsService(DamageParsingService damageParsingService) {
@@ -69,7 +70,7 @@ namespace GrimDamage.Statistics.Service {
             }
             else {
                 var result = player.DamageDealt
-                    .Where(dmg => dmg.Time > _lastUpdateTimeDetailedDamageTaken)
+                    .Where(dmg => dmg.Time > _lastUpdateTimeDetailedDamageDealt)
                     .Select(m => new DetailedDamageDealtJson {
                         VictimId = m.Target,
                         DamageType = m.Type.ToString(),
@@ -77,7 +78,7 @@ namespace GrimDamage.Statistics.Service {
                     })
                     .ToList();
 
-                _lastUpdateTimeDetailedDamageTaken = player.DamageDealt.Max(m => m.Time);
+                _lastUpdateTimeDetailedDamageDealt = player.DamageDealt.Max(m => m.Time);
                 return result;
             }
         }
