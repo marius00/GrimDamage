@@ -48,3 +48,19 @@ function sendCsharpNameSuggestion(suggestion) {
     if (suggestion)
         data.suggestLocationName(suggestion);
 }
+
+function api() {
+    console.log('All data is available in the global data variable: \"data\"');
+    console.log('The data variable contains the following keys:');
+    for (let key in data) {
+        if (key !== 'api') {
+            console.log('\t', key, '=>', data[key]);
+        }
+    }
+
+    console.log('\r\nThe following information is documented in C#:');
+    console.log('\t', data.api);
+}
+
+console.log("The API can be requested by calling api()");
+api();

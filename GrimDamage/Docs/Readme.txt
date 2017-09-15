@@ -18,6 +18,10 @@ TODO:
 * [JS] An issue with switching to NULL for consecutive 0s is that the sequence will start from null, not from 0, creating odd clipped graphs
 * [C#] Linklabel to download IA, if its not already installed.
 * [C#/PHP] Was thinking maybe a news thing, just a link to gog/steam when there's a sale or wtv.. unsure if it provides any value, but being able to announce stuff to users (while being non intrusive) might be nice.
+* [VS] Fix the need for config changes to compile
+
+highstock.js:58 Error: <path> attribute d: Expected number, "M L L L L L L L L".
+chart.addPoint(null, shouldRender, true);
 
 Nice to have:
 * HP line on damage taken graph, max and current life.

@@ -70,7 +70,7 @@ namespace GrimDamage.Statistics.Service {
                 var result = player.DamageTaken
                     .Where(dmg => dmg.Time > _lastUpdateTimeDetailedDamageTaken)
                     .Select(m => new DetailedDamageEntryJson {
-                        Attacker = _damageParsingService.GetEntity(m.Attacker)?.Name ?? "Unknown",
+                        AttackerId = m.Attacker,
                         DamageType = m.Type.ToString(),
                         Amount = m.Amount
                     })

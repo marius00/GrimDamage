@@ -29,6 +29,7 @@
             this.cbLogUnknownLogStatements = new System.Windows.Forms.CheckBox();
             this.cbLogPlayerMovement = new System.Windows.Forms.CheckBox();
             this.cbLogPlayerDetection = new System.Windows.Forms.CheckBox();
+            this.cbLogHitpointChanges = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // cbEnableInvestigativeLogging
@@ -59,7 +60,7 @@
             // 
             this.cbLogAllLogStatements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbLogAllLogStatements.AutoSize = true;
-            this.cbLogAllLogStatements.Location = new System.Drawing.Point(514, 239);
+            this.cbLogAllLogStatements.Location = new System.Drawing.Point(488, 239);
             this.cbLogAllLogStatements.Name = "cbLogAllLogStatements";
             this.cbLogAllLogStatements.Size = new System.Drawing.Size(92, 17);
             this.cbLogAllLogStatements.TabIndex = 6;
@@ -71,7 +72,7 @@
             // 
             this.cbLogUnknownLogStatements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbLogUnknownLogStatements.AutoSize = true;
-            this.cbLogUnknownLogStatements.Location = new System.Drawing.Point(514, 262);
+            this.cbLogUnknownLogStatements.Location = new System.Drawing.Point(488, 262);
             this.cbLogUnknownLogStatements.Name = "cbLogUnknownLogStatements";
             this.cbLogUnknownLogStatements.Size = new System.Drawing.Size(126, 17);
             this.cbLogUnknownLogStatements.TabIndex = 7;
@@ -83,7 +84,7 @@
             // 
             this.cbLogPlayerMovement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbLogPlayerMovement.AutoSize = true;
-            this.cbLogPlayerMovement.Location = new System.Drawing.Point(514, 285);
+            this.cbLogPlayerMovement.Location = new System.Drawing.Point(488, 285);
             this.cbLogPlayerMovement.Name = "cbLogPlayerMovement";
             this.cbLogPlayerMovement.Size = new System.Drawing.Size(127, 17);
             this.cbLogPlayerMovement.TabIndex = 8;
@@ -95,7 +96,7 @@
             // 
             this.cbLogPlayerDetection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbLogPlayerDetection.AutoSize = true;
-            this.cbLogPlayerDetection.Location = new System.Drawing.Point(513, 308);
+            this.cbLogPlayerDetection.Location = new System.Drawing.Point(487, 308);
             this.cbLogPlayerDetection.Name = "cbLogPlayerDetection";
             this.cbLogPlayerDetection.Size = new System.Drawing.Size(122, 17);
             this.cbLogPlayerDetection.TabIndex = 9;
@@ -103,11 +104,24 @@
             this.cbLogPlayerDetection.UseVisualStyleBackColor = true;
             this.cbLogPlayerDetection.CheckedChanged += new System.EventHandler(this.cbLogPlayerDetection_CheckedChanged);
             // 
+            // cbLogHitpointChanges
+            // 
+            this.cbLogHitpointChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbLogHitpointChanges.AutoSize = true;
+            this.cbLogHitpointChanges.Location = new System.Drawing.Point(488, 216);
+            this.cbLogHitpointChanges.Name = "cbLogHitpointChanges";
+            this.cbLogHitpointChanges.Size = new System.Drawing.Size(138, 17);
+            this.cbLogHitpointChanges.TabIndex = 10;
+            this.cbLogHitpointChanges.Text = "Log all hitpoint changes";
+            this.cbLogHitpointChanges.UseVisualStyleBackColor = true;
+            this.cbLogHitpointChanges.CheckedChanged += new System.EventHandler(this.cbLogHitpointChanges_CheckedChanged);
+            // 
             // DebugSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(652, 338);
+            this.Controls.Add(this.cbLogHitpointChanges);
             this.Controls.Add(this.cbLogPlayerDetection);
             this.Controls.Add(this.cbLogPlayerMovement);
             this.Controls.Add(this.cbLogUnknownLogStatements);
@@ -130,5 +144,6 @@
         private System.Windows.Forms.CheckBox cbLogUnknownLogStatements;
         private System.Windows.Forms.CheckBox cbLogPlayerMovement;
         private System.Windows.Forms.CheckBox cbLogPlayerDetection;
+        private System.Windows.Forms.CheckBox cbLogHitpointChanges;
     }
 }

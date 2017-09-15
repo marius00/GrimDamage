@@ -29,6 +29,7 @@ namespace GrimDamage.GUI.Forms {
             cbEnableInvestigativeLogging.Checked = _appSettings.LogProcessedMessages;
             cbLogPlayerMovement.Checked = _appSettings.LogPlayerMovement;
             cbLogPlayerDetection.Checked = _appSettings.LogPlayerDetection;
+            cbLogHitpointChanges.Checked = _appSettings.LogEntityHitpointEvent;
         }
 
         private void cbEnableInvestigativeLogging_CheckedChanged(object sender, EventArgs e) {
@@ -53,6 +54,10 @@ namespace GrimDamage.GUI.Forms {
 
         private void cbLogPlayerDetection_CheckedChanged(object sender, EventArgs e) {
             _appSettings.LogPlayerDetection = (sender as CheckBox)?.Checked ?? false;
+        }
+
+        private void cbLogHitpointChanges_CheckedChanged(object sender, EventArgs e) {
+            _appSettings.LogEntityHitpointEvent = (sender as CheckBox)?.Checked ?? false;
         }
     }
 }

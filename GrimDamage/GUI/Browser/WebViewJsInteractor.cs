@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using GrimDamage.Parser.Model;
@@ -20,8 +21,89 @@ namespace GrimDamage.GUI.Browser {
             };
 
             _js = js;
+
+            var docEntity = new EntityJson {
+                Id = 123,
+                Name = "Peter pan",
+                Type = "Player?",
+                Health = 123,
+                IsPrimary = false
+            };
+
+            var docDamageEntryJson = new DamageEntryJson {
+                DamageType = "Lightning",
+                Amount = 9381
+            };
+
+            List<string> documentation = new List<string>();
+            documentation.Add($"Example values for {nameof(_js.stateChangesJson)}:");
+            documentation.Add(Serialize(new List<GrimState> { GrimState.BeginStun }));
+
+            documentation.Add($"Example values for {nameof(_js.playerLocationName)}:");
+            documentation.Add(Serialize("Peter fucking griffin"));
+
+            documentation.Add($"Example values for {nameof(_js.damageTakenJson)}:");
+            documentation.Add(Serialize(
+                new Dictionary<int, List<DamageEntryJson>> {
+                {default(int), new List<DamageEntryJson> { docDamageEntryJson } }
+            }));
+
+            documentation.Add($"Example values for {nameof(_js.damageDealtJson)}:");
+            documentation.Add(Serialize(
+                new Dictionary<int, List<DamageEntryJson>> {
+                    {default(int), new List<DamageEntryJson> { docDamageEntryJson } }
+                })
+            );
+
+            documentation.Add($"Example values for {nameof(_js.detailedDamageTakenJson)}:");
+            documentation.Add(Serialize(
+                new Dictionary<int, List<DetailedDamageEntryJson>> {
+                    {default(int), new List<DetailedDamageEntryJson> { new DetailedDamageEntryJson {
+                        DamageType = "Chaos",
+                        Amount = 123,
+                        AttackerId = 555
+                    } } }
+                })
+            );
+
+            documentation.Add($"Example values for {nameof(_js.damageDealtToSingleTargetJson)}:");
+            documentation.Add(Serialize(
+                new Dictionary<int, List<DamageEntryJson>> {
+                    {default(int), new List<DamageEntryJson> { docDamageEntryJson } }
+                })
+            );
+
+            documentation.Add($"Example values for {nameof(_js.playersJson)}:");
+            documentation.Add(Serialize(new List<EntityJson> { docEntity }));
+
+            documentation.Add($"Example values for {nameof(_js.entitiesJson)}:");
+            documentation.Add(Serialize(new List<EntityJson> { docEntity }));
+
+            documentation.Add($"Example values for {nameof(_js.petsJson)}:");
+            documentation.Add(Serialize(new List<EntityJson> { docEntity }));
+
+            documentation.Add("\r\n\r\nThe following methods are exposed:");
+            MethodInfo[] methodInfos = typeof(WebViewJsPojo).GetMethods(BindingFlags.Public | BindingFlags.Instance);
+            foreach (var method in methodInfos) {
+                var parameters = method.GetParameters();
+                var parameterDescriptions = string.Join
+                (", ", method.GetParameters()
+                    .Select(x => x.ParameterType + " " + x.Name)
+                    .ToArray());
+
+                if (!method.Name.Contains('_')) {
+                    documentation.Add($"{method.ReturnType} {method.Name}({parameterDescriptions})");
+                }
+            }
+
+            documentation.Add("\r\n=== END OF DOCUMENTATION ===");
+
+            _js.api = string.Join("\r\n\t", documentation);
         }
 
+        private string Serialize(object o) {
+            return JsonConvert.SerializeObject(o, _settings);
+        }
 
         public void SetStateChanges(List<GrimState> value) {
             _js.stateChangesJson = JsonConvert.SerializeObject(value.Select(m => m.ToString()).ToList(), _settings);
@@ -59,6 +141,7 @@ namespace GrimDamage.GUI.Browser {
         public void SetPets(List<EntityJson> value) {
             _js.petsJson = JsonConvert.SerializeObject(value, _settings);
         }
+
 
     }
 }

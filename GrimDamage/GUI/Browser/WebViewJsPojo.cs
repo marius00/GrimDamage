@@ -18,7 +18,7 @@ namespace GrimDamage.GUI.Browser {
         public event EventHandler OnSave;
         public event EventHandler OnLog;
 
-
+        public string api { get; set; }
         public string stateChangesJson { get; set; }
 
         public string playerLocationName { get; set; }
