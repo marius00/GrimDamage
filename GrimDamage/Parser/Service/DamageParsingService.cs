@@ -21,6 +21,7 @@ namespace GrimDamage.Parser.Service {
         private string _defenderName;
         private string _attackerName;
         private int _attackerId;
+        private int _defenderId;
         private int _primaryId;
         private readonly ConcurrentDictionary<int, Entity> _entities;
 
@@ -133,10 +134,12 @@ namespace GrimDamage.Parser.Service {
                     IsPrimary = id == _primaryId
                 };
             }
+
+            _defenderId = id;
         }
 
         public void ApplyDeflect(double chance) {
-            
+            // Deflect is a "dodge ranged attack", the amount of damage that would have been done is not available
         }
 
         public void SetAbsorb(double amount) {
@@ -148,7 +151,17 @@ namespace GrimDamage.Parser.Service {
         }
 
         public void ApplyBlock(double total, double percentile, double remaining) {
-            // TODO: This damage may be useful if showing HP / Heals
+
+
+            if (_entities.ContainsKey(_defenderId)) {
+                var blocked = new DamageBlockedEntry {
+                    Amount = total,
+                    Attacker = _attackerId,
+                    Time = DateTime.UtcNow
+                };
+
+                _entities[_defenderId].DamageBlocked.Add(blocked);
+            }
         }
 
 

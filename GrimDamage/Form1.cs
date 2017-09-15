@@ -136,12 +136,14 @@ namespace GrimDamage {
             var damageTaken = new Dictionary<int, List<SimpleDamageEntryJson>>();
             var detailedDamageTaken = new Dictionary<int, List<DetailedDamageTakenJson>>();
             var detailedDamageDealt = new Dictionary<int, List<DetailedDamageDealtJson>>();
+            var damageBlocked = new Dictionary<int, List<DamageBlockedJson>>();
             foreach (var player in players) {
                 damageDealt[player.Id] = _statisticsService.GetLatestDamageDealt(player.Id);
                 damageTaken[player.Id] = _statisticsService.GetLatestDamageTaken(player.Id);
                 damageDealtToSingleTarget[player.Id] = _statisticsService.GetLatestDamageDealtToSingleTarget(player.Id);
                 detailedDamageTaken[player.Id] = _statisticsService.GetDetailedLatestDamageTaken(player.Id);
                 detailedDamageDealt[player.Id] = _statisticsService.GetDetailedLatestDamageDealt(player.Id);
+                damageBlocked[player.Id] = _statisticsService.GetDamageBlocked(player.Id);
             }
             foreach (var pet in pets) {
                 damageDealt[pet.Id] = _statisticsService.GetLatestDamageDealt(pet.Id);
@@ -152,6 +154,7 @@ namespace GrimDamage {
             _browser.JsInteractor.SetEntities(_statisticsService.GetEntities());
             _browser.JsInteractor.SetPets(pets);
             _browser.JsInteractor.SetPlayers(players);
+            _browser.JsInteractor.SetDamageBlocked(damageBlocked);
             _browser.JsInteractor.SetDamageDealt(damageDealt);
             _browser.JsInteractor.SetDamageDealtToSingleTarget(damageDealtToSingleTarget);
             _browser.JsInteractor.SetDamageTaken(damageTaken);

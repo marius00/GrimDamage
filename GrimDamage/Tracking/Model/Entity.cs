@@ -10,6 +10,7 @@ namespace GrimDamage.Tracking.Model {
         public Entity() {
             this.DamageDealt = new ConcurrentBag<DamageDealtEntry>();
             this.DamageTaken = new ConcurrentBag<DamageTakenEntry>();
+            this.DamageBlocked = new ConcurrentBag<DamageBlockedEntry>();
         }
 
 
@@ -26,6 +27,7 @@ namespace GrimDamage.Tracking.Model {
 
         public ConcurrentBag<DamageDealtEntry> DamageDealt { get; }
         public ConcurrentBag<DamageTakenEntry> DamageTaken { get; }
+        public ConcurrentBag<DamageBlockedEntry> DamageBlocked { get; }
 
         public DateTime LastSeen {
             get {

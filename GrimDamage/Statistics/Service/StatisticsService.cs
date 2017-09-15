@@ -61,7 +61,15 @@ namespace GrimDamage.Statistics.Service {
 
             return entries;
         }
-        
+
+        public List<DamageBlockedJson> GetDamageBlocked(int playerId) {
+            return _damageParsingService.GetEntity(playerId).DamageBlocked
+                .Select(m => new DamageBlockedJson {
+                    AttackerId = m.Attacker,
+                    Amount = m.Amount
+                })
+                .ToList();
+        }
 
         public List<DetailedDamageDealtJson> GetDetailedLatestDamageDealt(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);

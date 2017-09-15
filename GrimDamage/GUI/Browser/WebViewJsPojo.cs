@@ -23,6 +23,9 @@ namespace GrimDamage.GUI.Browser {
 
         public string playerLocationName { get; set; }
         // FROM JS ONLY
+
+        public string damageBlockedJson { get; set; }
+
         public string damageTakenJson { get; set; }
 
         public string damageDealtJson { get; set; }
