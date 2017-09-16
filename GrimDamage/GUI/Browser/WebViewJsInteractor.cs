@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using GrimDamage.Parser.Model;
 using GrimDamage.Statistics.dto;
 using GrimDamage.Tracking.Model;
+using GrimDamage.Utility;
 using Newtonsoft.Json;
 
 namespace GrimDamage.GUI.Browser {
@@ -37,8 +38,10 @@ namespace GrimDamage.GUI.Browser {
             };
 
             List<string> documentation = new List<string>();
-            documentation.Add($"Example values for {nameof(_js.stateChangesJson)}:");
-            documentation.Add(Serialize(Enum.GetValues(typeof(GrimState)).Cast<GrimState>().Select(m => m.ToString()).ToList()));
+            documentation.Add($"Example values for state changes:");
+            documentation.Add(
+                Serialize(new List<GrimDawnStateEventJson> { new GrimDawnStateEventJson { Event = GrimState.Dead.ToString(), Timestamp = Timestamp.UTCMilliseconds } }
+            ));
             documentation.Add("");
 
 
@@ -121,6 +124,11 @@ namespace GrimDamage.GUI.Browser {
             documentation.Add("");
 
 
+            documentation.Add($"The possible values for state are:");
+            documentation.Add(Serialize(Enum.GetValues(typeof(GrimState)).Cast<GrimState>().Select(m => m.ToString())));
+            documentation.Add("");
+
+
             documentation.Add($"The possible values for entity type are:");
             documentation.Add(Serialize(Enum.GetValues(typeof(EntityType)).Cast<EntityType>().Select(m => m.ToString())));
             documentation.Add("");
@@ -154,9 +162,6 @@ namespace GrimDamage.GUI.Browser {
             return JsonConvert.SerializeObject(o, _settings);
         }
 
-        public void SetStateChanges(List<GrimState> value) {
-            _js.stateChangesJson = JsonConvert.SerializeObject(value.Select(m => m.ToString()).ToList(), _settings);
-        }
 
         public void SetPlayerLocation(string location) {
             _js.playerLocationName = location;

@@ -91,6 +91,25 @@ namespace GrimDamage.Statistics.Service {
             }
         }
 
+        public List<DetailedDamageTakenJson> GetDetailedLatestDamageTaken(int playerId, long timestamp) {
+            var player = _damageParsingService.GetEntity(playerId);
+            if (player == null || player.DamageTaken.Count == 0) {
+                return new List<DetailedDamageTakenJson>();
+            }
+            else {
+                var from = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds(timestamp);
+                var result = player.DamageTaken
+                    .Where(dmg => dmg.Time > from)
+                    .Select(m => new DetailedDamageTakenJson {
+                        AttackerId = m.Attacker,
+                        DamageType = m.Type.ToString(),
+                        Amount = m.Amount
+                    })
+                    .ToList();
+
+                return result;
+            }
+        }
 
         public List<DetailedDamageTakenJson> GetDetailedLatestDamageTaken(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);

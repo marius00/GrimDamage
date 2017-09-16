@@ -17,6 +17,7 @@ using GrimDamage.Statistics.dto;
 using GrimDamage.Statistics.Service;
 using GrimDamage.Utilities;
 using log4net;
+using Newtonsoft.Json;
 
 namespace GrimDamage {
     public partial class Form1 : Form {
@@ -31,6 +32,7 @@ namespace GrimDamage {
         private readonly AutoUpdateUtility _autoUpdateUtility = new AutoUpdateUtility();
         private readonly NameSuggestionService _nameSuggestionService;
         private readonly AppSettings _appSettings;
+        private readonly CSharpJsStateMapper _cSharpJsStateMapper;
 
 
 
@@ -52,6 +54,11 @@ namespace GrimDamage {
             };
 
             _nameSuggestionService = new NameSuggestionService(GlobalSettings.BineroHost);
+            _cSharpJsStateMapper = new CSharpJsStateMapper(_browser, _statisticsService, _generalStateService);
+            _browser.JsPojo.OnRequestData += (sender, _args) => {
+                RequestDataArgument args = _args as RequestDataArgument;
+                _cSharpJsStateMapper.RequestData(args.Type, args.Timestamp, args.EntityId, args.Callback);
+            };
         }
 
         private void JsPojoOnOnSave(object sender, EventArgs eventArgs) {
@@ -127,6 +134,9 @@ namespace GrimDamage {
             _browser.ShowDevTools();
         }
 
+
+        
+
         private void TransferStatsToJson(object sender, EventArgs e) {
             var players = _statisticsService.GetPlayers();
             var pets = _statisticsService.GetPets();
@@ -159,12 +169,13 @@ namespace GrimDamage {
             _browser.JsInteractor.SetDamageDealtToSingleTarget(damageDealtToSingleTarget);
             _browser.JsInteractor.SetDamageTaken(damageTaken);
             _browser.JsInteractor.SetPlayerLocation(_positionTrackerService.GetPlayerLocation());
-            _browser.JsInteractor.SetStateChanges(_generalStateService.GetAndClearStates());
             _browser.JsInteractor.SetDetailedDamageTaken(detailedDamageTaken);
             _browser.JsInteractor.SetDetailedDamageDealt(detailedDamageDealt);
             
             _browser.NotifyUpdate();
         }
+
+        
 
         private void linkDiscord_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             Process.Start("https://discord.gg/PJ87Ewa");

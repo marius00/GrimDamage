@@ -77,6 +77,9 @@
     <Compile Include="GD\Processors\PlayerDetectionProcessor.cs" />
     <Compile Include="GD\Processors\PlayerPositionTrackerProcessor.cs" />
     <Compile Include="GUI\Browser\CefBrowserHandler.cs" />
+    <Compile Include="GUI\Browser\CSharpJsStateMapper.cs" />
+    <Compile Include="GUI\Browser\DataRequestType.cs" />
+    <Compile Include="GUI\Browser\dto\RequestDataArgument.cs" />
     <Compile Include="GUI\Browser\dto\SaveParseArgument.cs" />
     <Compile Include="GUI\Browser\dto\SuggestLocationNameArgument.cs" />
     <Compile Include="GUI\Browser\WebViewJsInteractor.cs" />
@@ -106,6 +109,7 @@
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
     <Compile Include="Statistics\dto\DamageBlockedJson.cs" />
+    <Compile Include="Statistics\dto\GrimDawnStateEventJson.cs" />
     <Compile Include="Statistics\dto\SimpleDamageEntryJson.cs" />
     <Compile Include="Statistics\dto\DetailedDamageDealtJson.cs" />
     <Compile Include="Statistics\dto\DetailedDamageTakenJson.cs" />
@@ -186,6 +190,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\damage-parser.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\js\death-tracker.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\main.js">

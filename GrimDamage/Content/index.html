@@ -8,6 +8,7 @@
 <script src="js/integration.js"></script>
 <script src="js/main.js"></script>
 <script src="js/damage-parser.js"></script>
+<script src="js/death-tracker.js"></script>
 <script src="js/graphs.js"></script>
 
 
@@ -19,6 +20,17 @@
         <input type="button" data-bind="click: suggestName" value="Suggest name" />
     </div>
 </div>
+
+
+<div>
+    <ul data-bind="foreach: deaths">
+        <li data-bind="text: label">
+            
+        </li>
+    </ul>
+</div>
+
+
 <div id="container-damage-taken-pie" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <div id="container-damage-done" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -46,12 +58,21 @@
     setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName) => {
         p.tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName);
         VM.isZoneUnknown(playerLocationName === 'Unknown');
-
     });
 
     setCsharpTickInterval(1000);
     setCsharpLoadHistoryCallback((dataset) => { console.log("Load:", dataset); });
 
+
+    // Track callback events
+    let deathTracker = new DeathTracker(p); // damage parser is the current 'track player id' class, may be split later
+
+
+    setCsharpRequestCallback((type, dataset) => {
+        if (type === TYPE_STATES) {
+            deathTracker.process(dataset);
+        }
+    });
 </script>
 
 If you're not seeing a graph above, something is wrong.

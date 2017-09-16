@@ -1,6 +1,12 @@
 ﻿let tickCallbackMethod = undefined;
+let requestCallbackMethod = undefined;
 let saveReceivedCallbackMethod = undefined;
 let intervalID = undefined;
+let lastStateTimestamp = 0;
+
+/// <field name='TYPE_STATES' type='Number'>The event type is states, such as death and pause game.</field>  
+const TYPE_STATES = 1;
+const TYPE_DETAILED_DAMAGE_TAKEN = 2;
 
 // This function is called from C# when a stat update is received
 function _itemsReceived() {
@@ -14,6 +20,8 @@ function _itemsReceived() {
         );
     }
 }
+
+
 
 // This function is called from C# when a saved parse is loaded
 function _saveReceived(data) {
@@ -33,11 +41,30 @@ function setCsharpTickCallback(method) {
     tickCallbackMethod = method;
 }
 
+function setCsharpRequestCallback(method) {
+    requestCallbackMethod = method;
+}
+
+function _notifyStateChanges(dataset) {
+    console.log('states received', dataset);
+
+    if (dataset.length > 0)
+        lastStateTimestamp = dataset[0].timestamp;
+
+    if (requestCallbackMethod) {
+        requestCallbackMethod(TYPE_STATES, dataset);
+    }
+}
+function requestUpdates() {
+    data.requestData(TYPE_STATES, lastStateTimestamp, null, '_notifyStateChanges');
+    data.requestUpdate();
+}
 function setCsharpTickInterval(interval) {
     if (intervalID !== undefined) {
         clearInterval(intervalID);
     }
-    intervalID = window.setInterval(data.requestUpdate, interval);
+
+    intervalID = window.setInterval(requestUpdates, interval);
 }
 
 function setCsharpLoadHistoryCallback(method) {
