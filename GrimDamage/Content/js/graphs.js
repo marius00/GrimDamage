@@ -263,10 +263,9 @@ function createPieChartDamageTaken(id) {
 
 
 function loadCharts() {
-    let dataTable = $('#bosstable').DataTable();
     let damageTakenChart = createChartDamageTaken('container-damage-taken', 100);
     let damageDealtChart = createChartDamageDealt('container-damage-done');
     //let damageTakenPie = createPieChartDamageTaken('container-damage-taken-pie');
 
-    return [damageTakenChart, damageDealtChart, dataTable];
+    return [damageTakenChart, damageDealtChart];
 }

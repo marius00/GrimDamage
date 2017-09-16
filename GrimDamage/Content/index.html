@@ -7,6 +7,8 @@
 <link rel="stylesheet" media="all" type="text/css" href="css/vendor/bootstrap.min.css" />
 <link rel="stylesheet" media="all" type="text/css" href="css/main.css" />
 
+<script src="js/vendor/pie.title.plugin.js"></script>
+
 <script src="js/vendor/popper.min.js"></script>
 <script src="js/vendor/popper-utils.min.js"></script>
 <script src="js/vendor/bootstrap.min.js"></script>
@@ -109,8 +111,8 @@
 
     // Chart and parsing
     let chartDamageTaken, chartDamageDealt;
-    [chartDamageTaken, chartDamageDealt, dataTable] = loadCharts();
-    var p = new DamageParser(chartDamageTaken, chartDamageDealt, dataTable);
+    [chartDamageTaken, chartDamageDealt] = loadCharts();
+    var p = new DamageParser(chartDamageTaken, chartDamageDealt);
 
     setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
         p.tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList);

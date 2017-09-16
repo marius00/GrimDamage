@@ -62,6 +62,63 @@
     }
 
     addBossModal() {
+        /* Create the modal */
+        this.add("bossmodal", "", "");
 
+        /* Create the bosschart */
+        let bosschartDiv = $('<div/>', {
+            id: "bosschart"
+        });
+
+        //Not the best way, but mixing javascript and jquery is meh.. so fuck it, refactor later
+        bosschartDiv.appendTo($('#bossmodal .modal-body'));
+
+        /* Init the chart */
+        let bosschart = Highcharts.chart('bosschart',
+            {
+                chart: {
+                    renderTo: 'container',
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Boss chart'
+                },
+                plotOptions: {
+                    pie: {
+                        dataLabels: {
+                            enabled: false
+                        },
+                        size: '75%',
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    size: 200,
+                    center: ['20%', '20%'],
+                    title: {
+                        align: 'center',
+                        format: '{name}<br>{total:.0f}',
+                        verticalAlign: 'middle'
+                    },
+                    name: 'Dealt',
+                    innerSize: '70%',
+                    data: []
+                }, {
+                    size: 200,
+                    center: ['80%', '20%'],
+                    title: {
+                        align: 'center',
+                        format: '{name}<br>{total:.0f}',
+                        verticalAlign: 'middle'
+                    },
+                    name: 'Taken',
+                    innerSize: '70%',
+
+                    linkedTo:':previous',
+                    data: []
+                }]
+            }
+        );
+        return bosschart;
     }
 }

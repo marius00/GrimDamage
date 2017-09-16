@@ -1,16 +1,27 @@
 ﻿// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 class DamageParser {
-    constructor(damageTakenGraph, damageDealtGraph, dataTable) {
+    constructor(damageTakenGraph, damageDealtGraph) {
         this.lastPlayerLocation = '';
         this.currentXAxis = 100;
         this.previousDamageTaken = {};
         this.damageDealtGraph = damageDealtGraph;
         this.damageTakenGraph = damageTakenGraph;
+        let dataTable = $('#bosstable').DataTable({
+            "columns": [
+                { "data": "encountered" },
+                { "data": "name" }
+            ]
+        });
+        $('#bosstable tbody').on('click', 'tr', this.showboss);
         this.dataTable = dataTable;
         this.players = [];
         this.totalDamageTaken = [];
         this.bosses = [];
         this.modals = new Modals();
+
+
+        this.bosschart = this.modals.addBossModal();
+        console.log(this.bosschart);
     }
 
     tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) {
@@ -28,6 +39,27 @@ class DamageParser {
         }
     }
 
+    showboss() {
+        let bossid = this.id;
+        if (bossid === undefined || bossid == "" || !p.bosses.hasOwnProperty(bossid)) {
+            return;
+        }
+
+        var dealtTemp = p.bosses[bossid]['dealt'];
+        var dealt = Object.keys(dealtTemp).map(function (data) {
+            return [data, dealtTemp[data]];
+        });
+
+        var takenTemp = p.bosses[bossid]['taken'];
+        var taken = Object.keys(takenTemp).map(function (data) {
+            return [data, takenTemp[data]];
+        });
+        p.bosschart.setTitle({ text: p.bosses[bossid].name });
+        p.bosschart.series[0].setData(dealt);
+        p.bosschart.series[1].setData(taken);
+        p.modals.show('bossmodal');
+    }
+
     /*
      * When a new entitiy is found, and it's a boss type we need to do:
      * 1. Add row to the database
@@ -38,12 +70,57 @@ class DamageParser {
         let length = list.length;
         for (let c = 0; c < length; c++) {
             /* check if id is already set */
+            let entity = list[c];
+            if (entity.type != "Monster" && entity.type != "Player") {
+                if (!this.bosses.hasOwnProperty(entity.id)) {
+                    this.bosses[entity.id] = [];
+                    this.bosses[entity.id]['type'] = entity.type;
+                    this.bosses[entity.id]['name'] = entity.name;
+                    this.bosses[entity.id]['dealt'] = [];
+                    this.bosses[entity.id]['taken'] = [];
+                    this.dataTable.row.add({ "DT_RowId": entity.id, "encountered": 1, "name": entity.name }).draw(false);
+                }
+            }
         }
     }
 
     handleDetailedDamageTaken(data) {
+        for (var playerid in data) {
+            if (!data.hasOwnProperty(playerid) || playerid != this.mainPlayerId) {
+                continue;
+            }
+            var length = data[playerid].length;
+            for (var c = 0; c < length; c++) {
+                let dmg = data[playerid][c];
+                /* Is it a boss? */
+                if (this.bosses.hasOwnProperty(dmg.attackerId)) {
+                    /* First time we're seeing this damage-type on boss? */
+                    if (!this.bosses[dmg.attackerId]['taken'].hasOwnProperty(dmg.damageType)) {
+                        this.bosses[dmg.attackerId]['taken'][dmg.damageType] = 0;
+                    }
+                    this.bosses[dmg.attackerId]['taken'][dmg.damageType] += Math.round(dmg.amount);
+                }
+            }
+        }
     }
     handleDetailedDamageDealt(data) {
+        for (var playerid in data) {
+            if (!data.hasOwnProperty(playerid) || playerid != this.mainPlayerId) {
+                continue;
+            }
+            var length = data[playerid].length;
+            for (var c = 0; c < length; c++) {
+                let dmg = data[playerid][c];
+                /* Is it a boss? */
+                if (this.bosses.hasOwnProperty(dmg.victimId)) {
+                    /* First time we're seeing this damage-type on boss? */
+                    if (!this.bosses[dmg.victimId]['dealt'].hasOwnProperty(dmg.damageType)) {
+                        this.bosses[dmg.victimId]['dealt'][dmg.damageType] = 0;
+                    }
+                    this.bosses[dmg.victimId]['dealt'][dmg.damageType] += Math.round(dmg.amount);
+                }
+            }
+        }
     }
 
     get mainPlayerId() {
