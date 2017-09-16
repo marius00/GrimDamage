@@ -9,5 +9,7 @@ namespace GrimDamage.GUI.Browser {
         States = 1,
         DetailedDamageTaken = 2,
         DetailedDamageDealt = 3,
+        SimpleDamageTaken = 4,
+        SimpleDamageDealt = 5,
     }
 }

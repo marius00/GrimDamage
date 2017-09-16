@@ -54,11 +54,37 @@ namespace GrimDamage.GUI.Browser {
                         Logger.Warn($"Data request for {data} was not handled due to the entityId being <0.");
                     }
                     break;
-                    
+
+                case DataRequestType.SimpleDamageDealt:
+                    if (entityId > 0) {
+                        TransferSimpleDamageDealt(entityId, start, end, callback);
+                    }
+                    else {
+                        Logger.Warn($"Data request for {data} was not handled due to the entityId being <0.");
+                    }
+                    break;
+
+                case DataRequestType.SimpleDamageTaken:
+                    if (entityId > 0) {
+                        TransferSimpleDamageTaken(entityId, start, end, callback);
+                    }
+                    else {
+                        Logger.Warn($"Data request for {data} was not handled due to the entityId being <0.");
+                    }
+                    break;
+
                 default:
                     Logger.Warn($"Data request for {data} was not handled, unknown type.");
                     break;
             }
+        }
+
+        private void TransferSimpleDamageDealt(int entityId, long start, long end, string callback) {
+            _browser.JsCallback(callback, Serialize(_statisticsService.GetSimpleDamageDealt(entityId, start, end)));
+        }
+
+        private void TransferSimpleDamageTaken(int entityId, long start, long end, string callback) {
+            _browser.JsCallback(callback, Serialize(_statisticsService.GetSimpleDamageTaken(entityId, start, end)));
         }
 
         private void TransferDetailedDamageDealt(int entityId, long start, long end, string callback) {

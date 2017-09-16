@@ -1,5 +1,7 @@
-﻿function loadCharts() {
-    let damageTakenChart = Highcharts.chart('container-damage-taken',
+﻿
+function createChartDamageTaken(id, sequenceLength) {
+    
+    return Highcharts.chart(id,
         {
             chart: {
                 type: 'area'
@@ -55,94 +57,95 @@
             series: [
                 {
                     name: 'Total',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
                 {
                     type: 'spline',
                     marker: { enabled: false },
                     name: 'Physical',
                     color: '#000000',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
                 {
                     type: 'spline',
                     marker: { enabled: false },
                     name: 'Lightning',
                     color: '#4658f8',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
                 {
                     type: 'spline',
                     marker: { enabled: false },
                     name: 'Vitality',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
                 {
                     type: 'spline',
                     marker: { enabled: false },
                     name: 'Aether',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
                 {
                     name: 'Bleeding',
                     marker: { enabled: false },
                     color: '#ffaec9',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
                 {
                     type: 'spline',
                     marker: { enabled: false },
                     color: '#00ff00',
                     name: 'Acid',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
                 {
                     type: 'spline',
                     marker: { enabled: false },
                     color: '#ffffff',
                     name: 'Pierce',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
 
                 {
                     type: 'spline',
                     marker: { enabled: false },
                     name: 'Chaos',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
 
                 {
                     type: 'spline',
                     marker: { enabled: false },
                     name: 'PercentCurrentLife',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
 
                 {
                     type: 'spline',
                     marker: { enabled: false },
                     name: 'LifeLeech',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
                 {
                     type: 'spline',
                     marker: { enabled: false },
                     color: '#0000ff',
                     name: 'Cold',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
                 {
                     type: 'spline',
                     marker: { enabled: false },
                     color: '#ff0000',
                     name: 'Fire',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 }
             ]
         });
+}
 
-
-    let damageDealtChart = Highcharts.chart('container-damage-done',
+function createChartDamageDealt(id) {
+    return Highcharts.chart(id,
         {
             chart: {
                 type: 'area'
@@ -221,8 +224,10 @@
                 }
             ]
         });
+}
 
-    let damageTakenPie = Highcharts.chart('container-damage-taken-pie',
+function createPieChartDamageTaken(id) {
+    return Highcharts.chart(id,
         {
             chart: {
                 plotBackgroundColor: null,
@@ -249,6 +254,12 @@
                 data: []
             }]
         });
+}
+
+function loadCharts() {
+    let damageTakenChart = createChartDamageTaken('container-damage-taken', 100);
+    let damageDealtChart = createChartDamageDealt('container-damage-done');
+    let damageTakenPie = createPieChartDamageTaken('container-damage-taken-pie');
 
     return [damageTakenChart, damageDealtChart, damageTakenPie];
 }
