@@ -103,12 +103,12 @@
     <Compile Include="Parser\Service\DamageParsingService.cs" />
     <Compile Include="Parser\Service\EntityNamingService.cs" />
     <Compile Include="Parser\Service\GeneralStateService.cs" />
-    <Compile Include="Parser\Service\ParsingService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
     <Compile Include="Statistics\dto\DamageBlockedJson.cs" />
+    <Compile Include="Statistics\dto\EntityHealthEntryJson.cs" />
     <Compile Include="Statistics\dto\GrimDawnStateEventJson.cs" />
     <Compile Include="Statistics\dto\SimpleDamageEntryJson.cs" />
     <Compile Include="Statistics\dto\DetailedDamageDealtJson.cs" />
@@ -123,6 +123,7 @@
     <Compile Include="Tracking\Model\DamageTakenEntry.cs" />
     <Compile Include="Tracking\Model\DamageType.cs" />
     <Compile Include="Tracking\Model\Entity.cs" />
+    <Compile Include="Tracking\Model\EntityHealthEntry.cs" />
     <Compile Include="Tracking\Model\EntityType.cs" />
     <Compile Include="Tracking\Model\IDamageEntry.cs" />
     <Compile Include="Utilities\AutoUpdateUtility.cs" />

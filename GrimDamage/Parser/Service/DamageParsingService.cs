@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GrimDamage.Parser.Config;
 using GrimDamage.Tracking.Model;
+using GrimDamage.Utility;
 using log4net;
 using log4net.Repository.Hierarchy;
 
@@ -41,7 +42,10 @@ namespace GrimDamage.Parser.Service {
 
         public void SetHealth(int id, float amount) {
             if (_entities.ContainsKey(id)) {
-                _entities[id].Health = amount;
+                _entities[id].Health.Add(new EntityHealthEntry {
+                    Health = amount,
+                    Timestamp = Timestamp.UTCMillisecondsNow
+                });
             }
         }
 

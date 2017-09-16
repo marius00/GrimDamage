@@ -11,6 +11,58 @@ class DeathTrackerViewModel {
         this.damageTakenChart = chartDamageTaken;
 
 
+        this._health = ko.observableArray([]);
+        this.health = ko.pureComputed({
+            read: function () {
+                return self._health;
+            },
+            write: function (value) {
+                self._health(value);
+
+                if (value.length > 0) {
+                    let minTimestamp = Math.min.apply(Math, value.map(function (o) { return o.timestamp; }));
+                    let dataPoints = [];
+                    dataPoints = value.reduce(function (res, value) {
+                            const series = Math.ceil((value.timestamp - minTimestamp) / 1000);
+
+                            if (!res[series]) {
+                                res[series] = {};
+                                dataPoints.push(res[value]);
+                            }
+
+                            res[series] = { x: parseInt(series), y: value.amount };
+                            return res;
+                        },
+                        {}
+                    );
+
+                    let points = Object.keys(dataPoints).map(function (key) {
+                        return dataPoints[key];
+                    });
+
+                    const series = self.damageTakenChart.series.filter(s => s.name === 'Hitpoints')[0];
+                    if (!series) {
+                        console.log('Hitpoints series not found, creating now..');
+                        self.damageTakenChart.addSeries(
+                            {
+                                type: 'spline',
+                                marker: { enabled: false },
+                                name: 'Hitpoints',
+                                color: '#ff0000',
+                                data: points
+                            });
+
+                    } else {
+                        series.setData(points, true, false, false);
+                    }
+                    console.log('Settings points', points, 'for series hitpoints');
+
+                }
+            },
+            owner: this
+        });
+
+
         this._detailedDamagePoints = ko.observableArray([]);
         this.detailedDamagePoints = ko.pureComputed({
             read: function () {
@@ -47,8 +99,6 @@ class DeathTrackerViewModel {
                         }
                     }
 
-                } else {
-                    //self.resetGraph(10);
                 }
 
             },
@@ -57,18 +107,25 @@ class DeathTrackerViewModel {
         
 
         this.showDeath = function(death) {
-            const period = 10 * 1000;
-            self.resetGraph(10); // TODO: This causes things to fail later on..
+            const period = 10 * 1000; // TODO: The number '10' is used many places, consider making a constant
+            self.resetGraph(10);
             self.detailedDamagePoints([]);
             console.log(death);
 
             // This is really unfortunate, but i have no better solution yet.
             const hardcodedClassVarName = 'deathTrackerViewModel';
-            data.requestData(TYPE_DETAILED_DAMAGE_DEALT, // TODO: Change this to taken, not dealt. Taken is just useful for testing.
+            data.requestData(TYPE_DETAILED_DAMAGE_TAKEN,
                 (death.timestamp - period).toString(),
                 death.timestamp.toString(),
                 death.entityId,
                 `${hardcodedClassVarName}.detailedDamagePoints`);
+
+
+            data.requestData(TYPE_HEALTH_CHECK,
+                (death.timestamp - period).toString(),
+                death.timestamp.toString(),
+                death.entityId,
+                `${hardcodedClassVarName}.health`);
         }
     }
 

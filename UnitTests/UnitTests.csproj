@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="CppTest.cs" />
-    <Compile Include="Parser\ParsingServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +67,9 @@
     <Content Include="TestData\131482213376447842.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Parser\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
