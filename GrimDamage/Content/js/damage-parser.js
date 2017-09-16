@@ -7,10 +7,12 @@ class DamageParser {
         this.damageDealtGraph = damageDealtGraph;
         this.damageTakenGraph = damageTakenGraph;
         this.dataTable = dataTable;
-        console.log(this.dataTable);
         this.players = [];
         this.totalDamageTaken = [];
         this.bosses = [];
+        this.modals = new Modals();
+        this.modals.add('test', 'test title', '<p>Para</p>');
+        this.modals.show('test');
     }
 
     tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) {
