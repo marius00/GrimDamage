@@ -17,12 +17,14 @@ namespace GrimDamage.GUI.Browser {
         public event EventHandler OnSuggestLocationName;
         public event EventHandler OnSave;
         public event EventHandler OnLog;
+        public event EventHandler OnRequestData;
 
         public string api { get; set; }
-        public string stateChangesJson { get; set; }
-
         public string playerLocationName { get; set; }
         // FROM JS ONLY
+
+        public string damageBlockedJson { get; set; }
+
         public string damageTakenJson { get; set; }
 
         public string damageDealtJson { get; set; }
@@ -59,7 +61,16 @@ namespace GrimDamage.GUI.Browser {
                 Data = json
             });
         }
-
+        public void requestData(int type, string start, string end, int id, string callback) {
+            OnRequestData?.Invoke(this, new RequestDataArgument {
+                Type = (DataRequestType)type,
+                TimestampStart = start,
+                TimestampEnd = end,
+                Callback = callback,
+                EntityId = id
+            });
+        }
+        
     }
     // ReSharper enable InconsistentNaming
     // ReSharper enable MemberCanBePrivate.Global

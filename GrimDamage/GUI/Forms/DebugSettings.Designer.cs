@@ -38,9 +38,9 @@
             this.cbEnableInvestigativeLogging.AutoSize = true;
             this.cbEnableInvestigativeLogging.Location = new System.Drawing.Point(12, 309);
             this.cbEnableInvestigativeLogging.Name = "cbEnableInvestigativeLogging";
-            this.cbEnableInvestigativeLogging.Size = new System.Drawing.Size(193, 17);
+            this.cbEnableInvestigativeLogging.Size = new System.Drawing.Size(254, 17);
             this.cbEnableInvestigativeLogging.TabIndex = 4;
-            this.cbEnableInvestigativeLogging.Text = "Log unknown messages to console";
+            this.cbEnableInvestigativeLogging.Text = "Log the service which processed each message";
             this.cbEnableInvestigativeLogging.UseVisualStyleBackColor = true;
             this.cbEnableInvestigativeLogging.CheckedChanged += new System.EventHandler(this.cbEnableInvestigativeLogging_CheckedChanged);
             // 
@@ -50,9 +50,9 @@
             this.cbLogStateChanges.AutoSize = true;
             this.cbLogStateChanges.Location = new System.Drawing.Point(12, 286);
             this.cbLogStateChanges.Name = "cbLogStateChanges";
-            this.cbLogStateChanges.Size = new System.Drawing.Size(114, 17);
+            this.cbLogStateChanges.Size = new System.Drawing.Size(199, 17);
             this.cbLogStateChanges.TabIndex = 5;
-            this.cbLogStateChanges.Text = "Log state changes";
+            this.cbLogStateChanges.Text = "Log state changes [pause, stun, etc]";
             this.cbLogStateChanges.UseVisualStyleBackColor = true;
             this.cbLogStateChanges.CheckedChanged += new System.EventHandler(this.cbLogStateChanges_CheckedChanged);
             // 
@@ -60,11 +60,11 @@
             // 
             this.cbLogAllLogStatements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbLogAllLogStatements.AutoSize = true;
-            this.cbLogAllLogStatements.Location = new System.Drawing.Point(488, 239);
+            this.cbLogAllLogStatements.Location = new System.Drawing.Point(442, 239);
             this.cbLogAllLogStatements.Name = "cbLogAllLogStatements";
-            this.cbLogAllLogStatements.Size = new System.Drawing.Size(92, 17);
+            this.cbLogAllLogStatements.Size = new System.Drawing.Size(138, 17);
             this.cbLogAllLogStatements.TabIndex = 6;
-            this.cbLogAllLogStatements.Text = "Log all events";
+            this.cbLogAllLogStatements.Text = "Log all events (GD Log)";
             this.cbLogAllLogStatements.UseVisualStyleBackColor = true;
             this.cbLogAllLogStatements.CheckedChanged += new System.EventHandler(this.cbLogAllLogStatements_CheckedChanged);
             // 
@@ -72,11 +72,11 @@
             // 
             this.cbLogUnknownLogStatements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbLogUnknownLogStatements.AutoSize = true;
-            this.cbLogUnknownLogStatements.Location = new System.Drawing.Point(488, 262);
+            this.cbLogUnknownLogStatements.Location = new System.Drawing.Point(442, 262);
             this.cbLogUnknownLogStatements.Name = "cbLogUnknownLogStatements";
-            this.cbLogUnknownLogStatements.Size = new System.Drawing.Size(126, 17);
+            this.cbLogUnknownLogStatements.Size = new System.Drawing.Size(172, 17);
             this.cbLogUnknownLogStatements.TabIndex = 7;
-            this.cbLogUnknownLogStatements.Text = "Log unknown events";
+            this.cbLogUnknownLogStatements.Text = "Log unknown events (GD Log)";
             this.cbLogUnknownLogStatements.UseVisualStyleBackColor = true;
             this.cbLogUnknownLogStatements.CheckedChanged += new System.EventHandler(this.cbLogUnknownLogStatements_CheckedChanged);
             // 
@@ -84,7 +84,7 @@
             // 
             this.cbLogPlayerMovement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbLogPlayerMovement.AutoSize = true;
-            this.cbLogPlayerMovement.Location = new System.Drawing.Point(488, 285);
+            this.cbLogPlayerMovement.Location = new System.Drawing.Point(442, 285);
             this.cbLogPlayerMovement.Name = "cbLogPlayerMovement";
             this.cbLogPlayerMovement.Size = new System.Drawing.Size(127, 17);
             this.cbLogPlayerMovement.TabIndex = 8;
@@ -96,7 +96,7 @@
             // 
             this.cbLogPlayerDetection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbLogPlayerDetection.AutoSize = true;
-            this.cbLogPlayerDetection.Location = new System.Drawing.Point(487, 308);
+            this.cbLogPlayerDetection.Location = new System.Drawing.Point(441, 308);
             this.cbLogPlayerDetection.Name = "cbLogPlayerDetection";
             this.cbLogPlayerDetection.Size = new System.Drawing.Size(122, 17);
             this.cbLogPlayerDetection.TabIndex = 9;
@@ -108,11 +108,11 @@
             // 
             this.cbLogHitpointChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbLogHitpointChanges.AutoSize = true;
-            this.cbLogHitpointChanges.Location = new System.Drawing.Point(488, 216);
+            this.cbLogHitpointChanges.Location = new System.Drawing.Point(442, 216);
             this.cbLogHitpointChanges.Name = "cbLogHitpointChanges";
-            this.cbLogHitpointChanges.Size = new System.Drawing.Size(138, 17);
+            this.cbLogHitpointChanges.Size = new System.Drawing.Size(181, 17);
             this.cbLogHitpointChanges.TabIndex = 10;
-            this.cbLogHitpointChanges.Text = "Log all hitpoint changes";
+            this.cbLogHitpointChanges.Text = "Log all hitpoint changes (Set HP)";
             this.cbLogHitpointChanges.UseVisualStyleBackColor = true;
             this.cbLogHitpointChanges.CheckedChanged += new System.EventHandler(this.cbLogHitpointChanges_CheckedChanged);
             // 

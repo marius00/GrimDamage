@@ -5,10 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GrimDamage.Statistics.dto {
-    public class DetailedDamageDealtJson {
-        public int VictimId { get; set; }
-        public string DamageType { get; set; }
-        public double Amount { get; set; }
+    public class GrimDawnStateEventJson {
+        public string Event { get; set; }
         public long Timestamp { get; set; }
     }
 }

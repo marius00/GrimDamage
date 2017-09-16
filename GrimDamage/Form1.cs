@@ -17,6 +17,7 @@ using GrimDamage.Statistics.dto;
 using GrimDamage.Statistics.Service;
 using GrimDamage.Utilities;
 using log4net;
+using Newtonsoft.Json;
 
 namespace GrimDamage {
     public partial class Form1 : Form {
@@ -31,6 +32,7 @@ namespace GrimDamage {
         private readonly AutoUpdateUtility _autoUpdateUtility = new AutoUpdateUtility();
         private readonly NameSuggestionService _nameSuggestionService;
         private readonly AppSettings _appSettings;
+        private readonly CSharpJsStateMapper _cSharpJsStateMapper;
 
 
 
@@ -52,6 +54,23 @@ namespace GrimDamage {
             };
 
             _nameSuggestionService = new NameSuggestionService(GlobalSettings.BineroHost);
+            _cSharpJsStateMapper = new CSharpJsStateMapper(_browser, _statisticsService, _generalStateService);
+            _browser.JsPojo.OnRequestData += (sender, _args) => {
+                RequestDataArgument args = _args as RequestDataArgument;
+                long start;
+                if (long.TryParse(args.TimestampStart, out start)) {
+                    long end;
+                    if (long.TryParse(args.TimestampEnd, out end)) {
+                        _cSharpJsStateMapper.RequestData(args.Type, start, end, args.EntityId, args.Callback);
+                    }
+                    else {
+                        Logger.Warn($"Could not parse timestamp {args.TimestampEnd} received for {args.Type}");
+                    }
+                }
+                else {
+                    Logger.Warn($"Could not parse timestamp {args.TimestampStart} received for {args.Type}");   
+                }
+            };
         }
 
         private void JsPojoOnOnSave(object sender, EventArgs eventArgs) {
@@ -127,6 +146,9 @@ namespace GrimDamage {
             _browser.ShowDevTools();
         }
 
+
+        
+
         private void TransferStatsToJson(object sender, EventArgs e) {
             var players = _statisticsService.GetPlayers();
             var pets = _statisticsService.GetPets();
@@ -136,12 +158,14 @@ namespace GrimDamage {
             var damageTaken = new Dictionary<int, List<SimpleDamageEntryJson>>();
             var detailedDamageTaken = new Dictionary<int, List<DetailedDamageTakenJson>>();
             var detailedDamageDealt = new Dictionary<int, List<DetailedDamageDealtJson>>();
+            var damageBlocked = new Dictionary<int, List<DamageBlockedJson>>();
             foreach (var player in players) {
                 damageDealt[player.Id] = _statisticsService.GetLatestDamageDealt(player.Id);
                 damageTaken[player.Id] = _statisticsService.GetLatestDamageTaken(player.Id);
                 damageDealtToSingleTarget[player.Id] = _statisticsService.GetLatestDamageDealtToSingleTarget(player.Id);
                 detailedDamageTaken[player.Id] = _statisticsService.GetDetailedLatestDamageTaken(player.Id);
                 detailedDamageDealt[player.Id] = _statisticsService.GetDetailedLatestDamageDealt(player.Id);
+                damageBlocked[player.Id] = _statisticsService.GetDamageBlocked(player.Id);
             }
             foreach (var pet in pets) {
                 damageDealt[pet.Id] = _statisticsService.GetLatestDamageDealt(pet.Id);
@@ -152,16 +176,18 @@ namespace GrimDamage {
             _browser.JsInteractor.SetEntities(_statisticsService.GetEntities());
             _browser.JsInteractor.SetPets(pets);
             _browser.JsInteractor.SetPlayers(players);
+            _browser.JsInteractor.SetDamageBlocked(damageBlocked);
             _browser.JsInteractor.SetDamageDealt(damageDealt);
             _browser.JsInteractor.SetDamageDealtToSingleTarget(damageDealtToSingleTarget);
             _browser.JsInteractor.SetDamageTaken(damageTaken);
             _browser.JsInteractor.SetPlayerLocation(_positionTrackerService.GetPlayerLocation());
-            _browser.JsInteractor.SetStateChanges(_generalStateService.GetAndClearStates());
             _browser.JsInteractor.SetDetailedDamageTaken(detailedDamageTaken);
             _browser.JsInteractor.SetDetailedDamageDealt(detailedDamageDealt);
             
             _browser.NotifyUpdate();
         }
+
+        
 
         private void linkDiscord_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             Process.Start("https://discord.gg/PJ87Ewa");

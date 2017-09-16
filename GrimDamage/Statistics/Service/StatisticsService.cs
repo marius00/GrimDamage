@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GrimDamage.Parser.Service;
 using GrimDamage.Statistics.dto;
 using GrimDamage.Tracking.Model;
+using GrimDamage.Utility;
 
 namespace GrimDamage.Statistics.Service {
     public class StatisticsService {
@@ -42,7 +43,7 @@ namespace GrimDamage.Statistics.Service {
             return _damageParsingService.Values.Where(entity => entity.Type == EntityType.Pet).Select(toJson).ToList();
         }
 
-        private List<SimpleDamageEntryJson> Normalize(List<SimpleDamageEntryJson> entries) {
+        private static List<SimpleDamageEntryJson> Normalize(List<SimpleDamageEntryJson> entries) {
             foreach (DamageType type in Enum.GetValues(typeof(DamageType))) {
                 if (type != DamageType.Unknown) {
                     if (!entries.Exists(m => m.DamageType == type.ToString())) {
@@ -61,7 +62,15 @@ namespace GrimDamage.Statistics.Service {
 
             return entries;
         }
-        
+
+        public List<DamageBlockedJson> GetDamageBlocked(int playerId) {
+            return _damageParsingService.GetEntity(playerId).DamageBlocked
+                .Select(m => new DamageBlockedJson {
+                    AttackerId = m.Attacker,
+                    Amount = m.Amount
+                })
+                .ToList();
+        }
 
         public List<DetailedDamageDealtJson> GetDetailedLatestDamageDealt(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);
@@ -83,6 +92,94 @@ namespace GrimDamage.Statistics.Service {
             }
         }
 
+
+        public List<SimpleDamageEntryJson> GetSimpleDamageTaken(int playerId, long start, long end) {
+            var player = _damageParsingService.GetEntity(playerId);
+
+            if (player == null || player.DamageTaken.Count == 0) {
+                return Normalize(new List<SimpleDamageEntryJson>());
+            }
+            else {
+                var from = Timestamp.ToDateTimeFromMilliseconds(start);
+                var to = Timestamp.ToDateTimeFromMilliseconds(end);
+                var result = player.DamageTaken
+                    .Where(dmg => dmg.Time > from && dmg.Time < to)
+                    .GroupBy(m => m.Type)
+                    .Select(m => new SimpleDamageEntryJson {
+                        DamageType = m.Key.ToString(),
+                        Amount = m.Sum(s => s.Amount)
+                    })
+                    .ToList();
+
+                return Normalize(result);
+            }
+        }
+
+        public List<SimpleDamageEntryJson> GetSimpleDamageDealt(int playerId, long start, long end) {
+            var player = _damageParsingService.GetEntity(playerId);
+
+            if (player == null || player.DamageDealt.Count == 0) {
+                return Normalize(new List<SimpleDamageEntryJson>());
+            }
+            else {
+                var from = Timestamp.ToDateTimeFromMilliseconds(start);
+                var to = Timestamp.ToDateTimeFromMilliseconds(end);
+                var result = player.DamageDealt
+                    .Where(dmg => dmg.Time > from && dmg.Time < to)
+                    .GroupBy(m => m.Type)
+                    .Select(m => new SimpleDamageEntryJson {
+                        DamageType = m.Key.ToString(),
+                        Amount = m.Sum(s => s.Amount)
+                    })
+                    .ToList();
+
+                return Normalize(result);
+            }
+        }
+
+        public List<DetailedDamageDealtJson> GetDetailedLatestDamageDealt(int playerId, long start, long end) {
+            var player = _damageParsingService.GetEntity(playerId);
+            if (player == null || player.DamageDealt.Count == 0) {
+                return new List<DetailedDamageDealtJson>();
+            }
+            else {
+                var from = Timestamp.ToDateTimeFromMilliseconds(start);
+                var to = Timestamp.ToDateTimeFromMilliseconds(end);
+                var result = player.DamageDealt
+                    .Where(dmg => dmg.Time > from && dmg.Time < to)
+                    .Select(m => new DetailedDamageDealtJson {
+                        VictimId = m.Target,
+                        DamageType = m.Type.ToString(),
+                        Amount = m.Amount,
+                        Timestamp = Timestamp.ToUtcMilliseconds(m.Time)
+                    })
+                    .ToList();
+
+                return result;
+            }
+        }
+
+        public List<DetailedDamageTakenJson> GetDetailedLatestDamageTaken(int playerId, long start, long end) {
+            var player = _damageParsingService.GetEntity(playerId);
+            if (player == null || player.DamageTaken.Count == 0) {
+                return new List<DetailedDamageTakenJson>();
+            }
+            else {
+                var from = Timestamp.ToDateTimeFromMilliseconds(start);
+                var to = Timestamp.ToDateTimeFromMilliseconds(end);
+                var result = player.DamageTaken
+                    .Where(dmg => dmg.Time > from && dmg.Time < to)
+                    .Select(m => new DetailedDamageTakenJson {
+                        AttackerId = m.Attacker,
+                        DamageType = m.Type.ToString(),
+                        Amount = m.Amount,
+                        Timestamp = Timestamp.ToUtcMilliseconds(m.Time)
+                    })
+                    .ToList();
+
+                return result;
+            }
+        }
 
         public List<DetailedDamageTakenJson> GetDetailedLatestDamageTaken(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);
