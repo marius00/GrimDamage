@@ -73,12 +73,24 @@ namespace GrimDamage.GUI.Browser {
                     }
                     break;
 
+                case DataRequestType.EntityHealth:
+                    if (entityId > 0) {
+                        TransferHealth(entityId, start, end, callback);
+                    }
+                    else {
+                        Logger.Warn($"Data request for {data} was not handled due to the entityId being <0.");
+                    }
+                    break;
+
                 default:
                     Logger.Warn($"Data request for {data} was not handled, unknown type.");
                     break;
             }
         }
-
+        
+        private void TransferHealth(int entityId, long start, long end, string callback) {
+            _browser.JsCallback(callback, Serialize(_statisticsService.GetEntityHealth(entityId, start, end)));
+        }
         private void TransferSimpleDamageDealt(int entityId, long start, long end, string callback) {
             _browser.JsCallback(callback, Serialize(_statisticsService.GetSimpleDamageDealt(entityId, start, end)));
         }

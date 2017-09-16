@@ -22,7 +22,7 @@ namespace GrimDamage.Parser.Service {
         public void PushState(GrimState state) {
             _states.Add(new GrimDawnStateEventJson {
                 Event = state.ToString(),
-                Timestamp = Timestamp.UTCMilliseconds
+                Timestamp = Timestamp.UTCMillisecondsNow
             });
             if (_appSettings.LogStateChanges) {
                 Logger.Debug($"GD State has been set to \"{state}\"");

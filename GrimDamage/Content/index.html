@@ -42,7 +42,7 @@
         <div id="name-suggest-ko">
             <div data-bind="visible: isZoneUnknown">
                 You are in an unmapped area
-                <input type="button" data-bicnd="click: suggestName" value="Suggest name" />
+                <input type="button" data-bind="click: suggestName" value="Suggest name" />
             </div>
         </div>
 
@@ -636,6 +636,12 @@
         { "victimId": 76511, "damageType": "Physical", "amount": 1398.638916015625, "timestamp": 1505572188355 }
     ];
     deathTrackerViewModel.detailedDamagePoints(dmg);
+
+    deathTrackerViewModel.health([
+        { timestamp: 1505572192241, amount: 10000 },
+        { timestamp: 1505572190676, amount: 8000 },
+        { timestamp: 1505572188355, amount: 5000 }
+    ]);
 
 
     // State update callback

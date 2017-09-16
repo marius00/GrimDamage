@@ -28,7 +28,6 @@ namespace GrimDamage.GUI.Browser {
                 Id = 123,
                 Name = "Peter pan",
                 Type = "Player",
-                Health = 123,
                 IsPrimary = false
             };
 
@@ -40,7 +39,7 @@ namespace GrimDamage.GUI.Browser {
             List<string> documentation = new List<string>();
             documentation.Add($"Example values for state changes:");
             documentation.Add(
-                Serialize(new List<GrimDawnStateEventJson> { new GrimDawnStateEventJson { Event = GrimState.Dead.ToString(), Timestamp = Timestamp.UTCMilliseconds } }
+                Serialize(new List<GrimDawnStateEventJson> { new GrimDawnStateEventJson { Event = GrimState.Dead.ToString(), Timestamp = Timestamp.UTCMillisecondsNow } }
             ));
             documentation.Add("");
 

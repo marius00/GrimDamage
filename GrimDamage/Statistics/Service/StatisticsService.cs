@@ -26,8 +26,7 @@ namespace GrimDamage.Statistics.Service {
                 Id = m.Id,
                 Name = m.Name,
                 IsPrimary = m.IsPrimary,
-                Type = m.Type.ToString(),
-                Health = m.Health
+                Type = m.Type.ToString()
             };
         }
 
@@ -114,7 +113,26 @@ namespace GrimDamage.Statistics.Service {
                 return Normalize(result);
             }
         }
+        
+        public List<EntityHealthEntryJson> GetEntityHealth(int entityId, long start, long end) {
+            var player = _damageParsingService.GetEntity(entityId);
 
+            if (player == null || player.Health.Count == 0) {
+                return new List<EntityHealthEntryJson>();
+            }
+            else {
+                var result = player.Health
+                    .Where(entry => entry.Timestamp > start && entry.Timestamp < end)
+                    .Select(m => new EntityHealthEntryJson {
+                        Amount = m.Health,
+                        Timestamp = m.Timestamp,
+                        Id = entityId
+                    })
+                    .ToList();
+
+                return result;
+            }
+        }
         public List<SimpleDamageEntryJson> GetSimpleDamageDealt(int playerId, long start, long end) {
             var player = _damageParsingService.GetEntity(playerId);
 
