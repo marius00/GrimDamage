@@ -8,5 +8,6 @@ namespace GrimDamage.GUI.Browser {
     public enum DataRequestType {
         States = 1,
         DetailedDamageTaken = 2,
+        DetailedDamageDealt = 3,
     }
 }

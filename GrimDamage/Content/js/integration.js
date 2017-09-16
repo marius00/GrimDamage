@@ -7,6 +7,7 @@ let lastStateTimestamp = 0;
 /// <field name='TYPE_STATES' type='Number'>The event type is states, such as death and pause game.</field>  
 const TYPE_STATES = 1;
 const TYPE_DETAILED_DAMAGE_TAKEN = 2;
+const TYPE_DETAILED_DAMAGE_DEALT = 3;
 
 // This function is called from C# when a stat update is received
 function _itemsReceived() {

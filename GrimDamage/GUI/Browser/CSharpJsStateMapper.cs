@@ -31,27 +31,41 @@ namespace GrimDamage.GUI.Browser {
             return JsonConvert.SerializeObject(value, _settings);
         }
 
-        public void RequestData(DataRequestType data, long timestamp, int? entityId, string callback) {
+        public void RequestData(DataRequestType data, long timestamp, int entityId, string callback) {
             switch (data) {
                 case DataRequestType.States:
                     TransferStates(timestamp, callback);
                     break;
 
                 case DataRequestType.DetailedDamageTaken:
-                    if (entityId.HasValue) {
-                        TransferDetailedDamage(entityId.Value, timestamp, callback);
+                    if (entityId > 0) {
+                        TransferDetailedDamageTaken(entityId, timestamp, callback);
                     }
                     else {
-                        Logger.Warn($"Data request for {data} was not handled due to the entityId being null.");
+                        Logger.Warn($"Data request for {data} was not handled due to the entityId being <0.");
                     }
                     break;
 
+                case DataRequestType.DetailedDamageDealt:
+                    if (entityId > 0) {
+                        TransferDetailedDamageDealt(entityId, timestamp, callback);
+                    }
+                    else {
+                        Logger.Warn($"Data request for {data} was not handled due to the entityId being <0.");
+                    }
+                    break;
+                    
                 default:
                     Logger.Warn($"Data request for {data} was not handled, unknown type.");
                     break;
             }
         }
-        private void TransferDetailedDamage(int entityId, long timestamp, string callback) {
+
+        private void TransferDetailedDamageDealt(int entityId, long timestamp, string callback) {
+            _browser.JsCallback(callback, Serialize(_statisticsService.GetDetailedLatestDamageDealt(entityId, timestamp)));
+        }
+
+        private void TransferDetailedDamageTaken(int entityId, long timestamp, string callback) {
             _browser.JsCallback(callback, Serialize(_statisticsService.GetDetailedLatestDamageTaken(entityId, timestamp)));
         }
 

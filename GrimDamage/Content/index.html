@@ -21,6 +21,7 @@
         You are in an unmapped area
         <input type="button" data-bind="click: suggestName" value="Suggest name" />
     </div>
+
 </div>
 
 
@@ -28,6 +29,13 @@
     <ul data-bind="foreach: deaths">
         <li>
             <span data-bind="text: label, click: $root.showDeath" class="what-killed-me-link"></span>
+        </li>
+    </ul>
+    
+    <!-- This would generally be inside a modal -->
+    <ul data-bind="foreach: detailedDamagePoints">
+        <li>
+            <span data-bind="text: amount"></span>
         </li>
     </ul>
 </div>
