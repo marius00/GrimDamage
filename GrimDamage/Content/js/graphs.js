@@ -225,6 +225,7 @@
             ]
         });
 
+    /* Keeping the code for now
     let damageTakenPie = Highcharts.chart('container-damage-taken-pie',
         {
             chart: {
@@ -252,6 +253,6 @@
                 data: []
             }]
         });
-
+        */
     return [damageTakenChart, damageDealtChart, dataTable];
 }

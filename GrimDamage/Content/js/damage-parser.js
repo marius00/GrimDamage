@@ -11,8 +11,6 @@ class DamageParser {
         this.totalDamageTaken = [];
         this.bosses = [];
         this.modals = new Modals();
-        this.modals.add('test', 'test title', '<p>Para</p>');
-        this.modals.show('test');
     }
 
     tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) {
