@@ -1,0 +1,13 @@
+﻿body {
+    padding: 2px;
+}
+
+.what-killed-me-link {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.placeholder {
+    border: 1px;
+    border-style: dashed;
+    margin: 8px;
+}

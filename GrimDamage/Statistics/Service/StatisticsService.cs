@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GrimDamage.Parser.Service;
 using GrimDamage.Statistics.dto;
 using GrimDamage.Tracking.Model;
+using GrimDamage.Utility;
 
 namespace GrimDamage.Statistics.Service {
     public class StatisticsService {
@@ -97,7 +98,7 @@ namespace GrimDamage.Statistics.Service {
                 return new List<DetailedDamageTakenJson>();
             }
             else {
-                var from = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds(timestamp);
+                var from = Timestamp.ToDateTimeFromMilliseconds(timestamp);
                 var result = player.DamageTaken
                     .Where(dmg => dmg.Time > from)
                     .Select(m => new DetailedDamageTakenJson {

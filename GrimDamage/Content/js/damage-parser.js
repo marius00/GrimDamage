@@ -99,7 +99,7 @@ class DamageParser {
             }
         }
         else {
-            console.log('No player yet.. skipping graph..');
+            //console.log('No player yet.. skipping graph..');
         }
     }
 

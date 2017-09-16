@@ -3,18 +3,20 @@
 <script src="js/vendor/jquery-3.2.1.min.js"></script> <!-- Required for impromptu, further use of jQuery functionality is discouraged -->
 <script src="js/vendor/jquery-impromptu.min.js"></script> <!-- Perhaps look into alternatives which does not require jQuery -->
 <link rel="stylesheet" media="all" type="text/css" href="css/vendor/jquery-impromptu.min.css" />
+<link rel="stylesheet" media="all" type="text/css" href="css/main.css" />
 
 
 <script src="js/integration.js"></script>
 <script src="js/main.js"></script>
 <script src="js/damage-parser.js"></script>
+<script src="js/death-tracker-viewmodel.js"></script>
 <script src="js/death-tracker.js"></script>
 <script src="js/graphs.js"></script>
 
 
 
 <!-- TODO: Bootstrap button maybe? -->
-<div id="name-suggest-ko">
+<div id="name-suggest-ko" class="placeholder">
     <div data-bind="visible: isZoneUnknown">
         You are in an unmapped area
         <input type="button" data-bind="click: suggestName" value="Suggest name" />
@@ -22,10 +24,10 @@
 </div>
 
 
-<div>
+<div id="what-killed-me-listing" class="placeholder">
     <ul data-bind="foreach: deaths">
-        <li data-bind="text: label">
-            
+        <li>
+            <span data-bind="text: label, click: $root.showDeath" class="what-killed-me-link"></span>
         </li>
     </ul>
 </div>
@@ -65,9 +67,23 @@
 
 
     // Track callback events
-    let deathTracker = new DeathTracker(p); // damage parser is the current 'track player id' class, may be split later
+    const deathTrackerViewModel = new DeathTrackerViewModel();
+    let deathTracker = new DeathTracker(p, deathTrackerViewModel); // damage parser is the current 'track player id' class, may be split later
+    ko.applyBindings(deathTrackerViewModel, document.getElementById('what-killed-me-listing'));
+
+    // Test data
+    deathTrackerViewModel.add({
+        timestamp: 1505547750 * 1000,
+        entityId: 123
+    });
+
+    deathTrackerViewModel.add({
+        timestamp: 1505547750 * 1000 + 30000,
+        entityId: 1233
+    });
 
 
+    // State update callback
     setCsharpRequestCallback((type, dataset) => {
         if (type === TYPE_STATES) {
             deathTracker.process(dataset);

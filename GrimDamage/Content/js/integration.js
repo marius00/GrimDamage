@@ -46,8 +46,6 @@ function setCsharpRequestCallback(method) {
 }
 
 function _notifyStateChanges(dataset) {
-    console.log('states received', dataset);
-
     if (dataset.length > 0)
         lastStateTimestamp = dataset[0].timestamp;
 
@@ -56,7 +54,8 @@ function _notifyStateChanges(dataset) {
     }
 }
 function requestUpdates() {
-    data.requestData(TYPE_STATES, lastStateTimestamp, null, '_notifyStateChanges');
+    // Sending timestamps as strings, as Chromium confuses them with doubles
+    data.requestData(TYPE_STATES, lastStateTimestamp.toString(), -1, '_notifyStateChanges');
     data.requestUpdate();
 }
 function setCsharpTickInterval(interval) {

@@ -2,12 +2,12 @@
 
 
 class DeathTracker {
-
-    constructor(playerTracker) {
+    constructor(playerTracker, viewModel) {
         /// <summary>Responsible for tracking player deaths</summary>  
         this.deaths = [];
         this.minInterval = 8000;
         this.playerTracker = playerTracker;
+        this.viewModel = viewModel;
     }
 
     process(events) {
@@ -16,18 +16,25 @@ class DeathTracker {
 
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            if (event.event === 'Dead') {
+            if (event.event === 'Dead' || event.event === 'Pause') {
                 // Minor cooldown on deaths, since the alert can come multiple times
                 if (event.timestamp > this.lastDeath + this.minInterval) {
-                    let entityId = this.playerTracker.mainPlayerId;
+                    const entityId = this.playerTracker.mainPlayerId;
                     if (entityId) {
-                        this.deaths.push({
+                        var death = {
                             timestamp: event.timestamp,
                             entityId: this.playerTracker.mainPlayerId
-                        });
+                        };
+
+                        this.deaths.push(death);
+                        this.viewModel.add(death);
                     } else {
                         console.log('Death detected but no player found');
                     }
+                } else {
+                    console.log(
+                        `Death ignored, timestamp ${event.timestamp} is too recent, expected >= ${this.lastDeath +
+                        this.minInterval}`);
                 }
             }
         }
