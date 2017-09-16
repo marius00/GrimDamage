@@ -91,15 +91,16 @@ namespace GrimDamage.Statistics.Service {
                 return result;
             }
         }
-        public List<DetailedDamageDealtJson> GetDetailedLatestDamageDealt(int playerId, long timestamp) {
+        public List<DetailedDamageDealtJson> GetDetailedLatestDamageDealt(int playerId, long start, long end) {
             var player = _damageParsingService.GetEntity(playerId);
             if (player == null || player.DamageDealt.Count == 0) {
                 return new List<DetailedDamageDealtJson>();
             }
             else {
-                var from = Timestamp.ToDateTimeFromMilliseconds(timestamp);
+                var from = Timestamp.ToDateTimeFromMilliseconds(start);
+                var to = Timestamp.ToDateTimeFromMilliseconds(end);
                 var result = player.DamageDealt
-                    .Where(dmg => dmg.Time > from)
+                    .Where(dmg => dmg.Time > from && dmg.Time < to)
                     .Select(m => new DetailedDamageDealtJson {
                         VictimId = m.Target,
                         DamageType = m.Type.ToString(),
@@ -111,15 +112,16 @@ namespace GrimDamage.Statistics.Service {
             }
         }
 
-        public List<DetailedDamageTakenJson> GetDetailedLatestDamageTaken(int playerId, long timestamp) {
+        public List<DetailedDamageTakenJson> GetDetailedLatestDamageTaken(int playerId, long start, long end) {
             var player = _damageParsingService.GetEntity(playerId);
             if (player == null || player.DamageTaken.Count == 0) {
                 return new List<DetailedDamageTakenJson>();
             }
             else {
-                var from = Timestamp.ToDateTimeFromMilliseconds(timestamp);
+                var from = Timestamp.ToDateTimeFromMilliseconds(start);
+                var to = Timestamp.ToDateTimeFromMilliseconds(end);
                 var result = player.DamageTaken
-                    .Where(dmg => dmg.Time > from)
+                    .Where(dmg => dmg.Time > from && dmg.Time < to)
                     .Select(m => new DetailedDamageTakenJson {
                         AttackerId = m.Attacker,
                         DamageType = m.Type.ToString(),

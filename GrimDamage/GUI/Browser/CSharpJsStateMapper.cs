@@ -31,15 +31,15 @@ namespace GrimDamage.GUI.Browser {
             return JsonConvert.SerializeObject(value, _settings);
         }
 
-        public void RequestData(DataRequestType data, long timestamp, int entityId, string callback) {
+        public void RequestData(DataRequestType data, long start, long end, int entityId, string callback) {
             switch (data) {
                 case DataRequestType.States:
-                    TransferStates(timestamp, callback);
+                    TransferStates(start, callback);
                     break;
 
                 case DataRequestType.DetailedDamageTaken:
                     if (entityId > 0) {
-                        TransferDetailedDamageTaken(entityId, timestamp, callback);
+                        TransferDetailedDamageTaken(entityId, start, end, callback);
                     }
                     else {
                         Logger.Warn($"Data request for {data} was not handled due to the entityId being <0.");
@@ -48,7 +48,7 @@ namespace GrimDamage.GUI.Browser {
 
                 case DataRequestType.DetailedDamageDealt:
                     if (entityId > 0) {
-                        TransferDetailedDamageDealt(entityId, timestamp, callback);
+                        TransferDetailedDamageDealt(entityId, start, end, callback);
                     }
                     else {
                         Logger.Warn($"Data request for {data} was not handled due to the entityId being <0.");
@@ -61,12 +61,12 @@ namespace GrimDamage.GUI.Browser {
             }
         }
 
-        private void TransferDetailedDamageDealt(int entityId, long timestamp, string callback) {
-            _browser.JsCallback(callback, Serialize(_statisticsService.GetDetailedLatestDamageDealt(entityId, timestamp)));
+        private void TransferDetailedDamageDealt(int entityId, long start, long end, string callback) {
+            _browser.JsCallback(callback, Serialize(_statisticsService.GetDetailedLatestDamageDealt(entityId, start, end)));
         }
 
-        private void TransferDetailedDamageTaken(int entityId, long timestamp, string callback) {
-            _browser.JsCallback(callback, Serialize(_statisticsService.GetDetailedLatestDamageTaken(entityId, timestamp)));
+        private void TransferDetailedDamageTaken(int entityId, long start, long end, string callback) {
+            _browser.JsCallback(callback, Serialize(_statisticsService.GetDetailedLatestDamageTaken(entityId, start, end)));
         }
 
         private void TransferStates(long timestamp, string callback) {

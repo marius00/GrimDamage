@@ -57,12 +57,18 @@ namespace GrimDamage {
             _cSharpJsStateMapper = new CSharpJsStateMapper(_browser, _statisticsService, _generalStateService);
             _browser.JsPojo.OnRequestData += (sender, _args) => {
                 RequestDataArgument args = _args as RequestDataArgument;
-                long timestamp;
-                if (long.TryParse(args.Timestamp, out timestamp)) {
-                    _cSharpJsStateMapper.RequestData(args.Type, timestamp, args.EntityId, args.Callback);
+                long start;
+                if (long.TryParse(args.TimestampStart, out start)) {
+                    long end;
+                    if (long.TryParse(args.TimestampEnd, out end)) {
+                        _cSharpJsStateMapper.RequestData(args.Type, start, end, args.EntityId, args.Callback);
+                    }
+                    else {
+                        Logger.Warn($"Could not parse timestamp {args.TimestampEnd} received for {args.Type}");
+                    }
                 }
                 else {
-                    Logger.Warn($"Could not parse timestamp {args.Timestamp} received for {args.Type}");   
+                    Logger.Warn($"Could not parse timestamp {args.TimestampStart} received for {args.Type}");   
                 }
             };
         }

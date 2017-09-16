@@ -9,14 +9,14 @@ class DeathTrackerViewModel {
         this.detailedDamagePoints = ko.observableArray([]);
 
         this.showDeath = function(death) {
-            console.log(self.detailedDamagePoints);
-            console.log(self.detailedDamagePoints());
+            const period = 10 * 1000;
             self.detailedDamagePoints([]);
             console.log(death);
 
             // This is really unfortunate, but i have no better solution yet.
             const hardcodedClassVarName = 'deathTrackerViewModel';
-            data.requestData(TYPE_DETAILED_DAMAGE_TAKEN,
+            data.requestData(TYPE_DETAILED_DAMAGE_DEALT, // TODO: Change this to taken, not dealt. Taken is just useful for testing.
+                (death.timestamp - period).toString(),
                 death.timestamp.toString(),
                 death.entityId,
                 `${hardcodedClassVarName}.detailedDamagePoints`);

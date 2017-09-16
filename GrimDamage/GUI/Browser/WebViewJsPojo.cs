@@ -61,10 +61,11 @@ namespace GrimDamage.GUI.Browser {
                 Data = json
             });
         }
-        public void requestData(int type, string timestamp, int id, string callback) {
+        public void requestData(int type, string start, string end, int id, string callback) {
             OnRequestData?.Invoke(this, new RequestDataArgument {
                 Type = (DataRequestType)type,
-                Timestamp = timestamp,
+                TimestampStart = start,
+                TimestampEnd = end,
                 Callback = callback,
                 EntityId = id
             });
