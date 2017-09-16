@@ -7,6 +7,10 @@ class DeathTrackerViewModel {
         var self = this;
         this.deaths = ko.observableArray([]);
 
+
+        this.damageTakenChart = chartDamageTaken;
+
+
         this._detailedDamagePoints = ko.observableArray([]);
         this.detailedDamagePoints = ko.pureComputed({
             read: function () {
@@ -20,32 +24,41 @@ class DeathTrackerViewModel {
                     console.log('Pie graph data points:', this.getPieChartDataPoints(value));
 
 
-
                     // TS transform is: Math.ceil((ts - min)/1000)
                     const lineChartPoints = this.getLineChartDataPoints(value);
                     console.log('Line graph points:', lineChartPoints, 'Length:', lineChartPoints.length);
+                    let points = {};
                     for (let x in lineChartPoints) {
                         for (let damageType in lineChartPoints[x]) {
-                            const series = self.damageTakenChart.series.filter(s => s.name === damageType)[0];
-                            if (series) {
-                                series.addPoint({ x: x, y: lineChartPoints[x][damageType] }, false, false);
-                            } else {
-                                console.log(`Could not find series ${damageType}`);
-                            }
+                            if (!points[damageType])
+                                points[damageType] = [];
+
+                            points[damageType].push({ x: parseInt(x), y: lineChartPoints[x][damageType] });
                         }
                     }
 
-                    self.damageTakenChart.redraw();
+                    for (let damageType in points) {
+                        const series = self.damageTakenChart.series.filter(s => s.name === damageType)[0];
+                        if (series) {
+                            series.setData(points[damageType], true, false, false);
+                            console.log('Settings points', points[damageType], 'for series', damageType);
+                        } else {
+                            console.log(`Could not find series ${damageType}`);
+                        }
+                    }
+
+                } else {
+                    //self.resetGraph(10);
                 }
+
             },
             owner: this
         });
         
 
-        this.damageTakenChart = chartDamageTaken;
-
         this.showDeath = function(death) {
             const period = 10 * 1000;
+            self.resetGraph(10); // TODO: This causes things to fail later on..
             self.detailedDamagePoints([]);
             console.log(death);
 
@@ -57,6 +70,14 @@ class DeathTrackerViewModel {
                 death.entityId,
                 `${hardcodedClassVarName}.detailedDamagePoints`);
         }
+    }
+
+    resetGraph(numElements) {
+        console.log('Resetting graph');
+        for (let idx = 0; idx < this.damageTakenChart.series.length; idx++) {
+            this.damageTakenChart.series[idx].setData(Array.from(Array(numElements), () => null));
+        }
+        this.damageTakenChart.redraw();
     }
 
     getPieChartDataPoints(value) {
