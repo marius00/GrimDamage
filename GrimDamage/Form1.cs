@@ -102,7 +102,6 @@ namespace GrimDamage {
                 webViewPanel.Location = new Point { X = 0, Y = linkItemAssistant.Height + margin*2 };
                 webViewPanel.Width = this.ClientSize.Width;
                 webViewPanel.Height = this.ClientSize.Height - linkItemAssistant.Height - margin * 2;
-                //linkItemAssistant.Location = new Point { X = this.ClientSize.Width - linkItemAssistant.Width - 20, Y = margin };
                 Controls.Add(linkItemAssistant);
 
             }

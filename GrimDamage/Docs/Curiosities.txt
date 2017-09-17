@@ -1,9 +1,4 @@
 ﻿# Engine
-class GAME::UniqueId const & GAME::Portal::GetId(void)
-bool GAME::Portal::GetIsOpen(void)
-class GAME::Region * GAME::Portal::GetConnectedRegion(void)
-class GAME::RegionId const & GAME::Portal::GetConnectedRegionId(void)
-class GAME::Coords const & GAME::Portal::GetCoords(void)
 
 
 unsigned short const * GAME::Player::GetPlayerName(void)
@@ -26,23 +21,7 @@ Ceno:
 >and it builds up as player's near or use skills/etc.
 >it decays as players flee
 
-int __thiscall GAME::Character::SetLifeState(int this, int a2)
-   case 0:      sub_1000B300(a2, "Life: Unknown");
-    case 1:      sub_1000B300(a2, "Life: Initializing");
-    case 2:      sub_1000B300(a2, "Life: Alive");
-    case 3:      sub_1000B300(a2, "Life: Dying");
-    case 4:      sub_1000B300(a2, "Life: Dead");
-    case 5:      sub_1000B300(a2, "Life: Respawning");
 
-
-GAME::CharacterBio::AddLifeFast(float) .text 1005CDD0 0000006A 00000004 00000004 R . . . B T .
-GAME::CharacterBio::AddLifeSlow(float) .text 1005CD50 00000073 00000004 00000004 R . . . B T .
-GAME::CharacterBio::SetAcceleratedLifeRegen(bool) .text 102759E0 0000000D 00000004 00000001 R . . . B T .
-GAME::Player::CancelAcceleratedLifeRegen(float,uint) .text 10272710 0000001C 00000004 00000004 R . . . B T .
-GAME::Character::SubtractLife(float,GAME::PlayStatsDamageType const &,bool,bool) .text 10040330 0000010E 00000018 0000000D R . . . B T .
-GAME::ControllerCharacter::DecrementCharacterLife(void) .text 100BCEB0 00000099 00000020 00000000 R . . . B T .
-GAME::ControllerCharacter::IncrementCharacterLife(int)  .text 100BCE00 000000A1 00000020 00000004 R . . . B T .
-GAME::ControllerCharacter::IncrementCharacterLife(void) .text 100BCD60 000000A0 00000020 00000000 R . . . B T .
 GAME::GameEngine::CreateItem(GAME::WorldCoords const &,GAME::ItemReplicaInfo &)                                                                                              .text 101C2050 00000023 00000004 00000008 R . . . B T .
 GAME::GameEngine::CreateItemForCharacter(uint,GAME::WorldCoords const &,GAME::ItemReplicaInfo &,std::basic_string<ushort,std::char_traits<ushort>,std::allocator<ushort>> *) .text 101C2080 0000001B 00000004 0000000C R . . . B . .
 char __thiscall GAME::PlayerInventoryCtrl::UsePotionOfType(int this, int a2, int a3, float a4)

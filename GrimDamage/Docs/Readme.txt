@@ -14,21 +14,22 @@ TODO:
 * [JS] Automatically show what killed you
 * [JS] show one graph with pets? 
 * [JS] Now possible to save/load parses from .JS ==> Need the JS integration
+* [JS] Stop parsing on pause
 * [JS] Use knockout for something? global states?
 * [JS] An issue with switching to NULL for consecutive 0s is that the sequence will start from null, not from 0, creating odd clipped graphs
 * [C#] Linklabel to download IA, if its not already installed.
 * [C#/PHP] Was thinking maybe a news thing, just a link to gog/steam when there's a sale or wtv.. unsure if it provides any value, but being able to announce stuff to users (while being non intrusive) might be nice.
 * [VS] Fix the need for config changes to compile
-** [evil]: dont add / start clearing damage types not dealt for 'what killed me?'
+** [evil]: dont add / start clearing damage types not dealt for 'what killed me?' [dont show irrelevant types]
 
 highstock.js:58 Error: <path> attribute d: Expected number, "M L L L L L L L L".
 chart.addPoint(null, shouldRender, true);
 
 Nice to have:
-* HP line on damage taken graph, max and current life.
 * Show damage blocked (shield)
 * show stats of enemies, off, def, etc..
 * How much dps from racial?
+* How much damage absorved from racial?
 * In .js, if you 've gone X updates without doing any damage, might as well tag him as out-of-combat, and stop updating the graph
 * Finding a way to show defensive actions like absorbs and heals would be "nice to have"
 * Showing which zone the player enters / leaves  ( https://www.highcharts.com/demo/combo-timeline )
