@@ -40,12 +40,14 @@
 <div class="tab-content" id="tabbed-content">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <!-- TODO: Bootstrap button maybe? -->
+        <!-- 
         <div id="name-suggest-ko">
             <div data-bind="visible: isZoneUnknown">
                 You are in an unmapped area
                 <input type="button" data-bind="click: suggestName" value="Suggest name" />
             </div>
         </div>
+        -->
 
         <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
         <div id="container-damage-done" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -119,12 +121,14 @@
     enableLogToCsharp();
 
     // KO, move this?
+    /*
     function _VM() {
         this.suggestName = triggerSuggestNameDialog;
         this.isZoneUnknown = ko.observable(false);
     }
     var VM = new _VM();
     ko.applyBindings(VM, document.getElementById('name-suggest-ko'));
+    */
 
 
     // Chart and parsing
@@ -134,7 +138,7 @@
 
     setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
         p.tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList);
-        VM.isZoneUnknown(playerLocationName === 'Unknown');
+        //VM.isZoneUnknown(playerLocationName === 'Unknown');
     });
 
     setCsharpTickInterval(1000);
