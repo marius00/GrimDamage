@@ -10,6 +10,16 @@ class DeathTrackerViewModel {
 
         this.damageTakenChart = chartDamageTaken;
 
+        this.deathtable = $('#killed-table').DataTable({
+            "columns": [
+                { "data": "timestamp"},
+                { "data": "location" }
+            ]
+        });
+        $('#killed-table tbody').on('click', 'tr', this.deathtableclicked);
+        p.modals.add("death-modal", "Death", "Death chart here");
+
+
 
         this._health = ko.observableArray([]);
         this.health = ko.pureComputed({
@@ -150,6 +160,13 @@ class DeathTrackerViewModel {
         }
     }
 
+
+    deathtableclicked() {
+        let deathid = this.id;
+        console.log('Clicked the row with id ' + deathid);
+        p.modals.show('death-modal');
+    }
+
     resetGraph(numElements) {
         console.log('Resetting graph');
         for (let idx = 0; idx < this.damageTakenChart.series.length; idx++) {
@@ -210,5 +227,7 @@ class DeathTrackerViewModel {
             timestamp: death.timestamp,
             entityId: death.entityId
         });
+        let now = moment(new Date());
+        this.deathtable.row.add({ "DT_RowId": death.entityId, "timestamp": now.format('HH:mm:ss'), "location": label }).draw(false);
     }
 }

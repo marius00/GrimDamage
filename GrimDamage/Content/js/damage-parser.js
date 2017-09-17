@@ -8,7 +8,7 @@ class DamageParser {
         this.damageTakenGraph = damageTakenGraph;
         let dataTable = $('#bosstable').DataTable({
             "columns": [
-                { "data": "encountered" },
+                { "data": "encountered"},
                 { "data": "name" }
             ]
         });
@@ -21,7 +21,6 @@ class DamageParser {
 
 
         this.bosschart = this.modals.addBossModal();
-        console.log(this.bosschart);
     }
 
     tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) {
@@ -78,7 +77,8 @@ class DamageParser {
                     this.bosses[entity.id]['name'] = entity.name;
                     this.bosses[entity.id]['dealt'] = [];
                     this.bosses[entity.id]['taken'] = [];
-                    this.dataTable.row.add({ "DT_RowId": entity.id, "encountered": 1, "name": entity.name }).draw(false);
+                    let now = moment(new Date());
+                    this.dataTable.row.add({ "DT_RowId": entity.id, "encountered": now.format('HH:mm:ss'), "name": entity.name }).draw(false);
                 }
             }
         }
