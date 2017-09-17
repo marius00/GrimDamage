@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
@@ -71,6 +72,39 @@ namespace GrimDamage {
                     Logger.Warn($"Could not parse timestamp {args.TimestampStart} received for {args.Type}");   
                 }
             };
+
+
+
+#if !DEBUG
+            webViewPanel.Parent.Controls.Remove(webViewPanel);
+            Controls.Clear();
+            Controls.Add(webViewPanel);
+
+            bool itemAssistantInstalled = Directory.Exists(GlobalSettings.ItemAssistantFolder);
+            if (itemAssistantInstalled) {
+                webViewPanel.Location = new Point { X = 0, Y = 0 };
+                webViewPanel.Width = this.ClientSize.Width;
+                webViewPanel.Height = this.ClientSize.Height;
+            }
+            else {
+                const int margin = 5;
+                webViewPanel.Location = new Point { X = 0, Y = linkItemAssistant.Height + margin*2 };
+                webViewPanel.Width = this.ClientSize.Width;
+                webViewPanel.Height = this.ClientSize.Height - linkItemAssistant.Height - margin * 2;
+                linkItemAssistant.Location = new Point { X = this.ClientSize.Width - linkItemAssistant.Width - 5, Y = margin };
+                Controls.Add(linkItemAssistant);
+
+                var labels = new[] {
+                    "Is your stash full? Try Item Assistant!",
+                    "Need a larger stash? Try Item Assistant!",
+                    "Having trouble finding space for all your loot? Try Item Assistant!",
+                    "Having trouble finding space for all your items? Try Item Assistant!",
+                    "Need extra item storage? Try Item Assistant!",
+                };
+            }
+#else
+            linkItemAssistant.Hide();
+#endif
         }
 
         private void JsPojoOnOnSave(object sender, EventArgs eventArgs) {
@@ -111,7 +145,7 @@ namespace GrimDamage {
             {
                 var webView = new WebView(_browser);
                 webView.TopLevel = false;
-                this.panel1.Controls.Add(webView);
+                this.webViewPanel.Controls.Add(webView);
                 webView.Show();
             }
             {
@@ -217,6 +251,10 @@ namespace GrimDamage {
 
         private void linkDonate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=29J3HM8G3CQSA");
+        }
+
+        private void linkItemAssistant_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            Process.Start("http://grimdawn.dreamcrash.org/ia/");
         }
     }
 }

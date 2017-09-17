@@ -23,6 +23,14 @@ namespace GrimDamage.Settings {
             }
         }
 
+        public static string ItemAssistantFolder {
+            get {
+                string appdata = Environment.GetEnvironmentVariable("LocalAppData");
+                string dir = Path.Combine(appdata, "EvilSoft", "iagd");
+                return CreateAndReturn(dir);
+            }
+        }
+
         private static string CreateAndReturn(string path) {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
