@@ -17,20 +17,21 @@ class DeathTrackerViewModel {
                 return self._health;
             },
             write: function (value) {
+                /// <summary>Responsible for rendering the player health line on the chart</summary>  
                 self._health(value);
 
                 if (value.length > 0) {
                     let minTimestamp = Math.min.apply(Math, value.map(function (o) { return o.timestamp; }));
                     let dataPoints = [];
-                    dataPoints = value.reduce(function (res, value) {
-                            const series = Math.ceil((value.timestamp - minTimestamp) / 1000);
+                    dataPoints = value.reduce(function (res, val) {
+                        const xAxis = Math.ceil((val.timestamp - minTimestamp) / 1000);
 
-                            if (!res[series]) {
-                                res[series] = {};
-                                dataPoints.push(res[value]);
+                            if (!res[xAxis]) {
+                                res[xAxis] = {};
+                                dataPoints.push(res[val]);
                             }
 
-                            res[series] = { x: parseInt(series), y: value.amount };
+                            res[xAxis] = { x: parseInt(xAxis), y: val.amount };
                             return res;
                         },
                         {}
@@ -46,7 +47,7 @@ class DeathTrackerViewModel {
                         self.damageTakenChart.addSeries(
                             {
                                 type: 'spline',
-                                marker: { enabled: false },
+                                dashStyle: 'Dash',
                                 name: 'Hitpoints',
                                 color: '#ff0000',
                                 data: points
@@ -68,7 +69,8 @@ class DeathTrackerViewModel {
             read: function () {
                 return self._detailedDamagePoints;
             },
-            write: function(value) {
+            write: function (value) {
+                /// <summary>Responsible for rendering the damage types the player has taken</summary>  
                 self._detailedDamagePoints(value);
                 console.log('Update the graph with the following data please:', value);
 
@@ -79,16 +81,32 @@ class DeathTrackerViewModel {
                     // TS transform is: Math.ceil((ts - min)/1000)
                     const lineChartPoints = this.getLineChartDataPoints(value);
                     console.log('Line graph points:', lineChartPoints, 'Length:', lineChartPoints.length);
-                    let points = {};
-                    for (let x in lineChartPoints) {
-                        for (let damageType in lineChartPoints[x]) {
-                            if (!points[damageType])
-                                points[damageType] = [];
 
-                            points[damageType].push({ x: parseInt(x), y: lineChartPoints[x][damageType] });
+                    // Convert the dictionary to single x/y paired elements
+                    let points = {};
+
+
+                    // Create the datapoint values
+                    const minTimestamp = Math.min.apply(Math, value.map(function (o) { return o.timestamp; }));
+                    const maxTimestamp = Math.max.apply(Math, value.map(function (o) { return o.timestamp; }));
+                    const xRange = Math.ceil((maxTimestamp - minTimestamp) / 1000);
+
+                    for (let damageType in lineChartPoints) {
+                        if (!points[damageType])
+                            points[damageType] = [];
+
+                        for (let x = 0; x < xRange; x++) {
+                            if (lineChartPoints[damageType][x]) {
+                                points[damageType].push({ x: x, y: lineChartPoints[damageType][x] });
+                                //console.log('Inserting', damageType, 'x=', x, 'y=', lineChartPoints[damageType][x]);
+                            } else {
+                                points[damageType].push({ x: x, y: 0 });
+                                //console.log('Inserting', damageType, 'x=', x, 'y=', 0);
+                            }
                         }
                     }
 
+                    // Set the datapoints on the graph
                     for (let damageType in points) {
                         const series = self.damageTakenChart.series.filter(s => s.name === damageType)[0];
                         if (series) {
@@ -137,11 +155,11 @@ class DeathTrackerViewModel {
         this.damageTakenChart.redraw();
     }
 
-    getPieChartDataPoints(value) {
+    getPieChartDataPoints(dataset) {
         /// <returns type="Dictionary">Generates a list of datapoints for a pie graph</returns>
         // Group by damage type and sum, this gets the totals usable for pie charts
         let dataPoints = [];
-        dataPoints = value.reduce(function (res, value) {
+        dataPoints = dataset.reduce(function (res, value) {
                 if (!res[value.damageType]) {
                     res[value.damageType] = 0;
                     dataPoints.push(res[value.damageType]);
@@ -155,24 +173,24 @@ class DeathTrackerViewModel {
         return dataPoints;
     }
 
-    getLineChartDataPoints(value) {
+    getLineChartDataPoints(dataset) {
         /// <summary>Transforms the timestamp value into a series X-axis point and groups by X-axis and damage type</summary>
         /// <returns type="Array">Generates a list of datapoints for a line graph</returns>
         
-        const minTimestamp = Math.min.apply(Math, value.map(function (o) { return o.timestamp; }));
+        const minTimestamp = Math.min.apply(Math, dataset.map(function (o) { return o.timestamp; }));
         let dataPoints = [];
-        dataPoints = value.reduce(function (res, value) {
+        dataPoints = dataset.reduce(function (res, value) {
                 const series = Math.ceil((value.timestamp - minTimestamp) / 1000);
                 console.log('detected series', series);
-                if (!res[series]) {
-                    res[series] = {};
+                if (!res[value.damageType]) {
+                    res[value.damageType] = {};
                     dataPoints.push(res[value]);
                 }
-                if (!res[series][value.damageType]) {
-                    res[series][value.damageType] = 0;
+                if (!res[value.damageType][series]) {
+                    res[value.damageType][series] = 0;
                 }
 
-                res[series][value.damageType] += value.amount;
+                res[value.damageType][series] += value.amount;
                 return res;
             },
             {}
