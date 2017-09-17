@@ -11,9 +11,11 @@
     border-style: dashed;
     margin: 8px;
 }
+#killed-table tr,
 #bosstable tr {
     cursor: pointer;
 }
+#killed-table tr td:first-of-type,
 #bosstable tr td:first-of-type {
     width: 130px !important;
 }
