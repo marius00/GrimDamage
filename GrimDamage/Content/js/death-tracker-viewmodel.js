@@ -159,7 +159,7 @@ class DeathTrackerViewModel {
         /// <summary>Transforms the timestamp value into a series X-axis point and groups by X-axis and damage type</summary>
         /// <returns type="Array">Generates a list of datapoints for a line graph</returns>
         
-        let minTimestamp = Math.min.apply(Math, value.map(function (o) { return o.timestamp; }));
+        const minTimestamp = Math.min.apply(Math, value.map(function (o) { return o.timestamp; }));
         let dataPoints = [];
         dataPoints = value.reduce(function (res, value) {
                 const series = Math.ceil((value.timestamp - minTimestamp) / 1000);
@@ -183,7 +183,7 @@ class DeathTrackerViewModel {
 
     add(death) {
         /// <summary>Add a death</summary>  
-        var label = `Died at ${new Date(death.timestamp).toLocaleTimeString()}`;
+        const label = `Died at ${new Date(death.timestamp).toLocaleTimeString()}`;
         this.deaths.push({
             label: label,
             timestamp: death.timestamp,

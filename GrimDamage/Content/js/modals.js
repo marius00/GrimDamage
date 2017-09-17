@@ -4,58 +4,58 @@
     }
 
     show(modalId) {
-        $('#'+modalId).modal('show');
+        $(`#${modalId}`).modal('show');
     }
 
     add(modalId, modalTitle, modalContent) {
-        var div1 = document.createElement('div');
+        const div1 = document.createElement('div');
         div1.id = modalId;
         div1.className = 'modal fade bd-example-modal-lg';
-        div1.setAttribute("role", "dialog");
+        div1.setAttribute('role', 'dialog');
 
-        var innerDiv1m = document.createElement('div');
-        innerDiv1m.className = 'modal-dialog modal-lg';
-        div1.appendChild(innerDiv1m);
+        const innerDiv1M = document.createElement('div');
+        innerDiv1M.className = 'modal-dialog modal-lg';
+        div1.appendChild(innerDiv1M);
 
-        var innerDiv2m = document.createElement('div');
-        innerDiv2m.className = 'modal-content';
-        innerDiv1m.appendChild(innerDiv2m);
+        const innerDiv2M = document.createElement('div');
+        innerDiv2M.className = 'modal-content';
+        innerDiv1M.appendChild(innerDiv2M);
 
-        var innerDiv3 = document.createElement('div');
+        const innerDiv3 = document.createElement('div');
         innerDiv3.className = 'modal-header';
-        innerDiv2m.appendChild(innerDiv3);
+        innerDiv2M.appendChild(innerDiv3);
 
-        var buttonM = document.createElement("button");
+        const buttonM = document.createElement('button');
         buttonM.className = 'close';
-        buttonM.setAttribute("data-dismiss", "modal");
-        buttonM.setAttribute("aria-hidden", "true");
-        buttonM.setAttribute("value", "Close");
+        buttonM.setAttribute('data-dismiss', 'modal');
+        buttonM.setAttribute('aria-hidden', 'true');
+        buttonM.setAttribute('value', 'Close');
         innerDiv3.appendChild(buttonM);
 
-        var headerM = document.createElement("h4");
+        const headerM = document.createElement('h4');
         headerM.className = 'modal-title';
-        var headerText = document.createTextNode(modalTitle);
+        const headerText = document.createTextNode(modalTitle);
         headerM.appendChild(headerText);
         innerDiv3.appendChild(headerM);
 
-        var innerDiv31 = document.createElement('div');
+        const innerDiv31 = document.createElement('div');
         innerDiv31.className = 'modal-body';
         innerDiv31.innerHTML = modalContent;
-        innerDiv2m.appendChild(innerDiv31);
+        innerDiv2M.appendChild(innerDiv31);
 
         //var para = document.createElement('p');
         //innerDiv31.appendChild(para);
         //para.innerHTML = "paragraph";
 
-        var innerDiv32 = document.createElement('div');
+        const innerDiv32 = document.createElement('div');
         innerDiv32.className = 'modal-footer';
-        innerDiv2m.appendChild(innerDiv32);
+        innerDiv2M.appendChild(innerDiv32);
 
-        var closeButton = document.createElement("input");
+        const closeButton = document.createElement('input');
         closeButton.className = 'btn btn-default';
-        closeButton.setAttribute("data-dismiss", "modal");
-        closeButton.setAttribute("type", "button");
-        closeButton.setAttribute("value", "Close");
+        closeButton.setAttribute('data-dismiss', 'modal');
+        closeButton.setAttribute('type', 'button');
+        closeButton.setAttribute('value', 'Close');
         innerDiv32.appendChild(closeButton);
 
         document.getElementById('modals').appendChild(div1);
@@ -63,18 +63,18 @@
 
     addBossModal() {
         /* Create the modal */
-        this.add("bossmodal", "", "");
+        this.add('bossmodal', '', '');
 
         /* Create the bosschart */
-        let bosschartDiv = $('<div/>', {
-            id: "bosschart"
+        const bosschartDiv = $('<div/>', {
+            id: 'bosschart'
         });
 
         //Not the best way, but mixing javascript and jquery is meh.. so fuck it, refactor later
         bosschartDiv.appendTo($('#bossmodal .modal-body'));
 
         /* Init the chart */
-        let bosschart = Highcharts.chart('bosschart',
+        const bosschart = Highcharts.chart('bosschart',
             {
                 chart: {
                     renderTo: 'container',
