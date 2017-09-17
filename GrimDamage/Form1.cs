@@ -80,7 +80,7 @@ namespace GrimDamage {
             Controls.Clear();
             Controls.Add(webViewPanel);
 
-            bool itemAssistantInstalled = !Directory.Exists(GlobalSettings.ItemAssistantFolder);
+            bool itemAssistantInstalled = Directory.Exists(GlobalSettings.ItemAssistantFolder);
             if (itemAssistantInstalled) {
                 webViewPanel.Location = new Point { X = 0, Y = 0 };
                 webViewPanel.Width = this.ClientSize.Width;
