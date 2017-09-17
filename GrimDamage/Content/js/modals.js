@@ -85,12 +85,21 @@
                 },
                 plotOptions: {
                     pie: {
+                        allowPointSelect: false,
+                        cursor: 'pointer',
                         dataLabels: {
-                            enabled: false
+                            enabled: false,
+                            format: '<b>{point.name}</b>: {point.y} ({point.percentage:.1f}%)',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
                         },
                         size: '75%',
                         showInLegend: true
                     }
+                },
+                tooltip: {
+                    pointFormat: '{point.y} ({point.percentage:.1f}%)'
                 },
                 series: [{
                     size: 200,
@@ -114,7 +123,7 @@
                     name: 'Taken',
                     innerSize: '70%',
 
-                    linkedTo:':previous',
+                    linkedTo: ':previous',
                     data: []
                 }]
             }
