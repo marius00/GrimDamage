@@ -45,12 +45,177 @@ namespace GrimDamage.Statistics.Service {
                 Zone = -1643822716,
                 Name = "Boss (The Warden)"
             },
+            //
+            
+            new RecognizedPosition {
+                Zone = -1460778184,
+                Name = "Homestead"
+            },
+            new RecognizedPosition {
+                Zone = 2045987642,
+                Name = "Sorrows bastion"
+            },
+            new RecognizedPosition {
+                Zone = 1878609095,
+                Name = "Kymon's sanctuary"
+            },
+            new RecognizedPosition {
+                Zone = -1813626772,
+                Name = "Fort Ikon"
+            },
+            new RecognizedPosition {
+                Zone = -1919595015,
+                Name = "Fort Ikon Prison"
+            },
+            new RecognizedPosition {
+                Zone = 450184872,
+                Name = "Gates of Necropolis"
+            },
+            new RecognizedPosition {
+                Zone = 1563117993,
+                Name = "Gates of Necropolis"
+            },
+            new RecognizedPosition {
+                Zone = -1258075253,
+                Name = "Gates of Necropolis"
+            },
+            new RecognizedPosition {
+                Zone = -651869254,
+                Name = "Gates of Necropolis"
+            },
+            new RecognizedPosition {
+                Zone = 1613778671,
+                Name = "Gates of Necropolis"
+            },
+            new RecognizedPosition {
+                Zone = -326480122,
+                Name = "Gates of Necropolis"
+            },
+            new RecognizedPosition {
+                Zone = -1955509690,
+                Name = "Plains of Strife"
+            },
+            new RecognizedPosition {
+                Zone = -806730780,
+                Name = "The Black Sepulcher"
+            },
+            new RecognizedPosition {
+                Zone = -1660598104,
+                Name = "Necropolis Interior"
+            },
+            new RecognizedPosition {
+                Zone = 1756316616,
+                Name = "Necropolis Interior"
+            },
+            new RecognizedPosition {
+                Zone = -1252309047,
+                Name = "Tomb of the watchers (Necropolis)"
+            },
+            new RecognizedPosition {
+                Zone = -1316927244,
+                Name = "Darkvale Gate"
+            },
+
+
+            new RecognizedPosition {
+                Zone = 1018840070,
+                Name = "Astakarn Road"
+            },
+            new RecognizedPosition {
+                Zone = -848277937,
+                Name = "Astakarn Road Rift"
+            },
+            new RecognizedPosition {
+                Zone = -330478143,
+                Name = "Astakarn Road Rift"
+            },
+            new RecognizedPosition {
+                Zone = 1359564347,
+                Name = "Astakarn Valley"
+            },
+            new RecognizedPosition {
+                Zone = 619267388,
+                Name = "Rotting Croplands"
+            },
+            new RecognizedPosition {
+                Zone = -1843310828,
+                Name = "Tomb of Korvaak"
+            },
+            new RecognizedPosition {
+                Zone = -1373552043,
+                Name = "Tomb of Korvaak"
+            },
+            new RecognizedPosition {
+                Zone = -349223825,
+                Name = "Tomb of Korvaak"
+            },
+            new RecognizedPosition {
+                Zone = -1679340999,
+                Name = "Tomb of Korvaak"
+            },
+            new RecognizedPosition {
+                Zone = 196166454,
+                Name = "Wardens Cellar"
+            },
+            new RecognizedPosition {
+                Zone = 1792298421,
+                Name = "Underground Transit (Warden #2)"
+            },
+            new RecognizedPosition {
+                Zone = 1191657842,
+                Name = "Burrowitch Village"
+            },
+            new RecognizedPosition {
+                Zone = 954744927,
+                Name = "Moldering Fields (Burrowitch Village)"
+            },
+            new RecognizedPosition {
+                Zone = 1623802494,
+                Name = "Gutworm (Boss)"
+            },
+            new RecognizedPosition {
+                Zone = -2035265569,
+                Name = "Cronley's Hideout"
+            },
+            new RecognizedPosition {
+                Zone = 1434796673,
+                Name = "Cronley's Hideout"
+            },
+            new RecognizedPosition {
+                Zone = -873773682,
+                Name = "Cronley's Hideout"
+            },
+            new RecognizedPosition {
+                Zone = 1863730804,
+                Name = "Cronley's Hideout"
+            },
+            new RecognizedPosition {
+                Zone = -132952783,
+                Name = "Cronley's Hideout"
+            },
+            new RecognizedPosition {
+                Zone = -810203939,
+                Name = "Cronley's Hideout"
+            },
+            new RecognizedPosition {
+                Zone = -1098758220,
+                Name = "Cronley (Boss)"
+            },
+            new RecognizedPosition {
+                Zone = -936296167,
+                Name = "Arkovian Foothills"
+            },
         };
 
         public PlayerPosition PlayerPosition { get; private set; }
 
+        HashSet<int> seen = new HashSet<int>();
         public void SetPlayerPosition(PlayerPosition playerPosition) {
             PlayerPosition = playerPosition;
+            if (!seen.Contains(playerPosition.Zone) && !_knownPositions.Exists(m => m.Zone == playerPosition.Zone)) {
+                Logger.Warn($"New zone: {playerPosition.Zone}");
+                seen.Add(playerPosition.Zone);
+            }
         }
         
         public string GetPlayerLocation() {
