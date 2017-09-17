@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CefSharp;
 
 namespace GrimDamage.GUI.Browser {
+    // https://github.com/cefsharp/CefSharp/blob/master/CefSharp.Example/RequestHandler.cs
     class DisableLinksRequestHandler : IRequestHandler {
         public bool OnBeforeBrowse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, bool isRedirect) {
             return request.Url.StartsWith("http:");
