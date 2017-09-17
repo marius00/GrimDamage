@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,10 @@ namespace GrimDamage.GUI.Browser {
     // https://github.com/cefsharp/CefSharp/blob/master/CefSharp.Example/RequestHandler.cs
     class DisableLinksRequestHandler : IRequestHandler {
         public bool OnBeforeBrowse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, bool isRedirect) {
+            if (request.Url.StartsWith("discord://")) {
+                Process.Start("https://discord.gg/PJ87Ewa");
+                return true;
+            }
             return request.Url.StartsWith("http:");
         }
 

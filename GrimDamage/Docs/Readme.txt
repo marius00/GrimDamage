@@ -9,6 +9,9 @@ Unmapped / uncharted territory:
 * Get player class[es] from in-game? [for pets]		-- unknown, suspect very tricky  // mastery
 
 TODO:
+*** Look into zooming the view
+** Dashboard would be nice, ala https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/free-bootstrap-admin-dashboard-templates.jpg
+	single/aoe in a graph, damage types as progress bars
 * [PHP] Finish the upload functionality
 * [JS] Maybe add a list of pets with checkboxes, where the player can choose which are his, and merge those into his aoe/st damage? [obs: per name? pets die pretty often]
 * [JS] Automatically show what killed you

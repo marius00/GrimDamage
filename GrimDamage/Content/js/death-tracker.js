@@ -16,7 +16,7 @@ class DeathTracker {
 
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            if (event.event === 'Dead' || event.event === 'Pause') {
+            if (event.event === 'Dead' || event.event === 'Dying') {
                 // Minor cooldown on deaths, since the alert can come multiple times
                 if (event.timestamp > this.lastDeath + this.minInterval) {
                     const entityId = this.playerTracker.mainPlayerId;
@@ -36,6 +36,8 @@ class DeathTracker {
                         `Death ignored, timestamp ${event.timestamp} is too recent, expected >= ${this.lastDeath +
                         this.minInterval}`);
                 }
+            } else {
+                console.log('Unknown event:', event.event);
             }
         }
     }
