@@ -96,6 +96,7 @@ namespace GrimDamage.GUI.Browser {
 
                 _browser = new ChromiumWebBrowser(startPage);
                 _browser.RegisterJsObject("data", bindeable, false);
+                _browser.RequestHandler = new DisableLinksRequestHandler();
 
                 if (browserIsBrowserInitializedChanged != null)
                     _browser.IsBrowserInitializedChanged += browserIsBrowserInitializedChanged;

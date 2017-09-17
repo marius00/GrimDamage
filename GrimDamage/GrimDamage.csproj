@@ -79,6 +79,7 @@
     <Compile Include="GUI\Browser\CefBrowserHandler.cs" />
     <Compile Include="GUI\Browser\CSharpJsStateMapper.cs" />
     <Compile Include="GUI\Browser\DataRequestType.cs" />
+    <Compile Include="GUI\Browser\DisableLinksRequestHandler.cs" />
     <Compile Include="GUI\Browser\dto\RequestDataArgument.cs" />
     <Compile Include="GUI\Browser\dto\SaveParseArgument.cs" />
     <Compile Include="GUI\Browser\dto\SuggestLocationNameArgument.cs" />
