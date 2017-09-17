@@ -21,7 +21,6 @@ class DamageParser {
 
 
         this.bosschart = this.modals.addBossModal();
-        console.log(this.bosschart);
     }
 
     tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) {
