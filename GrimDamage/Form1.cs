@@ -80,20 +80,13 @@ namespace GrimDamage {
             Controls.Clear();
             Controls.Add(webViewPanel);
 
-            bool itemAssistantInstalled = Directory.Exists(GlobalSettings.ItemAssistantFolder);
+            bool itemAssistantInstalled = !Directory.Exists(GlobalSettings.ItemAssistantFolder);
             if (itemAssistantInstalled) {
                 webViewPanel.Location = new Point { X = 0, Y = 0 };
                 webViewPanel.Width = this.ClientSize.Width;
                 webViewPanel.Height = this.ClientSize.Height;
             }
             else {
-                const int margin = 5;
-                webViewPanel.Location = new Point { X = 0, Y = linkItemAssistant.Height + margin*2 };
-                webViewPanel.Width = this.ClientSize.Width;
-                webViewPanel.Height = this.ClientSize.Height - linkItemAssistant.Height - margin * 2;
-                linkItemAssistant.Location = new Point { X = this.ClientSize.Width - linkItemAssistant.Width - 5, Y = margin };
-                Controls.Add(linkItemAssistant);
-
                 var labels = new[] {
                     "Is your stash full? Try Item Assistant!",
                     "Need a larger stash? Try Item Assistant!",
@@ -101,6 +94,17 @@ namespace GrimDamage {
                     "Having trouble finding space for all your items? Try Item Assistant!",
                     "Need extra item storage? Try Item Assistant!",
                 };
+                var idx = new Random().Next(0, labels.Length);
+                linkItemAssistant.Text = labels[idx];
+
+
+                const int margin = 5;
+                webViewPanel.Location = new Point { X = 0, Y = linkItemAssistant.Height + margin*2 };
+                webViewPanel.Width = this.ClientSize.Width;
+                webViewPanel.Height = this.ClientSize.Height - linkItemAssistant.Height - margin * 2;
+                //linkItemAssistant.Location = new Point { X = this.ClientSize.Width - linkItemAssistant.Width - 20, Y = margin };
+                Controls.Add(linkItemAssistant);
+
             }
 #else
             linkItemAssistant.Hide();

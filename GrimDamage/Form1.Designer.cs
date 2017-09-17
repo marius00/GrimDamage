@@ -154,19 +154,20 @@
             // linkItemAssistant
             // 
             this.linkItemAssistant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkItemAssistant.AutoSize = true;
-            this.linkItemAssistant.Location = new System.Drawing.Point(467, 9);
+            this.linkItemAssistant.Location = new System.Drawing.Point(794, 3);
             this.linkItemAssistant.Name = "linkItemAssistant";
-            this.linkItemAssistant.Size = new System.Drawing.Size(181, 13);
+            this.linkItemAssistant.Size = new System.Drawing.Size(390, 13);
             this.linkItemAssistant.TabIndex = 10;
             this.linkItemAssistant.TabStop = true;
             this.linkItemAssistant.Text = "Having trouble managing your items?";
+            this.linkItemAssistant.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.linkItemAssistant.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkItemAssistant_LinkClicked);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1189, 667);
             this.Controls.Add(this.linkItemAssistant);
             this.Controls.Add(this.linkDonate);
