@@ -144,7 +144,7 @@ function createChartDamageTaken(id, sequenceLength) {
         });
 }
 
-function createChartDamageDealt(id) {
+function createChartDamageDealt(id, sequenceLength) {
     return Highcharts.chart(id,
         {
             chart: {
@@ -156,6 +156,22 @@ function createChartDamageDealt(id) {
             subtitle: {
                 text: '(...)'
             },
+
+            rangeSelector: {
+                buttons: [{
+                    count: 10,
+                    text: '10'
+                }, {
+                    count: 5,
+                    text: '5M'
+                }, {
+                    type: 'all',
+                    text: 'All'
+                }],
+                inputEnabled: false,
+                selected: 0
+            },
+
             xAxis: {
                 allowDecimals: false,
                 labels: {
@@ -201,27 +217,27 @@ function createChartDamageDealt(id) {
             series: [
                 {
                     name: 'Total',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
                 {
                     type: 'spline',
                     marker: { enabled: false },
                     name: 'Single Target',
                     color: '#000000',
-                    data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+                    data: Array.from(Array(sequenceLength), () => null)
                 },
+                /*
                 {
                     type: 'flags',
                     name: 'EventLine',
                     color: '#333333',
                     shape: 'circlepin',
                     y: 15,
-                    data: [
-                        { x: 8, text: 'Player detected', title: 'Parser started' },
-                    ],
-                    onSeries: 'Single Target',
+                    gapUnit: 'value',
+                    data: Array.from(Array(sequenceLength), () => null),
+                    //onSeries: 'Single Target',
                     showInLegend: false
-                }
+                }*/
             ]
         });
 }
@@ -264,7 +280,7 @@ function createPieChartDamageTaken(id) {
 
 function loadCharts() {
     let damageTakenChart = createChartDamageTaken('container-damage-taken', 100);
-    let damageDealtChart = createChartDamageDealt('container-damage-done');
+    let damageDealtChart = createChartDamageDealt('container-damage-done', 100);
     //let damageTakenPie = createPieChartDamageTaken('container-damage-taken-pie');
 
     return [damageTakenChart, damageDealtChart];

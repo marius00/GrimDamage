@@ -24,7 +24,7 @@ class DeathTrackerViewModel {
                     let minTimestamp = Math.min.apply(Math, value.map(function (o) { return o.timestamp; }));
                     let dataPoints = [];
                     dataPoints = value.reduce(function (res, val) {
-                        const xAxis = Math.ceil((val.timestamp - minTimestamp) / 1000);
+                        const xAxis = Math.floor((val.timestamp - minTimestamp) / 1000);
 
                             if (!res[xAxis]) {
                                 res[xAxis] = {};
@@ -50,7 +50,10 @@ class DeathTrackerViewModel {
                                 dashStyle: 'Dash',
                                 name: 'Hitpoints',
                                 color: '#ff0000',
-                                data: points
+                                data: points,
+                                tooltip: {
+                                    pointFormat: '<b>{point.y:,.0f}</b> life remaining'
+                                }
                             });
 
                     } else {

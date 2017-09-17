@@ -55,13 +55,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Location = new System.Drawing.Point(2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(931, 456);
+            this.panel1.Size = new System.Drawing.Size(1175, 565);
             this.panel1.TabIndex = 3;
             // 
             // btnShowDevtools
             // 
             this.btnShowDevtools.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowDevtools.Location = new System.Drawing.Point(858, 12);
+            this.btnShowDevtools.Location = new System.Drawing.Point(1102, 12);
             this.btnShowDevtools.Name = "btnShowDevtools";
             this.btnShowDevtools.Size = new System.Drawing.Size(75, 23);
             this.btnShowDevtools.TabIndex = 4;
@@ -79,7 +79,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 71);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(941, 484);
+            this.tabControl1.Size = new System.Drawing.Size(1185, 593);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage1
@@ -88,7 +88,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(933, 458);
+            this.tabPage1.Size = new System.Drawing.Size(1177, 567);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -118,7 +118,7 @@
             // 
             this.linkDiscord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.linkDiscord.AutoSize = true;
-            this.linkDiscord.Location = new System.Drawing.Point(835, 38);
+            this.linkDiscord.Location = new System.Drawing.Point(1079, 38);
             this.linkDiscord.Name = "linkDiscord";
             this.linkDiscord.Size = new System.Drawing.Size(98, 13);
             this.linkDiscord.TabIndex = 7;
@@ -129,7 +129,7 @@
             // btnLoadSave
             // 
             this.btnLoadSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLoadSave.Location = new System.Drawing.Point(757, 12);
+            this.btnLoadSave.Location = new System.Drawing.Point(1001, 12);
             this.btnLoadSave.Name = "btnLoadSave";
             this.btnLoadSave.Size = new System.Drawing.Size(95, 23);
             this.btnLoadSave.TabIndex = 8;
@@ -141,7 +141,7 @@
             // 
             this.linkDonate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.linkDonate.AutoSize = true;
-            this.linkDonate.Location = new System.Drawing.Point(891, 55);
+            this.linkDonate.Location = new System.Drawing.Point(1135, 55);
             this.linkDonate.Name = "linkDonate";
             this.linkDonate.Size = new System.Drawing.Size(42, 13);
             this.linkDonate.TabIndex = 9;
@@ -154,7 +154,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(945, 558);
+            this.ClientSize = new System.Drawing.Size(1189, 667);
             this.Controls.Add(this.linkDonate);
             this.Controls.Add(this.btnLoadSave);
             this.Controls.Add(this.linkDiscord);
