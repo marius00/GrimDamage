@@ -191,6 +191,7 @@
     <Content Include="Content\index.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\js\colors.js" />
     <Content Include="Content\js\death-tracker-viewmodel.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

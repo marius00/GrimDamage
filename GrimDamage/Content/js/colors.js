@@ -17,5 +17,6 @@
         this.bleeding = '#ff0000';
         this.aether = '#89ffbb';
         this.chaos = '#720b00';
+        this.lifeLeech = '#ffbd89';
     }
 }
