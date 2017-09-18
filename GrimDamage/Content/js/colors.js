@@ -1,22 +1,35 @@
 ﻿class Colors {
 
-    construction() {
-        this.physical = '#000000';
-        this.internalTrauma = '#4a4a4a';
-        this.fire = '#ff6300';
-        this.burn = '#9e3d00';
-        this.cold = '#00beff';
-        this.frostburn = '#0088b6';
-        this.lightning = '#00fffe';
-        this.electrocute = '#00bfbe';
-        this.acid = '#26ff00';
-        this.poison = '#179a00';
-        this.vitality = '#fcff00';
-        this.vitalityDecay = '#969800';
-        this.pierce = '#ff009f';
-        this.bleeding = '#ff0000';
-        this.aether = '#89ffbb';
-        this.chaos = '#720b00';
-        this.lifeLeech = '#ffbd89';
+    constructor() {
+        this.colors = [];
+        this.colors['physical'] = '#000000';
+        this.colors['internalTrauma'] = '#4a4a4a';
+        this.colors['fire'] = '#ff6300';
+        this.colors['burn'] = '#9e3d00';
+        this.colors['cold'] = '#00beff';
+        this.colors['frostburn'] = '#0088b6';
+        this.colors['lightning'] = '#00fffe';
+        this.colors['electrocute'] = '#00bfbe';
+        this.colors['acid'] = '#26ff00';
+        this.colors['poison'] = '#179a00';
+        this.colors['vitality'] = '#fcff00';
+        this.colors['vitalityDecay'] = '#969800';
+        this.colors['pierce'] = '#ff009f';
+        this.colors['bleeding'] = '#ff7567';
+        this.colors['aether'] = '#89ffbb';
+        this.colors['chaos'] = '#720b00';
+        this.colors['lifeLeech'] = '#ffbd89';
+        this.colors['hitpoints'] = '#ff0000';
+    }
+
+    color(typeRaw) {
+        let type = typeRaw.toLowerCase();
+        if (this.colors.hasOwnProperty(type)) {
+            return this.colors[type];
+        }
+        else {
+            console.log("Unknown color: " + type);
+            return "#000000".replace(/0/g, function () { return (~~(Math.random() * 16)).toString(16); });
+        }
     }
 }

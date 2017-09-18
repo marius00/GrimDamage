@@ -46,12 +46,12 @@ class DamageParser {
 
         var dealtTemp = p.bosses[bossid]['dealt'];
         var dealt = Object.keys(dealtTemp).map(function (data) {
-            return [data, dealtTemp[data]];
+            return { name: data, y: dealtTemp[data], color: colors.color(data) };
         });
 
         var takenTemp = p.bosses[bossid]['taken'];
         var taken = Object.keys(takenTemp).map(function (data) {
-            return [data, takenTemp[data]];
+            return {name: data, y: takenTemp[data], color: colors.color(data)};
         });
         p.bosschart.setTitle({ text: p.bosses[bossid].name });
         p.bosschart.series[0].setData(dealt);
