@@ -2,10 +2,12 @@
 
 
 class DeathTrackerViewModel {
-    constructor(chartDamageTaken) {
+    constructor(showModal, chartDamageTaken) {
         /// <summary>Responsible for rendering the player deaths view</summary>  
         var self = this;
         this.deaths = ko.observableArray([]);
+        this.currentlyDisplayedDeath = 0;
+        this.showModal = showModal;
 
 
         this.damageTakenChart = chartDamageTaken;
@@ -16,10 +18,13 @@ class DeathTrackerViewModel {
                 { "data": "location" }
             ]
         });
-        $('#killed-table tbody').on('click', 'tr', this.deathtableclicked);
-        p.modals.add("death-modal", "Death", "Death chart here");
+        
 
-
+        this.calculateGraphPosition = function(timestamp) {
+            const startingPoint = this.currentlyDisplayedDeath - 10 * 1000;
+            const series = Math.floor((timestamp - startingPoint) / 1000);
+            return series;
+        }
 
         this._health = ko.observableArray([]);
         this.health = ko.pureComputed({
@@ -34,7 +39,7 @@ class DeathTrackerViewModel {
                     let minTimestamp = Math.min.apply(Math, value.map(function (o) { return o.timestamp; }));
                     let dataPoints = [];
                     dataPoints = value.reduce(function (res, val) {
-                        const xAxis = Math.floor((val.timestamp - minTimestamp) / 1000);
+                        const xAxis = self.calculateGraphPosition(val.timestamp);
 
                             if (!res[xAxis]) {
                                 res[xAxis] = {};
@@ -88,21 +93,14 @@ class DeathTrackerViewModel {
                 console.log('Update the graph with the following data please:', value);
 
                 if (value.length > 0) {
-                    console.log('Pie graph data points:', this.getPieChartDataPoints(value));
+                    //console.log('Pie graph data points:', this.getPieChartDataPoints(value));
 
-
-                    // TS transform is: Math.ceil((ts - min)/1000)
                     const lineChartPoints = this.getLineChartDataPoints(value);
                     console.log('Line graph points:', lineChartPoints, 'Length:', lineChartPoints.length);
 
                     // Convert the dictionary to single x/y paired elements
                     let points = {};
-
-
-                    // Create the datapoint values
-                    const minTimestamp = Math.min.apply(Math, value.map(function (o) { return o.timestamp; }));
-                    const maxTimestamp = Math.max.apply(Math, value.map(function (o) { return o.timestamp; }));
-                    const xRange = Math.ceil((maxTimestamp - minTimestamp) / 1000);
+                    const xRange = 10;
 
                     for (let damageType in lineChartPoints) {
                         if (!points[damageType])
@@ -140,6 +138,7 @@ class DeathTrackerViewModel {
         this.showDeath = function(death) {
             const period = 10 * 1000; // TODO: The number '10' is used many places, consider making a constant
             self.resetGraph(10);
+            self.currentlyDisplayedDeath = death.timestamp;
             self.detailedDamagePoints([]);
             console.log(death);
 
@@ -157,15 +156,12 @@ class DeathTrackerViewModel {
                 death.timestamp.toString(),
                 death.entityId,
                 `${hardcodedClassVarName}.health`);
+
+            self.showModal();
         }
     }
 
 
-    deathtableclicked() {
-        let deathid = this.id;
-        console.log('Clicked the row with id ' + deathid);
-        p.modals.show('death-modal');
-    }
 
     resetGraph(numElements) {
         console.log('Resetting graph');
@@ -175,6 +171,7 @@ class DeathTrackerViewModel {
         this.damageTakenChart.redraw();
     }
 
+    /*
     getPieChartDataPoints(dataset) {
         /// <returns type="Dictionary">Generates a list of datapoints for a pie graph</returns>
         // Group by damage type and sum, this gets the totals usable for pie charts
@@ -191,43 +188,46 @@ class DeathTrackerViewModel {
         );
 
         return dataPoints;
-    }
+    }*/
 
     getLineChartDataPoints(dataset) {
         /// <summary>Transforms the timestamp value into a series X-axis point and groups by X-axis and damage type</summary>
         /// <returns type="Array">Generates a list of datapoints for a line graph</returns>
         
-        const minTimestamp = Math.min.apply(Math, dataset.map(function (o) { return o.timestamp; }));
         let dataPoints = [];
+        const self = this;
         dataPoints = dataset.reduce(function (res, value) {
-                const series = Math.ceil((value.timestamp - minTimestamp) / 1000);
-                console.log('detected series', series);
-                if (!res[value.damageType]) {
-                    res[value.damageType] = {};
-                    dataPoints.push(res[value]);
-                }
-                if (!res[value.damageType][series]) {
-                    res[value.damageType][series] = 0;
-                }
+            const series = self.calculateGraphPosition(value.timestamp);
+            console.log('detected series', series);
+            if (!res[value.damageType]) {
+                res[value.damageType] = {};
+                dataPoints.push(res[value]);
+            }
+            if (!res[value.damageType][series]) {
+                res[value.damageType][series] = 0;
+            }
 
-                res[value.damageType][series] += value.amount;
-                return res;
-            },
-            {}
-        );
+            res[value.damageType][series] += value.amount;
+            return res;
+        },
+        {});
 
         return dataPoints;
     }
 
     add(death) {
         /// <summary>Add a death</summary>  
-        const label = `Died at ${new Date(death.timestamp).toLocaleTimeString()}`;
-        this.deaths.push({
+        const label = 'You died a horrible death';
+        const labelTimestamp = new Date(death.timestamp).toLocaleTimeString();
+
+        const d = {
             label: label,
+            labelTimestamp: labelTimestamp,
             timestamp: death.timestamp,
             entityId: death.entityId
-        });
-        let now = moment(new Date());
-        this.deathtable.row.add({ "DT_RowId": death.entityId, "timestamp": now.format('HH:mm:ss'), "location": label }).draw(false);
+        };
+
+        this.deaths.push(d);
+        this.showDeath(d);
     }
 }

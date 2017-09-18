@@ -86,20 +86,21 @@
                         <td>Location</td>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <td>Timestamp</td>
-                        <td>Location</td>
+                <tbody data-bind="foreach: deaths">
+                    <tr data-bind="click: $root.showDeath" class="what-killed-me-link">
+                        <td data-bind="text: labelTimestamp">Timestamp</td>
+                        <td data-bind="text: label">Location</td>
                     </tr>
+                </tbody>
+
+                <tfoot>
+                <tr>
+                    <td>Timestamp</td>
+                    <td>Location</td>
+                </tr>
                 </tfoot>
                 <tbody></tbody>
             </table>
-
-            <ul data-bind="foreach: deaths">
-                <li>
-                    <span data-bind="text: label, click: $root.showDeath" class="what-killed-me-link"></span>
-                </li>
-            </ul>
     
             <!-- This would generally be inside a modal -->
             <ul data-bind="foreach: detailedDamagePoints">
@@ -108,8 +109,6 @@
                 </li>
             </ul>
 
-            <div id="container-died-damage-taken-pie" style="min-width: 280px; height: 200px; margin: 0 auto"></div>
-            <div id="container-died-damage-taken" style="min-width: 280px; height: 500px; margin: 0 auto"></div>
         </div>
     </div>
 
@@ -120,6 +119,33 @@
 
 
 <div id="modals"></div>
+
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deathModal">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="deathModal" tabindex="-1" role="dialog" aria-labelledby="deathModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deathModalLabel">You have died a tragic death</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="deathModalBody">
+                <div id="container-died-damage-taken-pie" style="min-width: 280px; height: 200px; margin: 0 auto"></div>
+                <div id="container-died-damage-taken" style="min-width: 280px; height: 500px; margin: 0 auto"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script type="text/javascript">
     enableLogToCsharp();
@@ -151,7 +177,10 @@
 
 
     // Track callback events
-    const deathTrackerViewModel = new DeathTrackerViewModel(createChartDamageTaken('container-died-damage-taken'), 10);
+    const deathTrackerViewModel = new DeathTrackerViewModel(
+        () => $('#deathModal').modal('show'),
+        createChartDamageTaken('container-died-damage-taken', 10)
+    );
     let deathTracker = new DeathTracker(p, deathTrackerViewModel); // damage parser is the current 'track player id' class, may be split later
     ko.applyBindings(deathTrackerViewModel, document.getElementById('what-killed-me-listing'));
 
@@ -161,4 +190,5 @@
             deathTracker.process(dataset);
         }
     });
+
 </script>
