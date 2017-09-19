@@ -272,7 +272,9 @@
     <Content Include="Docs\BetaTesters.txt" />
     <Content Include="Docs\Curiosities.txt" />
     <Content Include="Docs\Dev.txt" />
-    <Content Include="Docs\Readme.txt" />
+    <Content Include="Docs\Readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="gd.ico" />
   </ItemGroup>
   <ItemGroup />

@@ -179,7 +179,7 @@
             this.Controls.Add(this.labelHookStatus);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Project GD Damage Parser";
+            this.Text = "Grim Dawn Damage";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

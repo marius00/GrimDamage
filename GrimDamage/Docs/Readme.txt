@@ -6,43 +6,38 @@
 Unmapped / uncharted territory:
 * Player name would be useful if we start saving parses
 * Get player heals from in-game [useful?]		-- unknown
-* Get player class[es] from in-game? [for pets]		-- unknown, suspect very tricky  // mastery
+* Get player class[es] from in-game? [for pets]		-- unknown, suspect somewhat tricky  // mastery
 
 TODO:
-*** Look into zooming the view
 ** Dashboard would be nice, ala https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/free-bootstrap-admin-dashboard-templates.jpg
 	single/aoe in a graph, damage types as progress bars
 * [PHP] Finish the upload functionality
 * [JS] Maybe add a list of pets with checkboxes, where the player can choose which are his, and merge those into his aoe/st damage? [obs: per name? pets die pretty often]
-* [JS] Automatically show what killed you
 * [JS] show one graph with pets? 
 * [JS] Now possible to save/load parses from .JS ==> Need the JS integration
-* [JS] Stop parsing on pause
-* [JS] Use knockout for something? global states?
+* [JS] Stop parsing upon pausing the game (what about entering crossroads? and what about training dummies if so?)
 * [JS] An issue with switching to NULL for consecutive 0s is that the sequence will start from null, not from 0, creating odd clipped graphs
-* [C#] Linklabel to download IA, if its not already installed.
 * [C#/PHP] Was thinking maybe a news thing, just a link to gog/steam when there's a sale or wtv.. unsure if it provides any value, but being able to announce stuff to users (while being non intrusive) might be nice.
 * [VS] Fix the need for config changes to compile
-** [evil]: dont add / start clearing damage types not dealt for 'what killed me?' [dont show irrelevant types]
+** [evil]: dont add / start removing damage types not dealt for 'what killed me?' [dont show irrelevant types]
 ** if you tab or pause while dying, it will register as another death. Our time increases, ingame time does not. -- detect pauses?
 ** Show where the player died?
 ** Show who killed the player?
 
-highstock.js:58 Error: <path> attribute d: Expected number, "M L L L L L L L L".
-chart.addPoint(null, shouldRender, true);
+Known bugs:
+  highstock.js:58 Error: <path> attribute d: Expected number, "M L L L L L L L L".
+  chart.addPoint(null, shouldRender, true);
 
 Nice to have:
 * Show damage blocked (shield)
-* show stats of enemies, off, def, etc..
+* show stats of enemies, off, def, etc.. -- while this is "neat", does it provide ANY value beyond the ingame "chance to hit/crit"?
 * How much dps from racial?
-* How much damage absorved from racial?
+* How much damage absorbed from racial?
 * In .js, if you 've gone X updates without doing any damage, might as well tag him as out-of-combat, and stop updating the graph
 * Finding a way to show defensive actions like absorbs and heals would be "nice to have"
 * Showing which zone the player enters / leaves  ( https://www.highcharts.com/demo/combo-timeline )
-
-Graphs planned:
-* What killed me? (area / line graphs?)
-* My damage (aoe/total and single-target)
+* Fine grained data of the individual attacks, see their portion of your overall damage.
+* Fine grained data of the individual defensive procs/heals, see their relevance in keeping you alive.
 * Comparison between players in MP ?
 
 
