@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.labelHookStatus = new System.Windows.Forms.Label();
             this.webViewPanel = new System.Windows.Forms.Panel();
             this.btnShowDevtools = new System.Windows.Forms.Button();
@@ -176,6 +177,7 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnShowDevtools);
             this.Controls.Add(this.labelHookStatus);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Project GD Damage Parser";
             this.Load += new System.EventHandler(this.Form1_Load);
