@@ -131,6 +131,13 @@ class DamageParser {
 
     addDamageDealt(id, damageDealt, damageDealtSingleTarget) {
         if (damageDealt[id]) {
+            /* Add to stepChart */
+            for (let c = 0; c < damageDealt[id].length; c++) {
+                damageDoneStepChart.addPoint(damageDealt[id][c].damageType, (new Date()).getTime(), damageDealt[id][c].amount);
+            }
+
+
+
             const total = damageDealt[id].filter(s => s.damageType === 'Total')[0];
             const totalSingle = damageDealtSingleTarget[id].filter(s => s.damageType === 'Total')[0];
             if (total) {

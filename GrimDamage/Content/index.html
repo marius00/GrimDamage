@@ -17,6 +17,7 @@
 <script src="js/vendor/jquery.dataTables.min.js"></script>
 <script src="js/vendor/dataTables.bootstrap4.min.js"></script>
 
+<script src="js/step-chart.js"></script>
 <script src="js/modals.js"></script>
 <script src="js/main.js"></script>
 <script src="js/damage-parser.js"></script>
@@ -52,6 +53,8 @@
             </div>
         </div>
         -->
+
+        <div id="step-test"></div>
 
         <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
         <div id="container-damage-done" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -157,6 +160,7 @@
 
 
     var colors = new Colors();
+    var damageDoneStepChart = new StepChart('step-test', 'Damage Done');
     // Chart and parsing
     let chartDamageTaken, chartDamageDealt;
     [chartDamageTaken, chartDamageDealt] = loadCharts();
@@ -185,5 +189,7 @@
             deathTracker.process(dataset);
         }
     });
+
+
 
 </script>

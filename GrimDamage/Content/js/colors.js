@@ -2,7 +2,8 @@
 
     constructor() {
         this.colors = [];
-        this.colors['physical'] = '#000000';
+        this.colors['total'] = '#000000';
+        this.colors['physical'] = '#eaeaea';
         this.colors['internalTrauma'] = '#4a4a4a';
         this.colors['fire'] = '#ff6300';
         this.colors['burn'] = '#9e3d00';
