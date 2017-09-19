@@ -1,5 +1,7 @@
 ﻿class StepChart {
     constructor(id, title) {
+        /// <param name="id">DOM Id of the element to create the chart on</param>
+        /// <param name="title">Title of the chart</param>
         this.series = [];
         this.chart = Highcharts.stockChart(id, {
             rangeSelector: {
@@ -20,9 +22,9 @@
                     type: 'minute',
                     text: '1M'
                 }, {
-                    count: 2,
+                    count: 3,
                     type: 'minute',
-                    text: '2M'
+                    text: '3M'
                 }, {
                     count: 5,
                     type: 'minute',
@@ -50,6 +52,7 @@
 
     addPoint(type, timestamp, value) {
         if (!this.series.hasOwnProperty(type)) {
+            console.debug(`Creating new series for ${type}`);
             let newSeries = this.chart.addSeries({
                 name: type,
                 color: colors.color(type),
@@ -60,6 +63,16 @@
             });
             this.series[type] = newSeries.index;
         }
-        this.chart.series[this.series[type]].addPoint([timestamp, value]);
+        this.chart.series[this.series[type]].addPoint([timestamp, value], false);
+    }
+
+    reset() {
+        for (let idx = 0; idx < this.chart.series.length; idx++) {
+            this.chart.series[idx].setData([], true, false, false);
+        }
+    }
+
+    redraw() {
+        this.chart.redraw();
     }
 }

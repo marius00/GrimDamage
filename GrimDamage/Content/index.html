@@ -135,7 +135,10 @@
             </div>
             <div class="modal-body" id="deathModalBody">
                 <div id="container-died-damage-taken-pie" style="min-width: 280px; height: 200px; margin: 0 auto"></div>
+                <hr />
                 <div id="container-died-damage-taken" style="min-width: 280px; height: 500px; margin: 0 auto"></div>
+                <hr/>
+                <div id="container-died-damage-taken-zoomy"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -161,10 +164,13 @@
 
     var colors = new Colors();
     var damageDoneStepChart = new StepChart('step-test', 'Damage Done');
+    var damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy', 'Damage Taken');
+
+
     // Chart and parsing
     let chartDamageTaken, chartDamageDealt;
     [chartDamageTaken, chartDamageDealt] = loadCharts();
-    var p = new DamageParser(chartDamageTaken, chartDamageDealt);
+    var p = new DamageParser(chartDamageTaken, chartDamageDealt, damageDoneStepChart);
 
     setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
         p.tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList);
@@ -178,7 +184,8 @@
     // Track callback events
     const deathTrackerViewModel = new DeathTrackerViewModel(
         () => $('#deathModal').modal('show'),
-        createChartDamageTaken('container-died-damage-taken', 10)
+        createChartDamageTaken('container-died-damage-taken', 10),
+        damageTakenAtDeathChart
     );
     let deathTracker = new DeathTracker(p, deathTrackerViewModel); // damage parser is the current 'track player id' class, may be split later
     ko.applyBindings(deathTrackerViewModel, document.getElementById('what-killed-me-listing'));

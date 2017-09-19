@@ -19,3 +19,7 @@
 #bosstable tr td:first-of-type {
     width: 130px !important;
 }
+
+.modal-dialog {
+    max-width: 95% !important;
+}

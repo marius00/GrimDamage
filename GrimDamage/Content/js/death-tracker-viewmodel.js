@@ -2,7 +2,7 @@
 
 
 class DeathTrackerViewModel {
-    constructor(showModal, chartDamageTaken) {
+    constructor(showModal, chartDamageTaken, stepChartDamageTaken) {
         /// <summary>Responsible for rendering the player deaths view</summary>  
         var self = this;
         this.deaths = ko.observableArray([]);
@@ -11,14 +11,8 @@ class DeathTrackerViewModel {
 
 
         this.damageTakenChart = chartDamageTaken;
+        this.stepChartDamageTaken = stepChartDamageTaken;
 
-        this.deathtable = $('#killed-table').DataTable({
-            "columns": [
-                { "data": "timestamp"},
-                { "data": "location" }
-            ]
-        });
-        
 
         this.calculateGraphPosition = function(timestamp) {
             const startingPoint = this.currentlyDisplayedDeath - 10 * 1000;
@@ -35,22 +29,26 @@ class DeathTrackerViewModel {
                 /// <summary>Responsible for rendering the player health line on the chart</summary>  
                 self._health(value);
 
+                for (let idx = 0; idx < value.length; idx++) {
+                    self.stepChartDamageTaken.addPoint('hitpoints', value[idx].timestamp, value[idx].amount);
+                }
+                console.debug('Received life data for death:', value);
+
+                self.stepChartDamageTaken.redraw();
+
                 if (value.length > 0) {
-                    let minTimestamp = Math.min.apply(Math, value.map(function (o) { return o.timestamp; }));
                     let dataPoints = [];
                     dataPoints = value.reduce(function (res, val) {
                         const xAxis = self.calculateGraphPosition(val.timestamp);
 
-                            if (!res[xAxis]) {
-                                res[xAxis] = {};
-                                dataPoints.push(res[val]);
-                            }
+                        if (!res[xAxis]) {
+                            res[xAxis] = {};
+                            dataPoints.push(res[val]);
+                        }
 
-                            res[xAxis] = { x: parseInt(xAxis), y: val.amount };
-                            return res;
-                        },
-                        {}
-                    );
+                        res[xAxis] = { x: parseInt(xAxis), y: val.amount };
+                        return res;
+                    },{});
 
                     let points = Object.keys(dataPoints).map(function (key) {
                         return dataPoints[key];
@@ -92,7 +90,17 @@ class DeathTrackerViewModel {
                 self._detailedDamagePoints(value);
                 console.log('Update the graph with the following data please:', value);
 
+
+
                 if (value.length > 0) {
+
+                    for (let idx = 0; idx < value.length; idx++) {
+                        self.stepChartDamageTaken.addPoint(value[idx].damageType, value[idx].timestamp, value[idx].amount);
+                    }
+                    console.debug('Received damage data for death:', value);
+
+                    self.stepChartDamageTaken.redraw();
+
                     //console.log('Pie graph data points:', this.getPieChartDataPoints(value));
 
                     const lineChartPoints = this.getLineChartDataPoints(value);
@@ -138,6 +146,7 @@ class DeathTrackerViewModel {
         this.showDeath = function(death) {
             const period = 10 * 1000; // TODO: The number '10' is used many places, consider making a constant
             self.resetGraph(10);
+            self.stepChartDamageTaken.reset();
             self.currentlyDisplayedDeath = death.timestamp;
             self.detailedDamagePoints([]);
             console.log(death);

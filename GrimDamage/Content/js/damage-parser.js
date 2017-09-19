@@ -1,11 +1,12 @@
 ﻿// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 class DamageParser {
-    constructor(damageTakenGraph, damageDealtGraph) {
+    constructor(damageTakenGraph, damageDealtGraph, damageDoneStepChart) {
         this.lastPlayerLocation = '';
         this.currentXAxis = 100;
         this.previousDamageTaken = {};
         this.damageDealtGraph = damageDealtGraph;
         this.damageTakenGraph = damageTakenGraph;
+        this.damageDoneStepChart = damageDoneStepChart;
         let dataTable = $('#bosstable').DataTable({
             "columns": [
                 { "data": "encountered"},
@@ -134,9 +135,9 @@ class DamageParser {
             /* Add to stepChart */
             let timestamp = (new Date()).getTime();
             for (let c = 0; c < damageDealt[id].length; c++) {
-                damageDoneStepChart.addPoint(damageDealt[id][c].damageType, timestamp, damageDealt[id][c].amount);
+                this.damageDoneStepChart.addPoint(damageDealt[id][c].damageType, timestamp, damageDealt[id][c].amount);
             }
-
+            self.damageDoneStepChart.redraw();
 
 
             const total = damageDealt[id].filter(s => s.damageType === 'Total')[0];
