@@ -4,8 +4,16 @@
         this.chart = Highcharts.stockChart(id, {
             rangeSelector: {
                 buttons: [{
-                    count: 0.5,
-                    type: 'minute',
+                    count: 500,
+                    type: 'millisecond',
+                    text: '0.5sec'
+                }, {
+                    count: 10,
+                    type: 'second',
+                    text: '10sec'
+                }, {
+                    count: 30,
+                    type: 'second',
                     text: '30sec'
                 }, {
                     count: 1,
@@ -24,7 +32,7 @@
                     text: 'All'
                 }],
                 inputEnabled: false,
-                selected: 0
+                selected: 1
             },
             title: {
                 text: title
