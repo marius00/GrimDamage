@@ -24,7 +24,7 @@
                     text: 'All'
                 }],
                 inputEnabled: false,
-                selected: 1
+                selected: 0
             },
             title: {
                 text: title
@@ -45,7 +45,7 @@
             let newSeries = this.chart.addSeries({
                 name: type,
                 color: colors.color(type),
-                step: true,
+                step: false,
                 tooltip: {
                     valueDecimals: 0
                 }
