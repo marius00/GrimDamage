@@ -106,19 +106,21 @@ class DamageParser {
     }
     handleDetailedDamageDealt(data) {
         for (var playerid in data) {
-            if (!data.hasOwnProperty(playerid) || playerid != this.mainPlayerId) {
+            if (!data.hasOwnProperty(playerid) || playerid !== this.mainPlayerId) {
                 continue;
             }
-            var length = data[playerid].length;
+
+            const length = data[playerid].length;
             for (var c = 0; c < length; c++) {
-                let dmg = data[playerid][c];
+                const entry = data[playerid][c];
+
                 /* Is it a boss? */
-                if (this.bosses.hasOwnProperty(dmg.victimId)) {
+                if (this.bosses.hasOwnProperty(entry.victimId)) {
                     /* First time we're seeing this damage-type on boss? */
-                    if (!this.bosses[dmg.victimId]['dealt'].hasOwnProperty(dmg.damageType)) {
-                        this.bosses[dmg.victimId]['dealt'][dmg.damageType] = 0;
+                    if (!this.bosses[entry.victimId]['dealt'].hasOwnProperty(entry.damageType)) {
+                        this.bosses[entry.victimId]['dealt'][entry.damageType] = 0;
                     }
-                    this.bosses[dmg.victimId]['dealt'][dmg.damageType] += Math.round(dmg.amount);
+                    this.bosses[entry.victimId]['dealt'][entry.damageType] += Math.round(entry.amount);
                 }
             }
         }
@@ -178,6 +180,8 @@ class DamageParser {
             this.damageTakenPie.series[0].setData(out);
         }
         /* Pie chart end */
+
+         
 
         const chart = this.damageTakenGraph.series.filter(s => s.name === type)[0];
         if (dmg > 2) {

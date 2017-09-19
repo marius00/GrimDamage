@@ -93,6 +93,9 @@ class DeathTrackerViewModel {
 
 
                 if (value.length > 0) {
+                    self.addOrUpdatePie(value);
+                    console.log('Pizza pie:', self.getPieChartDataPoints(value));
+
 
                     for (let idx = 0; idx < value.length; idx++) {
                         self.stepChartDamageTaken.addPoint(value[idx].damageType, value[idx].timestamp, value[idx].amount);
@@ -141,6 +144,49 @@ class DeathTrackerViewModel {
             },
             owner: this
         });
+
+
+        this.addOrUpdatePie = function(value) {
+            /* Mini Pie */
+            const dataset = self.getPieChartDataPoints(value);
+            let total = 0;
+            for (let key in dataset) {
+                total += dataset[key];
+            }
+
+            let pies = [];
+            for (let key in dataset) {
+                pies.push({
+                    name: key,
+                    y: 100 * (dataset[key] / total),
+                    // TODO: I'd like to be able to show the total..
+                    label: dataset[key]
+                    //color: 
+                });
+            }
+
+
+            let pieSeries = this.damageTakenChart.series.filter(s => s.type === 'pie')[0];
+            if (!pieSeries) {
+                this.damageTakenChart.addSeries({
+                        type: 'pie',
+                        name: 'Pie!',
+                        data: pies,
+                        center: [30, 5],
+                        size: 100,
+                        showInLegend: false,
+                        dataLabels: {
+                            enabled: false
+                        },
+                        tooltip: {
+                            pointFormat: '<b>{point.label:,.0f}</b> damage taken ({point.y:,.0f}% of total)'
+                        }
+                    }
+                );
+            } else {
+                pieSeries.setData(pies);
+            }
+        }
         
 
         this.showDeath = function(death) {
@@ -180,7 +226,7 @@ class DeathTrackerViewModel {
         this.damageTakenChart.redraw();
     }
 
-    /*
+    
     getPieChartDataPoints(dataset) {
         /// <returns type="Dictionary">Generates a list of datapoints for a pie graph</returns>
         // Group by damage type and sum, this gets the totals usable for pie charts
@@ -197,7 +243,7 @@ class DeathTrackerViewModel {
         );
 
         return dataPoints;
-    }*/
+    }
 
     getLineChartDataPoints(dataset) {
         /// <summary>Transforms the timestamp value into a series X-axis point and groups by X-axis and damage type</summary>
