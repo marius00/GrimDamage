@@ -205,6 +205,14 @@ namespace GrimDamage.Statistics.Service {
                 Zone = -936296167,
                 Name = "Arkovian Foothills"
             },
+            new RecognizedPosition {
+                Zone = -771013302,
+                Name = "Deadmans Gulch"
+            },
+            new RecognizedPosition {
+                Zone = 464142942,
+                Name = "Deadmans Gulch"
+            },
         };
 
         public PlayerPosition PlayerPosition { get; private set; }

@@ -23,6 +23,7 @@ namespace GrimDamage.GD.Dto {
         Absorb = 45009,
         Reflect = 45010,
         Block = 45011,
+        EndCombat = 45012,
         LogUnrecognized = 45000,
 
         Pause = 20000,

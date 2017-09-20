@@ -12,6 +12,7 @@ namespace GrimDamage.Tracking.Model {
         Boss,
         Bounty,
         Hero,
-        Pet
+        Pet,
+        Environmental
     }
 }

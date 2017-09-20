@@ -15,9 +15,17 @@ namespace GrimDamage.Parser.Service {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(DamageParsingService));
         private readonly EntityNamingService _entityNamingService;
 
-        private const string PlayerPattern = "/pc/";
-        private const string PetPattern0 = @"/playerclass";
-        private const string PetPattern1 = @"/pets/";
+
+        static class Pattern {
+            public const string Nemesis = "/nemesis/";
+            public const string Hero = "/hero/";
+            public const string Boss = "/boss&quest/";
+            public const string Bounties = "/bounties/";
+            public const string Player = "/pc/";
+            public const string Pet0 = @"/playerclass";
+            public const string Pet1 = @"/pets/";
+        }
+        
         private readonly int _nameCacheDuration = 30;
         private string _defenderName;
         private string _attackerName;
@@ -29,6 +37,12 @@ namespace GrimDamage.Parser.Service {
         public DamageParsingService() {
             _entityNamingService = new EntityNamingService();
             this._entities = new ConcurrentDictionary<int, Entity>();
+
+            _entities[0] = new Entity {
+                Id = 0,
+                Name = "Environmental",
+                Type = EntityType.Environmental
+            };
         }
 
         public ICollection<Entity> Values => _entities.Values;
@@ -112,6 +126,16 @@ namespace GrimDamage.Parser.Service {
         public void SetAttackerName(string name) {
             _attackerName = name;
         }
+
+
+        /// <summary>
+        /// At the end of a combat this may be called
+        /// Damage entries taken between combat sessions has no attacker and usually refer to environmental damage
+        /// </summary>
+        public void RemoveAttackerId() {
+            _attackerId = 0;
+        }
+
         public void SetAttackerId(int id) {
             if (!_entities.ContainsKey(id) && _attackerName != null) {
                 _entities[id] = new Entity {
@@ -180,22 +204,22 @@ namespace GrimDamage.Parser.Service {
         }
 
         private EntityType Classify(string record) {
-            if (record.Contains(PlayerPattern)) {
+            if (record.Contains(Pattern.Player)) {
                 return EntityType.Player;
             }
-            else if (record.Contains(PetPattern0) && record.Contains(PetPattern1)) {
+            else if (record.Contains(Pattern.Pet0) && record.Contains(Pattern.Pet1)) {
                 return EntityType.Pet;
             }
-            else if (record.Contains("/nemesis/")) {
+            else if (record.Contains(Pattern.Nemesis)) {
                 return EntityType.Nemsis;
             }
-            else if (record.Contains("/hero/")) {
+            else if (record.Contains(Pattern.Hero)) {
                 return EntityType.Hero;
             }
-            else if (record.Contains("/boss&quest/")) {
+            else if (record.Contains(Pattern.Boss)) {
                 return EntityType.Boss;
             }
-            else if (record.Contains("/bounties/")) {
+            else if (record.Contains(Pattern.Bounties)) {
                 return EntityType.Bounty;
             }
             else { 

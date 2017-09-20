@@ -47,3 +47,5 @@ PointerHelper readOffset(void* ptr);
 #define TYPE_PlayerHealthOffsetDetected 100
 #define TYPE_ErrorDetectingPlayerHealthOffset 404
 #define TYPE_HitpointMonitor 1007
+
+#define TYPE_LOG_EndCombat 45012

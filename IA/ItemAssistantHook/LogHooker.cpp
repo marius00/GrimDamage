@@ -57,6 +57,7 @@ const char* MSG_DEFLECT = "    ^yDeflect Projectile Chance (%f) caused prefix de
 const char* MSG_ABSORB = "    protectionAbsorption = %f"; //1
 const char* MSG_REFLECT = "    ^str%f%% Damage Reflected"; //1
 const char* MSG_BLOCK = "^bShield: Reduced (%f) Damage by (%f%) percent, remaining damage (%f)"; //3
+const char* MSG_END_COMBAT = "]";
 
 
 bool startsWith(const char* prefix, char* str) {
@@ -198,6 +199,11 @@ void __cdecl LoggerHook::HookedMethod(
 				memcpy(&result, &_param0, 4);
 
 				DataItemPtr item(new DataItem(45007, resultSize, (char*)&result));
+				m_dataQueue->push(item);
+				SetEvent(m_hEvent);
+			} 
+			else if (startsWith(MSG_END_COMBAT, logMessage)) {
+				DataItemPtr item(new DataItem(TYPE_LOG_EndCombat, 0, 0));
 				m_dataQueue->push(item);
 				SetEvent(m_hEvent);
 			}

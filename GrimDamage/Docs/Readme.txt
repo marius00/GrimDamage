@@ -39,7 +39,8 @@ Nice to have:
 * Fine grained data of the individual attacks, see their portion of your overall damage.
 * Fine grained data of the individual defensive procs/heals, see their relevance in keeping you alive.
 * Comparison between players in MP ?
-
+** In the future: See how much of your damage dealt was resisted by the enemy?
+** -------------: See how much damage you resisted from the enemy?
 
 Rant:
 Could these be useful?

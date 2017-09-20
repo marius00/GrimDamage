@@ -89,6 +89,9 @@ namespace GrimDamage.GD.Processors {
                 AddEvent($"^bShield: Reduced ({a}) Damage by ({b}%) percent, remaining damage ({c})");
                 _damageParsingService.ApplyBlock(a, b, c);
             }
+            else if (type == MessageType.EndCombat) {
+                _damageParsingService.RemoveAttackerId();
+            }
             else if (type == MessageType.LogUnrecognized) {
                 if (_appSettings.LogUnknownEvents) {
                     Logger.Debug($"Unrecognized log: {IOHelper.GetNullString(data, 0)}");
