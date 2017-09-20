@@ -1,0 +1,2 @@
+This tool requires .Net Framework 4.5.2
+If you're running Windows 10 or newer, this comes pre-installed.
