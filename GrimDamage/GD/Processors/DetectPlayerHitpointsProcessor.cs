@@ -24,11 +24,11 @@ namespace GrimDamage.GD.Processors {
 
         public bool Process(MessageType type, byte[] data) {
             switch (type) {
-                case MessageType.TYPE_PlayerHealthOffsetDetected:
+                case MessageType.TypePlayerHealthOffsetDetected:
                     Logger.Info("Player health offset has been successfully detected");
                     return true;
 
-                case MessageType.TYPE_ErrorDetectingPlayerHealthOffset:
+                case MessageType.TypeErrorDetectingPlayerHealthOffset:
                     Logger.Warn("Player health offset could not be detect, health graphs will be unavailable");
                     ExceptionReporter.ReportIssue("No health offset");
 
@@ -39,7 +39,7 @@ namespace GrimDamage.GD.Processors {
 
                     return true;
 
-                case MessageType.TYPE_HitpointMonitor: {
+                case MessageType.TypeHitpointMonitor: {
                         int entity = IOHelper.GetInt(data, 0);
                         float hp = IOHelper.GetFloat(data, 4);
 

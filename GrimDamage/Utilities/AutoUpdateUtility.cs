@@ -5,9 +5,11 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using AutoUpdaterDotNET;
 using EvilsoftCommons.Exceptions;
+using log4net;
 
 namespace GrimDamage.Utilities {
     class AutoUpdateUtility : IDisposable {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(AutoUpdateUtility));
         private System.Timers.Timer _timerReportUsage;
         private readonly Stopwatch _reportUsageStatistics;
         private DateTime _lastTimeNotMinimized = DateTime.Now;
@@ -29,13 +31,19 @@ namespace GrimDamage.Utilities {
 
 
         private void CheckForUpdates() {
+
             if (GetTickCount64() > 5 * 60 * 1000 && (DateTime.Now - _lastAutomaticUpdateCheck).TotalHours > 36) {
+                Logger.Info("Checking for updates...");
+
                 AutoUpdater.LetUserSelectRemindLater = true;
                 AutoUpdater.RemindLaterTimeSpan = RemindLaterFormat.Days;
                 AutoUpdater.RemindLaterAt = 7;
                 AutoUpdater.Start(UPDATE_XML);
 
                 _lastAutomaticUpdateCheck = DateTime.Now;
+            }
+            else {
+                Logger.Info("Checked for updates too recently, skipping update check");
             }
         }
 

@@ -26,6 +26,7 @@ namespace GrimDamage.GD.Dto {
         EndCombat = 45012,
         LogUnrecognized = 45000,
 
+
         Pause = 20000,
         Unpause = 20001,
         PlayerIdDetected = 20002, // TODO: Hopefully this isnt called for both thyself and the host. If it is, hopefully the first call is always thyself. Still an issue when starting a new game though.
@@ -37,8 +38,8 @@ namespace GrimDamage.GD.Dto {
         DisableMovement = 2005,
         SetLifeState = 2006,
 
-        TYPE_PlayerHealthOffsetDetected = 100,
-        TYPE_ErrorDetectingPlayerHealthOffset = 404,
-        TYPE_HitpointMonitor = 1007
+        TypePlayerHealthOffsetDetected = 100,
+        TypeErrorDetectingPlayerHealthOffset = 404,
+        TypeHitpointMonitor = 1007
     }
 }
