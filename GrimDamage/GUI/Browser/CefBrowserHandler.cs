@@ -95,6 +95,7 @@ namespace GrimDamage.GUI.Browser {
                 Cef.Initialize();
 
                 _browser = new ChromiumWebBrowser(startPage);
+                
                 _browser.RegisterJsObject("data", bindeable, false);
                 _browser.RequestHandler = new DisableLinksRequestHandler();
 

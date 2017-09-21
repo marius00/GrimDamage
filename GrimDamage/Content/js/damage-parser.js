@@ -190,7 +190,7 @@ class DamageParser {
         else {
             // If this is a consecutive 0, cut out the damage type sequence
             if (this.previousDamageTaken[type] !== undefined && this.previousDamageTaken[type] <= 0) {
-                chart.addPoint(null, shouldRender, true);
+                chart.addPoint(0, shouldRender, true);
             }
             // If this is the first zero, draw it, so the line goes back down to 0
             else {

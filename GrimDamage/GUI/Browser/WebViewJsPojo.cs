@@ -18,7 +18,8 @@ namespace GrimDamage.GUI.Browser {
         public event EventHandler OnSave;
         public event EventHandler OnLog;
         public event EventHandler OnRequestData;
-
+        public event EventHandler OnSetLightMode;
+        
         public string api { get; set; }
         public string playerLocationName { get; set; }
         // FROM JS ONLY
@@ -61,6 +62,14 @@ namespace GrimDamage.GUI.Browser {
                 Data = json
             });
         }
+
+        public void setLightMode(string mode) {
+            OnSetLightMode?.Invoke(this, new LightModeArgument {
+                IsDarkMode = mode.ToLower() == "dark"
+            });
+        }
+
+
         public void requestData(int type, string start, string end, int id, string callback) {
             OnRequestData?.Invoke(this, new RequestDataArgument {
                 Type = (DataRequestType)type,

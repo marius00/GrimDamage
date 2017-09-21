@@ -83,6 +83,7 @@
     <Compile Include="GUI\Browser\CSharpJsStateMapper.cs" />
     <Compile Include="GUI\Browser\DataRequestType.cs" />
     <Compile Include="GUI\Browser\DisableLinksRequestHandler.cs" />
+    <Compile Include="GUI\Browser\dto\LightModeArgument.cs" />
     <Compile Include="GUI\Browser\dto\RequestDataArgument.cs" />
     <Compile Include="GUI\Browser\dto\SaveParseArgument.cs" />
     <Compile Include="GUI\Browser\dto\SuggestLocationNameArgument.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Tracking\Model\IDamageEntry.cs" />
     <Compile Include="Utilities\AutoUpdateUtility.cs" />
     <Compile Include="Utility\Timestamp.cs" />
+    <Compile Include="Utility\UuidGenerator.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -185,6 +187,9 @@
     <Content Include="Content\css\faq.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\css\vendor\bootstrap-dark.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\css\vendor\bootstrap.min.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -192,6 +197,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\css\vendor\jquery-impromptu.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\darkmode.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\index.html">
@@ -215,6 +223,9 @@
     <Content Include="Content\js\death-tracker.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\js\light-mode-toggle.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\js\main.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -228,6 +239,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\vendor\dataTables.bootstrap4.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\js\vendor\highcharts-dark.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\vendor\highstock.js">

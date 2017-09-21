@@ -6,7 +6,7 @@
 <script src="js/vendor/jquery-3.2.1.min.js"></script> <!-- Required for impromptu, further use of jQuery functionality is discouraged -->
 <script src="js/vendor/jquery-impromptu.min.js"></script> <!-- Perhaps look into alternatives which does not require jQuery -->
 <link rel="stylesheet" media="all" type="text/css" href="css/vendor/jquery-impromptu.min.css" />
-<link rel="stylesheet" media="all" type="text/css" href="css/vendor/bootstrap.min.css" />
+<link rel="stylesheet" media="all" type="text/css" href="css/vendor/bootstrap.min.css" id="bootstrap-theme" />
 <link rel="stylesheet" media="all" type="text/css" href="css/main.css" />
 <link rel="stylesheet" media="all" type="text/css" href="css/faq.css" />
 
@@ -17,6 +17,7 @@
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="js/vendor/jquery.dataTables.min.js"></script>
 <script src="js/vendor/dataTables.bootstrap4.min.js"></script>
+<script src="js/vendor/highcharts-dark.js"></script>
 
 <script src="js/step-chart.js"></script>
 <script src="js/modals.js"></script>
@@ -25,21 +26,26 @@
 <script src="js/death-tracker-viewmodel.js"></script>
 <script src="js/death-tracker.js"></script>
 <script src="js/graphs.js"></script>
+<script src="js/light-mode-toggle.js"></script>
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-89186986-3"></script>
+
+
 <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments)};
-    gtag('js', new Date());
-
-    gtag('config', 'UA-89186986-3');
+    if (window.location.search.toString().toLowerCase().indexOf('darkmode=1') !== -1) {
+        EnableHighchartsDarkmode();
+        $('#bootstrap-theme').attr('href', 'css/vendor/bootstrap-dark.min.css');
+    }
 </script>
+
+
+
+
 
 
 
 <nav class="navbar fixed-top navbar-light bg-light">
     <ul class="nav nav-tabs" id="tabs" role="tablist">
-        <li class="nav-item">
+        <li class="nav-item" id="nav-item-home">
             <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
         </li>
         <li class="nav-item">
@@ -51,231 +57,261 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#faq">Faq</a>
         </li>
+        <li class="nav-item" id="light-mode-view">
+            <a class="nav-link" data-toggle="tab" href="#"><span data-bind="text: label, click: toggleDarkMode"></span></a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="discord://">Help / Discord</a>
         </li>
     </ul>
 </nav>
 
-    <div class="tab-content" id="tabbed-content" style="padding-top: 60px;">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <!-- TODO: Bootstrap button maybe? -->
-            <!--
-            <div id="name-suggest-ko">
-                <div data-bind="visible: isZoneUnknown">
-                    You are in an unmapped area
-                    <input type="button" data-bind="click: suggestName" value="Suggest name" />
-                </div>
+
+
+
+
+
+
+
+<div class="tab-content" id="tabbed-content" style="padding-top: 60px;">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <!-- TODO: Bootstrap button maybe? -->
+        <!--
+        <div id="name-suggest-ko">
+            <div data-bind="visible: isZoneUnknown">
+                You are in an unmapped area
+                <input type="button" data-bind="click: suggestName" value="Suggest name" />
             </div>
-            -->
+        </div>
+        -->
 
-            <div id="step-test"></div>
+        <div id="step-test"></div>
+            
+        <hr />
 
+        <div class="placeholder">
             <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </div>
+        <div class="placeholder">
             <div id="container-damage-done" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </div>
 
             If you're not seeing a graph above, something is wrong.
         </div>
-        <div class="tab-pane fade" id="bosses" role="tabpanel" aria-labelledby="profile-tab">
-            <table id="bosstable" class="table table-striped table-bordered" width="100%" cellspacing="0">
+    <div class="tab-pane fade" id="bosses" role="tabpanel" aria-labelledby="profile-tab">
+        <table id="bosstable" class="table table-striped table-bordered" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <td>Encountered</td>
+                    <td>Name</td>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td>Encountered</td>
+                    <td>Name</td>
+                </tr>
+            </tfoot>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="death" role="tabpanel" aria-labelledby="profile-tab">
+
+        <div id="what-killed-me-listing" class="placeholder">
+
+            <table id="killed-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <td>Encountered</td>
-                        <td>Name</td>
+                        <td>Timestamp</td>
+                        <td>Location</td>
                     </tr>
                 </thead>
+                <tbody data-bind="foreach: deaths">
+                    <tr data-bind="click: $root.showDeath" class="what-killed-me-link">
+                        <td data-bind="text: labelTimestamp">Timestamp</td>
+                        <td data-bind="text: label">Location</td>
+                    </tr>
+                </tbody>
+
                 <tfoot>
                     <tr>
-                        <td>Encountered</td>
-                        <td>Name</td>
+                        <td>Timestamp</td>
+                        <td>Location</td>
                     </tr>
                 </tfoot>
                 <tbody></tbody>
             </table>
+
+            <!-- This would generally be inside a modal -->
+            <ul data-bind="foreach: detailedDamagePoints">
+                <li>
+                    <span data-bind="text: amount"></span>
+                </li>
+            </ul>
+
         </div>
-        <div class="tab-pane fade" id="death" role="tabpanel" aria-labelledby="profile-tab">
+    </div>
 
-            <div id="what-killed-me-listing" class="placeholder">
-
-                <table id="killed-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <td>Timestamp</td>
-                            <td>Location</td>
-                        </tr>
-                    </thead>
-                    <tbody data-bind="foreach: deaths">
-                        <tr data-bind="click: $root.showDeath" class="what-killed-me-link">
-                            <td data-bind="text: labelTimestamp">Timestamp</td>
-                            <td data-bind="text: label">Location</td>
-                        </tr>
-                    </tbody>
-
-                    <tfoot>
-                        <tr>
-                            <td>Timestamp</td>
-                            <td>Location</td>
-                        </tr>
-                    </tfoot>
-                    <tbody></tbody>
-                </table>
-
-                <!-- This would generally be inside a modal -->
-                <ul data-bind="foreach: detailedDamagePoints">
-                    <li>
-                        <span data-bind="text: amount"></span>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-
-        <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="profile-tab">
-            <div data-bind="foreach: questions">
-                <div class="panel panel-default">
-                    <div class="panel-heading linkbutton" data-bind="attr: {id: 'qh' + $index(), href: '#qc' + $index()}, aria-controls: 'qc' + $index()" role="tab" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="false">
-                        <h4 class="panel-title">
-                            <a data-bind="text: issue">
-                                Question
-                            </a>
-                        </h4>
-                    </div>
-                    <div class="panel-collapse collapse" role="tabpanel" data-bind="attr: {aria_labelledby: 'qh' + $index(), id: 'qc' + $index()}">
-                        <div class="panel-body answer-body" data-bind="html: solution">
-                            Answer
-                        </div>
-                    </div>
+    <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="profile-tab">
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card">
+                <div class="card-header" role="tab" id="headingOne">
+                    <h5 class="mb-0">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Will this ever be ported to &lt;some random language&gt;
+                        </a>
+                    </h5>
                 </div>
-            </div>
 
-
-            <div id="questions" style="display: none">
-                <div>
-                    <div>
-                        Will this ever be ported to Titan Quest?
-                    </div>
-                    <div>
+                <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="card-block">
                         No.
                     </div>
                 </div>
-                <div>
-                    <div>
-                        How do i suggest a new feature?
+            </div>
+            <div class="card">
+                <div class="card-header" role="tab" id="headingTwo">
+                    <h5 class="mb-0">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Will this ever be ported to Titan Quest?
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="card-block">
+                        No.
                     </div>
-                    <div>
-                        Click the discord link or post it on the forum.<br />
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" role="tab" id="headingThree">
+                    <h5 class="mb-0">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            How do i suggest a new feature?
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="card-block">
+                        Click the discord link or post it on the forum.<br/>
                         If you're asked a follow-up question to a feature request and you do not reply, the request is discarded.
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 
+</div>
 
 
 
 
-    <div id="modals"></div>
 
-    <!-- "You have died" modal -->
-    <div class="modal fade" id="deathModal" tabindex="-1" role="dialog" aria-labelledby="deathModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deathModalLabel">You have died a tragic death</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="deathModalBody">
-                    <div id="container-died-damage-taken-pie" style="min-width: 280px; height: 200px; margin: 0 auto"></div>
-                    <hr />
-                    <div id="container-died-damage-taken" style="min-width: 280px; height: 500px; margin: 0 auto"></div>
-                    <hr />
-                    <div id="container-died-damage-taken-zoomy"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
+<div id="modals"></div>
+
+<!-- "You have died" modal -->
+<div class="modal fade" id="deathModal" tabindex="-1" role="dialog" aria-labelledby="deathModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deathModalLabel">You have died a tragic death</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="deathModalBody">
+                <div id="container-died-damage-taken-pie" style="min-width: 280px; height: 200px; margin: 0 auto"></div>
+                <hr />
+                <div id="container-died-damage-taken" style="min-width: 280px; height: 500px; margin: 0 auto"></div>
+                <hr />
+                <div id="container-died-damage-taken-zoomy"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 
 
 
 
 
-    <script type="text/javascript">
-        enableLogToCsharp();
+<script type="text/javascript">
+    enableLogToCsharp();
 
-        // KO, move this?
-        /*
-        function _VM() {
-            this.suggestName = triggerSuggestNameDialog;
-            this.isZoneUnknown = ko.observable(false);
+    // KO, move this?
+    /*
+    function _VM() {
+        this.suggestName = triggerSuggestNameDialog;
+        this.isZoneUnknown = ko.observable(false);
+    }
+    var VM = new _VM();
+    ko.applyBindings(VM, document.getElementById('name-suggest-ko'));
+    */
+
+
+    var colors = new Colors();
+    var damageDoneStepChart = new StepChart('step-test', 'Damage Done');
+    const damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy', 'Damage Taken');
+
+
+    // Chart and parsing
+    let chartDamageTaken, chartDamageDealt;
+    [chartDamageTaken, chartDamageDealt] = loadCharts();
+    var p = new DamageParser(chartDamageTaken, chartDamageDealt, damageDoneStepChart);
+
+    setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
+        p.tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList);
+        //VM.isZoneUnknown(playerLocationName === 'Unknown');
+    });
+
+    setCsharpTickInterval(1000);
+    setCsharpLoadHistoryCallback((dataset) => { console.log("Load:", dataset); });
+
+
+    // Track callback events
+    const deathTrackerViewModel = new DeathTrackerViewModel(
+        () => $('#deathModal').modal('show'),
+        createChartDamageTaken('container-died-damage-taken', 10),
+        damageTakenAtDeathChart
+    );
+    let deathTracker = new DeathTracker(p, deathTrackerViewModel); // damage parser is the current 'track player id' class, may be split later
+    ko.applyBindings(deathTrackerViewModel, document.getElementById('what-killed-me-listing'));
+
+    // State update callback
+    setCsharpRequestCallback((type, dataset) => {
+        if (type === TYPE_STATES) {
+            deathTracker.process(dataset);
         }
-        var VM = new _VM();
-        ko.applyBindings(VM, document.getElementById('name-suggest-ko'));
-        */
+    });
 
 
-        var colors = new Colors();
-        var damageDoneStepChart = new StepChart('step-test', 'Damage Done');
-        const damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy', 'Damage Taken');
+    
+    let isDarkModeEnabled = window.location.search.toString().toLowerCase().indexOf('darkmode=1') !== -1;
+    ko.applyBindings(new LightModeToggleViewModel(isDarkModeEnabled), document.getElementById('light-mode-view'));
 
 
-        // Chart and parsing
-        let chartDamageTaken, chartDamageDealt;
-        [chartDamageTaken, chartDamageDealt] = loadCharts();
-        var p = new DamageParser(chartDamageTaken, chartDamageDealt, damageDoneStepChart);
+    // FAQ -- Consider moving to its own file
+    function FaqViewModel() {
+        this.questions = ko.observableArray([{issue: '', solution: ''}]);
+    }
 
-        setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
-            p.tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList);
-            //VM.isZoneUnknown(playerLocationName === 'Unknown');
-        });
+    const faqViewModel = new FaqViewModel();
 
-        setCsharpTickInterval(1000);
-        setCsharpLoadHistoryCallback((dataset) => { console.log("Load:", dataset); });
+    ko.applyBindings(faqViewModel, document.getElementById('faq'));
 
+    let faqElements = [];
+    const questions = $('#questions').children();
+    for (var i = 0; i < questions.length; i++) {
+        let question = $(questions[i]).children(':nth-child(1)').text();
+        let answer = $(questions[i]).children(':nth-child(2)').html();
+        faqElements.push({issue: question, solution: answer});
+    }
+    faqViewModel.questions(faqElements);
 
-        // Track callback events
-        const deathTrackerViewModel = new DeathTrackerViewModel(
-            () => $('#deathModal').modal('show'),
-            createChartDamageTaken('container-died-damage-taken', 10),
-            damageTakenAtDeathChart
-        );
-        let deathTracker = new DeathTracker(p, deathTrackerViewModel); // damage parser is the current 'track player id' class, may be split later
-        ko.applyBindings(deathTrackerViewModel, document.getElementById('what-killed-me-listing'));
-
-        // State update callback
-        setCsharpRequestCallback((type, dataset) => {
-            if (type === TYPE_STATES) {
-                deathTracker.process(dataset);
-            }
-        });
+</script>
 
 
 
 
-
-
-        function FaqViewModel() {
-            this.questions = ko.observableArray([{issue: '', solution: ''}]);
-        }
-
-        const faqViewModel = new FaqViewModel();
-
-        ko.applyBindings(faqViewModel, document.getElementById('faq'));
-
-        let faqElements = [];
-        const questions = $('#questions').children();
-        for (var i = 0; i < questions.length; i++) {
-            let question = $(questions[i]).children(':nth-child(1)').text();
-            let answer = $(questions[i]).children(':nth-child(2)').html();
-            faqElements.push({issue: question, solution: answer});
-        }
-        faqViewModel.questions(faqElements);
-
-    </script>

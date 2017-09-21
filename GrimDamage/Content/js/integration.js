@@ -84,6 +84,10 @@ function sendCsharpNameSuggestion(suggestion) {
         data.suggestLocationName(suggestion);
 }
 
+function setCsharpLightMode(mode) {
+    data.setLightMode(mode);
+}
+
 function api() {
     console.log('All data is available in the global data variable: \"data\"');
     console.log('The data variable contains the following keys:');

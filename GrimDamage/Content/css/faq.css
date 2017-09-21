@@ -10,3 +10,6 @@
 	-ms-user-select: none;
 	user-select: none;
 }
+.card-block {
+    margin: 10px;
+}

@@ -48,6 +48,11 @@ namespace GrimDamage {
             _browser.JsPojo.OnRequestUpdate += TransferStatsToJson;
             _browser.JsPojo.OnSuggestLocationName += JsPojoOnOnSuggestLocationName;
             _browser.JsPojo.OnSave += JsPojoOnOnSave;
+            _browser.JsPojo.OnSetLightMode += (sender, args) => {
+                bool isDarkMode = (args as LightModeArgument)?.IsDarkMode ?? false;
+                Properties.Settings.Default.DarkModeEnabled = isDarkMode;
+                Properties.Settings.Default.Save();
+            };
             _browser.JsPojo.OnLog += (sender, args) => {
                 string data = (args as SaveParseArgument)?.Data;
                 Logger.Warn(data);

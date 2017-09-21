@@ -1,7 +1,6 @@
 ﻿Discord:
 	https://discord.gg/PJ87Ewa
 	Will be used for beta testers, feature suggestions etc.
-	Don't intend to share it widely on the forum until its fleshed out
 
 Unmapped / uncharted territory:
 * Player name would be useful if we start saving parses
@@ -9,6 +8,7 @@ Unmapped / uncharted territory:
 * Get player class[es] from in-game? [for pets]		-- unknown, suspect somewhat tricky  // mastery
 
 TODO:
+** Dark theme ( http://jsfiddle.net/82AsF/ )
 ** Dashboard would be nice, ala https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/free-bootstrap-admin-dashboard-templates.jpg
 	single/aoe in a graph, damage types as progress bars
 * [PHP] Finish the upload functionality
@@ -22,7 +22,7 @@ TODO:
 ** [evil]: dont add / start removing damage types not dealt for 'what killed me?' [dont show irrelevant types]
 ** if you tab or pause while dying, it will register as another death. Our time increases, ingame time does not. -- detect pauses?
 ** Show where the player died?
-** Show who killed the player?
+** Show who killed the player? [mob name]
 
 Known bugs:
   highstock.js:58 Error: <path> attribute d: Expected number, "M L L L L L L L L".

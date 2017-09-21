@@ -57,6 +57,7 @@ function createChartDamageTaken(id, sequenceLength) {
             series: [
                 {
                     name: 'Total',
+                    fillOpacity: 0.1,
                     data: Array.from(Array(sequenceLength), () => null)
                 },
                 {

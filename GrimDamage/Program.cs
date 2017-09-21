@@ -10,12 +10,30 @@ using GrimDamage.GUI.Browser;
 using GrimDamage.GUI.Forms;
 using GrimDamage.Settings;
 using GrimDamage.Tracking.Model;
+using GrimDamage.Utility;
 using log4net;
 using log4net.Repository.Hierarchy;
+using Microsoft.Win32;
 
 namespace GrimDamage {
     static class Program {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Program));
+
+        private static string GetUuid() {
+
+            using (RegistryKey registryKey = Registry.CurrentUser.CreateSubKey(@"Software\EvilSoft\GrimDamage")) {
+                string uuid = (string)registryKey?.GetValue("uuid");
+                if (!string.IsNullOrEmpty(uuid)) {
+                    return uuid;
+                }
+
+                UuidGenerator g = Guid.NewGuid();
+                uuid = g.ToString().Replace("-", "");
+
+                registryKey?.SetValue("uuid", uuid);
+                return uuid;
+            }
+        }
 
 
         /// <summary>
@@ -34,6 +52,7 @@ namespace GrimDamage {
             ExceptionReporter.UrlCrashreport = "http://ribbs.dreamcrash.org/gddamage/crashreport.php";
             ExceptionReporter.UrlStats = "http://ribbs.dreamcrash.org/gddamage/stats.php";
             ExceptionReporter.LogExceptions = true;
+            ExceptionReporter.Uuid = GetUuid();
 #if !DEBUG
 #endif
             Logger.Info("Anonymous usage statistics and crash reports will be collected.");
@@ -44,7 +63,11 @@ namespace GrimDamage {
                 return;
             }
 
-            string url = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "content", "index.html");
+            
+            string url = Properties.Settings.Default.DarkModeEnabled 
+                    ? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "content", "darkmode.html")
+                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "content", "index.html");
+
             if (!File.Exists(url)) {
                 MessageBox.Show("Error - It appears the stat view is missing", "Error");
             }
