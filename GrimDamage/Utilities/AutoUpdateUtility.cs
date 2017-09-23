@@ -38,7 +38,7 @@ namespace GrimDamage.Utilities {
                 AutoUpdater.LetUserSelectRemindLater = true;
                 AutoUpdater.RemindLaterTimeSpan = RemindLaterFormat.Days;
                 AutoUpdater.RemindLaterAt = 7;
-                AutoUpdater.Start(UPDATE_XML);
+                AutoUpdater.Start(UpdateXml);
 
                 _lastAutomaticUpdateCheck = DateTime.Now;
             }
@@ -47,7 +47,7 @@ namespace GrimDamage.Utilities {
             }
         }
 
-        private string UPDATE_XML {
+        private static string UpdateXml {
             get {
                 var v = Assembly.GetExecutingAssembly().GetName().Version;
                 string version = $"{v.Major}.{v.Minor}.{v.Build}.{v.Revision}";
@@ -61,7 +61,7 @@ namespace GrimDamage.Utilities {
                 if (_reportUsageStatistics.Elapsed.Hours > 12) {
                     _reportUsageStatistics.Restart();
                     ThreadPool.QueueUserWorkItem(m => ExceptionReporter.ReportUsage());
-                    AutoUpdater.Start(UPDATE_XML);
+                    AutoUpdater.Start(UpdateXml);
                 }
             }
         }

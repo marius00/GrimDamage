@@ -4,6 +4,24 @@
         /// <param name="title">Title of the chart</param>
         this.series = [];
         this.chart = Highcharts.stockChart(id, {
+            
+            series: [{
+                name: 'Total',
+                data: (function () {
+                    // generate an array of random data
+                    let data = [];
+                    const time = (new Date()).getTime();
+                    let i;
+
+                    for (i = -180; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: 0
+                        });
+                    }
+                    return data;
+                }())
+            }],
             rangeSelector: {
                 buttons: [{
                     count: 500,
@@ -34,7 +52,7 @@
                     text: 'All'
                 }],
                 inputEnabled: false,
-                selected: 1
+                selected: 4
             },
             title: {
                 text: title
@@ -48,6 +66,9 @@
         this.addPoint('Aether', 0, 45);
         this.addPoint('Aether', 1, 55);
         */
+
+
+        this.series['Total'] = 0;
     }
 
     addPoint(type, timestamp, value) {

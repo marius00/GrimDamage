@@ -8,9 +8,10 @@ Unmapped / uncharted territory:
 * Get player class[es] from in-game? [for pets]		-- unknown, suspect somewhat tricky  // mastery
 
 TODO:
-** Dark theme ( http://jsfiddle.net/82AsF/ )
 ** Dashboard would be nice, ala https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/free-bootstrap-admin-dashboard-templates.jpg
 	single/aoe in a graph, damage types as progress bars
+
+*** Graphs in dashboard needs a hide button
 * [PHP] Finish the upload functionality
 * [JS] Maybe add a list of pets with checkboxes, where the player can choose which are his, and merge those into his aoe/st damage? [obs: per name? pets die pretty often]
 * [JS] show one graph with pets? 
@@ -19,10 +20,9 @@ TODO:
 * [JS] An issue with switching to NULL for consecutive 0s is that the sequence will start from null, not from 0, creating odd clipped graphs
 * [C#/PHP] Was thinking maybe a news thing, just a link to gog/steam when there's a sale or wtv.. unsure if it provides any value, but being able to announce stuff to users (while being non intrusive) might be nice.
 * [VS] Fix the need for config changes to compile
-** [evil]: dont add / start removing damage types not dealt for 'what killed me?' [dont show irrelevant types]
-** if you tab or pause while dying, it will register as another death. Our time increases, ingame time does not. -- detect pauses?
-** Show where the player died?
-** Show who killed the player? [mob name]
+** [JS] if you tab or pause while dying, it will register as another death. Our time increases, ingame time does not. -- detect pauses?
+** [JS] Show where the player died?
+** [JS] Show who killed the player? [mob name]
 
 Known bugs:
   highstock.js:58 Error: <path> attribute d: Expected number, "M L L L L L L L L".
@@ -41,6 +41,7 @@ Nice to have:
 * Comparison between players in MP ?
 ** In the future: See how much of your damage dealt was resisted by the enemy?
 ** -------------: See how much damage you resisted from the enemy?
+** [evil]: dont add / start removing damage types not dealt for 'what killed me?' [dont show irrelevant types]
 
 Rant:
 Could these be useful?

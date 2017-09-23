@@ -39,6 +39,7 @@ function createChartDamageTaken(id, sequenceLength) {
             },
             plotOptions: {
                 area: {
+                    animation: false,
                     pointStart: 0,
                     marker: {
 
@@ -200,6 +201,7 @@ function createChartDamageDealt(id, sequenceLength) {
             },
             plotOptions: {
                 area: {
+                    animation: false,
                     pointStart: 0,
                     marker: {
 

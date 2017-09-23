@@ -287,11 +287,21 @@
     });
 
 
-    
+
+
+
+
+    // ===================================================
+    // Light/Dark mode toggle
     let isDarkModeEnabled = window.location.search.toString().toLowerCase().indexOf('darkmode=1') !== -1;
     ko.applyBindings(new LightModeToggleViewModel(isDarkModeEnabled), document.getElementById('light-mode-view'));
+    // ===================================================
 
 
+
+
+
+    // ===================================================
     // FAQ -- Consider moving to its own file
     function FaqViewModel() {
         this.questions = ko.observableArray([{issue: '', solution: ''}]);
@@ -309,6 +319,7 @@
         faqElements.push({issue: question, solution: answer});
     }
     faqViewModel.questions(faqElements);
+    // ===================================================
 
 </script>
 
