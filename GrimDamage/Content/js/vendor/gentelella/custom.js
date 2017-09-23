@@ -139,6 +139,28 @@ $(document).ready(function () {
 
         icon.toggleClass('fa-chevron-right fa-chevron-left');
     });
+    $('.expand-6-12-link').on('click', function () {
+        let container = $(this).closest('.x_panel').parent();
+        let icon = $(this).find('i');
+
+        container.toggleClass('col-sm-6 col-sm-12');
+        container.toggleClass('col-md-6 col-md-12');
+
+        setTimeout(function () {
+            container.find('div').each(function () {
+                const chartIndex = $(this).data('highchartsChart');
+
+                console.debug('Chart index', chartIndex);
+                if (chartIndex !== undefined) {
+                    const chart = Highcharts.charts[chartIndex];
+                    chart.setSize($(this).width(), $(this).height());
+                }
+            });
+        }, 200);
+
+
+        icon.toggleClass('fa-chevron-right fa-chevron-left');
+    });
 
     $('.close-link').click(function () {
         var $BOX_PANEL = $(this).closest('.x_panel');

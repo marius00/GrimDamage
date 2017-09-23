@@ -11,7 +11,9 @@ TODO:
 ** Dashboard would be nice, ala https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/free-bootstrap-admin-dashboard-templates.jpg
 	single/aoe in a graph, damage types as progress bars
 
-*** Graphs in dashboard needs a hide button
+*** Sometimes when switching to dark mode, graphs gets the wrong size (race condition? made too soon?)
+*** Removing the very first graph does not cause graph #2 to shift left
+*** Tab leakage
 * [PHP] Finish the upload functionality
 * [JS] Maybe add a list of pets with checkboxes, where the player can choose which are his, and merge those into his aoe/st damage? [obs: per name? pets die pretty often]
 * [JS] show one graph with pets? 

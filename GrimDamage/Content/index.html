@@ -62,8 +62,8 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#faq">Faq</a>
         </li>
-        <li class="nav-item" id="light-mode-view">
-            <a class="nav-link" data-toggle="tab" href="#"><span data-bind="text: label, click: toggleDarkMode"></span></a>
+        <li class="nav-item" id="light-mode-view" data-bind="click: toggleDarkMode">
+            <a class="nav-link" data-toggle="tab" href="#"><span data-bind="text: label"></span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="discord://">Help / Discord</a>
@@ -92,7 +92,7 @@
         
         
         <div class="col-md-9 col-sm-9">
-            <div class="x_panel tile fixed_height_320 overflow_hidden">
+            <div class="x_panel tile overflow_hidden">
                 <div class="x_title">
                     <h2>Damage Dealt</h2>
                     <ul class="nav navbar-right panel_toolbox">
@@ -112,7 +112,7 @@
             </div>
         </div>
         
-        <div class="col-md-3 col-sm-3 bg-white">
+        <div class="col-md-3 col-sm-3">
             <div class="x_panel tile overflow_hidden">
                 <div class="x_title">
                     <h2>Top Damage Dealt</h2>
@@ -168,20 +168,23 @@
             </div>
         </div>
             
+        
+    <div class="col-md-4 col-sm-4">
+        <div class="x_panel tile overflow_hidden">
+            <div class="x_title">
+                <h2>Top Damage Dealt</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
 
-        <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="x_panel tile fixed_height_320 overflow_hidden">
-                <div class="x_title">
-                    <h2>Damage Taken</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
+            <div class="x_content">
                     <table class="" style="width:100%">
                         <tr>
                             <th style="width:37%;">
@@ -241,18 +244,53 @@
         </div>
 
         <hr />
-        
+
         <div class="col-md-12 col-sm-12 col-xs-6">
-            <div class="placeholder">
-                <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            <div class="x_panel tile overflow_hidden">
+                <div class="x_title">
+                    <h2>Damage Taken</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="expand-6-12-link"><i class="fa fa-chevron-left"></i></a>
+                        </li>
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                </div>
             </div>
         </div>
-        <div class="col-md-12 col-sm-12 col-xs-6">
-            <div class="placeholder">
-                <div id="container-damage-done" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-            </div>
+        
+        <div class="col-md-12 col-sm-12 col-xs-6">            
+            <div class="x_panel tile overflow_hidden">
+                <div class="x_title">
+                    <h2>Damage Dealt</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="expand-6-12-link"><i class="fa fa-chevron-left"></i></a>
+                        </li>
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
 
-            If you're not seeing a graph above, something is wrong.
+                <div class="x_content">
+                    <div id="container-damage-done" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="tab-pane fade" id="bosses" role="tabpanel" aria-labelledby="profile-tab">
@@ -394,94 +432,6 @@
 
 
 
-<script type="text/javascript">
-    enableLogToCsharp();
-
-    // KO, move this?
-    /*
-    function _VM() {
-        this.suggestName = triggerSuggestNameDialog;
-        this.isZoneUnknown = ko.observable(false);
-    }
-    var VM = new _VM();
-    ko.applyBindings(VM, document.getElementById('name-suggest-ko'));
-    */
-
-
-    var colors = new Colors();
-    var damageDoneStepChart = new StepChart('step-test', 'Damage Done');
-    const damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy', 'Damage Taken');
-
-
-    // Chart and parsing
-    let chartDamageTaken, chartDamageDealt;
-    [chartDamageTaken, chartDamageDealt] = loadCharts();
-    var p = new DamageParser(chartDamageTaken, chartDamageDealt, damageDoneStepChart);
-
-    setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
-        p.tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList);
-        //VM.isZoneUnknown(playerLocationName === 'Unknown');
-    });
-
-    setCsharpTickInterval(1000);
-    setCsharpLoadHistoryCallback((dataset) => { console.log("Load:", dataset); });
-
-
-    // Track callback events
-    const deathTrackerViewModel = new DeathTrackerViewModel(
-        () => $('#deathModal').modal('show'),
-        createChartDamageTaken('container-died-damage-taken', 10),
-        damageTakenAtDeathChart
-    );
-    let deathTracker = new DeathTracker(p, deathTrackerViewModel); // damage parser is the current 'track player id' class, may be split later
-    ko.applyBindings(deathTrackerViewModel, document.getElementById('what-killed-me-listing'));
-
-    // State update callback
-    setCsharpRequestCallback((type, dataset) => {
-        if (type === TYPE_STATES) {
-            deathTracker.process(dataset);
-        }
-    });
-
-
-    // ===================================================
-    // Damage taken view, pie graph creation
-    createDamageTakenPieChart('damage-taken-pie-graph');
-    // ===================================================
-
-
-    // ===================================================
-    // Light/Dark mode toggle
-    let isDarkModeEnabled = window.location.search.toString().toLowerCase().indexOf('darkmode=1') !== -1;
-    ko.applyBindings(new LightModeToggleViewModel(isDarkModeEnabled), document.getElementById('light-mode-view'));
-    // ===================================================
-
-
-
-
-
-    // ===================================================
-    // FAQ -- Consider moving to its own file
-    function FaqViewModel() {
-        this.questions = ko.observableArray([{issue: '', solution: ''}]);
-    }
-
-    const faqViewModel = new FaqViewModel();
-
-    ko.applyBindings(faqViewModel, document.getElementById('faq'));
-
-    let faqElements = [];
-    const questions = $('#questions').children();
-    for (var i = 0; i < questions.length; i++) {
-        let question = $(questions[i]).children(':nth-child(1)').text();
-        let answer = $(questions[i]).children(':nth-child(2)').html();
-        faqElements.push({issue: question, solution: answer});
-    }
-    faqViewModel.questions(faqElements);
-    // ===================================================
-
-</script>
-
-
+<script src="js/index.js"></script>
 
 
