@@ -37,7 +37,6 @@ class DamageTakenPieHandler {
             totals[type] = Math.round(sum);
             sumTotal += Math.round(sum);
         }
-        console.log('totals', totals, sumTotal);
         
 
         // Create chart points and update chart
@@ -49,15 +48,12 @@ class DamageTakenPieHandler {
                 label: totals[type]
             });
         }
-        console.log('setting data', data);
         this.damageTakenPieChart.series[0].setData(data, true);
 
 
         // Delete old entries
         const expiration = new Date().getTime() - this.pieTimespan;
-        console.log("Exp:", expiration);
         for (let type in this.totalDamageTaken) {
-            console.log(this.totalDamageTaken[type]);
             let currentLength = this.totalDamageTaken[type].length;
             this.totalDamageTaken[type] = this.totalDamageTaken[type].filter((e) => e.timestamp < expiration);
             if (this.totalDamageTaken[type].length < currentLength) {

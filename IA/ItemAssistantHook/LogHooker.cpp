@@ -284,23 +284,10 @@ void __cdecl LoggerHook::HookedMethod(
 				}
 			}
 			else {
-				DataItemPtr item(new DataItem(45000, buffsize, (char*)&logMessage));
-				m_dataQueue->push(item);
-				SetEvent(m_hEvent);
+				//DataItemPtr item(new DataItem(45000, buffsize, (char*)&logMessage));
+				//m_dataQueue->push(item);
+				//SetEvent(m_hEvent);
 			}
-			/*
-			if (isRelevant(logMessage)) {
-				sprintf_s(result, resultSize, logMessage, _param0, _param1, _param2);
-				DataItemPtr item(new DataItem(45001, resultSize, (char*)&result));
-				m_dataQueue->push(item);
-				SetEvent(m_hEvent);
-			}
-			else {
-				DataItemPtr item(new DataItem(45001, buffsize, (char*)&logMessage));
-				m_dataQueue->push(item);
-				SetEvent(m_hEvent);
-				
-			}*/
 
 		}
 

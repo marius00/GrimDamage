@@ -87,156 +87,164 @@
 
 
 
-<div class="tab-content container-fluid" id="tabbed-content" style="padding-top: 60px;">
+<div class="tab-content" id="tabbed-content" style="padding-top: 60px;">
     <div class="tab-pane fade show active row" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <div class="col-sm-9">
-            <div class="x_panel tile overflow_hidden">
-                <div class="x_title">
-                    <h2>Damage Dealt</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="expand-link"><i class="fa fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li>
-                            <a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div id="step-test"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-3">
-            <div class="x_panel tile overflow_hidden">
-                <div class="x_title">
-                    <h2>Top Damage Dealt</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li>
-                            <a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
+        <div class="container-fluid">
+            <div class="row">
+                    <div class="col-sm-9 x_panel tile overflow_hidden">
+                        <div class="x_title">
+                            <h2>Damage Dealt</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="expand-link"><i class="fa fa-chevron-right"></i></a>
+                                </li>
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li>
+                                    <a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div id="step-test"></div>
+                        </div>
                 </div>
 
-                <div class="x_content">
-                    <div class="col-sm-12 col-xs-6">
-                        <div>
-                            <p>Chaos</p>
-                            <div class="">
-                                <div class="progress progress_sm" style="width: 76%;">
-                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
+                <div class="col-sm-3">
+                    <div class="x_panel tile overflow_hidden">
+                        <div class="x_title">
+                            <h2>Top Damage Dealt</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li>
+                                    <a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+                            <div class="col-sm-12 col-xs-6">
+                                <div>
+                                    <p>Chaos</p>
+                                    <div class="">
+                                        <div class="progress progress_sm" style="width: 76%;">
+                                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p>Aether</p>
+                                    <div class="">
+                                        <div class="progress progress_sm" style="width: 76%;">
+                                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="60"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <p>Aether</p>
-                            <div class="">
-                                <div class="progress progress_sm" style="width: 76%;">
-                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="60"></div>
+                            <div class="col-sm-12 col-xs-6">
+                                <div>
+                                    <p>Physical</p>
+                                    <div class="">
+                                        <div class="progress progress_sm" style="width: 76%;">
+                                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="40"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p>Fire</p>
+                                    <div class="">
+                                        <div class="progress progress_sm" style="width: 76%;">
+                                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xs-6">
-                        <div>
-                            <p>Physical</p>
-                            <div class="">
-                                <div class="progress progress_sm" style="width: 76%;">
-                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="40"></div>
-                                </div>
-                            </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="x_panel tile overflow_hidden">
+                        <div class="x_title">
+                            <h2>Top Damage Taken - 5 Min</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li>
+                                    <a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
                         </div>
-                        <div>
-                            <p>Fire</p>
-                            <div class="">
-                                <div class="progress progress_sm" style="width: 76%;">
-                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                                </div>
-                            </div>
+
+                        <div class="x_content">
+                            <div id="damage-taken-pie-graph"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <div class="row">
 
-        <div class="col-sm-4">
-            <div class="x_panel tile overflow_hidden">
-                <div class="x_title">
-                    <h2>Top Damage Taken - 5 Min</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li>
-                            <a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
+            <div class="col-sm-12 col-xs-6">
+                <div class="x_panel tile overflow_hidden">
+                    <div class="x_title">
+                        <h2>Damage Taken</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="expand-6-12-link"><i class="fa fa-chevron-left"></i></a>
+                            </li>
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
 
-                <div class="x_content">
-                    <div id="damage-taken-pie-graph"></div>
-                </div>
-            </div>
-        </div>
-
-        <hr />
-
-        <div class="col-sm-12 col-xs-6">
-            <div class="x_panel tile overflow_hidden">
-                <div class="x_title">
-                    <h2>Damage Taken</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="expand-6-12-link"><i class="fa fa-chevron-left"></i></a>
-                        </li>
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li>
-                            <a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-
-                <div class="x_content">
-                    <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                    <div class="x_content">
+                        <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                    </div>
                 </div>
             </div>
-        </div>
+            </div>
 
-        <div class="col-sm-12 col-xs-6">
-            <div class="x_panel tile overflow_hidden">
-                <div class="x_title">
-                    <h2>Damage Dealt</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="expand-6-12-link"><i class="fa fa-chevron-left"></i></a>
-                        </li>
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li>
-                            <a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
+            <div class="row">
 
-                <div class="x_content">
-                    <div id="container-damage-done" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            <div class="col-sm-12 col-xs-6">
+                <div class="x_panel tile overflow_hidden">
+                    <div class="x_title">
+                        <h2>Damage Dealt</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="expand-6-12-link"><i class="fa fa-chevron-left"></i></a>
+                            </li>
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div id="container-damage-done" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                    </div>
                 </div>
+            </div>
             </div>
         </div>
         

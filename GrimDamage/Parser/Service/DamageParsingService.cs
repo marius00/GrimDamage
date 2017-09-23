@@ -84,35 +84,38 @@ namespace GrimDamage.Parser.Service {
                 _entities[id].IsPrimary = isPrimary;
         }
 
-        public void ApplyDamage(double amount, int victim, string damageType) {
+        private Entity GetOrCreate(int entityId) {
+            if (!_entities.ContainsKey(entityId)) {
+                _entities[entityId] = new Entity {
+                    Id = entityId
+                };
+            }
+
+
+            return _entities[entityId];
+            
+        }
+
+        public void ApplyDamage(double amount, int victimId, string damageType) {
             var dmg = new DamageDealtEntry {
                 Amount = amount,
-                Target = victim,
+                Target = victimId,
                 Type = convertDamage(damageType),
                 Time = DateTime.UtcNow
             };
 
+            var victim = GetOrCreate(victimId);
+            var taken = new DamageTakenEntry {
+                Amount = amount,
+                Attacker = _attackerId,
+                Type = convertDamage(damageType),
+                Time = DateTime.UtcNow
+            };
+            victim.DamageTaken.Add(taken);
 
-            if (_entities.ContainsKey(victim)) {
-                var taken = new DamageTakenEntry {
-                    Amount = amount,
-                    Attacker = _attackerId,
-                    Type = convertDamage(damageType),
-                    Time = DateTime.UtcNow
-                };
-
-                _entities[victim].DamageTaken.Add(taken);
-            }
-            else {
-                Logger.Warn($"Got a damage entry for victim {victim}, but the entity has not been previously stored");
-            }
-
-            if (_entities.ContainsKey(_attackerId)) {
-                _entities[_attackerId].DamageDealt.Add(dmg);
-            }
-            else {
-                Logger.Warn($"Got a damage entry for attacker {_attackerId}, but the entity has not been previously stored");
-            }
+            var attacker = GetOrCreate(victimId);
+            attacker.DamageDealt.Add(dmg);
+            
         }
 
         public void ApplyLifeLeech(double chance, double amount) {

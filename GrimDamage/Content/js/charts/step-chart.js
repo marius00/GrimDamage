@@ -6,24 +6,16 @@
 
         let preloadMinutes = 3;
         this.chart = Highcharts.stockChart(id, {
-            selection: function (event) {
-                console.debug('Selection', event);
+            
+            xAxis: {
+                events: {
+                    afterSetExtremes: function (event) {
+                        console.debug('Selection', event); // TODO: handle this
+                    }
+                },
             },
-            plotOptions: {
-                area: { animation: false },
-                arearange: { animation: false },
-                areaspline: { animation: false },
-                areasplinerange: { animation: false },
-                bar: { animation: false },
-                candlestick: { animation: false },
-                column: { animation: false },
-                columnrange: { animation: false },
-                flags: { animation: false },
-                line: { animation: false },
-                ohlc: { animation: false },
-                pie: { animation: false },
-                scatter: { animation: false },
-                spline: { animation: false }
+            chart: {
+                animation: false
             },
             series: [{
                 name: 'Total',
