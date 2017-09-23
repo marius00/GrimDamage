@@ -3,8 +3,26 @@
         /// <param name="id">DOM Id of the element to create the chart on</param>
         /// <param name="title">Title of the chart</param>
         this.series = [];
+
+        let preloadMinutes = 3;
         this.chart = Highcharts.stockChart(id, {
-            
+
+            plotOptions: {
+                area: { animation: false },
+                arearange: { animation: false },
+                areaspline: { animation: false },
+                areasplinerange: { animation: false },
+                bar: { animation: false },
+                candlestick: { animation: false },
+                column: { animation: false },
+                columnrange: { animation: false },
+                flags: { animation: false },
+                line: { animation: false },
+                ohlc: { animation: false },
+                pie: { animation: false },
+                scatter: { animation: false },
+                spline: { animation: false }
+            },
             series: [{
                 name: 'Total',
                 data: (function () {
@@ -13,7 +31,7 @@
                     const time = (new Date()).getTime();
                     let i;
 
-                    for (i = -180; i <= 0; i += 1) {
+                    for (i = -(preloadMinutes*60+1) ; i <= 0; i += 1) {
                         data.push({
                             x: time + i * 1000,
                             y: 0
