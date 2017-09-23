@@ -10,11 +10,11 @@ Unmapped / uncharted territory:
 TODO:
 ** Dashboard would be nice, ala https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/free-bootstrap-admin-dashboard-templates.jpg
 	single/aoe in a graph, damage types as progress bars
-
+	
+** [JS] if you tab or pause while dying, it will register as another death. Our time increases, ingame time does not. -- detect pauses?
 *** Sometimes when switching to dark mode, graphs gets the wrong size (race condition? made too soon?)
 *** Removing the very first graph does not cause graph #2 to shift left
 *** Tab leakage
-* [PHP] Finish the upload functionality
 * [JS] Maybe add a list of pets with checkboxes, where the player can choose which are his, and merge those into his aoe/st damage? [obs: per name? pets die pretty often]
 * [JS] show one graph with pets? 
 * [JS] Now possible to save/load parses from .JS ==> Need the JS integration
@@ -22,7 +22,6 @@ TODO:
 * [JS] An issue with switching to NULL for consecutive 0s is that the sequence will start from null, not from 0, creating odd clipped graphs
 * [C#/PHP] Was thinking maybe a news thing, just a link to gog/steam when there's a sale or wtv.. unsure if it provides any value, but being able to announce stuff to users (while being non intrusive) might be nice.
 * [VS] Fix the need for config changes to compile
-** [JS] if you tab or pause while dying, it will register as another death. Our time increases, ingame time does not. -- detect pauses?
 ** [JS] Show where the player died?
 ** [JS] Show who killed the player? [mob name]
 
@@ -44,6 +43,7 @@ Nice to have:
 ** In the future: See how much of your damage dealt was resisted by the enemy?
 ** -------------: See how much damage you resisted from the enemy?
 ** [evil]: dont add / start removing damage types not dealt for 'what killed me?' [dont show irrelevant types]
+* [PHP] Finish the upload functionality
 
 Rant:
 Could these be useful?

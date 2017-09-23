@@ -247,13 +247,13 @@
     <Content Include="Content\js\charts\damage-taken-pie.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\js\colors.js">
+    <Content Include="Content\js\charts\colors.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\js\death-tracker-viewmodel.js">
+    <Content Include="Content\js\ViewModels\death-tracker-viewmodel.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\js\graphs.js">
+    <Content Include="Content\js\charts\graphs.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\index.js">
@@ -262,22 +262,25 @@
     <Content Include="Content\js\integration.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\js\damage-parser.js">
+    <Content Include="Content\js\logic\damage-parser.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\js\death-tracker.js">
+    <Content Include="Content\js\logic\death-tracker.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\light-mode-toggle.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\js\logic\pause-tracker.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\js\main.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\js\modals.js">
+    <Content Include="Content\js\charts\modals.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\js\step-chart.js">
+    <Content Include="Content\js\charts\step-chart.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\vendor\bootstrap.min.js">
