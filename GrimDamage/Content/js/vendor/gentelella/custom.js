@@ -118,7 +118,7 @@ $(document).ready(function () {
 
     // Evil
     $('.expand-link').on('click', function () {
-        let container = $(this).closest('.x_panel');
+        let container = $(this).closest('.x_panel').parent();
         let icon = $(this).find('i');
 
         container.toggleClass('col-sm-9 col-sm-12');
@@ -161,7 +161,7 @@ $(document).ready(function () {
     });
 
     $('.close-link').click(function () {
-        var $BOX_PANEL = $(this).closest('.x_panel');
+        var $BOX_PANEL = $(this).closest('.x_panel').parent();
 
         $BOX_PANEL.remove();
     });
