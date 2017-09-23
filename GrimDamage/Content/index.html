@@ -5,51 +5,51 @@
     <meta name="viewport">
 </head>
 <body>
-<script src="js/integration.js"></script>
-<script src="js/charts/colors.js"></script>
-<script src="js/vendor/moment.min.js"></script>
-<script src="js/vendor/highstock.js"></script>
-<script src="js/vendor/knockout-3.4.0.js"></script>
-<script src="js/vendor/jquery-3.2.1.min.js"></script>
-<script src="js/vendor/jquery-impromptu.min.js"></script>
-<link rel="stylesheet" media="all" type="text/css" href="css/vendor/jquery-impromptu.min.css" />
-<link rel="stylesheet" media="all" type="text/css" href="css/vendor/bootstrap.min.css" id="bootstrap-theme" />
-<link rel="stylesheet" media="all" type="text/css" href="css/main.css" />
-<link rel="stylesheet" media="all" type="text/css" href="css/faq.css" />
-<link rel="stylesheet" media="all" type="text/css" href="css/vendor/gentelella/custom.min.css" />
-<link rel="stylesheet" media="all" type="text/css" href="css/vendor/font-awesome/css/font-awesome.css" />
+    <script src="js/integration.js"></script>
+    <script src="js/charts/colors.js"></script>
+    <script src="js/vendor/moment.min.js"></script>
+    <script src="js/vendor/highstock.js"></script>
+    <script src="js/vendor/knockout-3.4.0.js"></script>
+    <script src="js/vendor/jquery-3.2.1.min.js"></script>
+    <script src="js/vendor/jquery-impromptu.min.js"></script>
+    <link rel="stylesheet" media="all" type="text/css" href="css/vendor/jquery-impromptu.min.css" />
+    <link rel="stylesheet" media="all" type="text/css" href="css/vendor/bootstrap.min.css" id="bootstrap-theme" />
+    <link rel="stylesheet" media="all" type="text/css" href="css/main.css" />
+    <link rel="stylesheet" media="all" type="text/css" href="css/faq.css" />
+    <link rel="stylesheet" media="all" type="text/css" href="css/vendor/gentelella/custom.min.css" />
+    <link rel="stylesheet" media="all" type="text/css" href="css/vendor/font-awesome/css/font-awesome.css" />
 
-<script src="js/vendor/pie.title.plugin.js"></script>
+    <script src="js/vendor/pie.title.plugin.js"></script>
 
-<script src="js/vendor/popper.min.js"></script>
-<script src="js/vendor/popper-utils.min.js"></script>
-<script src="js/vendor/bootstrap.min.js"></script>
-<script src="js/vendor/jquery.dataTables.min.js"></script>
-<script src="js/vendor/dataTables.bootstrap4.min.js"></script>
-<script src="js/vendor/highcharts-dark.js"></script>
+    <script src="js/vendor/popper.min.js"></script>
+    <script src="js/vendor/popper-utils.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/vendor/jquery.dataTables.min.js"></script>
+    <script src="js/vendor/dataTables.bootstrap4.min.js"></script>
+    <script src="js/vendor/highcharts-dark.js"></script>
 
-<script src="js/charts/step-chart.js"></script>
-<script src="js/charts/modals.js"></script>
-<script src="js/main.js"></script>
-<script src="js/logic/damage-parser.js"></script>
-<script src="js/ViewModels/death-tracker-viewmodel.js"></script>
-<script src="js/logic/death-tracker.js"></script>
-<script src="js/charts/graphs.js"></script>
-<script src="js/light-mode-toggle.js"></script>
+    <script src="js/charts/step-chart.js"></script>
+    <script src="js/charts/modals.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/logic/damage-parser.js"></script>
+    <script src="js/ViewModels/death-tracker-viewmodel.js"></script>
+    <script src="js/logic/death-tracker.js"></script>
+    <script src="js/charts/graphs.js"></script>
+    <script src="js/light-mode-toggle.js"></script>
 
-<script src="js/vendor/gentelella/custom.js"></script>
-<script src="js/charts/damage-taken-pie.js"></script>
-<script src="js/logic/pause-tracker.js"></script>
-<script src="js/logic/pie-chart-damage-taken-processor.js"></script>
+    <script src="js/vendor/gentelella/custom.js"></script>
+    <script src="js/charts/damage-taken-pie.js"></script>
+    <script src="js/logic/pause-tracker.js"></script>
+    <script src="js/logic/pie-chart-damage-taken-processor.js"></script>
 
 
-<script>
+    <script>
     if (window.location.search.toString().toLowerCase().indexOf('darkmode=1') !== -1) {
         EnableHighchartsDarkmode();
         $('#bootstrap-theme').attr('href', 'css/vendor/bootstrap-dark.min.css');
         console.log('Dark mode enabled');
     }
-</script>
+    </script>
 
 
 
@@ -57,28 +57,28 @@
 
 
 
-<nav class="navbar fixed-top navbar-light bg-light">
-    <ul class="nav nav-tabs" id="tabs" role="tablist">
-        <li class="nav-item" id="nav-item-home">
-            <a class="nav-link" data-toggle="tab" href="#home">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#bosses">Bosses</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#death">What killed me?</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#faq">Faq</a>
-        </li>
-        <li class="nav-item" id="light-mode-view" data-bind="click: toggleDarkMode">
-            <a class="nav-link" href="#"><span data-bind="text: label"></span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="discord://">Help / Discord</a>
-        </li>
-    </ul>
-</nav>
+    <nav class="navbar fixed-top navbar-light bg-light">
+        <ul class="nav nav-tabs" id="tabs" role="tablist">
+            <li class="nav-item" id="nav-item-home">
+                <a class="nav-link" data-toggle="tab" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#bosses">Bosses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#death">What killed me?</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#faq">Faq</a>
+            </li>
+            <li class="nav-item" id="light-mode-view" data-bind="click: toggleDarkMode">
+                <a class="nav-link" href="#"><span data-bind="text: label"></span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="discord://">Help / Discord</a>
+            </li>
+        </ul>
+    </nav>
 
 
 
@@ -87,329 +87,299 @@
 
 
 
-<div class="tab-content" id="tabbed-content" style="padding-top: 60px;">
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <div class="container-fluid">
-            <div class="row">
-                    <div class="col-sm-9 x_panel tile overflow_hidden">
-                        <div class="x_title">
-                            <h2>Damage Dealt</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li>
-                                    <a class="expand-link"><i class="fa fa-chevron-right"></i></a>
-                                </li>
-                                <li>
-                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li>
-                                    <a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
+    <div class="tab-content" id="tabbed-content" style="padding-top: 60px;">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="x_panel tile overflow_hidden">
+                            <div class="x_title">
+                                <h2>Damage Dealt</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="expand-link"><i class="fa fa-chevron-right"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div id="step-test"></div>
+                            </div>
                         </div>
-                        <div class="x_content">
-                            <div id="step-test"></div>
-                        </div>
-                </div>
+                    </div>
 
-                <div class="col-sm-3">
-                    <div class="x_panel tile overflow_hidden">
-                        <div class="x_title">
-                            <h2>Top Damage Dealt</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li>
-                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li>
-                                    <a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
+                    <div class="col-sm-3">
+                        <div class="x_panel tile overflow_hidden">
+                            <div class="x_title">
+                                <h2>Top Damage Dealt</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
 
-                        <div class="x_content">
-                            <div class="col-sm-12 col-xs-6">
-                                <div>
-                                    <p>Chaos</p>
-                                    <div class="">
-                                        <div class="progress progress_sm" style="width: 76%;">
-                                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
+                            <div class="x_content">
+                                <div class="col-sm-12 col-xs-6">
+                                    <div>
+                                        <p>Chaos</p>
+                                        <div class="">
+                                            <div class="progress progress_sm" style="width: 76%;">
+                                                <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>Aether</p>
+                                        <div class="">
+                                            <div class="progress progress_sm" style="width: 76%;">
+                                                <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="60"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <p>Aether</p>
-                                    <div class="">
-                                        <div class="progress progress_sm" style="width: 76%;">
-                                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="60"></div>
+                                <div class="col-sm-12 col-xs-6">
+                                    <div>
+                                        <p>Physical</p>
+                                        <div class="">
+                                            <div class="progress progress_sm" style="width: 76%;">
+                                                <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="40"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>Fire</p>
+                                        <div class="">
+                                            <div class="progress progress_sm" style="width: 76%;">
+                                                <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-xs-6">
-                                <div>
-                                    <p>Physical</p>
-                                    <div class="">
-                                        <div class="progress progress_sm" style="width: 76%;">
-                                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="40"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <p>Fire</p>
-                                    <div class="">
-                                        <div class="progress progress_sm" style="width: 76%;">
-                                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="x_panel tile overflow_hidden">
+                            <div class="x_title">
+                                <h2>Top Damage Taken</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+                                <div id="damage-taken-pie-graph"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-xs-6">
+                        <div class="x_panel tile overflow_hidden">
+                            <div class="x_title">
+                                <h2>Damage Taken</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="expand-6-12-link"><i class="fa fa-chevron-left"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+                                <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-xs-6">
+                        <div class="x_panel tile overflow_hidden">
+                            <div class="x_title">
+                                <h2>Damage Dealt</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="expand-6-12-link"><i class="fa fa-chevron-left"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+                                <div id="container-damage-done" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="x_panel tile overflow_hidden">
-                        <div class="x_title">
-                            <h2>Top Damage Taken - 5 Min</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li>
-                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li>
-                                    <a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-
-                        <div class="x_content">
-                            <div id="damage-taken-pie-graph"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col-sm-12 col-xs-6 x_panel tile overflow_hidden">
-                    <div class="x_title">
-                        <h2>Damage Taken</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li>
-                                <a class="expand-6-12-link"><i class="fa fa-chevron-left"></i></a>
-                            </li>
-                            <li>
-                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li>
-                                <a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-
-                    <div class="x_content">
-                        <div id="container-damage-taken" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-
-            <div class="col-sm-12 col-xs-6 x_panel tile overflow_hidden">
-                    <div class="x_title">
-                        <h2>Damage Dealt</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li>
-                                <a class="expand-6-12-link"><i class="fa fa-chevron-left"></i></a>
-                            </li>
-                            <li>
-                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li>
-                                <a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-
-                    <div class="x_content">
-                        <div id="container-damage-done" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                    </div>
-            </div>
-            </div>
         </div>
-        
-        
-        
-        <!-- START: Detailed text view of damage taken -->
-        <div class="col-sm-12 col-xs-12 x_panel tile overflow_hidden">
-                <div class="x_title">
-                    <h2>Damage Taken - Detailed</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li>
-                            <a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-
-                <div class="x_content">
-                    <div id="damage-taken-detailed-text"></div>
-                </div>
-        </div>
-        <!-- END: Detailed text view of damage taken -->
-        
-        
-
-    </div>
-    <div class="tab-pane fade" id="bosses" role="tabpanel" aria-labelledby="profile-tab">
-        <table id="bosstable" class="table table-striped table-bordered" width="100%" cellspacing="0">
-            <thead>
-                <tr>
-                    <td>Encountered</td>
-                    <td>Name</td>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <td>Encountered</td>
-                    <td>Name</td>
-                </tr>
-            </tfoot>
-            <tbody></tbody>
-        </table>
-    </div>
-    <div class="tab-pane fade" id="death" role="tabpanel" aria-labelledby="profile-tab">
-
-        <div id="what-killed-me-listing" class="placeholder">
-
-            <table id="killed-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
+        <div class="tab-pane fade" id="bosses" role="tabpanel" aria-labelledby="profile-tab">
+            <table id="bosstable" class="table table-striped table-bordered" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <td>Timestamp</td>
-                        <td>Location</td>
+                        <td>Encountered</td>
+                        <td>Name</td>
                     </tr>
                 </thead>
-                <tbody data-bind="foreach: deaths">
-                    <tr data-bind="click: $root.showDeath" class="what-killed-me-link">
-                        <td data-bind="text: labelTimestamp">Timestamp</td>
-                        <td data-bind="text: label">Location</td>
-                    </tr>
-                </tbody>
-
                 <tfoot>
                     <tr>
-                        <td>Timestamp</td>
-                        <td>Location</td>
+                        <td>Encountered</td>
+                        <td>Name</td>
                     </tr>
                 </tfoot>
                 <tbody></tbody>
             </table>
-
-            <!-- This would generally be inside a modal -->
-            <ul data-bind="foreach: detailedDamagePoints">
-                <li>
-                    <span data-bind="text: amount"></span>
-                </li>
-            </ul>
-
         </div>
-    </div>
+        <div class="tab-pane fade" id="death" role="tabpanel" aria-labelledby="profile-tab">
 
-    <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="profile-tab">
-        <div id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="card">
-                <div class="card-header" role="tab" id="headingOne">
-                    <h5 class="mb-0">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Will this ever be ported to &lt;some random language&gt;
-                        </a>
-                    </h5>
+            <div id="what-killed-me-listing" class="placeholder">
+
+                <table id="killed-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <td>Timestamp</td>
+                            <td>Location</td>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: deaths">
+                        <tr data-bind="click: $root.showDeath" class="what-killed-me-link">
+                            <td data-bind="text: labelTimestamp">Timestamp</td>
+                            <td data-bind="text: label">Location</td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td>Timestamp</td>
+                            <td>Location</td>
+                        </tr>
+                    </tfoot>
+                    <tbody></tbody>
+                </table>
+
+                <!-- This would generally be inside a modal -->
+                <ul data-bind="foreach: detailedDamagePoints">
+                    <li>
+                        <span data-bind="text: amount"></span>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="profile-tab">
+            <div id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingOne">
+                        <h5 class="mb-0">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Will this ever be ported to &lt;some random language&gt;
+                            </a>
+                        </h5>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="card-block">
+                            No.
+                        </div>
+                    </div>
                 </div>
-
-                <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="card-block">
-                        No.
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingTwo">
+                        <h5 class="mb-0">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Will this ever be ported to Titan Quest?
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="card-block">
+                            No.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingThree">
+                        <h5 class="mb-0">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                How do i suggest a new feature?
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="card-block">
+                            Click the discord link or post it on the forum.<br />
+                            If you're asked a follow-up question to a feature request and you do not reply, the request is discarded.
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header" role="tab" id="headingTwo">
-                    <h5 class="mb-0">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Will this ever be ported to Titan Quest?
-                        </a>
-                    </h5>
+        </div>
+
+    </div>
+
+
+
+
+
+    <div id="modals"></div>
+
+    <!-- "You have died" modal -->
+    <div class="modal fade" id="deathModal" tabindex="-1" role="dialog" aria-labelledby="deathModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deathModalLabel">You have died a tragic death</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                    <div class="card-block">
-                        No.
-                    </div>
+                <div class="modal-body" id="deathModalBody">
+                    <div id="container-died-damage-taken-pie" style="min-width: 280px; height: 200px; margin: 0 auto"></div>
+                    <hr />
+                    <div id="container-died-damage-taken" style="min-width: 280px; height: 500px; margin: 0 auto"></div>
+                    <hr />
+                    <div id="container-died-damage-taken-zoomy"></div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-header" role="tab" id="headingThree">
-                    <h5 class="mb-0">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            How do i suggest a new feature?
-                        </a>
-                    </h5>
-                </div>
-                <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
-                    <div class="card-block">
-                        Click the discord link or post it on the forum.<br />
-                        If you're asked a follow-up question to a feature request and you do not reply, the request is discarded.
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
-</div>
 
 
 
 
-
-<div id="modals"></div>
-
-<!-- "You have died" modal -->
-<div class="modal fade" id="deathModal" tabindex="-1" role="dialog" aria-labelledby="deathModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deathModalLabel">You have died a tragic death</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="deathModalBody">
-                <div id="container-died-damage-taken-pie" style="min-width: 280px; height: 200px; margin: 0 auto"></div>
-                <hr />
-                <div id="container-died-damage-taken" style="min-width: 280px; height: 500px; margin: 0 auto"></div>
-                <hr />
-                <div id="container-died-damage-taken-zoomy"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-<script src="js/index.js"></script>
+    <script src="js/index.js"></script>
 
 
 </body>
