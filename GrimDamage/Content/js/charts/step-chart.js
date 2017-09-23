@@ -6,22 +6,10 @@
 
         let preloadMinutes = 3;
         this.chart = Highcharts.stockChart(id, {
-
+            chart: {
+                animation: false
+            },
             plotOptions: {
-                area: { animation: false },
-                arearange: { animation: false },
-                areaspline: { animation: false },
-                areasplinerange: { animation: false },
-                bar: { animation: false },
-                candlestick: { animation: false },
-                column: { animation: false },
-                columnrange: { animation: false },
-                flags: { animation: false },
-                line: { animation: false },
-                ohlc: { animation: false },
-                pie: { animation: false },
-                scatter: { animation: false },
-                spline: { animation: false }
             },
             series: [{
                 name: 'Total',
