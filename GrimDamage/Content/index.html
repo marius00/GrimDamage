@@ -40,6 +40,7 @@
 <script src="js/vendor/gentelella/custom.js"></script>
 <script src="js/charts/damage-taken-pie.js"></script>
 <script src="js/logic/pause-tracker.js"></script>
+<script src="js/logic/pie-chart-damage-taken-processor.js"></script>
 
 
 <script>
@@ -57,28 +58,26 @@
 
 
 <nav class="navbar fixed-top navbar-light bg-light">
-    <div class="container-fluid">
-        <ul class="nav nav-tabs" id="tabs" role="tablist">
-            <li class="nav-item" id="nav-item-home">
-                <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#bosses">Bosses</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#death">What killed me?</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#faq">Faq</a>
-            </li>
-            <li class="nav-item" id="light-mode-view" data-bind="click: toggleDarkMode">
-                <a class="nav-link" data-toggle="tab" href="#"><span data-bind="text: label"></span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="discord://">Help / Discord</a>
-            </li>
-        </ul>
-    </div>
+    <ul class="nav nav-tabs" id="tabs" role="tablist">
+        <li class="nav-item" id="nav-item-home">
+            <a class="nav-link" data-toggle="tab" href="#home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#bosses">Bosses</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#death">What killed me?</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#faq">Faq</a>
+        </li>
+        <li class="nav-item" id="light-mode-view" data-bind="click: toggleDarkMode">
+            <a class="nav-link" href="#"><span data-bind="text: label"></span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="discord://">Help / Discord</a>
+        </li>
+    </ul>
 </nav>
 
 

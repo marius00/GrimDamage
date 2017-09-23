@@ -86,13 +86,13 @@ class DamageParser {
     }
 
     handleDetailedDamageTaken(data) {
-        for (var playerid in data) {
-            if (!data.hasOwnProperty(playerid) || playerid != this.mainPlayerId) {
+        for (let playerid in data) {
+            if (!data.hasOwnProperty(playerid) || playerid !== this.mainPlayerId) {
                 continue;
             }
-            var length = data[playerid].length;
-            for (var c = 0; c < length; c++) {
-                let dmg = data[playerid][c];
+            const length = data[playerid].length;
+            for (let c = 0; c < length; c++) {
+                const dmg = data[playerid][c];
                 /* Is it a boss? */
                 if (this.bosses.hasOwnProperty(dmg.attackerId)) {
                     /* First time we're seeing this damage-type on boss? */
@@ -105,7 +105,7 @@ class DamageParser {
         }
     }
     handleDetailedDamageDealt(data) {
-        for (var playerid in data) {
+        for (let playerid in data) {
             if (!data.hasOwnProperty(playerid) || playerid !== this.mainPlayerId) {
                 continue;
             }

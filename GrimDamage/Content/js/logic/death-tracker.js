@@ -36,8 +36,6 @@ class DeathTracker {
                         `Death ignored, timestamp ${event.timestamp} is too recent, expected >= ${this.lastDeath +
                         this.minInterval}`);
                 }
-            } else {
-                console.log('Unknown event:', event.event);
             }
         }
     }

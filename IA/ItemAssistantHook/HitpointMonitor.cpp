@@ -99,7 +99,7 @@ bool HitpointMonitor::DetectOffset() {
 void HitpointMonitor::EnableHook() {
 	if (DetectOffset()) {
 		GetObjectId = (GetObjectIdMethodPtr)GetProcAddress(::GetModuleHandle("Engine.dll"), "?GetObjectId@Object@GAME@@QBEIXZ");
-		originalMethod = (OriginalMethodPtr)GetProcAddress(::GetModuleHandle("Game.dll"), "?UpdateSelf@Character@GAME@@UAEXH@Z");
+		originalMethod = (OriginalMethodPtr)GetProcAddress(::GetModuleHandle("Game.dll"), "?UpdateSelf@Player@GAME@@UAEXH@Z");
 		DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());
 		DetourAttach((PVOID*)&originalMethod, HookedMethod);
@@ -125,22 +125,26 @@ void HitpointMonitor::DisableHook() {
 	}
 }
 
+int lastSend = 0;
 void* __fastcall HitpointMonitor::HookedMethod(void* This, void* notUsed, int val) {
 	void* v = originalMethod(This, val); 
 
-	SIZE_T bytesRead = 0;
-	HANDLE hProcess = GetCurrentProcess();
-	const size_t resultSize = 8;
-	unsigned char result[resultSize] = { 0 };
+	if (lastSend++ > 30) {
+		SIZE_T bytesRead = 0;
+		HANDLE hProcess = GetCurrentProcess();
+		const size_t resultSize = 8;
+		unsigned char result[resultSize] = { 0 };
 
-	if (ReadProcessMemory(hProcess, (char*)This + m_offset, (char*)&result + 4, 4, &bytesRead) != 0) {
-		int id = GetObjectId((void*)This);
-		memcpy(result, &id, sizeof(id));
+		if (ReadProcessMemory(hProcess, (char*)This + m_offset, (char*)&result + 4, 4, &bytesRead) != 0) {
+			int id = GetObjectId((void*)This);
+			memcpy(result, &id, sizeof(id));
 
-		DataItemPtr item(new DataItem(TYPE_HitpointMonitor, resultSize, (char*)&result));
-		m_dataQueue->push(item);
-		SetEvent(m_hEvent);
+			DataItemPtr item(new DataItem(TYPE_HitpointMonitor, resultSize, (char*)&result));
+			m_dataQueue->push(item);
+			SetEvent(m_hEvent);
 
+		}
+		lastSend = 0;
 	}
 	return v;
 }

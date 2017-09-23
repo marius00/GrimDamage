@@ -9,6 +9,7 @@
 /// <reference path="vendor/jquery-3.2.1.min.js" />
 /// <reference path="vendor/knockout-3.4.0.js" />
 /// <reference path="light-mode-toggle.js" />
+/// <reference path="logic/pie-chart-damage-taken-processor.js" />
 
 enableLogToCsharp();
 
@@ -23,19 +24,6 @@ let chartDamageTaken, chartDamageDealt;
 [chartDamageTaken, chartDamageDealt] = loadCharts();
 var p = new DamageParser(chartDamageTaken, chartDamageDealt, damageDoneStepChart);
 
-setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
-    if (pauseTracker.isActive) {
-        p.tick(players,
-            damageDealt,
-            damageTaken,
-            damageDealtSingleTarget,
-            playerLocationName,
-            detailedDamageDealt,
-            detailedDamageTaken,
-            entitiesList);
-    }
-    //VM.isZoneUnknown(playerLocationName === 'Unknown');
-});
 
 setCsharpTickInterval(1000);
 setCsharpLoadHistoryCallback((dataset) => { console.log("Load:", dataset); });
@@ -68,7 +56,8 @@ setCsharpRequestCallback((type, dataset) => {
 
 // ===================================================
 // Damage taken view, pie graph creation
-createDamageTakenPieChart('damage-taken-pie-graph');
+let damageTakenPieChart = createDamageTakenPieChart('damage-taken-pie-graph');
+let damageTakenPieHandler = new DamageTakenPieHandler(damageTakenPieChart, 60 * 5);
 // ===================================================
 
 
@@ -105,8 +94,29 @@ faqViewModel.questions(faqElements);
 // ===================================================
 
 
-$(document).ready(function() {
-    $(".nav-pills .nav-item .nav-link:not(.nav-pills .nav-item.dropdown .nav-link), .dropdown-item").click(function () {
-        $(".dropdown-item.active").removeClass('active');
-    });
+
+
+
+
+
+// ===================================================
+// Tick handler - This is up for refactoring
+setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
+    if (pauseTracker.isActive) {
+        p.tick(players,
+            damageDealt,
+            damageTaken,
+            damageDealtSingleTarget,
+            playerLocationName,
+            detailedDamageDealt,
+            detailedDamageTaken,
+            entitiesList);
+
+        const playerId = p.mainPlayerId;
+        if (playerId && damageTaken[playerId]) {
+            damageTakenPieHandler.addDamageTaken(detailedDamageTaken[playerId]);
+        }
+    }
+    //VM.isZoneUnknown(playerLocationName === 'Unknown');
 });
+// ===================================================
