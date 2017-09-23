@@ -1,9 +1,16 @@
-﻿<script src="js/integration.js"></script>
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>-</title>
+    <meta name="viewport">
+</head>
+<body>
+<script src="js/integration.js"></script>
 <script src="js/charts/colors.js"></script>
 <script src="js/vendor/moment.min.js"></script>
 <script src="js/vendor/highstock.js"></script>
 <script src="js/vendor/knockout-3.4.0.js"></script>
-<script src="js/vendor/jquery-3.2.1.min.js"></script> 
+<script src="js/vendor/jquery-3.2.1.min.js"></script>
 <script src="js/vendor/jquery-impromptu.min.js"></script>
 <link rel="stylesheet" media="all" type="text/css" href="css/vendor/jquery-impromptu.min.css" />
 <link rel="stylesheet" media="all" type="text/css" href="css/vendor/bootstrap.min.css" id="bootstrap-theme" />
@@ -50,26 +57,28 @@
 
 
 <nav class="navbar fixed-top navbar-light bg-light">
-    <ul class="nav nav-tabs" id="tabs" role="tablist">
-        <li class="nav-item" id="nav-item-home">
-            <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#bosses">Bosses</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#death">What killed me?</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#faq">Faq</a>
-        </li>
-        <li class="nav-item" id="light-mode-view" data-bind="click: toggleDarkMode">
-            <a class="nav-link" data-toggle="tab" href="#"><span data-bind="text: label"></span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="discord://">Help / Discord</a>
-        </li>
-    </ul>
+    <div class="container-fluid">
+        <ul class="nav nav-tabs" id="tabs" role="tablist">
+            <li class="nav-item" id="nav-item-home">
+                <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#bosses">Bosses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#death">What killed me?</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#faq">Faq</a>
+            </li>
+            <li class="nav-item" id="light-mode-view" data-bind="click: toggleDarkMode">
+                <a class="nav-link" data-toggle="tab" href="#"><span data-bind="text: label"></span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="discord://">Help / Discord</a>
+            </li>
+        </ul>
+    </div>
 </nav>
 
 
@@ -79,20 +88,9 @@
 
 
 
-<div class="tab-content" id="tabbed-content" style="padding-top: 60px;">
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <!-- TODO: Bootstrap button maybe? -->
-        <!--
-        <div id="name-suggest-ko">
-            <div data-bind="visible: isZoneUnknown">
-                You are in an unmapped area
-                <input type="button" data-bind="click: suggestName" value="Suggest name" />
-            </div>
-        </div>
-        -->
-        
-        
-        <div class="col-md-9 col-sm-9">
+<div class="tab-content container-fluid" id="tabbed-content" style="padding-top: 60px;">
+    <div class="tab-pane fade show active row" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="col-sm-9">
             <div class="x_panel tile overflow_hidden">
                 <div class="x_title">
                     <h2>Damage Dealt</h2>
@@ -100,9 +98,11 @@
                         <li>
                             <a class="expand-link"><i class="fa fa-chevron-right"></i></a>
                         </li>
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
                         </li>
                     </ul>
                     <div class="clearfix"></div>
@@ -112,8 +112,8 @@
                 </div>
             </div>
         </div>
-        
-        <div class="col-md-3 col-sm-3">
+
+        <div class="col-sm-3">
             <div class="x_panel tile overflow_hidden">
                 <div class="x_title">
                     <h2>Top Damage Dealt</h2>
@@ -129,7 +129,7 @@
                 </div>
 
                 <div class="x_content">
-                    <div class="col-md-12 col-sm-12 col-xs-6">
+                    <div class="col-sm-12 col-xs-6">
                         <div>
                             <p>Chaos</p>
                             <div class="">
@@ -147,7 +147,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-6">
+                    <div class="col-sm-12 col-xs-6">
                         <div>
                             <p>Physical</p>
                             <div class="">
@@ -168,85 +168,32 @@
                 </div>
             </div>
         </div>
-            
-        
-    <div class="col-md-4 col-sm-4">
-        <div class="x_panel tile overflow_hidden">
-            <div class="x_title">
-                <h2>Top Damage Dealt</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li>
-                        <a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
 
-            <div class="x_content">
-                    <table class="" style="width:100%">
-                        <tr>
-                            <th style="width:37%;">
-                                <p>Top 5</p>
-                            </th>
-                            <th>
-                                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                                    <p class="">Device</p>
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                    <p class="">Progress</p>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div id="damage-taken-pie-graph"></div>
-                            </td>
-                            <td>
-                                <table class="tile_info">
-                                    <tr>
-                                        <td>
-                                            <p><i class="fa fa-square blue"></i>IOS </p>
-                                        </td>
-                                        <td>30%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p><i class="fa fa-square green"></i>Android </p>
-                                        </td>
-                                        <td>10%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p><i class="fa fa-square purple"></i>Blackberry </p>
-                                        </td>
-                                        <td>20%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p><i class="fa fa-square aero"></i>Symbian </p>
-                                        </td>
-                                        <td>15%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p><i class="fa fa-square red"></i>Others </p>
-                                        </td>
-                                        <td>30%</td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
+
+        <div class="col-sm-4">
+            <div class="x_panel tile overflow_hidden">
+                <div class="x_title">
+                    <h2>Top Damage Taken</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <div id="damage-taken-pie-graph"></div>
                 </div>
             </div>
         </div>
 
         <hr />
 
-        <div class="col-md-12 col-sm-12 col-xs-6">
+        <div class="col-sm-12 col-xs-6">
             <div class="x_panel tile overflow_hidden">
                 <div class="x_title">
                     <h2>Damage Taken</h2>
@@ -269,8 +216,8 @@
                 </div>
             </div>
         </div>
-        
-        <div class="col-md-12 col-sm-12 col-xs-6">            
+
+        <div class="col-sm-12 col-xs-6">
             <div class="x_panel tile overflow_hidden">
                 <div class="x_title">
                     <h2>Damage Dealt</h2>
@@ -389,7 +336,7 @@
                 </div>
                 <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
                     <div class="card-block">
-                        Click the discord link or post it on the forum.<br/>
+                        Click the discord link or post it on the forum.<br />
                         If you're asked a follow-up question to a feature request and you do not reply, the request is discarded.
                     </div>
                 </div>
@@ -436,3 +383,5 @@
 <script src="js/index.js"></script>
 
 
+</body>
+</html>
