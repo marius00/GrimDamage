@@ -118,11 +118,10 @@ $(document).ready(function () {
 
     // Evil
     $('.expand-link').on('click', function () {
-        let container = $(this).closest('.x_panel').parent();
+        let container = $(this).closest('.x_panel');
         let icon = $(this).find('i');
 
         container.toggleClass('col-sm-9 col-sm-12');
-        container.toggleClass('col-md-9 col-md-12');
 
         setTimeout(function () {
             container.find('div').each(function () {
@@ -140,11 +139,10 @@ $(document).ready(function () {
         icon.toggleClass('fa-chevron-right fa-chevron-left');
     });
     $('.expand-6-12-link').on('click', function () {
-        let container = $(this).closest('.x_panel').parent();
+        let container = $(this).closest('.x_panel');
         let icon = $(this).find('i');
 
         container.toggleClass('col-sm-6 col-sm-12');
-        container.toggleClass('col-md-6 col-md-12');
 
         setTimeout(function () {
             container.find('div').each(function () {
