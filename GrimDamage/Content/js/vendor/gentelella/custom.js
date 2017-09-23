@@ -142,7 +142,7 @@ $(document).ready(function () {
         let container = $(this).closest('.x_panel');
         let icon = $(this).find('i');
 
-        container.toggleClass('col-sm-6 col-sm-12');
+        container.toggleClass('col-sm-12 col-sm-6');
 
         setTimeout(function () {
             container.find('div').each(function () {
