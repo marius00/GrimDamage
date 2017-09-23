@@ -166,7 +166,7 @@ class DeathTrackerViewModel {
             }
 
 
-            let pieSeries = this.damageTakenChart.series.filter(s => s.type === 'pie')[0];
+            const pieSeries = this.damageTakenChart.series.filter(s => s.type === 'pie')[0];
             if (!pieSeries) {
                 this.damageTakenChart.addSeries({
                         type: 'pie',

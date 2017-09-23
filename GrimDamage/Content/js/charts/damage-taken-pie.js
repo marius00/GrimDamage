@@ -24,34 +24,11 @@
             }
         },
         series: [{
-            name: 'Brands',
             colorByPoint: true,
             data: [
                 {
-                    name: 'Chaos',
-                    y: 56.33
-                },
-                {
-                    name: 'Fire',
-                    y: 24.03,
-                    sliced: true,
-                    selected: true
-                },
-                {
-                    name: 'Aether',
-                    y: 10.38
-                },
-                {
-                    name: 'Cold',
-                    y: 4.77
-                },
-                {
-                    name: 'Physical',
-                    y: 0.91
-                },
-                {
-                    name: 'Piercing',
-                    y: 0.2
+                    name: 'Imaginary',
+                    y: 100
                 }
             ]
         }]

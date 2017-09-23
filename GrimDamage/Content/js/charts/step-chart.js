@@ -6,7 +6,9 @@
 
         let preloadMinutes = 3;
         this.chart = Highcharts.stockChart(id, {
-
+            selection: function (event) {
+                console.debug('Selection', event);
+            },
             plotOptions: {
                 area: { animation: false },
                 arearange: { animation: false },

@@ -828,7 +828,6 @@ h2 {
   border: 1px solid #E6E9ED;
   -webkit-column-break-inside: avoid;
   -moz-column-break-inside: avoid;
-  column-break-inside: avoid;
   opacity: 1;
   -moz-transition: all .2s ease;
   -o-transition: all .2s ease;
@@ -1638,12 +1637,7 @@ h4.graph_title {
   transition: all 300ms ease-in-out; }
 
 .tile-stats:hover .icon i {
-  animation-name: tansformAnimation;
-  animation-duration: .5s;
-  animation-iteration-count: 1;
   color: rgba(58, 58, 58, 0.41);
-  animation-timing-function: ease;
-  animation-fill-mode: forwards;
   -webkit-animation-name: tansformAnimation;
   -webkit-animation-duration: .5s;
   -webkit-animation-iteration-count: 1;
@@ -3212,19 +3206,16 @@ a.hiddenanchor {
   z-index: 22;
   -webkit-animation-name: fadeInLeft;
   -moz-animation-name: fadeInLeft;
-  -ms-animation-name: fadeInLeft;
   -o-animation-name: fadeInLeft;
   animation-name: fadeInLeft;
   -webkit-animation-delay: .1s;
   -moz-animation-delay: .1s;
   -o-animation-delay: .1s;
-  -ms-animation-delay: .1s;
   animation-delay: .1s; }
 
 #signup:target ~ .login_wrapper .login_form, #signin:target ~ .login_wrapper .registration_form {
   -webkit-animation-name: fadeOutLeft;
   -moz-animation-name: fadeOutLeft;
-  -ms-animation-name: fadeOutLeft;
   -o-animation-name: fadeOutLeft;
   animation-name: fadeOutLeft; }
 

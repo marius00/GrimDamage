@@ -11,7 +11,7 @@ TODO:
 ** Dashboard would be nice, ala https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/free-bootstrap-admin-dashboard-templates.jpg
 	single/aoe in a graph, damage types as progress bars
 	
-** [JS] if you tab or pause while dying, it will register as another death. Our time increases, ingame time does not. -- detect pauses?
+** blow by blow text
 *** Sometimes when switching to dark mode, graphs gets the wrong size (race condition? made too soon?)
 *** Removing the very first graph does not cause graph #2 to shift left
 *** Tab leakage
@@ -24,6 +24,7 @@ TODO:
 * [VS] Fix the need for config changes to compile
 ** [JS] Show where the player died?
 ** [JS] Show who killed the player? [mob name]
+** [JS] if you tab or pause while dying, it will register as another death.
 
 Known bugs:
   highstock.js:58 Error: <path> attribute d: Expected number, "M L L L L L L L L".
