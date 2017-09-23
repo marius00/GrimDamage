@@ -139,7 +139,7 @@ $(document).ready(function () {
         icon.toggleClass('fa-chevron-right fa-chevron-left');
     });
     $('.expand-6-12-link').on('click', function () {
-        let container = $(this).closest('.x_panel');
+        let container = $(this).closest('.x_panel').parent();
         let icon = $(this).find('i');
 
         container.toggleClass('col-sm-12 col-sm-6');
