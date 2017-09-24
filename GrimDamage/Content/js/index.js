@@ -10,6 +10,7 @@
 /// <reference path="vendor/knockout-3.4.0.js" />
 /// <reference path="light-mode-toggle.js" />
 /// <reference path="logic/pie-chart-damage-taken-processor.js" />
+/// <reference path="data/Database.js" />
 
 enableLogToCsharp();
 
@@ -98,9 +99,27 @@ faqViewModel.questions(faqElements);
 
 
 
+// ===================================================
+// Data lookup class
+const database = new Database();
+// ===================================================
+
+
+
+
+// ===================================================
+// Text view - each damage hit taken
+const detailedDamageTakenTextVm = new DetailedDamageTakenTextViewModel(database);
+ko.applyBindings(detailedDamageTakenTextVm, document.getElementById('damage-taken-detailed-textview'));
+// ===================================================
+
+
+
+
 
 // ===================================================
 // Tick handler - This is up for refactoring
+let lastPlayerId = undefined;
 setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
     if (pauseTracker.isActive) {
         p.tick(players,
@@ -113,8 +132,23 @@ setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarge
             entitiesList);
 
         const playerId = p.mainPlayerId;
-        if (playerId && damageTaken[playerId]) {
+        if (playerId && detailedDamageTaken[playerId]) {
             damageTakenPieHandler.addDamageTaken(detailedDamageTaken[playerId]);
+
+            if (playerId !== lastPlayerId) {
+                database.reset();
+            }
+
+            database.addDetailedDamageTaken(detailedDamageTaken[playerId]);
+            lastPlayerId = playerId;
+
+            detailedDamageTakenTextVm.update();
+        }
+
+        // For test
+        if (playerId && detailedDamageDealt[playerId]) {
+            database.addDetailedDamageTaken(detailedDamageDealt[playerId]);
+            detailedDamageTakenTextVm.update();
         }
     }
     //VM.isZoneUnknown(playerLocationName === 'Unknown');

@@ -55,12 +55,11 @@ namespace GrimDamage.Parser.Service {
         }
 
         public void SetHealth(int id, float amount) {
-            if (_entities.ContainsKey(id)) {
-                _entities[id].Health.Add(new EntityHealthEntry {
-                    Health = amount,
-                    Timestamp = Timestamp.UTCMillisecondsNow
-                });
-            }
+            var entity = GetOrCreate(id);
+            entity.Health.Add(new EntityHealthEntry {
+                Health = amount,
+                Timestamp = Timestamp.UTCMillisecondsNow
+            });
         }
 
         // TODO: Call regularly, every minute or so.
@@ -80,14 +79,17 @@ namespace GrimDamage.Parser.Service {
                 _primaryId = id;
             }
 
-            if (_entities.ContainsKey(id))
-                _entities[id].IsPrimary = isPrimary;
+            // TODO: Unset any other primary?
+
+            var entity = GetOrCreate(id);
+            entity.IsPrimary = true;
         }
 
         private Entity GetOrCreate(int entityId) {
             if (!_entities.ContainsKey(entityId)) {
                 _entities[entityId] = new Entity {
-                    Id = entityId
+                    Id = entityId,
+                    IsPrimary = entityId == _primaryId
                 };
             }
 
@@ -113,7 +115,7 @@ namespace GrimDamage.Parser.Service {
             };
             victim.DamageTaken.Add(taken);
 
-            var attacker = GetOrCreate(victimId);
+            var attacker = GetOrCreate(_attackerId);
             attacker.DamageDealt.Add(dmg);
             
         }
@@ -140,13 +142,12 @@ namespace GrimDamage.Parser.Service {
         }
 
         public void SetAttackerId(int id) {
-            if (!_entities.ContainsKey(id) && _attackerName != null) {
-                _entities[id] = new Entity {
-                    Id = id,
-                    Name = _entityNamingService.GetName(_attackerName),
-                    Type = Classify(_attackerName),
-                    IsPrimary = id == _primaryId
-                };
+            if (!string.IsNullOrEmpty(_attackerName)) {
+                var entity = GetOrCreate(id);
+                if (string.IsNullOrEmpty(entity.Name)) {
+                    entity.Name = _entityNamingService.GetName(_attackerName);
+                    entity.Type = Classify(_attackerName);
+                }
             }
 
             _attackerId = id;
@@ -157,14 +158,14 @@ namespace GrimDamage.Parser.Service {
         }
 
         public void SetDefenderId(int id) {
-            if (!_entities.ContainsKey(id) && _defenderName != null) {
-                _entities[id] = new Entity {
-                    Id = id,
-                    Name = _entityNamingService.GetName(_defenderName),
-                    Type = Classify(_defenderName),
-                    IsPrimary = id == _primaryId
-                };
+            if (!string.IsNullOrEmpty(_defenderName)) {
+                var entity = GetOrCreate(id);
+                if (string.IsNullOrEmpty(entity.Name)) {
+                    entity.Name = _entityNamingService.GetName(_defenderName);
+                    entity.Type = Classify(_defenderName);
+                }
             }
+
 
             _defenderId = id;
         }
@@ -182,17 +183,14 @@ namespace GrimDamage.Parser.Service {
         }
 
         public void ApplyBlock(double total, double percentile, double remaining) {
+            var entity = GetOrCreate(_defenderId);
+            var blocked = new DamageBlockedEntry {
+                Amount = total,
+                Attacker = _attackerId,
+                Time = DateTime.UtcNow
+            };
 
-
-            if (_entities.ContainsKey(_defenderId)) {
-                var blocked = new DamageBlockedEntry {
-                    Amount = total,
-                    Attacker = _attackerId,
-                    Time = DateTime.UtcNow
-                };
-
-                _entities[_defenderId].DamageBlocked.Add(blocked);
-            }
+            entity.DamageBlocked.Add(blocked);
         }
 
 

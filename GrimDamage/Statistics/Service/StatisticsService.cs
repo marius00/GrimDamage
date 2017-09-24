@@ -82,7 +82,8 @@ namespace GrimDamage.Statistics.Service {
                     .Select(m => new DetailedDamageDealtJson {
                         VictimId = m.Target,
                         DamageType = m.Type.ToString(),
-                        Amount = m.Amount
+                        Amount = m.Amount,
+                        Timestamp = Timestamp.ToUtcMilliseconds(m.Time)
                     })
                     .ToList();
 
