@@ -87,7 +87,7 @@ class DamageParser {
 
     handleDetailedDamageTaken(data) {
         for (let playerid in data) {
-            if (!data.hasOwnProperty(playerid) || playerid !== this.mainPlayerId) {
+            if (!data.hasOwnProperty(playerid) || playerid != this.mainPlayerId) {
                 continue;
             }
             const length = data[playerid].length;
@@ -105,8 +105,10 @@ class DamageParser {
         }
     }
     handleDetailedDamageDealt(data) {
+        //console.log("Playerid: " + this.mainPlayerId);
+        //console.log(data);
         for (let playerid in data) {
-            if (!data.hasOwnProperty(playerid) || playerid !== this.mainPlayerId) {
+            if (!data.hasOwnProperty(playerid) || playerid != this.mainPlayerId) {
                 continue;
             }
 
