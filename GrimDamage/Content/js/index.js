@@ -150,6 +150,8 @@ setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarge
             database.addDetailedDamageTaken(detailedDamageDealt[playerId]);
             detailedDamageTakenTextVm.update();
         }
+
+        database.setPlayerLocation(playerLocationName);
     }
     //VM.isZoneUnknown(playerLocationName === 'Unknown');
 });

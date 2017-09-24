@@ -28,4 +28,7 @@
 
 
 
-
+.th-sort-link {
+    cursor: pointer; 
+    -webkit-user-select: none;
+}

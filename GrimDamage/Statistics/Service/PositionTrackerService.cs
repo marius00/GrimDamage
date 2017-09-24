@@ -218,6 +218,7 @@ namespace GrimDamage.Statistics.Service {
         public PlayerPosition PlayerPosition { get; private set; }
 
         HashSet<int> seen = new HashSet<int>();
+
         public void SetPlayerPosition(PlayerPosition playerPosition) {
             PlayerPosition = playerPosition;
             if (!seen.Contains(playerPosition.Zone) && !_knownPositions.Exists(m => m.Zone == playerPosition.Zone)) {

@@ -261,7 +261,7 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>When</th>
+                                    <th data-bind="click: swapTimestampOrder" class="th-sort-link">When</th>
                                     <th>What</th>
                                     <th>Amount</th>
                                     <th>Who</th>
@@ -274,7 +274,7 @@
                                     <td data-bind="text: damageType"></td>
                                     <td data-bind="text: amount"></td>
                                     <td>Whom?</td>
-                                    <td>Where?</td>
+                                    <td data-bind="text: location">Where?</td>
                                 </tr>
                                 </tbody>
                             </table>
