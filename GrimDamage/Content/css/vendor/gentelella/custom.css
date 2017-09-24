@@ -944,7 +944,9 @@ table.tile h3, table.tile h4, table.tile span {
   vertical-align: middle !important; }
 
 table.tile th, table.tile td {
-  text-align: center; }
+  text-align: center; 
+
+}
 
 table.tile th {
   border-bottom: 1px solid #E6ECEE; }
