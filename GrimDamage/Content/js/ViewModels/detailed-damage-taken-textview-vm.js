@@ -23,6 +23,7 @@ class DetailedDamageTakenTextViewModel {
     }
 
     update() {
+        // Why does this work without 'this.'??
         const damageEntries = database.getDamageTaken(this.start, this.end);
         const locations = database.getPlayerLocation(this.start, this.end);
         const result = this.filter(damageEntries, locations);
@@ -35,7 +36,7 @@ class DetailedDamageTakenTextViewModel {
     }
 
 
-    createEntry(locations, total, damageType, timestamp) {
+    createEntry(locations, total, damageType, timestamp, entityId) {
         const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
         const date = new Date(timestamp);
 
@@ -46,7 +47,8 @@ class DetailedDamageTakenTextViewModel {
             amount: Math.round(total),
             damageType: damageType,
             timestamp: date.toLocaleTimeString('en-us', options) + '.' + (`000${date.getMilliseconds()}`).slice(-3),
-            location: location.location
+            location: location.location,
+            attacker: this.database.getEntity(entityId)
         }
     }
 
@@ -60,22 +62,28 @@ class DetailedDamageTakenTextViewModel {
         let total = 0;
         let damageType = data[0].damageType;
         let ts = data[0].timestamp;
+        let attacker = data[0].attackerId;
 
-
+        // TODO: 'attackerId' / 'victimId'
         for (let idx = 0; idx < data.length; idx++) {
-            if (data[idx].timestamp - ts <= 1 && data[idx].damageType === damageType) {
+            if (data[idx].timestamp - ts <= 1 && data[idx].damageType === damageType && data[idx].attackerId === attacker) {
                 total += data[idx].amount;
             } else {
-                result.push(this.createEntry(locations, total, damageType, ts));
-                
+                if (total > 1) {
+                    result.push(this.createEntry(locations, total, damageType, ts, attacker));
+                }
+
                 damageType = data[idx].damageType;
                 total = data[idx].amount;
                 ts = data[idx].timestamp;
+                attacker = data[idx].attackerId;
             }
         }
         
         // Last hit won't be recorded, since the else never triggers
-        result.push(this.createEntry(locations, total, damageType, ts));
+        if (total > 1) {
+            result.push(this.createEntry(locations, total, damageType, ts, attacker));
+        }
 
         return result;
     }

@@ -146,12 +146,14 @@ setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarge
         }
 
         // For test
+        /*
         if (playerId && detailedDamageDealt[playerId]) {
             database.addDetailedDamageTaken(detailedDamageDealt[playerId]);
             detailedDamageTakenTextVm.update();
-        }
+        }*/
 
         database.setPlayerLocation(playerLocationName);
+        database.setEntities(entitiesList);
     }
     //VM.isZoneUnknown(playerLocationName === 'Unknown');
 });

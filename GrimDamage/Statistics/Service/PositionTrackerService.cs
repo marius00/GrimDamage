@@ -53,11 +53,11 @@ namespace GrimDamage.Statistics.Service {
             },
             new RecognizedPosition {
                 Zone = 2045987642,
-                Name = "Sorrows bastion"
+                Name = "Sorrows Bastion"
             },
             new RecognizedPosition {
                 Zone = 1878609095,
-                Name = "Kymon's sanctuary"
+                Name = "Kymon's Sanctuary"
             },
             new RecognizedPosition {
                 Zone = -1813626772,
@@ -212,6 +212,38 @@ namespace GrimDamage.Statistics.Service {
             new RecognizedPosition {
                 Zone = 464142942,
                 Name = "Deadmans Gulch"
+            },
+            new RecognizedPosition {
+                Zone = -1605221695,
+                Name = "Deadmans Gulch"
+            },
+            new RecognizedPosition {
+                Zone = -1494005580,
+                Name = "Deadmans Gulch"
+            },
+            new RecognizedPosition {
+                Zone = 1621574431,
+                Name = "Deadmans Gulch / The Immolation"
+            },
+            new RecognizedPosition {
+                Zone = 1701594579,
+                Name = "Smugglers Pass"
+            },
+            new RecognizedPosition {
+                Zone = -41269260,
+                Name = "Smugglers Pass"
+            },
+            new RecognizedPosition {
+                Zone = -128563231,
+                Name = "The Immolation"
+            },
+            new RecognizedPosition {
+                Zone = -925743329,
+                Name = "The Immolation"
+            },
+            new RecognizedPosition {
+                Zone = 244338406,
+                Name = "The Immolation"
             },
         };
 

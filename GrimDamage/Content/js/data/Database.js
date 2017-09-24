@@ -9,11 +9,19 @@ class Database {
                 location: 'Unknown'
             }
         ];
+
+        this.entities = {};
     }
 
     addDetailedDamageTaken(elements) {
         console.log('adding', elements);
         this.detailedDamageTaken = this.detailedDamageTaken.concat(elements);
+    }
+
+    setEntities(entities) {
+        for (let idx = 0; idx < entities.length; idx++) {
+            this.entities[entities[idx].id] = entities[idx].name;
+        }
     }
 
     setPlayerLocation(location) {
@@ -39,9 +47,17 @@ class Database {
         /// <summary>Get all the player locations for a given timespan</summary>
         /// <param name="start" type="Epoch">The start period (exclusive)</param>
         /// <param name="end" type="Epoch">The start period (inclusive)</param>
-        /// <returns type="[{timestamp: 0, location: 'Crossroads'}]"></returns>
+        /// <returns type="Array">[{timestamp: 0, location: 'Crossroads'}]</returns>
 
         return this.playerLocation.filter((e) => e.timestamp > start && e.timestamp <= end);
+    }
+
+    getEntity(entityId) {
+        /// <summary>Get the entity for the given entityId</summary>
+        /// <param name="entityId" type="Numeric">The entity ID</param>
+        /// <returns type="String">Peter Pan</returns>
+
+        return this.entities[entityId] || 'Unknown';
     }
 
 
