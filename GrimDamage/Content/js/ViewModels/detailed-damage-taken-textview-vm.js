@@ -24,8 +24,8 @@ class DetailedDamageTakenTextViewModel {
 
     update() {
         // Why does this work without 'this.'??
-        const damageEntries = database.getDamageTaken(this.start, this.end);
-        const locations = database.getPlayerLocation(this.start, this.end);
+        const damageEntries = this.database.getDamageTaken(this.start, this.end);
+        const locations = this.database.getPlayerLocation(this.start, this.end);
         const result = this.filter(damageEntries, locations);
 
         if (this.timestampOrderAscending)

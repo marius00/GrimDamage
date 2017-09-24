@@ -98,6 +98,10 @@ class DeathTrackerViewModel {
 
 
                     for (let idx = 0; idx < value.length; idx++) {
+                        console.log('self.stepChartDamageTaken.addPoint',
+                            value[idx].damageType,
+                            value[idx].timestamp,
+                            value[idx].amount);
                         self.stepChartDamageTaken.addPoint(value[idx].damageType, value[idx].timestamp, value[idx].amount);
                     }
                     console.debug('Received damage data for death:', value);

@@ -139,7 +139,7 @@ class DamageParser {
             for (let c = 0; c < damageDealt[id].length; c++) {
                 this.damageDoneStepChart.addPoint(damageDealt[id][c].damageType, timestamp, damageDealt[id][c].amount);
             }
-            self.damageDoneStepChart.redraw();
+            this.damageDoneStepChart.redraw();
 
 
             const total = damageDealt[id].filter(s => s.damageType === 'Total')[0];
@@ -163,7 +163,7 @@ class DamageParser {
         }
     }
 
-    addDamageTaken(elem, shouldRender) {
+    addDamageTaken(elem) {
         const dmg = elem.amount;
         const type = elem.damageType;
 
@@ -185,16 +185,16 @@ class DamageParser {
 
         const chart = this.damageTakenGraph.series.filter(s => s.name === type)[0];
         if (dmg > 2) {
-            chart.addPoint(dmg, shouldRender, true);
+            chart.addPoint(dmg, false, true);
         }
         else {
             // If this is a consecutive 0, cut out the damage type sequence
             if (this.previousDamageTaken[type] !== undefined && this.previousDamageTaken[type] <= 0) {
-                chart.addPoint(0, shouldRender, true);
+                chart.addPoint(0, false, true);
             }
             // If this is the first zero, draw it, so the line goes back down to 0
             else {
-                chart.addPoint(dmg, shouldRender, true);
+                chart.addPoint(dmg, false, true);
             }
         }
 
@@ -209,9 +209,12 @@ class DamageParser {
 
             for (let i = 0; i < damageTaken[playerId].length; i++) {
                 const elem = damageTaken[playerId][i];
-                const shouldRender = i === damageTaken[playerId].length - 1;
-                this.addDamageTaken(elem, shouldRender);
+                this.addDamageTaken(elem);
             }
+
+            // Redraw
+            this.damageTakenGraph.redraw();
+            
         }
         else {
             //console.log('No player yet.. skipping graph..');

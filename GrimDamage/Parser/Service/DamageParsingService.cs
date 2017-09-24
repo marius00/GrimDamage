@@ -80,6 +80,9 @@ namespace GrimDamage.Parser.Service {
             }
 
             // TODO: Unset any other primary?
+            foreach (var key in _entities.Keys) {
+                _entities[key].IsPrimary = key == id;
+            }
 
             var entity = GetOrCreate(id);
             entity.IsPrimary = true;

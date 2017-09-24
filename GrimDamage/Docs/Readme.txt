@@ -26,6 +26,7 @@ TODO:
 ** [JS] Show where the player died?
 ** [JS] Show who killed the player? [mob name]
 ** [JS] if you tab or pause while dying, it will register as another death.
+** A player has suggested we show the players current resist when taking damage. Ex 'took 1500 fire dmg, resist was 40%' -- how would we display this in a useful manner?
 
 Known bugs:
   highstock.js:58 Error: <path> attribute d: Expected number, "M L L L L L L L L".

@@ -25,6 +25,12 @@ function createChartDamageTaken(id, sequenceLength) {
                 title: {
                     text: 'Damage per second'
                 },
+                events: {
+                    afterSetExtremes: function() {
+                        console.log('after extrmee!');
+                        // var chart = $('#container').highcharts();
+                    }
+                },
                 labels: {
                     formatter: function () {
                         if (this.value > 10000)

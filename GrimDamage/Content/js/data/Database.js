@@ -14,7 +14,6 @@ class Database {
     }
 
     addDetailedDamageTaken(elements) {
-        console.log('adding', elements);
         this.detailedDamageTaken = this.detailedDamageTaken.concat(elements);
     }
 
