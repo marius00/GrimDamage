@@ -71,14 +71,14 @@ class DamageParser {
         for (let c = 0; c < length; c++) {
             /* check if id is already set */
             let entity = list[c];
-            if (entity.type !== "Monster" && entity.type !== "Player") {
+            if (entity.type !== 'Monster' && entity.type !== 'Player') {
                 if (!this.bosses.hasOwnProperty(entity.id)) {
                     this.bosses[entity.id] = [];
                     this.bosses[entity.id]['type'] = entity.type;
                     this.bosses[entity.id]['name'] = entity.name;
                     this.bosses[entity.id]['dealt'] = [];
                     this.bosses[entity.id]['taken'] = [];
-                    let now = moment(new Date());
+                    const now = moment(new Date());
                     this.dataTable.row.add({ "DT_RowId": entity.id, "encountered": now.format('HH:mm:ss'), "name": entity.name }).draw(false);
                 }
             }
@@ -111,7 +111,7 @@ class DamageParser {
             }
 
             const length = data[playerid].length;
-            for (var c = 0; c < length; c++) {
+            for (let c = 0; c < length; c++) {
                 const entry = data[playerid][c];
 
                 /* Is it a boss? */

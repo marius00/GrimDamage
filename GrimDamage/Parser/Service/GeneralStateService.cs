@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ using log4net;
 namespace GrimDamage.Parser.Service {
     class GeneralStateService {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(GeneralStateService));
-        private List<GrimDawnStateEventJson> _states = new List<GrimDawnStateEventJson>();
+        private ConcurrentBag<GrimDawnStateEventJson> _states = new ConcurrentBag<GrimDawnStateEventJson>();
         private readonly AppSettings _appSettings;
 
         public GeneralStateService(AppSettings settings) {

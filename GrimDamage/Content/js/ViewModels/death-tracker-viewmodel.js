@@ -118,7 +118,7 @@ class DeathTrackerViewModel {
                     const xRange = 10;
 
                     for (let damageType in lineChartPoints) {
-                        if (!points[damageType])
+                        if (points[damageType])
                             points[damageType] = [];
 
                         for (let x = 0; x < xRange; x++) {
