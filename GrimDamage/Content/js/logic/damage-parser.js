@@ -17,7 +17,7 @@ class DamageParser {
         this.dataTable = dataTable;
         this.players = [];
         this.totalDamageTaken = [];
-        this.bosses = [];
+        this.bosses = {};
         this.modals = new Modals();
 
 
@@ -71,7 +71,7 @@ class DamageParser {
         for (let c = 0; c < length; c++) {
             /* check if id is already set */
             let entity = list[c];
-            if (entity.type != "Monster" && entity.type != "Player") {
+            if (entity.type !== "Monster" && entity.type !== "Player") {
                 if (!this.bosses.hasOwnProperty(entity.id)) {
                     this.bosses[entity.id] = [];
                     this.bosses[entity.id]['type'] = entity.type;
