@@ -4,7 +4,10 @@
     }
 
     show(modalId) {
-        $(`#${modalId}`).modal('show');
+        let $modal = $(modalId);
+        if (!$modal.hasClass('show')) {
+            $(modalId).modal('show');
+        }
     }
 
     add(modalId, modalTitle, modalContent) {
