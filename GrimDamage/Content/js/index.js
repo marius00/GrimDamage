@@ -30,9 +30,12 @@ setCsharpTickInterval(1000);
 setCsharpLoadHistoryCallback((dataset) => { console.log("Load:", dataset); });
 
 
+//Modal class
+var Modal = new Modals();
+
 // Track callback events
 const deathTrackerViewModel = new DeathTrackerViewModel(
-    () => $('#deathModal').modal('show'),
+    () => Modal.show('#deathModal'),
     createChartDamageTaken('container-died-damage-taken', 10),
     damageTakenAtDeathChart
 );
