@@ -6,6 +6,7 @@ class PauseTracker {
         /// <summary>Responsible for tracking game pause state</summary>  
         
         this.state = PauseTracker.Unpaused;
+        this.highestTimestamp = 0;
     }
 
     static get Paused() {
@@ -22,12 +23,16 @@ class PauseTracker {
 
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            if (event.event === 'Unpause') {
-                this.state = PauseTracker.Unpaused;
+
+            if (event.timestamp > this.highestTimestamp) {
+                if (event.event === 'Unpause') {
+                    this.state = PauseTracker.Unpaused;
+                } else if (event.event === 'Pause') {
+                    this.state = PauseTracker.Paused;
+                }
             }
-            else if (event.event === 'Pause') {
-                this.state = PauseTracker.Paused;
-            }
+
+            this.highestTimestamp = Math.max(this.highestTimestamp, event.timestamp);
         }
     }
 

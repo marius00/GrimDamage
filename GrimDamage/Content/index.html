@@ -278,6 +278,13 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <p>
+                                Page <span data-bind="text: currentPageNumber() + 1"></span> out of <span data-bind="text: maximumPageNumber"></span>
+                            </p>
+                            <p>
+                                <span class="button link-button" data-bind="click: triggerPrevPage"><i class="fa fa-arrow-circle-o-left"></i></span>
+                                <span class="button link-button" data-bind="click: triggerNextPage"><i class="fa fa-arrow-circle-o-right"></i></span>
+                            </p>
                         </div>
                     </div>
                 </div>

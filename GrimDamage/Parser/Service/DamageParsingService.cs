@@ -25,8 +25,8 @@ namespace GrimDamage.Parser.Service {
             public const string Pet0 = @"/playerclass";
             public const string Pet1 = @"/pets/";
         }
-        
-        private readonly int _nameCacheDuration = 30;
+
+        private const int NameCacheDuration = 30;
         private string _defenderName;
         private string _attackerName;
         private int _attackerId;
@@ -64,7 +64,7 @@ namespace GrimDamage.Parser.Service {
 
         // TODO: Call regularly, every minute or so.
         public void Cleanup() {
-            var expired = _entities.Values.Where(m => (DateTime.UtcNow - m.LastSeen).Minutes > _nameCacheDuration)
+            var expired = _entities.Values.Where(m => (DateTime.UtcNow - m.LastSeen).Minutes > NameCacheDuration)
                 .Select(m => m.Id)
                 .ToList();
 

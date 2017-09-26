@@ -11,28 +11,65 @@ class DetailedDamageTakenTextViewModel {
         this.start = 0;
         this.end = 2527282800000;
         this.timestampOrderAscending = true;
+        this.currentPageNumber = ko.observable(0);
+        this.maximumPageNumber = ko.observable(1);
+        this.internalData = [];
         this.swapTimestampOrder = function() {
             self.timestampOrderAscending = !self.timestampOrderAscending;
             self.update();
         }
     }
 
+    get linesPerPage() {
+        return 12;
+    }
+
+
     setTimeperiod(start, end) {
         this.start = start;
         this.end = end;
     }
 
+    getCurrentSlice() {
+        if (this.timestampOrderAscending) {
+            return this.internalData.slice(this.linesPerPage * this.currentPageNumber(),
+                this.linesPerPage * (this.currentPageNumber() + 1));
+        } else {
+            return this.internalData.slice(this.linesPerPage * this.currentPageNumber() * -1,
+                this.linesPerPage * (this.currentPageNumber() + 1) * -1);
+            
+        }
+    }
+
     update() {
-        // Why does this work without 'this.'??
+        /// <summary>Update the internal state / dataset</summary>  
         const damageEntries = this.database.getDamageTaken(this.start, this.end);
         const locations = this.database.getPlayerLocation(this.start, this.end);
-        const result = this.filter(damageEntries, locations);
+        this.internalData = this.filter(damageEntries, locations);
+        this.maximumPageNumber(Math.ceil(this.internalData.length / this.linesPerPage));
 
-        if (this.timestampOrderAscending)
-            this.entries(result);
-        else
-            this.entries(result.reverse());
+        console.log('yadayada', this.internalData);
+        if (!this.timestampOrderAscending)
+            this.internalData = this.internalData.reverse();
 
+        const result = this.getCurrentSlice();
+        this.entries(result);
+    }
+
+    triggerNextPage() {
+        console.log('>');
+        if (this.currentPageNumber() < this.internalData.length / this.linesPerPage) {
+            this.currentPageNumber(this.currentPageNumber() + 1);
+            this.entries(this.getCurrentSlice());
+        }
+    }
+
+    triggerPrevPage() {
+        console.log('<');
+        if (this.currentPageNumber() > 0) {
+            this.currentPageNumber(this.currentPageNumber() - 1);
+            this.entries(this.getCurrentSlice());
+        }
     }
 
 

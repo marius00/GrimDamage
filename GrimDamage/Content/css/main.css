@@ -6,6 +6,9 @@
     text-decoration: underline;
     cursor: pointer;
 }
+.link-button {
+    cursor: pointer;
+}
 .placeholder {
     border: 1px;
     border-style: dashed;
