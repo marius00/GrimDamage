@@ -2,9 +2,10 @@
 
 
 class DeathTrackerViewModel {
-    constructor(showModal, chartDamageTaken, stepChartDamageTaken) {
+    constructor(database, showModal, chartDamageTaken, stepChartDamageTaken) {
         /// <summary>Responsible for rendering the player deaths view</summary>  
         var self = this;
+        this.database = database;
         this.deaths = ko.observableArray([]);
         this.currentlyDisplayedDeath = 0;
         this.showModal = showModal;
@@ -118,7 +119,7 @@ class DeathTrackerViewModel {
                     const xRange = 10;
 
                     for (let damageType in lineChartPoints) {
-                        if (points[damageType])
+                        if (!points[damageType])
                             points[damageType] = [];
 
                         for (let x = 0; x < xRange; x++) {
@@ -274,16 +275,48 @@ class DeathTrackerViewModel {
         return dataPoints;
     }
 
+    getPrimaryAttackerId(timestamp) {
+        /// <summary>Find the entity Id of the mob that killed you</summary>  
+        const attackers = {};
+        const dataset = this.database.getDamageTaken(timestamp - 4000, timestamp);
+        for (let idx = 0; idx < dataset.length; idx++) {
+            const entry = dataset[idx];
+            if (!attackers[entry.attackerId]) {
+                attackers[entry.attackerId] = 0;
+            }
+            attackers[entry.attackerId] += entry.amount;
+        }
+
+        let highest = 0;
+        let k = undefined;
+        const keys = Object.keys(attackers);
+        for (let idx = 0; idx < keys.length; idx++) {
+            const key = keys[idx];
+            if (attackers[key] > highest) {
+                k = key;
+                highest = attackers[key];
+            }
+        }
+
+        return k;
+    }
+
     add(death) {
         /// <summary>Add a death</summary>  
         const label = 'You died a horrible death';
         const labelTimestamp = new Date(death.timestamp).toLocaleTimeString();
+        const murdererId = this.getPrimaryAttackerId(death.timestamp);
+        const murdererName = this.database.getEntity(murdererId);
+        const location = this.database.getPlayerLocation(0, death.timestamp)[0] || { location: 'Unknown' };
+
+
 
         const d = {
-            label: label,
+            label: location.location,
             labelTimestamp: labelTimestamp,
             timestamp: death.timestamp,
-            entityId: death.entityId
+            entityId: death.entityId,
+            attackerName: murdererName
         };
 
         this.deaths.push(d);

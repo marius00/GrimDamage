@@ -120,7 +120,7 @@
             <div class="col-sm-3">
                 <div class="x_panel tile overflow_hidden">
                     <div class="x_title">
-                        <h2>Top Damage Dealt</h2>
+                        <h2 class="placeholder-text">Top Damage Dealt</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li>
                                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -320,21 +320,16 @@
             <tr>
                 <td>Timestamp</td>
                 <td>Location</td>
+                <td>Villain</td>
             </tr>
             </thead>
             <tbody data-bind="foreach: deaths">
             <tr data-bind="click: $root.showDeath" class="what-killed-me-link">
-                <td data-bind="text: labelTimestamp">Timestamp</td>
-                <td data-bind="text: label">Location</td>
+                <td data-bind="text: labelTimestamp"></td>
+                <td data-bind="text: label"></td>
+                <td data-bind="text: attackerName"></td>
             </tr>
             </tbody>
-
-            <tfoot>
-            <tr>
-                <td>Timestamp</td>
-                <td>Location</td>
-            </tr>
-            </tfoot>
             <tbody></tbody>
         </table>
 
@@ -416,8 +411,6 @@
                 </button>
             </div>
             <div class="modal-body" id="deathModalBody">
-                <div id="container-died-damage-taken-pie" style="min-width: 280px; height: 200px; margin: 0 auto"></div>
-                <hr />
                 <div id="container-died-damage-taken" style="min-width: 280px; height: 500px; margin: 0 auto"></div>
                 <hr />
                 <div id="container-died-damage-taken-zoomy"></div>

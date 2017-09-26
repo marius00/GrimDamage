@@ -8,14 +8,12 @@ Unmapped / uncharted territory:
 * Get player class[es] from in-game? [for pets]		-- unknown, suspect somewhat tricky  // mastery
 
 TODO:
-** Dashboard would be nice, ala https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/free-bootstrap-admin-dashboard-templates.jpg
-	single/aoe in a graph, damage types as progress bars
-	
-** Pagination on blow-by-blow
+
 ** Stop updating graphs and text when the tab is closed
 *** Sometimes when switching to dark mode, graphs gets the wrong size (race condition? made too soon?)
-*** Removing the very first graph does not cause graph #2 to shift left
+** Allow the user to swap color modes without reloading the page and losing data (issue is the graphs that needs to be recreated, but should be trivial, just copy the series info and make a new graph)
 *** Tab leakage
+* http://gridstackjs.com/ Would be very flexible
 * [JS] Maybe add a list of pets with checkboxes, where the player can choose which are his, and merge those into his aoe/st damage? [obs: per name? pets die pretty often]
 * [JS] show one graph with pets? 
 * [JS] Now possible to save/load parses from .JS ==> Need the JS integration
@@ -23,10 +21,13 @@ TODO:
 * [JS] An issue with switching to NULL for consecutive 0s is that the sequence will start from null, not from 0, creating odd clipped graphs
 * [C#/PHP] Was thinking maybe a news thing, just a link to gog/steam when there's a sale or wtv.. unsure if it provides any value, but being able to announce stuff to users (while being non intrusive) might be nice.
 * [VS] Fix the need for config changes to compile
-** [JS] Show where the player died?
-** [JS] Show who killed the player? [mob name]
-** [JS] if you tab or pause while dying, it will register as another death.
 ** A player has suggested we show the players current resist when taking damage. Ex 'took 1500 fire dmg, resist was 40%' -- how would we display this in a useful manner?
+
+What killed me popup:
+* Show where the player died?
+* Show who killed the player? [mob name]
+* [JS] if you tab or pause while dying, it will register as another death.
+
 
 Known bugs:
   highstock.js:58 Error: <path> attribute d: Expected number, "M L L L L L L L L".

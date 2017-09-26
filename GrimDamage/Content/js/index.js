@@ -14,10 +14,23 @@
 
 enableLogToCsharp();
 
+// ===================================================
+// Practically globals
 let pauseTracker = new PauseTracker();
 var colors = new Colors();
+// ===================================================
+
+
+
+// ===================================================
+// Data lookup class
+const database = new Database();
+// ===================================================
+
+
 var damageDoneStepChart = new StepChart('step-test', 'Damage Done');
 const damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy', 'Damage Taken');
+
 
 
 // Chart and parsing
@@ -35,6 +48,7 @@ var Modal = new Modals();
 
 // Track callback events
 const deathTrackerViewModel = new DeathTrackerViewModel(
+    database,
     () => Modal.show('#deathModal'),
     createChartDamageTaken('container-died-damage-taken', 10),
     damageTakenAtDeathChart
@@ -101,11 +115,6 @@ faqViewModel.questions(faqElements);
 
 
 
-
-// ===================================================
-// Data lookup class
-const database = new Database();
-// ===================================================
 
 
 

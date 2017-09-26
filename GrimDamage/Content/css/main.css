@@ -14,6 +14,9 @@
     border-style: dashed;
     margin: 8px;
 }
+.placeholder-text {
+    text-decoration: line-through;
+}
 #killed-table tr,
 #bosstable tr {
     cursor: pointer;

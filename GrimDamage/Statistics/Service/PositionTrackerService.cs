@@ -245,6 +245,10 @@ namespace GrimDamage.Statistics.Service {
                 Zone = 244338406,
                 Name = "The Immolation"
             },
+            new RecognizedPosition {
+                Zone = -1945766,
+                Name = "Withering Fields"
+            },
         };
 
         public PlayerPosition PlayerPosition { get; private set; }
@@ -254,7 +258,7 @@ namespace GrimDamage.Statistics.Service {
         public void SetPlayerPosition(PlayerPosition playerPosition) {
             PlayerPosition = playerPosition;
             if (!seen.Contains(playerPosition.Zone) && !_knownPositions.Exists(m => m.Zone == playerPosition.Zone)) {
-                Logger.Warn($"New zone: {playerPosition.Zone}");
+                Logger.Warn($"New zone: {playerPosition.Zone:X}");
                 seen.Add(playerPosition.Zone);
             }
         }
