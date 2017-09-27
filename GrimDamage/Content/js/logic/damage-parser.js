@@ -72,7 +72,7 @@ class DamageParser {
         for (let c = 0; c < length; c++) {
             /* check if id is already set */
             let entity = list[c];
-            if (entity.type !== 'Monster' && entity.type !== 'Player') {
+            if (entity.type !== 'Monster' && entity.type !== 'Player' && entity.type !== 'Environmental' && entity.type !== 'Pet') {
                 if (!this.bosses.hasOwnProperty(entity.id)) {
                     this.bosses[entity.id] = [];
                     this.bosses[entity.id]['type'] = entity.type;
