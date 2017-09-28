@@ -25,7 +25,6 @@ class DamageParser {
     }
 
     tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) {
-        console.log('ticky');
         this.players = players; // Just a convinience so we don't need to call getMainPlayerId(players)
 
         this.currentXAxis++;

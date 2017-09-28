@@ -1,31 +1,53 @@
 ﻿class StepChart {
-    constructor(id, title) {
+    constructor(id, title, previousChart) {
         /// <param name="id">DOM Id of the element to create the chart on</param>
         /// <param name="title">Title of the chart</param>
-        this.series = [];
+        this.series = {};
 
-        let preloadMinutes = 3;
-        this.chart = Highcharts.stockChart(id, {
-            
-            xAxis: {
-                events: {
-                    afterSetExtremes: function (event) {
-                        //console.debug('Selection', event); // TODO: handle this
+        const preloadMinutes = 3;
+        let preloadSeries = [];
+        if (previousChart && previousChart.series) {
+            console.debug('Recreated a chart with existing series', previousChart.series, 'from', previousChart.chart.series);
+
+            for (let key in previousChart.series) {
+                if (previousChart.series.hasOwnProperty(key)) {
+                    const idx = previousChart.series[key];
+                    const s = previousChart.chart.series[idx];
+                    const data = [];
+                    for (let dataKey in s.data) {
+                        if (s.data.hasOwnProperty(dataKey)) {
+                            data.push({
+                                x: s.data[dataKey].x,
+                                y: s.data[dataKey].y
+                            });
+                        }
                     }
-                },
-            },
-            chart: {
-                animation: false
-            },
-            series: [{
+
+                    preloadSeries.push({
+                        name: s.name,
+                        data: data,
+                        color: s.color,
+                        step: s.step,
+                        tooltip: s.tooltip
+                    });
+
+                }
+            }
+
+            console.debug('Received preload data', preloadSeries);
+            this.series = previousChart.series;
+            previousChart.chart.destroy();
+        }
+        else {
+            preloadSeries.push({
                 name: 'Total',
-                data: (function () {
+                data: (function() {
                     // generate an array of random data
-                    let data = [];
+                    const data = [];
                     const time = (new Date()).getTime();
                     let i;
 
-                    for (i = -(preloadMinutes*60+1) ; i <= 0; i += 1) {
+                    for (i = -(preloadMinutes * 60 + 1); i <= 0; i += 1) {
                         data.push({
                             x: time + i * 1000,
                             y: 0
@@ -33,7 +55,22 @@
                     }
                     return data;
                 }())
-            }],
+            });
+        }
+
+        this.chart = Highcharts.stockChart(id, {
+            
+            xAxis: {
+                events: {
+                    afterSetExtremes: function (event) {
+                        //console.debug('Selection', event); // TODO: handle this
+                    }
+                }
+            },
+            chart: {
+                animation: false
+            },
+            series: preloadSeries,
             rangeSelector: {
                 buttons: [{
                     count: 500,
@@ -68,19 +105,16 @@
             },
             title: {
                 text: title
-            },
+            }
         });
-        /*
-        this.addPoint('Fire', 0, 10);
-        this.addPoint('Fire', 1, 5);
-        this.addPoint('Lightning', 0, 1);
-        this.addPoint('Lightning', 1, 15);
-        this.addPoint('Aether', 0, 45);
-        this.addPoint('Aether', 1, 55);
-        */
 
-
-        this.series['Total'] = 0;
+        console.debug(`There are ${preloadSeries.length} series in this graph. Storing locally`);
+        for (let idx = 0; idx < preloadSeries.length; idx++) {
+            const s = preloadSeries[idx];
+            console.log(`Storing series "${s.name}" as index ${idx}`);
+            this.series[s.name] = idx;
+        }
+        //this.series['Total'] = 0;
     }
 
     addPoint(type, timestamp, value) {
@@ -99,7 +133,7 @@
             this.series[type] = newSeries.index;
         }
         console.log('Adding damage for', type, 'at', timestamp, 'with', value, 'on', this.chart.series[this.series[type]]);
-        this.chart.series[this.series[type]].addPoint([timestamp, value], false);
+        this.chart.series[this.series[type]].addPoint([timestamp, Math.round(value)], false);
     }
 
     reset() {

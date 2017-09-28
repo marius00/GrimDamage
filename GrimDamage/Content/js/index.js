@@ -11,6 +11,7 @@
 /// <reference path="light-mode-toggle.js" />
 /// <reference path="logic/pie-chart-damage-taken-processor.js" />
 /// <reference path="data/Database.js" />
+/// <reference path="ViewModels/death-tracker-viewmodel.js" />
 
 enableLogToCsharp();
 
@@ -27,9 +28,9 @@ var colors = new Colors();
 const database = new Database();
 // ===================================================
 
-
-var damageDoneStepChart = new StepChart('step-test', 'Damage Done');
-const damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy', 'Damage Taken');
+// var damageDoneStepChart = new StepChart('step-test', 'Damage Done', damageDoneStepChart);
+let damageDoneStepChart = new StepChart('step-test', 'Damage Done');
+let damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy', 'Damage Taken');
 
 
 
@@ -126,6 +127,20 @@ ko.applyBindings(detailedDamageTakenTextVm, document.getElementById('damage-take
 // ===================================================
 
 
+
+
+
+
+// ===================================================
+// Graph reconstruction - Changing light/dark mode
+function recreateGraphs() {
+    damageDoneStepChart = new StepChart('step-test', 'Damage Done', damageDoneStepChart);
+    damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy', 'Damage Taken', damageTakenAtDeathChart);
+
+    p.damageDoneStepChart = damageDoneStepChart;
+    deathTrackerViewModel.stepChartDamageTaken = damageTakenAtDeathChart;
+}
+// ===================================================
 
 
 
