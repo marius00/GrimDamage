@@ -127,7 +127,7 @@ ko.applyBindings(detailedDamageTakenTextVm, document.getElementById('damage-take
 // Graph reconstruction - Changing light/dark mode
 function recreateGraphs(mode) {
     if (mode === 'light') {
-        EnableHighchartsLightmode();
+        //EnableHighchartsLightmode();
         $('#bootstrap-theme').attr('href', 'css/vendor/bootstrap.min.css');
     } else {
         EnableHighchartsDarkmode();
@@ -135,10 +135,12 @@ function recreateGraphs(mode) {
     }
 
     damageDoneStepChart = new StepChart('step-test', 'Damage Done', damageDoneStepChart);
-    chartDamageTaken = createChartDamageTaken('container-damage-taken', 100, colors, chartDamageTaken);
-    chartDamageDealt = createChartDamageDealt('container-damage-done', 100, colors, chartDamageDealt);
     p.damageDoneStepChart = damageDoneStepChart;
+
+    chartDamageTaken = createChartDamageTaken('container-damage-taken', 100, colors, chartDamageTaken);
     p.damageTakenGraph = chartDamageTaken;
+
+    chartDamageDealt = createChartDamageDealt('container-damage-done', 100, colors, chartDamageDealt);
     p.damageDealtGraph = chartDamageDealt;
     
 

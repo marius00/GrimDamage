@@ -277,7 +277,7 @@
     <Content Include="Content\js\logic\death-tracker.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\js\light-mode-toggle.js">
+    <Content Include="Content\js\ViewModels\light-mode-toggle.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\logic\pause-tracker.js">
