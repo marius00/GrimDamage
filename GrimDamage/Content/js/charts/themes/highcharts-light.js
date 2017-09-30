@@ -23,7 +23,7 @@ function EnableHighchartsLightmode() {
             }
         },
         xAxis: {
-            gridLineWidth: 0,
+            gridfeWidth: 0,
             lineColor: '#C0D0E0',
             tickColor: '#C0D0E0',
             labels: {

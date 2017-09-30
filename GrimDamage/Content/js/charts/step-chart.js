@@ -2,6 +2,7 @@
     constructor(id, title, previousChart) {
         /// <param name="id">DOM Id of the element to create the chart on</param>
         /// <param name="title">Title of the chart</param>
+        /// <param name="previousChart">The previous object, if being recreated for re-theming</param>
         this.series = {};
 
         const preloadMinutes = 3;
@@ -35,7 +36,7 @@
             }
 
             console.debug('Received preload data', preloadSeries);
-            this.series = previousChart.series;
+            this.series = previousChart.series; // Redundant?
             previousChart.chart.destroy();
         }
         else {
@@ -132,7 +133,7 @@
             });
             this.series[type] = newSeries.index;
         }
-        console.log('Adding damage for', type, 'at', timestamp, 'with', value, 'on', this.chart.series[this.series[type]]);
+        //console.log('Adding damage for', type, 'at', timestamp, 'with', value, 'on', this.chart.series[this.series[type]]);
         this.chart.series[this.series[type]].addPoint([timestamp, Math.round(value)], false);
     }
 

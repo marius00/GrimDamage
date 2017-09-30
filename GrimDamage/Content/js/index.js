@@ -35,23 +35,24 @@ let damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy',
 
 
 // Chart and parsing
-let chartDamageTaken, chartDamageDealt;
-[chartDamageTaken, chartDamageDealt] = loadCharts();
+let chartDamageTaken = createChartDamageTaken('container-damage-taken', 100, colors);
+let chartDamageDealt = createChartDamageDealt('container-damage-done', 100, colors);
 var p = new DamageParser(chartDamageTaken, chartDamageDealt, damageDoneStepChart);
 
 
 setCsharpTickInterval(1000);
-setCsharpLoadHistoryCallback((dataset) => { console.log("Load:", dataset); });
+setCsharpLoadHistoryCallback((dataset) => { console.log('Load:', dataset); });
 
 
 //Modal class
 var Modal = new Modals();
 
 // Track callback events
+let damageTakenChartDiedPopup = createChartDamageTaken('container-died-damage-taken', 10, colors);
 const deathTrackerViewModel = new DeathTrackerViewModel(
     database,
     () => Modal.show('#deathModal'),
-    createChartDamageTaken('container-died-damage-taken', 10),
+    damageTakenChartDiedPopup,
     damageTakenAtDeathChart
 );
 let deathTracker = new DeathTracker(p, deathTrackerViewModel); // damage parser is the current 'track player id' class, may be split later
@@ -77,15 +78,6 @@ setCsharpRequestCallback((type, dataset) => {
 // Damage taken view, pie graph creation
 let damageTakenPieChart = createDamageTakenPieChart('damage-taken-pie-graph');
 let damageTakenPieHandler = new DamageTakenPieHandler(damageTakenPieChart, 60 * 5);
-// ===================================================
-
-
-
-
-// ===================================================
-// Light/Dark mode toggle
-let isDarkModeEnabled = window.location.search.toString().toLowerCase().indexOf('darkmode=1') !== -1;
-ko.applyBindings(new LightModeToggleViewModel(isDarkModeEnabled), document.getElementById('light-mode-view'));
 // ===================================================
 
 
@@ -133,14 +125,36 @@ ko.applyBindings(detailedDamageTakenTextVm, document.getElementById('damage-take
 
 // ===================================================
 // Graph reconstruction - Changing light/dark mode
-function recreateGraphs() {
+function recreateGraphs(mode) {
+    if (mode === 'light') {
+        EnableHighchartsLightmode();
+        $('#bootstrap-theme').attr('href', 'css/vendor/bootstrap.min.css');
+    } else {
+        EnableHighchartsDarkmode();
+        $('#bootstrap-theme').attr('href', 'css/vendor/bootstrap-dark.min.css');
+    }
+
     damageDoneStepChart = new StepChart('step-test', 'Damage Done', damageDoneStepChart);
+    chartDamageTaken = createChartDamageTaken('container-damage-taken', 100, colors, chartDamageTaken);
+    chartDamageDealt = createChartDamageDealt('container-damage-done', 100, colors, chartDamageDealt);
+    p.damageDoneStepChart = damageDoneStepChart;
+    p.damageTakenGraph = chartDamageTaken;
+    p.damageDealtGraph = chartDamageDealt;
+    
+
+
+    damageTakenChartDiedPopup = createChartDamageTaken('container-died-damage-taken', 10, colors, damageTakenChartDiedPopup);
     damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy', 'Damage Taken', damageTakenAtDeathChart);
 
-    p.damageDoneStepChart = damageDoneStepChart;
+    deathTrackerViewModel.damageTakenChart = damageTakenChartDiedPopup;
     deathTrackerViewModel.stepChartDamageTaken = damageTakenAtDeathChart;
 }
+
+// Light/Dark mode toggle
+let isDarkModeEnabled = window.location.search.toString().toLowerCase().indexOf('darkmode=1') !== -1;
+ko.applyBindings(new LightModeToggleViewModel(isDarkModeEnabled, recreateGraphs), document.getElementById('light-mode-view'));
 // ===================================================
+
 
 
 

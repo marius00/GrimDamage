@@ -1,13 +1,4 @@
 ﻿function EnableHighchartsDarkmode() {
-    Highcharts.createElement('link',
-        {
-            href: 'https://fonts.googleapis.com/css?family=Unica+One',
-            rel: 'stylesheet',
-            type: 'text/css'
-        },
-        null,
-        document.getElementsByTagName('head')[0]);
-
     Highcharts.theme = {
         colors: [
             '#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee',
@@ -20,9 +11,6 @@
                     [0, '#2a2a2b'],
                     [1, '#3e3e40']
                 ]
-            },
-            style: {
-                fontFamily: '\'Unica One\', sans-serif'
             },
             plotBorderColor: '#606063'
         },

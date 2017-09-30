@@ -64,6 +64,21 @@ class DetailedDamageTakenTextViewModel {
         }
     }
 
+    triggerFirstPage() {
+        if (this.currentPageNumber() > 0) {
+            this.currentPageNumber(0);
+            this.entries(this.getCurrentSlice());
+        }
+    }
+
+    triggerLastPage() {
+        const lastPage = Math.floor(this.internalData.length / this.linesPerPage);
+        if (this.currentPageNumber() !== lastPage) {
+            this.currentPageNumber(lastPage);
+            this.entries(this.getCurrentSlice());
+        }
+    }
+
     triggerPrevPage() {
         console.log('<');
         if (this.currentPageNumber() > 0) {

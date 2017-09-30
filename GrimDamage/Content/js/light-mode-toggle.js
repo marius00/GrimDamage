@@ -1,19 +1,20 @@
 ﻿
 
 class LightModeToggleViewModel {
-    constructor(enabled) {
+    constructor(enabled, toggleCallback) {
         this.enabled = ko.observable(enabled);
         let self = this;
+        this.toggleCallback = toggleCallback;
     
         this.toggleDarkMode = () => {
             if (self.enabled()) {
-                console.log('Loading "Light mode"');
-                setCsharpLightMode('light');
-                document.location = 'index.html';
+                console.debug('Loading "Light mode"');
+                self.toggleCallback('light');
+                self.enabled(false);
             } else {
-                console.log('Loading "Dark mode"');
-                setCsharpLightMode('dark');
-                document.location = 'index.html?DarkMode=1';
+                console.debug('Loading "Dark mode"');
+                self.toggleCallback('dark');
+                self.enabled(true);
             }
         }
 

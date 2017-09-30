@@ -1,6 +1,140 @@
 
-function createChartDamageTaken(id, sequenceLength) {
-    
+function createChartDamageTaken(id, sequenceLength, colors, previousChart) {
+    /// <param name="id">DOM Id of the element to create the chart on</param>
+    /// <param name="sequenceLength">The length of the sequence to preload</param>
+    /// <param name="previousChart">The previous object, if being recreated for re-theming</param>
+
+    let preloadSeries = [];
+    if (previousChart && previousChart.series) {
+        console.debug('Recreated a chart with existing series', previousChart.series);
+
+
+        for (let key in previousChart.series) {
+            if (previousChart.series.hasOwnProperty(key)) {
+                const s = previousChart.series[key];
+                const data = [];
+                for (let dataKey in s.data) {
+                    if (s.data.hasOwnProperty(dataKey)) {
+                        data.push({
+                            x: s.data[dataKey].x,
+                            y: s.data[dataKey].y
+                        });
+                    }
+                }
+
+                let obj = {
+                    name: s.name,
+                    data: data,
+                    color: s.color,
+                    marker: s.marker || { enabled: false },
+                    type: s.type
+                };
+
+                if (s.fillOpacity)
+                    obj.fillOpacity = s.fillOpacity;
+
+                if (s.tooltip)
+                    obj.tooltip = s.tooltip;
+
+                preloadSeries.push(obj);
+
+            }
+        }
+        console.log('Preload:', preloadSeries);
+    } else {
+        preloadSeries = [
+            {
+                name: 'Total',
+                fillOpacity: 0.1,
+                data: Array.from(Array(sequenceLength), () => null)
+            },
+            {
+                type: 'spline',
+                marker: { enabled: false },
+                name: 'Physical',
+                color: colors.color('Physical'),
+                data: Array.from(Array(sequenceLength), () => null)
+            },
+            {
+                type: 'spline',
+                marker: { enabled: false },
+                name: 'Lightning',
+                color: colors.color('Lightning'),
+                data: Array.from(Array(sequenceLength), () => null)
+            },
+            {
+                type: 'spline',
+                marker: { enabled: false },
+                name: 'Vitality',
+                color: colors.color('Vitality'),
+                data: Array.from(Array(sequenceLength), () => null)
+            },
+            {
+                type: 'spline',
+                marker: { enabled: false },
+                name: 'Aether',
+                color: colors.color('Aether'),
+                data: Array.from(Array(sequenceLength), () => null)
+            },
+            {
+                name: 'Bleeding',
+                marker: { enabled: false },
+                color: colors.color('Bleeding'),
+                data: Array.from(Array(sequenceLength), () => null)
+            },
+            {
+                type: 'spline',
+                marker: { enabled: false },
+                name: 'Acid',
+                color: colors.color('Acid'),
+                data: Array.from(Array(sequenceLength), () => null)
+            },
+            {
+                type: 'spline',
+                marker: { enabled: false },
+                name: 'Pierce',
+                color: colors.color('Pierce'),
+                data: Array.from(Array(sequenceLength), () => null)
+            },
+            {
+                type: 'spline',
+                marker: { enabled: false },
+                name: 'Chaos',
+                color: colors.color('Chaos'),
+                data: Array.from(Array(sequenceLength), () => null)
+            },
+            {
+                type: 'spline',
+                marker: { enabled: false },
+                name: 'PercentCurrentLife',
+                color: colors.color('PercentCurrentLife'),
+                data: Array.from(Array(sequenceLength), () => null)
+            },
+            {
+                type: 'spline',
+                marker: { enabled: false },
+                name: 'LifeLeech',
+                color: colors.color('LifeLeech'),
+                data: Array.from(Array(sequenceLength), () => null)
+            },
+            {
+                type: 'spline',
+                marker: { enabled: false },
+                name: 'Cold',
+                color: colors.color('Cold'),
+                data: Array.from(Array(sequenceLength), () => null)
+            },
+            {
+                type: 'spline',
+                marker: { enabled: false },
+                name: 'Fire',
+                color: colors.color('Fire'),
+                data: Array.from(Array(sequenceLength), () => null)
+            }
+        ];
+    }
+
+
     return Highcharts.chart(id,
         {
             chart: {
@@ -61,98 +195,69 @@ function createChartDamageTaken(id, sequenceLength) {
                     }
                 }
             },
-            series: [
-                {
-                    name: 'Total',
-                    fillOpacity: 0.1,
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-                {
-                    type: 'spline',
-                    marker: { enabled: false },
-                    name: 'Physical',
-                    color: '#000000',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-                {
-                    type: 'spline',
-                    marker: { enabled: false },
-                    name: 'Lightning',
-                    color: '#4658f8',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-                {
-                    type: 'spline',
-                    marker: { enabled: false },
-                    name: 'Vitality',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-                {
-                    type: 'spline',
-                    marker: { enabled: false },
-                    name: 'Aether',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-                {
-                    name: 'Bleeding',
-                    marker: { enabled: false },
-                    color: '#ffaec9',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-                {
-                    type: 'spline',
-                    marker: { enabled: false },
-                    color: '#00ff00',
-                    name: 'Acid',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-                {
-                    type: 'spline',
-                    marker: { enabled: false },
-                    color: '#ffffff',
-                    name: 'Pierce',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-
-                {
-                    type: 'spline',
-                    marker: { enabled: false },
-                    name: 'Chaos',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-
-                {
-                    type: 'spline',
-                    marker: { enabled: false },
-                    name: 'PercentCurrentLife',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-
-                {
-                    type: 'spline',
-                    marker: { enabled: false },
-                    name: 'LifeLeech',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-                {
-                    type: 'spline',
-                    marker: { enabled: false },
-                    color: '#0000ff',
-                    name: 'Cold',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-                {
-                    type: 'spline',
-                    marker: { enabled: false },
-                    color: '#ff0000',
-                    name: 'Fire',
-                    data: Array.from(Array(sequenceLength), () => null)
-                }
-            ]
+            series: preloadSeries
         });
 }
 
-function createChartDamageDealt(id, sequenceLength) {
+function createChartDamageDealt(id, sequenceLength, colors, previousChart) {
+    let preloadSeries = [
+        {
+            name: 'Total',
+            color: colors.color('Total'),
+            data: Array.from(Array(sequenceLength), () => null)
+        },
+        {
+            type: 'spline',
+            marker: { enabled: false },
+            name: 'Single Target',
+            color: colors.color('Single Target'),
+            data: Array.from(Array(sequenceLength), () => null)
+        }
+        /*
+        {
+            type: 'flags',
+            name: 'EventLine',
+            color: '#333333',
+            shape: 'circlepin',
+            y: 15,
+            gapUnit: 'value',
+            data: Array.from(Array(sequenceLength), () => null),
+            //onSeries: 'Single Target',
+            showInLegend: false
+        }*/
+    ];
+
+
+    if (previousChart && previousChart.series) {
+        console.debug('Recreated a chart with existing series', previousChart.series);
+
+        for (let key in previousChart.series) {
+            if (previousChart.series.hasOwnProperty(key)) {
+                const s = previousChart.series[key];
+                const data = [];
+                for (let dataKey in s.data) {
+                    if (s.data.hasOwnProperty(dataKey)) {
+                        data.push({
+                            x: s.data[dataKey].x,
+                            y: s.data[dataKey].y
+                        });
+                    }
+                }
+
+                preloadSeries.push({
+                    name: s.name,
+                    data: data,
+                    color: s.color || colors.color(s.name),
+                    marker: s.marker || { enabled: false },
+                    type: s.type
+                });
+
+            }
+        }
+
+        console.log('Preload:', preloadSeries);
+    }
+
     return Highcharts.chart(id,
         {
             chart: {
@@ -223,31 +328,7 @@ function createChartDamageDealt(id, sequenceLength) {
                     }
                 }
             },
-            series: [
-                {
-                    name: 'Total',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-                {
-                    type: 'spline',
-                    marker: { enabled: false },
-                    name: 'Single Target',
-                    color: '#000000',
-                    data: Array.from(Array(sequenceLength), () => null)
-                },
-                /*
-                {
-                    type: 'flags',
-                    name: 'EventLine',
-                    color: '#333333',
-                    shape: 'circlepin',
-                    y: 15,
-                    gapUnit: 'value',
-                    data: Array.from(Array(sequenceLength), () => null),
-                    //onSeries: 'Single Target',
-                    showInLegend: false
-                }*/
-            ]
+            series: preloadSeries
         });
 }
 
@@ -285,12 +366,3 @@ function createPieChartDamageTaken(id) {
         });
 <<<<<<< HEAD dataTable
         */
-
-
-function loadCharts() {
-    let damageTakenChart = createChartDamageTaken('container-damage-taken', 100);
-    let damageDealtChart = createChartDamageDealt('container-damage-done', 100);
-    //let damageTakenPie = createPieChartDamageTaken('container-damage-taken-pie');
-
-    return [damageTakenChart, damageDealtChart];
-}

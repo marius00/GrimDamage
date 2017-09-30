@@ -24,13 +24,13 @@
     }
 
     color(typeRaw) {
-        let type = typeRaw.toLowerCase();
+        const type = typeRaw.toLowerCase();
         if (this.colors.hasOwnProperty(type)) {
             return this.colors[type];
         }
         else {
-            console.log("Unknown color: " + type);
-            return "#000000".replace(/0/g, function () { return (~~(Math.random() * 16)).toString(16); });
+            console.log('Unknown color: ' + type);
+            return '#000000'.replace(/0/g, function () { return (~~(Math.random() * 16)).toString(16); });
         }
     }
 }
