@@ -1,10 +1,7 @@
 ﻿// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 class DamageParser {
-    constructor(damageTakenGraph, damageDealtGraph, damageDoneStepChart) {
-        this.lastPlayerLocation = '';
-        this.currentXAxis = 100;
+    constructor(damageTakenGraph, damageDoneStepChart) {
         this.previousDamageTaken = {};
-        this.damageDealtGraph = damageDealtGraph;
         this.damageTakenGraph = damageTakenGraph;
         this.damageDoneStepChart = damageDoneStepChart;
         let dataTable = $('#bosstable').DataTable({
@@ -24,19 +21,14 @@ class DamageParser {
         this.bosschart = this.modals.addBossModal();
     }
 
-    tick(players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) {
+    tick(players, damageDealt, damageTaken, damageDealtSingleTarget, detailedDamageDealt, detailedDamageTaken, entitiesList) {
         this.players = players; // Just a convinience so we don't need to call getMainPlayerId(players)
 
-        this.currentXAxis++;
-        this.dataReceived(players, damageDealt, damageTaken, damageDealtSingleTarget);
+        this.dataReceived(damageDealt, damageTaken, damageDealtSingleTarget); // TODO: OBSOLETE!
 
         this.handleEntitiesList(entitiesList);
         this.handleDetailedDamageTaken(detailedDamageTaken);
         this.handleDetailedDamageDealt(detailedDamageDealt);
-
-        if (this.lastPlayerLocation !== playerLocationName && playerLocationName !== undefined && playerLocationName !== 'Unknown') {
-            this.updatePlayerLocation(playerLocationName);
-        }
     }
 
     showboss() {
@@ -97,13 +89,15 @@ class DamageParser {
                 if (this.bosses.hasOwnProperty(dmg.attackerId)) {
                     /* First time we're seeing this damage-type on boss? */
                     if (!this.bosses[dmg.attackerId]['taken'].hasOwnProperty(dmg.damageType)) {
-                        this.bosses[dmg.attackerId]['taken'][dmg.damageType] = 0;
+                        this.bosses[dmg.attackerId]['taken'][dmg.dmamageType] = 0;
                     }
                     this.bosses[dmg.attackerId]['taken'][dmg.damageType] += Math.round(dmg.amount);
                 }
             }
         }
     }
+
+
     handleDetailedDamageDealt(data) {
         //console.log("Playerid: " + this.mainPlayerId);
         //console.log(data);
@@ -127,14 +121,14 @@ class DamageParser {
             }
         }
     }
-
+    // TODO: Move to database
     get mainPlayerId() {
         return this.players.filter(p => p.isPrimary).map(p => p.id)[0] || this.players.map(p => p.id)[0];
     }
 
 
 
-    addDamageDealt(id, damageDealt, damageDealtSingleTarget) {
+    addDamageDealt(id, damageDealt) {
         if (damageDealt[id]) {
             /* Add to stepChart */
             let timestamp = (new Date()).getTime();
@@ -142,48 +136,12 @@ class DamageParser {
                 this.damageDoneStepChart.addPoint(damageDealt[id][c].damageType, timestamp, damageDealt[id][c].amount);
             }
             this.damageDoneStepChart.redraw();
-
-
-            const total = damageDealt[id].filter(s => s.damageType === 'Total')[0];
-            const totalSingle = damageDealtSingleTarget[id].filter(s => s.damageType === 'Total')[0];
-            if (total) {
-                //console.log("Adding ", damageDealt[id][i].amount, ' to ', damageDealt[id][i].damageType);
-                // TODO: Add series if it doesn't exist, that would resolve the issue with having damage types stored 2 places (js and c#)
-                // TODO: This is critical, new damage types are being discovered
-                // TODO: if it does not exist, it needs to be added!
-
-                const dmg = total.amount;
-                this.damageDealtGraph.series.filter(s => s.name === 'Total')[0].addPoint(dmg,
-                    totalSingle === undefined,
-                    true);
-            }
-
-            if (totalSingle) {
-                const dmg = totalSingle.amount;
-                this.damageDealtGraph.series.filter(s => s.name === 'Single Target')[0].addPoint(dmg, true, true);
-            }
         }
     }
 
     addDamageTaken(elem) {
         const dmg = elem.amount;
         const type = elem.damageType;
-
-        /* Pie chart of total damage recieved */
-        if (!isNaN(dmg) && type != "Total" && dmg > 0 && false) {
-            if (!this.totalDamageTaken.hasOwnProperty(type)) {
-                this.totalDamageTaken[type] = 0;
-            }
-            this.totalDamageTaken[type] += Math.round(dmg);
-            var temp = this.totalDamageTaken; //this.totalDamageTaken[data] wouldn't work two lines down
-            var out = Object.keys(this.totalDamageTaken).map(function (data) {
-                return [data, temp[data]];
-            });
-            this.damageTakenPie.series[0].setData(out);
-        }
-        /* Pie chart end */
-
-         
 
         const chart = this.damageTakenGraph.series.filter(s => s.name === type)[0];
         if (dmg > 2) {
@@ -204,7 +162,7 @@ class DamageParser {
     }
 
 
-    dataReceived(players, damageDealt, damageTaken, damageDealtSingleTarget) {
+    dataReceived(damageDealt, damageTaken, damageDealtSingleTarget) {
         const playerId = this.mainPlayerId;
         if (playerId && damageTaken[playerId]) {
             this.addDamageDealt(playerId, damageDealt, damageDealtSingleTarget);
@@ -218,19 +176,6 @@ class DamageParser {
             this.damageTakenGraph.redraw();
             
         }
-        else {
-            //console.log('No player yet.. skipping graph..');
-        }
     }
 
-
-    updatePlayerLocation(playerLocationName) {
-        console.log('updating player position to ', playerLocationName);
-        this.lastPlayerLocation = playerLocationName;
-        /*
-        this.damageDealtGraph.series.filter(s => s.name === 'EventLine')[0].addPoint({
-            text: this.lastPlayerLocation,
-            title: this.lastPlayerLocation
-        });*/
-    }
 }

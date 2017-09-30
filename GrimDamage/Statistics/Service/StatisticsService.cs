@@ -61,7 +61,7 @@ namespace GrimDamage.Statistics.Service {
 
             return entries;
         }
-
+        [Obsolete]
         public List<DamageBlockedJson> GetDamageBlocked(int playerId) {
             return _damageParsingService.GetEntity(playerId).DamageBlocked
                 .Select(m => new DamageBlockedJson {
@@ -70,7 +70,7 @@ namespace GrimDamage.Statistics.Service {
                 })
                 .ToList();
         }
-
+        [Obsolete]
         public List<DetailedDamageDealtJson> GetDetailedLatestDamageDealt(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);
             if (player == null || player.DamageDealt.Count == 0) {
@@ -199,7 +199,7 @@ namespace GrimDamage.Statistics.Service {
                 return result;
             }
         }
-
+        [Obsolete]
         public List<DetailedDamageTakenJson> GetDetailedLatestDamageTaken(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);
             if (player == null || player.DamageTaken.Count == 0) {
@@ -220,7 +220,7 @@ namespace GrimDamage.Statistics.Service {
                 return result;
             }
         }
-
+        [Obsolete]
         public List<SimpleDamageEntryJson> GetLatestDamageTaken(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);
 
@@ -241,7 +241,7 @@ namespace GrimDamage.Statistics.Service {
                 return Normalize(result);
             }
         }
-
+        [Obsolete]
         public List<SimpleDamageEntryJson> GetLatestDamageDealt(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);
 
@@ -263,6 +263,7 @@ namespace GrimDamage.Statistics.Service {
             }
         }
         
+        [Obsolete]
         public List<SimpleDamageEntryJson> GetLatestDamageDealtToSingleTarget(int playerId) {
             var player = _damageParsingService.GetEntity(playerId);
 

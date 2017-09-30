@@ -7,6 +7,7 @@
 
         const preloadMinutes = 3;
         let preloadSeries = [];
+        let maxExtreme = 0;
         if (previousChart && previousChart.series) {
             console.debug('Recreated a chart with existing series', previousChart.series, 'from', previousChart.chart.series);
 
@@ -21,6 +22,10 @@
                                 x: s.data[dataKey].x,
                                 y: s.data[dataKey].y
                             });
+
+                            if (s.data[dataKey].x > maxExtreme) {
+                                maxExtreme = s.data[dataKey].x;
+                            } 
                         }
                     }
 
@@ -40,23 +45,27 @@
             previousChart.chart.destroy();
         }
         else {
+            let generatedData = (function() {
+                // generate an array of random data
+                const data = [];
+                const time = (new Date()).getTime();
+                let i;
+
+                for (i = -(preloadMinutes * 60 + 1); i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: 0
+                    });
+                }
+                return data;
+            }());
+
             preloadSeries.push({
                 name: 'Total',
-                data: (function() {
-                    // generate an array of random data
-                    const data = [];
-                    const time = (new Date()).getTime();
-                    let i;
-
-                    for (i = -(preloadMinutes * 60 + 1); i <= 0; i += 1) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: 0
-                        });
-                    }
-                    return data;
-                }())
+                data: generatedData
             });
+
+            maxExtreme = generatedData[generatedData.length - 1].x;
         }
 
         this.chart = Highcharts.stockChart(id, {
@@ -69,7 +78,11 @@
                 }
             },
             chart: {
-                animation: false
+                animation: false,
+                
+                load: function () {
+                    //this.xAxis[0].setExtremes(maxExtreme - 60 * 3 * 1000, maxExtreme + 1000);
+                }
             },
             series: preloadSeries,
             rangeSelector: {
@@ -101,13 +114,17 @@
                     type: 'all',
                     text: 'All'
                 }],
-                inputEnabled: false,
+                inputEnabled: true,
                 selected: 4
             },
             title: {
                 text: title
+            },
+            navigator: {
+                adaptToUpdatedData: true
             }
         });
+
 
         console.debug(`There are ${preloadSeries.length} series in this graph. Storing locally`);
         for (let idx = 0; idx < preloadSeries.length; idx++) {

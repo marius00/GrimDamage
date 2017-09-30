@@ -305,7 +305,7 @@ class DeathTrackerViewModel {
         /// <summary>Add a death</summary>  
         const labelTimestamp = new Date(death.timestamp).toLocaleTimeString();
         const murdererId = this.getPrimaryAttackerId(death.timestamp);
-        const murdererName = this.database.getEntity(murdererId);
+        const murdererName = this.database.getEntity(murdererId).name;
         const locations = this.database.getPlayerLocation(0, death.timestamp);
         const location = locations[locations.length - 1] || { location: 'Unknown' };
 

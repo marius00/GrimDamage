@@ -58,7 +58,8 @@ class DetailedDamageTakenTextViewModel {
 
     triggerNextPage() {
         console.log('>');
-        if (this.currentPageNumber() < this.internalData.length / this.linesPerPage) {
+        const lastPage = Math.floor(this.internalData.length / this.linesPerPage);
+        if (this.currentPageNumber() < lastPage) {
             this.currentPageNumber(this.currentPageNumber() + 1);
             this.entries(this.getCurrentSlice());
         }
@@ -100,7 +101,7 @@ class DetailedDamageTakenTextViewModel {
             damageType: damageType,
             timestamp: date.toLocaleTimeString('en-us', options) + '.' + (`000${date.getMilliseconds()}`).slice(-3),
             location: location.location,
-            attacker: this.database.getEntity(entityId)
+            attacker: this.database.getEntity(entityId).name
         }
     }
 

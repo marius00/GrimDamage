@@ -204,6 +204,7 @@ function createChartDamageDealt(id, sequenceLength, colors, previousChart) {
         {
             name: 'Total',
             color: colors.color('Total'),
+            fillOpacity: 0.3,
             data: Array.from(Array(sequenceLength), () => null)
         },
         {
@@ -213,18 +214,6 @@ function createChartDamageDealt(id, sequenceLength, colors, previousChart) {
             color: colors.color('Single Target'),
             data: Array.from(Array(sequenceLength), () => null)
         }
-        /*
-        {
-            type: 'flags',
-            name: 'EventLine',
-            color: '#333333',
-            shape: 'circlepin',
-            y: 15,
-            gapUnit: 'value',
-            data: Array.from(Array(sequenceLength), () => null),
-            //onSeries: 'Single Target',
-            showInLegend: false
-        }*/
     ];
 
 

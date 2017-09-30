@@ -12,6 +12,7 @@
 /// <reference path="logic/pie-chart-damage-taken-processor.js" />
 /// <reference path="data/Database.js" />
 /// <reference path="ViewModels/death-tracker-viewmodel.js" />
+/// <reference path="logic/graph-damage-dealt-single-aoe.js" />
 
 enableLogToCsharp();
 
@@ -36,8 +37,11 @@ let damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy',
 
 // Chart and parsing
 let chartDamageTaken = createChartDamageTaken('container-damage-taken', 100, colors);
+var p = new DamageParser(chartDamageTaken, damageDoneStepChart);
+
 let chartDamageDealt = createChartDamageDealt('container-damage-done', 100, colors);
-var p = new DamageParser(chartDamageTaken, chartDamageDealt, damageDoneStepChart);
+let damageDealtGraphHandler = new DamageDealtGraphLogicHandler(database, chartDamageDealt);
+
 
 
 setCsharpTickInterval(1000);
@@ -127,10 +131,9 @@ ko.applyBindings(detailedDamageTakenTextVm, document.getElementById('damage-take
 // Graph reconstruction - Changing light/dark mode
 function recreateGraphs(mode) {
     if (mode === 'light') {
-        //EnableHighchartsLightmode();
         $('#bootstrap-theme').attr('href', 'css/vendor/bootstrap.min.css');
     } else {
-        EnableHighchartsDarkmode();
+        EnableHighchartsDarkmode(); // Apply graph theme
         $('#bootstrap-theme').attr('href', 'css/vendor/bootstrap-dark.min.css');
     }
 
@@ -141,7 +144,7 @@ function recreateGraphs(mode) {
     p.damageTakenGraph = chartDamageTaken;
 
     chartDamageDealt = createChartDamageDealt('container-damage-done', 100, colors, chartDamageDealt);
-    p.damageDealtGraph = chartDamageDealt;
+    damageDealtGraphHandler.setDamageDealtGraph(chartDamageDealt);
     
 
 
@@ -169,12 +172,11 @@ setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarge
             damageDealt,
             damageTaken,
             damageDealtSingleTarget,
-            playerLocationName,
             detailedDamageDealt,
             detailedDamageTaken,
             entitiesList);
 
-        const playerId = p.mainPlayerId;
+        const playerId = database.getMainPlayerEntityId();
         if (playerId && detailedDamageTaken[playerId]) {
             damageTakenPieHandler.addDamageTaken(detailedDamageTaken[playerId]);
 
@@ -197,6 +199,20 @@ setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarge
 
         database.setPlayerLocation(playerLocationName);
         database.setEntities(entitiesList);
+
+
+        // Request new detailed damage dealt
+        if (playerId) {
+            data.requestData(TYPE_DETAILED_DAMAGE_DEALT,
+                database.getHighestDamageDealtTimestamp().toString(), // TODO: Method missing
+                TimestampEverything.toString(),
+                playerId,
+                'database.addDetailedDamageDealt');
+        }
+
+
+        // Tick/update for damage dealt graph
+        damageDealtGraphHandler.update();
     }
     //VM.isZoneUnknown(playerLocationName === 'Unknown');
 });

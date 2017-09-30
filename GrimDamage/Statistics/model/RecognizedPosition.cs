@@ -10,6 +10,6 @@ namespace GrimDamage.Statistics.model {
         public float X { get; set; }
         public float Y { get; set; }
         public float Z { get; set; }
-        public int Zone { get; set; }
+        public long Zone { get; set; }
     }
 }

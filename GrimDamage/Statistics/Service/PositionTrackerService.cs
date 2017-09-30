@@ -249,6 +249,14 @@ namespace GrimDamage.Statistics.Service {
                 Zone = -1945766,
                 Name = "Withering Fields"
             },
+            new RecognizedPosition {
+                Zone = 0xF4634CFC,
+                Name = "Mountain Deeps"
+            },
+            new RecognizedPosition {
+                Zone = 0xCD664903,
+                Name = "Mountain Deeps"
+            },
         };
 
         public PlayerPosition PlayerPosition { get; private set; }
