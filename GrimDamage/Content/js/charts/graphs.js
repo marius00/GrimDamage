@@ -42,11 +42,28 @@ function createChartDamageTaken(id, sequenceLength, colors, previousChart) {
         }
         console.log('Preload:', preloadSeries);
     } else {
+        /*
+        let pdata = [];
+        for (let idx = 0; idx < sequenceLength; idx++) {
+            pdata.push({
+
+            });
+        }*/
         preloadSeries = [
             {
                 name: 'Total',
                 fillOpacity: 0.1,
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                color: colors.color('Total')
+            },
+            {
+                name: 'Raw Total',
+                fillOpacity: 0.03,
+                data: Array.from(Array(sequenceLength), () => null),
+                color: colors.color('Raw Total'),
+                tooltip: {
+                    pointFormat: 'Received <b>{point.y:,.0f}</b> {series.name} damage'
+                }
             },
             {
                 type: 'spline',
