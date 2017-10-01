@@ -1,8 +1,6 @@
 ﻿// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 class DamageParser {
-    constructor(damageTakenGraph, damageDoneStepChart) {
-        this.previousDamageTaken = {};
-        this.damageTakenGraph = damageTakenGraph;
+    constructor(damageDoneStepChart) {
         this.damageDoneStepChart = damageDoneStepChart;
         let dataTable = $('#bosstable').DataTable({
             "columns": [
@@ -13,10 +11,8 @@ class DamageParser {
         $('#bosstable tbody').on('click', 'tr', this.showboss);
         this.dataTable = dataTable;
         this.players = [];
-        this.totalDamageTaken = [];
         this.bosses = {};
         this.modals = new Modals();
-
 
         this.bosschart = this.modals.addBossModal();
     }
@@ -139,42 +135,12 @@ class DamageParser {
         }
     }
 
-    addDamageTaken(elem) {
-        const dmg = elem.amount;
-        const type = elem.damageType;
-
-        const chart = this.damageTakenGraph.series.filter(s => s.name === type)[0];
-        if (dmg > 2) {
-            chart.addPoint(dmg, false, true);
-        }
-        else {
-            // If this is a consecutive 0, cut out the damage type sequence
-            if (this.previousDamageTaken[type] !== undefined && this.previousDamageTaken[type] <= 0) {
-                chart.addPoint(0, false, true);
-            }
-            // If this is the first zero, draw it, so the line goes back down to 0
-            else {
-                chart.addPoint(dmg, false, true);
-            }
-        }
-
-        this.previousDamageTaken[type] = dmg;
-    }
 
 
     dataReceived(damageDealt, damageTaken, damageDealtSingleTarget) {
         const playerId = this.mainPlayerId;
         if (playerId && damageTaken[playerId]) {
             this.addDamageDealt(playerId, damageDealt, damageDealtSingleTarget);
-
-            for (let i = 0; i < damageTaken[playerId].length; i++) {
-                const elem = damageTaken[playerId][i];
-                this.addDamageTaken(elem);
-            }
-
-            // Redraw
-            this.damageTakenGraph.redraw();
-            
         }
     }
 

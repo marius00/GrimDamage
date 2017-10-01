@@ -103,7 +103,17 @@ class DeathTrackerViewModel {
                             value[idx].damageType,
                             value[idx].timestamp,
                             value[idx].amount);
-                        self.stepChartDamageTaken.addPoint(value[idx].damageType, value[idx].timestamp, value[idx].amount);
+
+                        const resist = self.database.getResists(value[idx].damageType, value[idx].timestamp);
+                        const extrapolated = this.extrapolateForResists(value[idx].amount, resist);
+                        self.stepChartDamageTaken.addPoint(
+                            {
+                                y: value[idx].damageType,
+                                extrapolated: extrapolated // TODO: Add this to tooltip
+                            },
+                            value[idx].timestamp,
+                            value[idx].amount
+                        );
                     }
                     console.debug('Received damage data for death:', value);
 
@@ -319,5 +329,12 @@ class DeathTrackerViewModel {
 
         this.deaths.push(d);
         this.showDeath(d);
+    }
+
+    extrapolateForResists(damage, resists) {
+        /// <summary>Extrapolate how much damage was really taken, before resists</summary>  
+        /// <param name="damage">How much damage was taken</param>
+        /// <param name="resists">The player resist for this damage type</param>
+        return damage / ((100 - resists) / 100);
     }
 }

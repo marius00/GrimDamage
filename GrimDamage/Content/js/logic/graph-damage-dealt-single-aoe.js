@@ -7,7 +7,7 @@ class DamageDealtGraphLogicHandler {
         this.database = database;
     }
 
-    setDamageDealtGraph(graph) {
+    setGraph(graph) {
         /// <summary>Set the graph element, typically after having remade it with a new theme</summary>
         this.damageDealtGraph = graph;
     }
@@ -63,7 +63,7 @@ class DamageDealtGraphLogicHandler {
             const damageDealt = this.database.getDamageDealt(this.lastRunTime, 888888888888888888888);
             const damageDealtSingleTarget = this.getSingleTargetDamage(damageDealt);
             const damageDealtTotal = this.getTotalDamage(damageDealt);
-            console.debug('Updating damage dealt graph with',
+            console.debug('Updating damage DEALT graph with',
                 damageDealtSingleTarget,
                 damageDealtTotal,
                 'from',

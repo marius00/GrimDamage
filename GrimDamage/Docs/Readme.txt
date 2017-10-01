@@ -8,6 +8,8 @@ Unmapped / uncharted territory:
 * Get player class[es] from in-game? [for pets]		-- unknown, suspect somewhat tricky  // mastery
 
 TODO:
+* Graph with the players and boss resist, per second (to track debuffs)
+* Make the damage taken graph include armor for figuring out physical damage taken
 ** Find out how to fetch resists, and combine resist+blocked+absorbed data into showing real damage taken
 ** Stop updating graphs and text when the tab is closed
 * http://gridstackjs.com/ Would be very flexible

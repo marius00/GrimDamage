@@ -13,6 +13,7 @@
 /// <reference path="data/Database.js" />
 /// <reference path="ViewModels/death-tracker-viewmodel.js" />
 /// <reference path="logic/graph-damage-dealt-single-aoe.js" />
+/// <reference path="logic/graph-damage-taken-graph-handler.js" />
 
 enableLogToCsharp();
 
@@ -36,8 +37,11 @@ let damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy',
 
 
 // Chart and parsing
-let chartDamageTaken = createChartDamageTaken('container-damage-taken', 100, colors);
-var p = new DamageParser(chartDamageTaken, damageDoneStepChart);
+var p = new DamageParser(damageDoneStepChart);
+
+
+let chartDamageTaken = createChartDamageTaken('container-damage-taken', 100, colors); // TODO set this the rightplace!
+let damageTakenGraphLogichandler = new DamageTakenGraphLogichandler(database, chartDamageTaken);
 
 let chartDamageDealt = createChartDamageDealt('container-damage-done', 100, colors);
 let damageDealtGraphHandler = new DamageDealtGraphLogicHandler(database, chartDamageDealt);
@@ -141,10 +145,10 @@ function recreateGraphs(mode) {
     p.damageDoneStepChart = damageDoneStepChart;
 
     chartDamageTaken = createChartDamageTaken('container-damage-taken', 100, colors, chartDamageTaken);
-    p.damageTakenGraph = chartDamageTaken;
+    damageTakenGraphLogichandler.setGraph(chartDamageTaken);
 
     chartDamageDealt = createChartDamageDealt('container-damage-done', 100, colors, chartDamageDealt);
-    damageDealtGraphHandler.setDamageDealtGraph(chartDamageDealt);
+    damageDealtGraphHandler.setGraph(chartDamageDealt);
     
 
 
@@ -184,7 +188,6 @@ setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarge
                 database.reset();
             }
 
-            database.addDetailedDamageTaken(detailedDamageTaken[playerId]);
             lastPlayerId = playerId;
 
             detailedDamageTakenTextVm.update();
@@ -203,6 +206,12 @@ setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarge
 
         // Request new detailed damage dealt
         if (playerId) {
+            data.requestData(TYPE_DETAILED_DAMAGE_TAKEN,
+                database.getHighestDamageTakenTimestamp().toString(),
+                TimestampEverything,
+                playerId,
+                'database.addDetailedDamageTaken');
+
             data.requestData(TYPE_DETAILED_DAMAGE_DEALT,
                 database.getHighestDamageDealtTimestamp().toString(),
                 TimestampEverything,
@@ -220,6 +229,7 @@ setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarge
 
         // Tick/update for damage dealt graph
         damageDealtGraphHandler.update();
+        damageTakenGraphLogichandler.update();
     }
     //VM.isZoneUnknown(playerLocationName === 'Unknown');
 });

@@ -3,6 +3,7 @@
 class Database {
     constructor() {
         this.detailedDamageTaken = [];
+        this.detailedDamageTakenMaxTimestamp = 0;
 
         this.detailedDamageDealt = [];
         this.detailedDamageDealtMaxTimestamp = 0;
@@ -21,6 +22,8 @@ class Database {
         this.entitiesRaw = [];
     }
 
+
+
     addResists(elements) {
         /// <summary>Add new "resist" entries to the DB</summary>
         this.resists = this.resists.concat(elements);
@@ -33,11 +36,14 @@ class Database {
 
     getHighestResistTimestamp() {
         return this.resistsMaxTimestamp;
-        
     }
 
     getHighestDamageDealtTimestamp() {
         return this.detailedDamageDealtMaxTimestamp;
+    }
+
+    getHighestDamageTakenTimestamp() {
+        return this.detailedDamageTakenMaxTimestamp;
     }
 
     addDetailedDamageDealt(elements) {
@@ -53,6 +59,11 @@ class Database {
     addDetailedDamageTaken(elements) {
         /// <summary>Add new "detailed damage taken" entries to the DB</summary>
         this.detailedDamageTaken = this.detailedDamageTaken.concat(elements);
+        for (let idx = 0; idx < elements.length; idx++) {
+            if (elements[idx].timestamp > this.detailedDamageTakenMaxTimestamp) {
+                this.detailedDamageTakenMaxTimestamp = elements[idx].timestamp; // TODO :Linq?
+            }
+        }
     }
 
     setEntities(entities) {
@@ -114,10 +125,22 @@ class Database {
         /// <returns type="Numeric">ID of the player, or best guess if uncertain.</returns>
         const b = this.entitiesRaw;
         return b.filter(p => p.isPrimary).map(p => p.id)[0]
-            || b.filter(p => p.type === 'Player').map(p => p.id)[0]
+            || b.filter(p => p.name === 'Player').map(p => p.id)[0] // Type is not enough, sometimes we got the type correct but no name.. weird!?
             || b.map(p => p.id)[0];
     }
 
+    getResists(damageType, timestamp) {
+        /// <summary>Get resist of the **player** at a given point in time</summary>
+        /// <returns type="String">Damage/resist type</returns>
+        /// <returns type="Numeric">Timestamp of the occurance</returns>
+        try {
+            return Enumerable.From(database.resists)
+                .Where((x) => x.type === damageType && x.timestamp < timestamp)
+                .MaxBy((x) => x.timestamp).amount;
+        } catch (e) {
+            return 0; // No clue
+        }
+    }
 
     reset() {
         // NOOP
