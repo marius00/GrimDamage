@@ -62,7 +62,9 @@
 
             preloadSeries.push({
                 name: 'Total',
-                data: generatedData
+                data: generatedData,
+                fillOpacity: 0.6,
+                type: 'area'
             });
 
             maxExtreme = generatedData[generatedData.length - 1].x;

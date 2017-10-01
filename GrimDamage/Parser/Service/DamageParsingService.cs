@@ -9,6 +9,7 @@ using GrimDamage.Tracking.Model;
 using GrimDamage.Utility;
 using log4net;
 using log4net.Repository.Hierarchy;
+using MoreLinq;
 
 namespace GrimDamage.Parser.Service {
     public class DamageParsingService {
@@ -179,6 +180,37 @@ namespace GrimDamage.Parser.Service {
 
         public void SetAbsorb(double amount) {
             
+        }
+
+        public void SetResist(int entityId, ResistType type, float amount) {
+            if (type == ResistType.Unknown1 || type == ResistType.Unknown2) {
+                return;
+            }
+            Entity entity = GetOrCreate(entityId);
+
+
+
+            if (entity.Resists.Any(m => m.Type == type)) {
+                ResistUpdatedEntry previousEntry = entity.Resists
+                    .Where(m => m.Type == type)
+                    .MaxBy(m => m.Time);
+
+                if (Math.Abs(previousEntry.Amount - amount) >= 1) {
+                    entity.Resists.Add(new ResistUpdatedEntry {
+                        Amount = amount,
+                        Type = type,
+                        Time = DateTime.UtcNow
+                    });
+
+                }
+            }
+            else {
+                entity.Resists.Add(new ResistUpdatedEntry {
+                    Amount = amount,
+                    Type = type,
+                    Time = DateTime.UtcNow
+                });
+            }
         }
 
         public void ApplyReflect(double amount) {

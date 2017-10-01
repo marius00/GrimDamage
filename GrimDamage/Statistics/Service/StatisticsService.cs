@@ -177,6 +177,29 @@ namespace GrimDamage.Statistics.Service {
                 return result;
             }
         }
+        
+        public List<ResistEntryJson> GetResists(int entityId, long start, long end) {
+            var entity = _damageParsingService.GetEntity(entityId);
+            if (entity == null || entity.Resists.Count == 0) {
+                return new List<ResistEntryJson>();
+            }
+            else {
+                var from = Timestamp.ToDateTimeFromMilliseconds(start);
+                var to = Timestamp.ToDateTimeFromMilliseconds(end);
+                var result = entity.Resists
+                    .Where(dmg => dmg.Time > from && dmg.Time < to)
+                    .Select(m => new ResistEntryJson {
+                        EntityId = entityId,
+                        Type = m.Type.ToString(),
+                        Amount = m.Amount,
+                        Timestamp = Timestamp.ToUtcMilliseconds(m.Time)
+                    })
+                    .ToList();
+
+                return result;
+            }
+        }
+
 
         public List<DetailedDamageTakenJson> GetDetailedLatestDamageTaken(int playerId, long start, long end) {
             var player = _damageParsingService.GetEntity(playerId);

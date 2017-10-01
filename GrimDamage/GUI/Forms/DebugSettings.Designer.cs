@@ -30,6 +30,7 @@
             this.cbLogPlayerMovement = new System.Windows.Forms.CheckBox();
             this.cbLogPlayerDetection = new System.Windows.Forms.CheckBox();
             this.cbLogHitpointChanges = new System.Windows.Forms.CheckBox();
+            this.cbLogResistsOnAttack = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // cbEnableInvestigativeLogging
@@ -116,11 +117,24 @@
             this.cbLogHitpointChanges.UseVisualStyleBackColor = true;
             this.cbLogHitpointChanges.CheckedChanged += new System.EventHandler(this.cbLogHitpointChanges_CheckedChanged);
             // 
+            // cbLogResistsOnAttack
+            // 
+            this.cbLogResistsOnAttack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbLogResistsOnAttack.AutoSize = true;
+            this.cbLogResistsOnAttack.Location = new System.Drawing.Point(441, 193);
+            this.cbLogResistsOnAttack.Name = "cbLogResistsOnAttack";
+            this.cbLogResistsOnAttack.Size = new System.Drawing.Size(124, 17);
+            this.cbLogResistsOnAttack.TabIndex = 11;
+            this.cbLogResistsOnAttack.Text = "Log resists on attack";
+            this.cbLogResistsOnAttack.UseVisualStyleBackColor = true;
+            this.cbLogResistsOnAttack.CheckedChanged += new System.EventHandler(this.cbLogResistsOnAttack_CheckedChanged);
+            // 
             // DebugSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(652, 338);
+            this.Controls.Add(this.cbLogResistsOnAttack);
             this.Controls.Add(this.cbLogHitpointChanges);
             this.Controls.Add(this.cbLogPlayerDetection);
             this.Controls.Add(this.cbLogPlayerMovement);
@@ -145,5 +159,6 @@
         private System.Windows.Forms.CheckBox cbLogPlayerMovement;
         private System.Windows.Forms.CheckBox cbLogPlayerDetection;
         private System.Windows.Forms.CheckBox cbLogHitpointChanges;
+        private System.Windows.Forms.CheckBox cbLogResistsOnAttack;
     }
 }

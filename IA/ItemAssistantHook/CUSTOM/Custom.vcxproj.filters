@@ -90,6 +90,9 @@
     <ClCompile Include="..\HitpointMonitor.cpp">
       <Filter>HookedMethods</Filter>
     </ClCompile>
+    <ClCompile Include="..\EntityResistMonitor.cpp">
+      <Filter>HookedMethods</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DataQueue.h">
@@ -156,6 +159,9 @@
       <Filter>HookedMethods\GameState</Filter>
     </ClInclude>
     <ClInclude Include="..\HitpointMonitor.h">
+      <Filter>HookedMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\EntityResistMonitor.h">
       <Filter>HookedMethods</Filter>
     </ClInclude>
   </ItemGroup>

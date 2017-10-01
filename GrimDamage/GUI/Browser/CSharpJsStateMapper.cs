@@ -46,6 +46,15 @@ namespace GrimDamage.GUI.Browser {
                     }
                     break;
 
+                case DataRequestType.FetchResists:
+                    if (entityId > 0) {
+                        TransferResists(entityId, start, end, callback);
+                    }
+                    else {
+                        Logger.Warn($"Data request for {data} was not handled due to the entityId being <0.");
+                    }
+                    break;
+
                 case DataRequestType.DetailedDamageDealt:
                     if (entityId > 0) {
                         TransferDetailedDamageDealt(entityId, start, end, callback);
@@ -102,7 +111,10 @@ namespace GrimDamage.GUI.Browser {
         private void TransferDetailedDamageDealt(int entityId, long start, long end, string callback) {
             _browser.JsCallback(callback, Serialize(_statisticsService.GetDetailedLatestDamageDealt(entityId, start, end)));
         }
-
+        
+        private void TransferResists(int entityId, long start, long end, string callback) {
+            _browser.JsCallback(callback, Serialize(_statisticsService.GetResists(entityId, start, end)));
+        }
         private void TransferDetailedDamageTaken(int entityId, long start, long end, string callback) {
             _browser.JsCallback(callback, Serialize(_statisticsService.GetDetailedLatestDamageTaken(entityId, start, end)));
         }

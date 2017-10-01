@@ -13,6 +13,7 @@ const TYPE_DETAILED_DAMAGE_DEALT = 3;
 const TYPE_SIMPLE_DAMAGE_TAKEN = 4;
 const TYPE_SIMPLE_DAMAGE_DEALT = 5;
 const TYPE_HEALTH_CHECK = 6;
+const TYPE_FETCH_RESISTS_CHECK = 7;
 
 // This function is called from C# when a stat update is received
 function _itemsReceived() {

@@ -37,7 +37,8 @@ namespace GrimDamage.GD.Processors {
                 new PlayerPositionTrackerProcessor(positionTrackerService, appSettings),
                 new GdGameEventProcessor(generalStateService),
                 new PlayerDetectionProcessor(damageParsingService, appSettings),
-                new DetectPlayerHitpointsProcessor(damageParsingService, appSettings)
+                new DetectPlayerHitpointsProcessor(damageParsingService, appSettings),
+                new PlayerResistMonitor(damageParsingService, appSettings)
             };
 
             _registerWindowDelegate = CustomWndProc;

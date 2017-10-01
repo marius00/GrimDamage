@@ -23,6 +23,7 @@
 #include "DisableMovement.h"
 #include "SetLifeState.h"
 #include "HitpointMonitor.h"
+#include "EntityResistMonitor.h"
 
 
 #pragma region Variables
@@ -151,6 +152,7 @@ int ProcessAttach(HINSTANCE _hModule) {
 	hooks.push_back(new DisableMovement(&g_dataQueue, g_hEvent));
 
 	hooks.push_back(new HitpointMonitor(&g_dataQueue, g_hEvent));
+	hooks.push_back(new EntityResistMonitor(&g_dataQueue, g_hEvent));
 	
 	for (unsigned int i = 0; i < hooks.size(); i++) {
 		hooks[i]->EnableHook();

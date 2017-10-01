@@ -39,7 +39,13 @@ namespace GrimDamage.GUI.Browser {
         }
 
         public void ShowDevTools() {
-            _browser.ShowDevTools();
+            if (_browser.IsBrowserInitialized) {
+                _browser.ShowDevTools();
+            }
+            else {
+                MessageBox.Show("Chill the fuck out\nChromium is still initializing.", "Chill, man",
+                    MessageBoxButtons.OK);
+            }
         }
         public void NotifyUpdate() {
             if (_browser.IsBrowserInitialized)

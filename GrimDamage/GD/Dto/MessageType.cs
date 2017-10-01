@@ -40,6 +40,7 @@ namespace GrimDamage.GD.Dto {
 
         TypePlayerHealthOffsetDetected = 100,
         TypeErrorDetectingPlayerHealthOffset = 404,
-        TypeHitpointMonitor = 1007
+        TypeHitpointMonitor = 1007,
+        TypeResistMonitor = 10101010,
     }
 }

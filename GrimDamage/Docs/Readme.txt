@@ -8,9 +8,8 @@ Unmapped / uncharted territory:
 * Get player class[es] from in-game? [for pets]		-- unknown, suspect somewhat tricky  // mastery
 
 TODO:
-
+** Find out how to fetch resists, and combine resist+blocked+absorbed data into showing real damage taken
 ** Stop updating graphs and text when the tab is closed
-* Header overlaps some content in dark mode
 * http://gridstackjs.com/ Would be very flexible
 * [JS] Maybe add a list of pets with checkboxes, where the player can choose which are his, and merge those into his aoe/st damage? [obs: per name? pets die pretty often]
 * [JS] show one graph with pets? 

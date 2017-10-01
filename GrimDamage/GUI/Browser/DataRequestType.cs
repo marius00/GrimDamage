@@ -12,5 +12,6 @@ namespace GrimDamage.GUI.Browser {
         SimpleDamageTaken = 4, // WARNING: 
         SimpleDamageDealt = 5, // WARNING: 
         EntityHealth = 6,
+        FetchResists = 7,
     }
 }

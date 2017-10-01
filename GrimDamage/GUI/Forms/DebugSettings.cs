@@ -30,6 +30,7 @@ namespace GrimDamage.GUI.Forms {
             cbLogPlayerMovement.Checked = _appSettings.LogPlayerMovement;
             cbLogPlayerDetection.Checked = _appSettings.LogPlayerDetection;
             cbLogHitpointChanges.Checked = _appSettings.LogEntityHitpointEvent;
+            cbLogResistsOnAttack.Checked = _appSettings.LogResistEntries;
         }
 
         private void cbEnableInvestigativeLogging_CheckedChanged(object sender, EventArgs e) {
@@ -58,6 +59,10 @@ namespace GrimDamage.GUI.Forms {
 
         private void cbLogHitpointChanges_CheckedChanged(object sender, EventArgs e) {
             _appSettings.LogEntityHitpointEvent = (sender as CheckBox)?.Checked ?? false;
+        }
+
+        private void cbLogResistsOnAttack_CheckedChanged(object sender, EventArgs e) {
+            _appSettings.LogResistEntries = (sender as CheckBox)?.Checked ?? false;
         }
     }
 }

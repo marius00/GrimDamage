@@ -80,9 +80,7 @@ namespace GrimDamage {
         }
 
         private static AppSettings GetSettings() {
-            return new AppSettings {
-
-            };
+            return new AppSettings();
         }
     }
 }

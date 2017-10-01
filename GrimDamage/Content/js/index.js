@@ -204,10 +204,17 @@ setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarge
         // Request new detailed damage dealt
         if (playerId) {
             data.requestData(TYPE_DETAILED_DAMAGE_DEALT,
-                database.getHighestDamageDealtTimestamp().toString(), // TODO: Method missing
-                TimestampEverything.toString(),
+                database.getHighestDamageDealtTimestamp().toString(),
+                TimestampEverything,
                 playerId,
                 'database.addDetailedDamageDealt');
+
+
+            data.requestData(TYPE_FETCH_RESISTS_CHECK,
+                database.getHighestResistTimestamp().toString(),
+                TimestampEverything,
+                playerId,
+                'database.addResists');
         }
 
 

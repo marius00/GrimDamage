@@ -52,6 +52,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -91,6 +95,7 @@
     <Compile Include="GD\Processors\MessageProcessorCore.cs" />
     <Compile Include="GD\Processors\PlayerDetectionProcessor.cs" />
     <Compile Include="GD\Processors\PlayerPositionTrackerProcessor.cs" />
+    <Compile Include="GD\Processors\PlayerResistMonitor.cs" />
     <Compile Include="GUI\Browser\CefBrowserHandler.cs" />
     <Compile Include="GUI\Browser\CSharpJsStateMapper.cs" />
     <Compile Include="GUI\Browser\DataRequestType.cs" />
@@ -114,6 +119,7 @@
       <DependentUpon>WebView.cs</DependentUpon>
     </Compile>
     <Compile Include="IOHelper.cs" />
+    <Compile Include="MoreLinq\MoreEnumerable.MaxBy.cs" />
     <Compile Include="Parser\Config\EventMapping.cs" />
     <Compile Include="Parser\Model\EventType.cs" />
     <Compile Include="Parser\Model\GrimState.cs" />
@@ -125,6 +131,7 @@
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
     <Compile Include="Statistics\dto\DamageBlockedJson.cs" />
+    <Compile Include="Statistics\dto\ResistEntryJson.cs" />
     <Compile Include="Statistics\dto\EntityHealthEntryJson.cs" />
     <Compile Include="Statistics\dto\GrimDawnStateEventJson.cs" />
     <Compile Include="Statistics\dto\SimpleDamageEntryJson.cs" />
@@ -137,12 +144,14 @@
     <Compile Include="Statistics\Service\StatisticsService.cs" />
     <Compile Include="Tracking\Model\DamageBlockedEntry.cs" />
     <Compile Include="Tracking\Model\DamageDealtEntry.cs" />
+    <Compile Include="Tracking\Model\ResistUpdatedEntry.cs" />
     <Compile Include="Tracking\Model\DamageTakenEntry.cs" />
     <Compile Include="Tracking\Model\DamageType.cs" />
     <Compile Include="Tracking\Model\Entity.cs" />
     <Compile Include="Tracking\Model\EntityHealthEntry.cs" />
     <Compile Include="Tracking\Model\EntityType.cs" />
     <Compile Include="Tracking\Model\IDamageEntry.cs" />
+    <Compile Include="Tracking\Model\ResistType.cs" />
     <Compile Include="Utilities\AutoUpdateUtility.cs" />
     <Compile Include="Utility\Timestamp.cs" />
     <Compile Include="Utility\UuidGenerator.cs" />

@@ -7,6 +7,8 @@ class Database {
         this.detailedDamageDealt = [];
         this.detailedDamageDealtMaxTimestamp = 0;
 
+        this.resists = [];
+        this.resistsMaxTimestamp = 0;
 
         this.playerLocation = [
             {
@@ -17,6 +19,21 @@ class Database {
 
         this.entities = {};
         this.entitiesRaw = [];
+    }
+
+    addResists(elements) {
+        /// <summary>Add new "resist" entries to the DB</summary>
+        this.resists = this.resists.concat(elements);
+        for (let idx = 0; idx < elements.length; idx++) {
+            if (elements[idx].timestamp > this.resistsMaxTimestamp) {
+                this.resistsMaxTimestamp = elements[idx].timestamp;
+            }
+        }
+    }
+
+    getHighestResistTimestamp() {
+        return this.resistsMaxTimestamp;
+        
     }
 
     getHighestDamageDealtTimestamp() {
