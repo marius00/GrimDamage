@@ -230,14 +230,14 @@ setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageD
                 TimestampEverything,
                 playerId,
                 'database.addResists');
-
-
-            data.requestData(TYPE_FETCH_ENTITIES,
-                '0',
-                '0',
-                0,
-                'database.setEntities');
         }
+
+
+        data.requestData(TYPE_FETCH_ENTITIES,
+            '0',
+            '0',
+            0,
+            'database.setEntities');
 
 
         // Tick/update for damage dealt graph
