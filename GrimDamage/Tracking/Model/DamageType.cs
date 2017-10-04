@@ -12,7 +12,7 @@ namespace GrimDamage.Tracking.Model {
         Vitality,
         Aether,
         Bleeding,
-        Acid,
+        Poison,
         Chaos,
         Cold,
         Fire,

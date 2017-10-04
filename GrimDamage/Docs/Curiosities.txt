@@ -13,13 +13,12 @@ DefenseAttributeStore_Skill
 class mem::list<struct GAME::SkillBuffTransfer> const & GAME::SkillServices_Character::GetBuffList(void)
 ^y  Racial Bonus Defense (%f) filtered (%f) damage\n
 
+GAME::GameEngine::GetMainPlayer(GAME::gGameEngine)
 
-* GAME::Character::GetAngerMultiplier <- Aggro meter??!??
-Ceno:
->oh, shit, regarding your anger question
->enemies have an anger limit above which they'll aggro a target
->and it builds up as player's near or use skills/etc.
->it decays as players flee
+	From player::updateself =>
+    GAME::Engine::AddStatisticText(GAME::gEngine, "My Faction: %s", v52);
+    GAME::Engine::AddStatisticText(GAME::gEngine, "Faction: %s - Level %i [%i]", v60, v58, v56);
+	void __thiscall GAME::PlayStats::UpdateStrings(GAME::PlayStats *this)  <- has a bunch of statistics
 
 
 GAME::GameEngine::CreateItem(GAME::WorldCoords const &,GAME::ItemReplicaInfo &)                                                                                              .text 101C2050 00000023 00000004 00000008 R . . . B T .

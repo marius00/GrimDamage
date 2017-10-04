@@ -89,6 +89,13 @@ let damageTakenPieHandler = new DamageTakenPieHandler(damageTakenPieChart, 60 * 
 // ===================================================
 
 
+// ===================================================
+// Resists graph
+//let resistGraph = createResistGraph('resistance-graph', 100, colors);
+//let playerResistsGraphLogichandler = new PlayerResistsGraphLogichandler(database, resistGraph);
+// ===================================================
+
+
 
 
 
@@ -170,15 +177,14 @@ ko.applyBindings(new LightModeToggleViewModel(isDarkModeEnabled, recreateGraphs)
 // ===================================================
 // Tick handler - This is up for refactoring
 let lastPlayerId = undefined;
-setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarget, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
+setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
     if (pauseTracker.isActive) {
         p.tick(players,
             damageDealt,
-            damageTaken,
-            damageDealtSingleTarget,
             detailedDamageDealt,
             detailedDamageTaken,
-            entitiesList);
+            entitiesList
+        );
 
         const playerId = database.getMainPlayerEntityId();
         if (playerId && detailedDamageTaken[playerId]) {
@@ -201,7 +207,7 @@ setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarge
         }*/
 
         database.setPlayerLocation(playerLocationName);
-        database.setEntities(entitiesList);
+        //database.setEntities(entitiesList); // TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
         // Request new detailed damage dealt
@@ -224,6 +230,13 @@ setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarge
                 TimestampEverything,
                 playerId,
                 'database.addResists');
+
+
+            data.requestData(TYPE_FETCH_ENTITIES,
+                '0',
+                '0',
+                0,
+                'database.setEntities');
         }
 
 
@@ -234,3 +247,5 @@ setCsharpTickCallback((players, damageDealt, damageTaken, damageDealtSingleTarge
     //VM.isZoneUnknown(playerLocationName === 'Unknown');
 });
 // ===================================================
+
+

@@ -137,11 +137,11 @@
         //this.series['Total'] = 0;
     }
 
-    addPoint(type, timestamp, value) {
+    addPoint(type, timestamp, value, extrapolatedValue) {
         /// <param name="type">The damage type / name of the series</param>
         /// <param name="value">Y axis, usually damage taken</param>
         if (!this.series.hasOwnProperty(type)) {
-            console.debug(`Creating new series for ${type}`);
+            console.debug('Creating new series for', type);
             let newSeries = this.chart.addSeries({
                 name: type,
                 color: colors.color(type),
@@ -153,7 +153,11 @@
             this.series[type] = newSeries.index;
         }
         //console.log('Adding damage for', type, 'at', timestamp, 'with', value, 'on', this.chart.series[this.series[type]]);
-        this.chart.series[this.series[type]].addPoint([timestamp, Math.round(value)], false);
+        this.chart.series[this.series[type]].addPoint({
+            x: timestamp,
+            y: Math.round(value),
+            extrapolated: extrapolatedValue
+        }, false);
     }
 
     reset() {

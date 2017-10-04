@@ -99,21 +99,15 @@ class DeathTrackerViewModel {
 
 
                     for (let idx = 0; idx < value.length; idx++) {
-                        console.log('self.stepChartDamageTaken.addPoint',
+                        /*console.log('self.stepChartDamageTaken.addPoint',
                             value[idx].damageType,
                             value[idx].timestamp,
                             value[idx].amount);
+                            */
 
                         const resist = self.database.getResists(value[idx].damageType, value[idx].timestamp);
                         const extrapolated = this.extrapolateForResists(value[idx].amount, resist);
-                        self.stepChartDamageTaken.addPoint(
-                            {
-                                y: value[idx].damageType,
-                                extrapolated: extrapolated // TODO: Add this to tooltip
-                            },
-                            value[idx].timestamp,
-                            value[idx].amount
-                        );
+                        self.stepChartDamageTaken.addPoint(value[idx].damageType, value[idx].timestamp, value[idx].amount, extrapolated);
                     }
                     console.debug('Received damage data for death:', value);
 

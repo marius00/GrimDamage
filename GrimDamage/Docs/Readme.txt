@@ -2,12 +2,18 @@
 	https://discord.gg/PJ87Ewa
 	Will be used for beta testers, feature suggestions etc.
 
+Third party devs:
+	Launch with '-devtools' to get JS dev tools
+
 Unmapped / uncharted territory:
 * Player name would be useful if we start saving parses
 * Get player heals from in-game [useful?]		-- unknown
 * Get player class[es] from in-game? [for pets]		-- unknown, suspect somewhat tricky  // mastery
 
 TODO:
+* Reports of still accumulating damage
+* Life line not shown on damage taken
+* Resists a bit buggy
 * Graph with the players and boss resist, per second (to track debuffs)
 * Make the damage taken graph include armor for figuring out physical damage taken
 ** Find out how to fetch resists, and combine resist+blocked+absorbed data into showing real damage taken

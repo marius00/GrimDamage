@@ -34,14 +34,15 @@ namespace GrimDamage {
         private readonly NameSuggestionService _nameSuggestionService;
         private readonly AppSettings _appSettings;
         private readonly CSharpJsStateMapper _cSharpJsStateMapper;
+        private readonly bool _showDevtools;
 
 
-
-        public Form1(CefBrowserHandler browser, AppSettings appSettings) {
+        public Form1(CefBrowserHandler browser, AppSettings appSettings, bool showDevtools) {
             InitializeComponent();
             _browser = browser;
             _appSettings = appSettings;
             _generalStateService = new GeneralStateService(_appSettings);
+            _showDevtools = showDevtools;
 
             _messageProcessorCore = new MessageProcessorCore(_damageParsingService, _positionTrackerService, _generalStateService, _appSettings);
             _statisticsService = new StatisticsService(_damageParsingService);
@@ -83,6 +84,9 @@ namespace GrimDamage {
 #if !DEBUG
             webViewPanel.Parent.Controls.Remove(webViewPanel);
             Controls.Clear();
+            if (_showDevtools) {
+                Controls.Add(btnShowDevtools);
+            }
             Controls.Add(webViewPanel);
 
             bool itemAssistantInstalled = Directory.Exists(GlobalSettings.ItemAssistantFolder);
@@ -196,31 +200,28 @@ namespace GrimDamage {
             var pets = _statisticsService.GetPets();
 
             var damageDealt = new Dictionary<int, List<SimpleDamageEntryJson>>();
-            var damageDealtToSingleTarget = new Dictionary<int, List<SimpleDamageEntryJson>>();
             var damageTaken = new Dictionary<int, List<SimpleDamageEntryJson>>();
             var detailedDamageTaken = new Dictionary<int, List<DetailedDamageTakenJson>>();
             var detailedDamageDealt = new Dictionary<int, List<DetailedDamageDealtJson>>();
-            var damageBlocked = new Dictionary<int, List<DamageBlockedJson>>();
             foreach (var player in players) {
                 damageDealt[player.Id] = _statisticsService.GetLatestDamageDealt(player.Id);
                 damageTaken[player.Id] = _statisticsService.GetLatestDamageTaken(player.Id);
-                damageDealtToSingleTarget[player.Id] = _statisticsService.GetLatestDamageDealtToSingleTarget(player.Id);
+                //damageDealtToSingleTarget[player.Id] = _statisticsService.GetLatestDamageDealtToSingleTarget(player.Id);
                 detailedDamageTaken[player.Id] = _statisticsService.GetDetailedLatestDamageTaken(player.Id);
                 detailedDamageDealt[player.Id] = _statisticsService.GetDetailedLatestDamageDealt(player.Id);
-                damageBlocked[player.Id] = _statisticsService.GetDamageBlocked(player.Id);
+                //damageBlocked[player.Id] = _statisticsService.GetDamageBlocked(player.Id);
             }
+            /*
             foreach (var pet in pets) {
                 damageDealt[pet.Id] = _statisticsService.GetLatestDamageDealt(pet.Id);
                 damageTaken[pet.Id] = _statisticsService.GetLatestDamageTaken(pet.Id);
                 damageDealtToSingleTarget[pet.Id] = _statisticsService.GetLatestDamageDealtToSingleTarget(pet.Id);
-            }
+            }*/
 
             _browser.JsInteractor.SetEntities(_statisticsService.GetEntities());
             _browser.JsInteractor.SetPets(pets);
             _browser.JsInteractor.SetPlayers(players);
-            _browser.JsInteractor.SetDamageBlocked(damageBlocked);
             _browser.JsInteractor.SetDamageDealt(damageDealt);
-            _browser.JsInteractor.SetDamageDealtToSingleTarget(damageDealtToSingleTarget);
             _browser.JsInteractor.SetDamageTaken(damageTaken);
             _browser.JsInteractor.SetPlayerLocation(_positionTrackerService.GetPlayerLocation());
             _browser.JsInteractor.SetDetailedDamageTaken(detailedDamageTaken);

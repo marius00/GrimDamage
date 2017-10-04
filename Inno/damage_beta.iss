@@ -1,11 +1,11 @@
 #define ApplicationVersion GetFileVersion('..\GrimDamage\bin\release\GrimDamage.exe')
 
 [Setup]
-AppVerName=Grim Dawn Damage Details
-AppName=Grim Dawn Damage Details (c) EvilSoft
+AppVerName=Grim Damage
+AppName=Grim Damage (c) EvilSoft
 VersionInfoVersion={#ApplicationVersion}
 AppId=gddmg
-DefaultDirName={code:DefDirRoot}\Grim Dawn Damage Details
+DefaultDirName={code:DefDirRoot}\Grim Damage
 Uninstallable=Yes
 OutputDir=..\Installer
 SetupIconFile=gd.ico
@@ -17,8 +17,8 @@ Name: starticon; Description: "Create a &startmenu icon"; GroupDescription: "Ico
 
 
 [Icons]
-Name: "{commonprograms}\Grim Dawn Damage Details"; Filename: "{app}\\GrimDamage.exe"; Tasks: starticon
-Name: "{commondesktop}\Grim Dawn Damage Details"; Filename: "{app}\\GrimDamage.exe"; Tasks: desktopicon
+Name: "{commonprograms}\Grim Damage"; Filename: "{app}\\GrimDamage.exe"; Tasks: starticon
+Name: "{commondesktop}\Grim Damage"; Filename: "{app}\\GrimDamage.exe"; Tasks: desktopicon
 
 
 [Files]
@@ -29,7 +29,7 @@ Source: "..\GrimDamage\bin\Release\*"; Excludes: "*.pdb, *.exe.config"; DestDir:
 Filename: "{app}\dotNetFx45_Full_setup.exe"; Description: "Install .NET 4.5"; Flags: postinstall unchecked
 Filename: "{app}\vcredist_x86.exe"; Parameters: "/install /quiet /norestart"; Description: "Install VC++ Redistributable 2013 (x86)"; Flags: runhidden runascurrentuser
 Filename: "{app}\2010sp1_vcredist_x86.exe"; Parameters: "/install /quiet /norestart"; Description: "Install VC++ Redistributable 2010 SP1 (x86)"; Flags: runhidden runascurrentuser
-Filename: "{app}\GrimDamage.exe"; Description: "Launch Grim Dawn Damage Details"; Flags: postinstall nowait
+Filename: "{app}\GrimDamage.exe"; Description: "Launch Grim Damage"; Flags: postinstall nowait
 
 
 [Setup]
@@ -41,7 +41,7 @@ PrivilegesRequired=admin
 DisableWelcomePage=Yes
 AlwaysShowDirOnReadyPage=Yes
 DisableDirPage=No
-OutputBaseFilename=GDDamageDetailsBeta
+OutputBaseFilename=GrimDamageInstaller
 LicenseFile=license.txt
 
 [UninstallDelete]

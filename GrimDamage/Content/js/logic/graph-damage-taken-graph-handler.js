@@ -32,7 +32,7 @@ class DamageTakenGraphLogichandler {
 
 
     addDamageTaken(x, type, amount, extrapolated) {
-        console.debug(`AddPoint(${type}, ${amount}, ${extrapolated})`);
+        //console.debug(`AddPoint(${type}, ${amount}, ${extrapolated})`);
         const chart = this.damageTakenGraph.series.filter(s => s.name === type)[0];
         if (amount > 2) {
             chart.addPoint({ y: amount, extrapolated: extrapolated }, false, true);

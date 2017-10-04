@@ -102,7 +102,7 @@ function createChartDamageTaken(id, sequenceLength, colors, previousChart) {
             {
                 type: 'spline',
                 marker: { enabled: false },
-                name: 'Acid',
+                name: 'Poison',
                 color: colors.color('Acid'),
                 data: Array.from(Array(sequenceLength), () => null)
             },

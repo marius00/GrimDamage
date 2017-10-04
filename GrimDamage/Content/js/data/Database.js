@@ -142,6 +142,17 @@ class Database {
         }
     }
 
+    getAllResists(start, end) {
+        /// <summary>Get resist of the **player** at a given time period</summary>
+        try {
+            return Enumerable.From(database.resists)
+                .Where((x) => x.timestamp >= start && x.timestamp < end)
+                .ToArray();
+        } catch (e) {
+            return [];
+        }
+    }
+
     reset() {
         // NOOP
     }

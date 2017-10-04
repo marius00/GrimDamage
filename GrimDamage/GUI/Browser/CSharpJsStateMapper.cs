@@ -37,6 +37,10 @@ namespace GrimDamage.GUI.Browser {
                     TransferStates(start, callback);
                     break;
 
+                case DataRequestType.FetchEntities:
+                    TransferEntities(callback);
+                    break;
+
                 case DataRequestType.DetailedDamageTaken:
                     if (entityId > 0) {
                         TransferDetailedDamageTaken(entityId, start, end, callback);
@@ -118,7 +122,10 @@ namespace GrimDamage.GUI.Browser {
         private void TransferDetailedDamageTaken(int entityId, long start, long end, string callback) {
             _browser.JsCallback(callback, Serialize(_statisticsService.GetDetailedLatestDamageTaken(entityId, start, end)));
         }
-
+        private void TransferEntities(string callback) {
+            _browser.JsCallback(callback, Serialize(_statisticsService.GetEntities()));
+        }
+        
         private void TransferStates(long timestamp, string callback) {
             _browser.JsCallback(callback, Serialize(_generalStateService.GetStates(timestamp)));
         }

@@ -31,9 +31,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panelDebugView = new System.Windows.Forms.Panel();
-            this.linkDiscord = new System.Windows.Forms.LinkLabel();
             this.btnLoadSave = new System.Windows.Forms.Button();
-            this.linkDonate = new System.Windows.Forms.LinkLabel();
             this.linkItemAssistant = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -116,18 +114,6 @@
             this.panelDebugView.Size = new System.Drawing.Size(1176, 611);
             this.panelDebugView.TabIndex = 7;
             // 
-            // linkDiscord
-            // 
-            this.linkDiscord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkDiscord.AutoSize = true;
-            this.linkDiscord.Location = new System.Drawing.Point(1090, 25);
-            this.linkDiscord.Name = "linkDiscord";
-            this.linkDiscord.Size = new System.Drawing.Size(98, 13);
-            this.linkDiscord.TabIndex = 7;
-            this.linkDiscord.TabStop = true;
-            this.linkDiscord.Text = "Discuss on Discord";
-            this.linkDiscord.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkDiscord_LinkClicked);
-            // 
             // btnLoadSave
             // 
             this.btnLoadSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -138,19 +124,6 @@
             this.btnLoadSave.Text = "Load Save";
             this.btnLoadSave.UseVisualStyleBackColor = true;
             this.btnLoadSave.Click += new System.EventHandler(this.btnLoadSave_Click);
-            // 
-            // linkDonate
-            // 
-            this.linkDonate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkDonate.AutoSize = true;
-            this.linkDonate.Location = new System.Drawing.Point(1009, 25);
-            this.linkDonate.Name = "linkDonate";
-            this.linkDonate.Size = new System.Drawing.Size(42, 13);
-            this.linkDonate.TabIndex = 9;
-            this.linkDonate.TabStop = true;
-            this.linkDonate.Text = "Donate";
-            this.linkDonate.Visible = false;
-            this.linkDonate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkDonate_LinkClicked);
             // 
             // linkItemAssistant
             // 
@@ -171,15 +144,13 @@
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1189, 667);
             this.Controls.Add(this.linkItemAssistant);
-            this.Controls.Add(this.linkDonate);
             this.Controls.Add(this.btnLoadSave);
-            this.Controls.Add(this.linkDiscord);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnShowDevtools);
             this.Controls.Add(this.labelHookStatus);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Grim Dawn Damage";
+            this.Text = "Grim Damage";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -198,9 +169,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panelDebugView;
-        private System.Windows.Forms.LinkLabel linkDiscord;
         private System.Windows.Forms.Button btnLoadSave;
-        private System.Windows.Forms.LinkLabel linkDonate;
         private System.Windows.Forms.LinkLabel linkItemAssistant;
     }
 }

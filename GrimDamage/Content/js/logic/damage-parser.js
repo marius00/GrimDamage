@@ -17,10 +17,10 @@ class DamageParser {
         this.bosschart = this.modals.addBossModal();
     }
 
-    tick(players, damageDealt, damageTaken, damageDealtSingleTarget, detailedDamageDealt, detailedDamageTaken, entitiesList) {
-        this.players = players; // Just a convinience so we don't need to call getMainPlayerId(players)
+    tick(players, damageDealt, detailedDamageDealt, detailedDamageTaken, entitiesList) {
+        this.players = players; // Just a convenience so we don't need to call getMainPlayerId(players)
 
-        this.dataReceived(damageDealt, damageTaken, damageDealtSingleTarget); // TODO: OBSOLETE!
+        this.dataReceived(damageDealt); // TODO: OBSOLETE!
 
         this.handleEntitiesList(entitiesList);
         this.handleDetailedDamageTaken(detailedDamageTaken);
@@ -137,10 +137,10 @@ class DamageParser {
 
 
 
-    dataReceived(damageDealt, damageTaken, damageDealtSingleTarget) {
+    dataReceived(damageDealt) {
         const playerId = this.mainPlayerId;
-        if (playerId && damageTaken[playerId]) {
-            this.addDamageDealt(playerId, damageDealt, damageDealtSingleTarget);
+        if (playerId && damageDealt[playerId]) {
+            this.addDamageDealt(playerId, damageDealt);
         }
     }
 
