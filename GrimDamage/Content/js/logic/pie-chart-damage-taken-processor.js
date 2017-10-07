@@ -1,10 +1,31 @@
 ﻿
 
 class DamageTakenPieHandler {
-    constructor(damageTakenPieChart, pieTimespan) {
+    constructor(database, damageTakenPieChart, pieTimespan) {
+        this.database = database;
         this.damageTakenPieChart = damageTakenPieChart;
         this.totalDamageTaken = {};
         this.pieTimespan = pieTimespan;
+        this.previousTimestamp = new Date().getTime();
+        this.isImaginary = true;
+    }
+
+    update() {
+        let entries = this.database.getDamageTaken(this.previousTimestamp, TimestampEverything);
+        if (entries.length > 0) {
+            try {
+                this.previousTimestamp = Enumerable.From(database.detailedDamageTaken).Max(e => e.timestamp) || this.previousTimestamp;
+            } catch (ex) {
+                console.error('Got an error', ex, 'while fetching previous timestamp');
+            }
+
+            this.isImaginary = false;
+        }
+
+        // Let's just keep the 100% imaginary until our first entry
+        if (!this.isImaginary) {
+            this.addDamageTaken(entries);
+        }
     }
 
     addDamageTaken(elements) {
@@ -26,7 +47,7 @@ class DamageTakenPieHandler {
 
 
         // Sum data
-        let totals = {};
+        const totals = {};
         let sumTotal = 0.01;
         for (let type in this.totalDamageTaken) {
             let sum = 0;

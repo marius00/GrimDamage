@@ -85,7 +85,7 @@ setCsharpRequestCallback((type, dataset) => {
 // ===================================================
 // Damage taken view, pie graph creation
 let damageTakenPieChart = createDamageTakenPieChart('damage-taken-pie-graph');
-let damageTakenPieHandler = new DamageTakenPieHandler(damageTakenPieChart, 60 * 5);
+let damageTakenPieHandler = new DamageTakenPieHandler(database, damageTakenPieChart, 60 * 5);
 // ===================================================
 
 
@@ -189,7 +189,6 @@ setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageD
 
         /// TODO: This needs to use the new 'database.js' method of doing things
         if (playerId && detailedDamageTaken && detailedDamageTaken[playerId]) {
-            damageTakenPieHandler.addDamageTaken(detailedDamageTaken[playerId]);
 
             if (playerId !== lastPlayerId) {
                 database.reset();
@@ -250,6 +249,7 @@ setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageD
         // Tick/update for damage dealt graph
         damageDealtGraphHandler.update();
         damageTakenGraphLogichandler.update();
+        damageTakenPieHandler.update();
     }
     //VM.isZoneUnknown(playerLocationName === 'Unknown');
 });
