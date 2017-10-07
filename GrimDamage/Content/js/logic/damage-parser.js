@@ -2,14 +2,14 @@
 class DamageParser {
     constructor(damageDoneStepChart, database) {
         this.damageDoneStepChart = damageDoneStepChart;
-        let dataTable = $('#bosstable').DataTable({
+        /*let dataTable = $('#bosstable').DataTable({
             "columns": [
                 { "data": "encountered"},
                 { "data": "name" }
             ]
-        });
-        $('#bosstable tbody').on('click', 'tr', this.showboss);
-        this.dataTable = dataTable;
+        });*/
+        //$('#bosstable tbody').on('click', 'tr', this.showboss);
+        //this.dataTable = dataTable;
         this.players = [];
         this.bosses = {};
         this.modals = new Modals();
@@ -20,6 +20,37 @@ class DamageParser {
 
         this.previousTimestampDamageDealt = new Date().getTime();
         this.previousTimestampDamageTaken = new Date().getTime();
+
+        this.bossList = ko.observableArray([{
+            type: 'Boss',
+            name: 'Test data',
+            encountered: moment(new Date()).format('HH:mm:ss')
+        }]);
+
+        let self = this;
+        this.showboss = function(entry) {
+            console.log(entry);
+            const bossid = entry.id;
+            if (bossid === undefined || bossid == "" || !self.bosses.hasOwnProperty(bossid)) {
+                console.debug('showboss cancelled');
+                return;
+            }
+
+            const dealtTemp = self.bosses[bossid]['dealt'];
+            const dealt = Object.keys(dealtTemp).map(function (data) {
+                return { name: data, y: dealtTemp[data], color: colors.color(data) };
+            });
+
+            let takenTemp = self.bosses[bossid]['taken'];
+            const taken = Object.keys(takenTemp).map(function (data) {
+                return {name: data, y: takenTemp[data], color: colors.color(data)};
+            });
+            self.bosschart.setTitle({ text: self.bosses[bossid].name });
+            self.bosschart.series[0].setData(dealt);
+            self.bosschart.series[1].setData(taken);
+            self.modals.show('#bossmodal');
+            console.debug('Showing boss');
+        }
     }
 
     tick(damageDealt) {
@@ -49,7 +80,7 @@ class DamageParser {
     }
 
     update() {
-        const playerId = this.database.getMainPlayerEntityId(); // TODO:
+        const playerId = this.database.getMainPlayerEntityId();
         if (playerId && damageDealt[playerId]) { // TODO:
             this.addDamageDealt(playerId, damageDealt); // TODO:
         } // TODO:
@@ -78,26 +109,7 @@ class DamageParser {
         this.addDamageDealtToBosses(detailedDamageDealt);
     }
 
-    showboss() {
-        let bossid = this.id;
-        if (bossid === undefined || bossid == "" || !p.bosses.hasOwnProperty(bossid)) {
-            return;
-        }
-
-        let dealtTemp = p.bosses[bossid]['dealt'];
-        let dealt = Object.keys(dealtTemp).map(function (data) {
-            return { name: data, y: dealtTemp[data], color: colors.color(data) };
-        });
-
-        let takenTemp = p.bosses[bossid]['taken'];
-        let taken = Object.keys(takenTemp).map(function (data) {
-            return {name: data, y: takenTemp[data], color: colors.color(data)};
-        });
-        p.bosschart.setTitle({ text: p.bosses[bossid].name });
-        p.bosschart.series[0].setData(dealt);
-        p.bosschart.series[1].setData(taken);
-        p.modals.show('bossmodal');
-    }
+    
 
 
     isBossEntity(entity) {
@@ -132,26 +144,28 @@ class DamageParser {
             this.bosses[entity.id]['name'] = entity.name;
             this.bosses[entity.id]['dealt'] = [];
             this.bosses[entity.id]['taken'] = [];
-            this.dataTable.row.add({ "DT_RowId": entity.id, "encountered": now.format('HH:mm:ss'), "name": entity.name }).draw(false);
+            //this.dataTable.row.add({ "DT_RowId": entity.id, "encountered": now.format('HH:mm:ss'), "name": entity.name }).draw(false);
+
+            this.bossList.push({
+                id: entity.id,
+                type: entity.type,
+                name: entity.name,
+                encountered: now.format('HH:mm:ss')
+            });
         }
     }
 
     handleDetailedDamageTaken(data) {
-        for (let playerid in data) {
-            if (!data.hasOwnProperty(playerid) || playerid != this.database.getMainPlayerEntityId()) {
-                continue;
-            }
-            const length = data[playerid].length;
-            for (let c = 0; c < length; c++) {
-                const dmg = data[playerid][c];
-                /* Is it a boss? */
-                if (this.bosses.hasOwnProperty(dmg.attackerId)) {
-                    /* First time we're seeing this damage-type on boss? */
-                    if (!this.bosses[dmg.attackerId]['taken'].hasOwnProperty(dmg.damageType)) {
-                        this.bosses[dmg.attackerId]['taken'][dmg.dmamageType] = 0;
-                    }
-                    this.bosses[dmg.attackerId]['taken'][dmg.damageType] += Math.round(dmg.amount);
+        const length = data.length;
+        for (let c = 0; c < length; c++) {
+            const dmg = data[c];
+            /* Is it a boss? */
+            if (this.bosses.hasOwnProperty(dmg.attackerId)) {
+                /* First time we're seeing this damage-type on boss? */
+                if (!this.bosses[dmg.attackerId]['taken'].hasOwnProperty(dmg.damageType)) {
+                    this.bosses[dmg.attackerId]['taken'][dmg.dmamageType] = 0;
                 }
+                this.bosses[dmg.attackerId]['taken'][dmg.damageType] += Math.round(dmg.amount);
             }
         }
     }

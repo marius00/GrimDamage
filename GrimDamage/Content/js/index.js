@@ -36,8 +36,11 @@ let damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy',
 
 
 
-// Chart and parsing
+// ===================================================
+// Bosses tab and damage dealt step chart on main page
 let p = new DamageParser(damageDoneStepChart, database);
+ko.applyBindings(p, document.getElementById('bosstable'));
+// ===================================================
 
 
 let chartDamageTaken = createChartDamageTaken('container-damage-taken', 100, colors); // TODO set this the rightplace!
@@ -197,15 +200,6 @@ setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageD
         }
         detailedDamageTakenTextVm.update();
 
-        // For test
-        /*
-        if (playerId && detailedDamageDealt[playerId]) {
-            database.addDetailedDamageTaken(detailedDamageDealt[playerId]);
-            detailedDamageTakenTextVm.update();
-        }*/
-
-        //database.setPlayerLocation(playerLocationName);
-        //database.setEntities(entitiesList); // TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
         // Request new detailed damage dealt

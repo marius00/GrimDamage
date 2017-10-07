@@ -316,7 +316,12 @@
             <td>Name</td>
         </tr>
         </tfoot>
-        <tbody></tbody>
+        <tbody data-bind="foreach: bossList">
+        <tr data-bind="click: $root.showboss">
+            <td data-bind="text: encountered"></td>
+            <td data-bind="text: name"></td>
+        </tr>
+        </tbody>
     </table>
 </div>
 
