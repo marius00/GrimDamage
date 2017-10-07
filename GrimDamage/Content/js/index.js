@@ -37,7 +37,7 @@ let damageTakenAtDeathChart = new StepChart('container-died-damage-taken-zoomy',
 
 
 // Chart and parsing
-var p = new DamageParser(damageDoneStepChart);
+let p = new DamageParser(damageDoneStepChart, database);
 
 
 let chartDamageTaken = createChartDamageTaken('container-damage-taken', 100, colors); // TODO set this the rightplace!
@@ -179,11 +179,10 @@ ko.applyBindings(new LightModeToggleViewModel(isDarkModeEnabled, recreateGraphs)
 let lastPlayerId = undefined;
 setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
     if (pauseTracker.isActive) {
-        p.tick(players,
-            damageDealt,
+        p.tick(damageDealt,
             detailedDamageDealt,
             detailedDamageTaken,
-            entitiesList
+            database.entitiesRaw
         );
 
         const playerId = database.getMainPlayerEntityId();

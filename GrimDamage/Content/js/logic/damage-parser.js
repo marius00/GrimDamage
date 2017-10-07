@@ -1,6 +1,6 @@
 ﻿// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 class DamageParser {
-    constructor(damageDoneStepChart) {
+    constructor(damageDoneStepChart, database) {
         this.damageDoneStepChart = damageDoneStepChart;
         let dataTable = $('#bosstable').DataTable({
             "columns": [
@@ -13,13 +13,12 @@ class DamageParser {
         this.players = [];
         this.bosses = {};
         this.modals = new Modals();
+        this.database = database;
 
         this.bosschart = this.modals.addBossModal();
     }
 
-    tick(players, damageDealt, detailedDamageDealt, detailedDamageTaken, entitiesList) {
-        this.players = players; // Just a convenience so we don't need to call getMainPlayerId(players)
-
+    tick(damageDealt, detailedDamageDealt, detailedDamageTaken, entitiesList) {
         this.dataReceived(damageDealt); // TODO: OBSOLETE!
 
         this.handleEntitiesList(entitiesList);
@@ -75,7 +74,7 @@ class DamageParser {
 
     handleDetailedDamageTaken(data) {
         for (let playerid in data) {
-            if (!data.hasOwnProperty(playerid) || playerid != this.mainPlayerId) {
+            if (!data.hasOwnProperty(playerid) || playerid != this.database.getMainPlayerEntityId()) {
                 continue;
             }
             const length = data[playerid].length;
@@ -98,7 +97,7 @@ class DamageParser {
         //console.log("Playerid: " + this.mainPlayerId);
         //console.log(data);
         for (let playerid in data) {
-            if (!data.hasOwnProperty(playerid) || playerid != this.mainPlayerId) {
+            if (!data.hasOwnProperty(playerid) || playerid != this.database.getMainPlayerEntityId()) {
                 continue;
             }
 
@@ -117,12 +116,6 @@ class DamageParser {
             }
         }
     }
-    // TODO: Move to database
-    get mainPlayerId() {
-        return this.players.filter(p => p.isPrimary).map(p => p.id)[0] || this.players.map(p => p.id)[0];
-    }
-
-
 
     addDamageDealt(id, damageDealt) {
         if (damageDealt[id]) {
@@ -138,7 +131,7 @@ class DamageParser {
 
 
     dataReceived(damageDealt) {
-        const playerId = this.mainPlayerId;
+        const playerId = this.database.getMainPlayerEntityId();
         if (playerId && damageDealt[playerId]) {
             this.addDamageDealt(playerId, damageDealt);
         }
