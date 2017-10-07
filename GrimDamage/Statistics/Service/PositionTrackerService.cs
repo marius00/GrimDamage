@@ -42,6 +42,10 @@ namespace GrimDamage.Statistics.Service {
                 Name = "Hidden Laboratory"
             },
             new RecognizedPosition {
+                Zone = 0x81F4F3B,
+                Name = "Hidden Laboratory"
+            },
+            new RecognizedPosition {
                 Zone = 1013990166,
                 Name = "Hidden Laboratory" // Living quarters
             },

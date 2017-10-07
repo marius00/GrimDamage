@@ -19,10 +19,29 @@ class DamageParser {
 
 
         this.previousTimestampDamageDealt = new Date().getTime();
+        this.previousTimestampDamageTaken = new Date().getTime();
     }
 
-    tick(damageDealt, detailedDamageDealt, detailedDamageTaken) {
+    tick(damageDealt) {
         this.dataReceived(damageDealt); // TODO: OBSOLETE!
+
+        const detailedDamageDealt = this.database.getDamageDealt(this.previousTimestampDamageDealt, TimestampEverything);
+        if (detailedDamageDealt.length > 0) {
+            try {
+                this.previousTimestampDamageDealt = Enumerable.From(detailedDamageDealt).Max(e => e.timestamp) || this.previousTimestampDamageDealt;
+            } catch (ex) {
+                console.error('Got an error', ex, 'while fetching previous timestamp');
+            }
+        }
+        
+        const detailedDamageTaken = this.database.getDamageTaken(this.previousTimestampDamageTaken, TimestampEverything);
+        if (detailedDamageTaken.length > 0) {
+            try {
+                this.previousTimestampDamageTaken = Enumerable.From(detailedDamageTaken).Max(e => e.timestamp) || this.previousTimestampDamageTaken;
+            } catch (ex2) {
+                console.error('Got an error', ex2, 'while fetching previous timestamp');
+            }
+        }
 
         this.handleEntitiesList();
         this.handleDetailedDamageTaken(detailedDamageTaken);
@@ -43,8 +62,17 @@ class DamageParser {
                 console.error('Got an error', ex, 'while fetching previous timestamp');
             }
         }
+        
 
-        let detailedDamageTaken = []; // TODO:
+        const detailedDamageTaken = this.database.getDamageTaken(this.previousTimestampDamageTaken, TimestampEverything);
+        if (detailedDamageTaken.length > 0) {
+            try {
+                this.previousTimestampDamageTaken = Enumerable.From(detailedDamageTaken).Max(e => e.timestamp) || this.previousTimestampDamageTaken;
+            } catch (ex2) {
+                console.error('Got an error', ex2, 'while fetching previous timestamp');
+            }
+        }
+
         this.handleEntitiesList();
         this.handleDetailedDamageTaken(detailedDamageTaken);
         this.addDamageDealtToBosses(detailedDamageDealt);
