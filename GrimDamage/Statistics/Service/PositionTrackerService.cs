@@ -1,14 +1,22 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GrimDamage.Statistics.dto;
 using GrimDamage.Statistics.model;
+using GrimDamage.Tracking.Model;
+using GrimDamage.Utility;
 using log4net;
+using log4net.Repository.Hierarchy;
 
 namespace GrimDamage.Statistics.Service {
     class PositionTrackerService {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(PositionTrackerService));
+        private ConcurrentBag<PlayerLocation> _playerPositions = new ConcurrentBag<PlayerLocation>();
+
+        private PlayerLocation _previousPosition;
         // Crossroads -720355282, -1281368434, 1803970569
         // lower crossing 1063600470, -2110175027, 1746663183
         // lower crossing 2099529530, -1809042412, -1049290392
@@ -36,6 +44,10 @@ namespace GrimDamage.Statistics.Service {
             new RecognizedPosition {
                 Zone = 1013990166,
                 Name = "Hidden Laboratory" // Living quarters
+            },
+            new RecognizedPosition {
+                Zone = 0x515642B7,
+                Name = "Hidden Laboratory" // Near last portal
             },
             new RecognizedPosition {
                 Zone = 2074428718,
@@ -259,28 +271,46 @@ namespace GrimDamage.Statistics.Service {
             },
         };
 
-        public PlayerPosition PlayerPosition { get; private set; }
+        public List<PlayerLocation> GetLocations(long start, long end) {
+            return _playerPositions.Where(dmg => dmg.Timestamp > start && dmg.Timestamp < end).ToList();
+        }
 
         HashSet<int> seen = new HashSet<int>();
 
         public void SetPlayerPosition(PlayerPosition playerPosition) {
-            PlayerPosition = playerPosition;
+            
+            var newPosition = new PlayerLocation {
+                Location = GetPlayerLocation(playerPosition),
+                Timestamp = Timestamp.ToUtcMilliseconds(DateTime.UtcNow)
+            };
+            if (_previousPosition != null && _previousPosition.Location == newPosition.Location) {
+                return;
+            }
+            else {
+                _playerPositions.Add(new PlayerLocation {
+                    Location = GetPlayerLocation(playerPosition),
+                    Timestamp = Timestamp.ToUtcMilliseconds(DateTime.UtcNow)
+                });
+
+                _previousPosition = newPosition;
+            }
+
             if (!seen.Contains(playerPosition.Zone) && !_knownPositions.Exists(m => m.Zone == playerPosition.Zone)) {
-                Logger.Warn($"New zone: {playerPosition.Zone:X}");
+                Logger.Warn($"Unknown zone detected: {playerPosition.Zone:X}");
                 seen.Add(playerPosition.Zone);
             }
         }
         
-        public string GetPlayerLocation() {
-            if (PlayerPosition != null) {
-                var loc = _knownPositions.FirstOrDefault(p => p.Zone == PlayerPosition.Zone);
+        string GetPlayerLocation(PlayerPosition p) {
+            if (p != null) {
+                var loc = _knownPositions.FirstOrDefault(m => m.Zone == p.Zone);
                 if (loc != null)
                     return loc.Name;
 
                 //Logger.Debug($"Unknown location: {PlayerPosition.Zone}");
             }
 
-            return "Unknown";
+            return $"Unknown Area {p?.Zone}";
         }
     }
 }

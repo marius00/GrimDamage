@@ -11,7 +11,8 @@ Unmapped / uncharted territory:
 * Get player class[es] from in-game? [for pets]		-- unknown, suspect somewhat tricky  // mastery
 
 TODO:
-* Reports of still accumulating damage
+** highcharts error 20 on damage taken, look into making it 'sliding' and/or removing old points.
+** Reports of still accumulating damage on DEALT
 * Life line not shown on damage taken
 * Resists a bit buggy
 * Graph with the players and boss resist, per second (to track debuffs)

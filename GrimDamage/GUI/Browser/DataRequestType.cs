@@ -14,5 +14,6 @@ namespace GrimDamage.GUI.Browser {
         EntityHealth = 6,
         FetchResists = 7,
         FetchEntities = 8,
+        FetchLocations = 9,
     }
 }

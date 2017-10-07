@@ -76,13 +76,8 @@ class Database {
     }
 
     setPlayerLocation(location) {
-        /// <param name="location" type="String">The current location of the player</param>
-        if (this.playerLocation.length === 0 || this.playerLocation[this.playerLocation.length - 1].location !== location) {
-            this.playerLocation.push({
-                timestamp: new Date().getTime(),
-                location: location
-            });
-        }
+        /// <param name="location" type="Array">The current location of the player</param>
+        this.playerLocation = location;
     }
 
     getDamageTaken(start, end) {

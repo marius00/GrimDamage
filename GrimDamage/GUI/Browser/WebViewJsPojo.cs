@@ -14,15 +14,12 @@ namespace GrimDamage.GUI.Browser {
     // ReSharper disable UnusedAutoPropertyAccessor.Global
     public class WebViewJsPojo {
         public event EventHandler OnRequestUpdate;
-        public event EventHandler OnSuggestLocationName;
         public event EventHandler OnSave;
         public event EventHandler OnLog;
         public event EventHandler OnRequestData;
         public event EventHandler OnSetLightMode;
         
         public string api { get; set; }
-        public string playerLocationName { get; set; }
-        // FROM JS ONLY
 
         public string damageBlockedJson { get; set; }
 
@@ -46,11 +43,6 @@ namespace GrimDamage.GUI.Browser {
             OnRequestUpdate?.Invoke(this, null);
         }
 
-        public void suggestLocationName(string name) {
-            OnSuggestLocationName?.Invoke(this, new SuggestLocationNameArgument() {
-                Suggestion = name
-            });
-        }
 
         public void save(string json) {
             OnSave?.Invoke(this, new SaveParseArgument() {

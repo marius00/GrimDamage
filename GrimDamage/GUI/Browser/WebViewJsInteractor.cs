@@ -43,10 +43,6 @@ namespace GrimDamage.GUI.Browser {
             ));
             documentation.Add("");
 
-
-            documentation.Add($"Example values for {nameof(_js.playerLocationName)}:");
-            documentation.Add(Serialize("Peter fucking griffin"));
-            documentation.Add("");
             
 
             documentation.Add($"Example values for {nameof(_js.damageBlockedJson)}:");
@@ -161,10 +157,6 @@ namespace GrimDamage.GUI.Browser {
             return JsonConvert.SerializeObject(o, _settings);
         }
 
-
-        public void SetPlayerLocation(string location) {
-            _js.playerLocationName = location;
-        }
 
         public void SetDamageTaken(Dictionary<int, List<SimpleDamageEntryJson>> value) {
             _js.damageTakenJson = JsonConvert.SerializeObject(value, _settings);

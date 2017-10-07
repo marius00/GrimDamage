@@ -198,7 +198,7 @@ class DeathTrackerViewModel {
         }
         
 
-        this.showDeath = function(death) {
+        this.showDeath = function (death) {
             const period = 10 * 1000; // TODO: The number '10' is used many places, consider making a constant
             self.resetGraph(10);
             self.stepChartDamageTaken.reset();
@@ -310,7 +310,7 @@ class DeathTrackerViewModel {
         const labelTimestamp = new Date(death.timestamp).toLocaleTimeString();
         const murdererId = this.getPrimaryAttackerId(death.timestamp);
         const murdererName = this.database.getEntity(murdererId).name;
-        const locations = this.database.getPlayerLocation(0, death.timestamp);
+        const locations = this.database.getPlayerLocation(0, death.timestamp).sort(e => e.timestamp);
         const location = locations[locations.length - 1] || { location: 'Unknown' };
 
         const d = {

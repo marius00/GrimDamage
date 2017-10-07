@@ -7,7 +7,6 @@
 
         const preloadMinutes = 3;
         let preloadSeries = [];
-        let maxExtreme = 0;
         if (previousChart && previousChart.series) {
             console.debug('Recreated a chart with existing series', previousChart.series, 'from', previousChart.chart.series);
 
@@ -22,10 +21,6 @@
                                 x: s.data[dataKey].x,
                                 y: s.data[dataKey].y
                             });
-
-                            if (s.data[dataKey].x > maxExtreme) {
-                                maxExtreme = s.data[dataKey].x;
-                            } 
                         }
                     }
 
@@ -67,18 +62,9 @@
                 type: 'area'
             });
 
-            maxExtreme = generatedData[generatedData.length - 1].x;
         }
 
         this.chart = Highcharts.stockChart(id, {
-            
-            xAxis: {
-                events: {
-                    afterSetExtremes: function (event) {
-                        //console.debug('Selection', event); // TODO: handle this
-                    }
-                }
-            },
             chart: {
                 animation: false,
                 

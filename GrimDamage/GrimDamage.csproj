@@ -39,6 +39,9 @@
   <PropertyGroup>
     <ApplicationIcon>gd.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>GrimDamage.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoUpdater.NET">
       <HintPath>..\Auto updater\AutoUpdater.NET\bin\Release\AutoUpdater.NET.dll</HintPath>
@@ -150,6 +153,7 @@
     <Compile Include="Statistics\Service\StatisticsService.cs" />
     <Compile Include="Tracking\Model\DamageBlockedEntry.cs" />
     <Compile Include="Tracking\Model\DamageDealtEntry.cs" />
+    <Compile Include="Tracking\Model\PlayerLocation.cs" />
     <Compile Include="Tracking\Model\ResistUpdatedEntry.cs" />
     <Compile Include="Tracking\Model\DamageTakenEntry.cs" />
     <Compile Include="Tracking\Model\DamageType.cs" />

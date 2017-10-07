@@ -47,7 +47,6 @@ namespace GrimDamage {
             _messageProcessorCore = new MessageProcessorCore(_damageParsingService, _positionTrackerService, _generalStateService, _appSettings);
             _statisticsService = new StatisticsService(_damageParsingService);
             _browser.JsPojo.OnRequestUpdate += TransferStatsToJson;
-            _browser.JsPojo.OnSuggestLocationName += JsPojoOnOnSuggestLocationName;
             _browser.JsPojo.OnSave += JsPojoOnOnSave;
             _browser.JsPojo.OnSetLightMode += (sender, args) => {
                 bool isDarkMode = (args as LightModeArgument)?.IsDarkMode ?? false;
@@ -61,7 +60,7 @@ namespace GrimDamage {
             };
 
             _nameSuggestionService = new NameSuggestionService(GlobalSettings.BineroHost);
-            _cSharpJsStateMapper = new CSharpJsStateMapper(_browser, _statisticsService, _generalStateService);
+            _cSharpJsStateMapper = new CSharpJsStateMapper(_browser, _statisticsService, _generalStateService, _positionTrackerService);
             _browser.JsPojo.OnRequestData += (sender, _args) => {
                 RequestDataArgument args = _args as RequestDataArgument;
                 long start;
@@ -135,13 +134,6 @@ namespace GrimDamage {
                 if (ofd.ShowDialog() == DialogResult.OK) {
                     File.WriteAllText(ofd.FileName, args?.Data);
                 }
-            }
-        }
-
-        private void JsPojoOnOnSuggestLocationName(object sender, EventArgs eventArgs) {
-            SuggestLocationNameArgument args = eventArgs as SuggestLocationNameArgument;
-            if (!_nameSuggestionService.SuggestName(_positionTrackerService.PlayerPosition, args?.Suggestion)) {
-                MessageBox.Show("Suggestion could not be sent due to an unknown error");
             }
         }
 
@@ -223,7 +215,6 @@ namespace GrimDamage {
             _browser.JsInteractor.SetPlayers(players);
             _browser.JsInteractor.SetDamageDealt(damageDealt);
             _browser.JsInteractor.SetDamageTaken(damageTaken);
-            _browser.JsInteractor.SetPlayerLocation(_positionTrackerService.GetPlayerLocation());
             _browser.JsInteractor.SetDetailedDamageTaken(detailedDamageTaken);
             _browser.JsInteractor.SetDetailedDamageDealt(detailedDamageDealt);
             

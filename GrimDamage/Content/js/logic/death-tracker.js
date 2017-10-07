@@ -2,11 +2,11 @@
 
 
 class DeathTracker {
-    constructor(playerTracker, viewModel) {
+    constructor(database, viewModel) {
         /// <summary>Responsible for tracking player deaths</summary>  
         this.deaths = [];
         this.minInterval = 8000;
-        this.playerTracker = playerTracker;
+        this.database = database;
         this.viewModel = viewModel;
     }
 
@@ -19,11 +19,11 @@ class DeathTracker {
             if (event.event === 'Dead' || event.event === 'Dying') {
                 // Minor cooldown on deaths, since the alert can come multiple times
                 if (event.timestamp > this.lastDeath + this.minInterval) {
-                    const entityId = this.playerTracker.mainPlayerId;
+                    const entityId = this.database.getMainPlayerEntityId();
                     if (entityId) {
                         var death = {
                             timestamp: event.timestamp,
-                            entityId: this.playerTracker.mainPlayerId
+                            entityId: this.database.getMainPlayerEntityId()
                         };
 
                         this.deaths.push(death);

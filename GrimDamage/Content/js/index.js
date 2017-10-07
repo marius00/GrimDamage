@@ -63,7 +63,7 @@ const deathTrackerViewModel = new DeathTrackerViewModel(
     damageTakenChartDiedPopup,
     damageTakenAtDeathChart
 );
-let deathTracker = new DeathTracker(p, deathTrackerViewModel); // damage parser is the current 'track player id' class, may be split later
+let deathTracker = new DeathTracker(database, deathTrackerViewModel); // damage parser is the current 'track player id' class, may be split later
 ko.applyBindings(deathTrackerViewModel, document.getElementById('what-killed-me-listing'));
 
 
@@ -187,7 +187,9 @@ setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageD
         );
 
         const playerId = database.getMainPlayerEntityId();
-        if (playerId && detailedDamageTaken[playerId]) {
+
+        /// TODO: This needs to use the new 'database.js' method of doing things
+        if (playerId && detailedDamageTaken && detailedDamageTaken[playerId]) {
             damageTakenPieHandler.addDamageTaken(detailedDamageTaken[playerId]);
 
             if (playerId !== lastPlayerId) {
@@ -195,9 +197,8 @@ setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageD
             }
 
             lastPlayerId = playerId;
-
-            detailedDamageTakenTextVm.update();
         }
+        detailedDamageTakenTextVm.update();
 
         // For test
         /*
@@ -206,7 +207,7 @@ setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageD
             detailedDamageTakenTextVm.update();
         }*/
 
-        database.setPlayerLocation(playerLocationName);
+        //database.setPlayerLocation(playerLocationName);
         //database.setEntities(entitiesList); // TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -238,6 +239,13 @@ setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageD
             '0',
             0,
             'database.setEntities');
+
+
+        data.requestData(TYPE_FETCH_LOCATIONS,
+            '0',
+            TimestampEverything,
+            0,
+            'database.setPlayerLocation');
 
 
         // Tick/update for damage dealt graph

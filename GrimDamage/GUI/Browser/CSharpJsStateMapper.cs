@@ -15,11 +15,13 @@ namespace GrimDamage.GUI.Browser {
         private readonly StatisticsService _statisticsService;
         private readonly GeneralStateService _generalStateService;
         private readonly JsonSerializerSettings _settings;
+        private readonly PositionTrackerService _positionTrackerService;
 
-        public CSharpJsStateMapper(CefBrowserHandler browser, StatisticsService statisticsService, GeneralStateService generalStateService) {
+        public CSharpJsStateMapper(CefBrowserHandler browser, StatisticsService statisticsService, GeneralStateService generalStateService, PositionTrackerService positionTrackerService) {
             _browser = browser;
             _statisticsService = statisticsService;
             _generalStateService = generalStateService;
+            _positionTrackerService = positionTrackerService;
             _settings = new JsonSerializerSettings {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Culture = System.Globalization.CultureInfo.InvariantCulture,
@@ -39,6 +41,10 @@ namespace GrimDamage.GUI.Browser {
 
                 case DataRequestType.FetchEntities:
                     TransferEntities(callback);
+                    break;
+
+                case DataRequestType.FetchLocations:
+                    TransferLocations(start, end, callback);
                     break;
 
                 case DataRequestType.DetailedDamageTaken:
@@ -121,6 +127,10 @@ namespace GrimDamage.GUI.Browser {
         }
         private void TransferDetailedDamageTaken(int entityId, long start, long end, string callback) {
             _browser.JsCallback(callback, Serialize(_statisticsService.GetDetailedLatestDamageTaken(entityId, start, end)));
+        }
+        
+        private void TransferLocations(long start, long end, string callback) {
+            _browser.JsCallback(callback, Serialize(_positionTrackerService.GetLocations(start, end)));
         }
         private void TransferEntities(string callback) {
             _browser.JsCallback(callback, Serialize(_statisticsService.GetEntities()));
