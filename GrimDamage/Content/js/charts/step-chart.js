@@ -102,7 +102,7 @@
                     type: 'all',
                     text: 'All'
                 }],
-                inputEnabled: true,
+                inputEnabled: false,
                 selected: 4
             },
             title: {
