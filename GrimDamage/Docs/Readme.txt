@@ -42,8 +42,7 @@ Nice to have:
 * How much damage absorbed from racial?
 * In .js, if you 've gone X updates without doing any damage, might as well tag him as out-of-combat, and stop updating the graph
 * Finding a way to show defensive actions like absorbs and heals would be "nice to have"
-* Showing which zone the player enters / leaves  ( https://www.highcharts.com/demo/combo-timeline )
-* Fine grained data of the individual attacks, see their portion of your overall damage.
+* Fine grained data of the individual attacks [skills], see their portion of your overall damage.
 * Fine grained data of the individual defensive procs/heals, see their relevance in keeping you alive.
 * Comparison between players in MP ?
 ** In the future: See how much of your damage dealt was resisted by the enemy?

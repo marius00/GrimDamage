@@ -177,12 +177,11 @@ ko.applyBindings(new LightModeToggleViewModel(isDarkModeEnabled, recreateGraphs)
 // ===================================================
 // Tick handler - This is up for refactoring
 let lastPlayerId = undefined;
-setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageDealt, detailedDamageTaken, entitiesList) => {
+setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageDealt, detailedDamageTaken) => {
     if (pauseTracker.isActive) {
         p.tick(damageDealt,
             detailedDamageDealt,
-            detailedDamageTaken,
-            database.entitiesRaw
+            detailedDamageTaken
         );
 
         const playerId = database.getMainPlayerEntityId();

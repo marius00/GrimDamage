@@ -14,7 +14,7 @@ class DamageTakenPieHandler {
         let entries = this.database.getDamageTaken(this.previousTimestamp, TimestampEverything);
         if (entries.length > 0) {
             try {
-                this.previousTimestamp = Enumerable.From(database.detailedDamageTaken).Max(e => e.timestamp) || this.previousTimestamp;
+                this.previousTimestamp = Enumerable.From(entries).Max(e => e.timestamp) || this.previousTimestamp;
             } catch (ex) {
                 console.error('Got an error', ex, 'while fetching previous timestamp');
             }
