@@ -10,6 +10,10 @@ class DamageTakenPieHandler {
         this.isImaginary = true;
     }
 
+    setChart(chart) {
+        this.damageTakenPieChart = chart;
+    }
+
     update() {
         let entries = this.database.getDamageTaken(this.previousTimestamp, TimestampEverything);
         if (entries.length > 0) {

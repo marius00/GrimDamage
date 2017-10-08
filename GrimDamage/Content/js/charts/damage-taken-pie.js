@@ -1,4 +1,31 @@
-﻿function createDamageTakenPieChart(id) {
+﻿function createDamageTakenPieChart(id, previousChart) {
+
+    let preloadSeries = [];
+    if (previousChart && previousChart.series) {
+        console.debug('Recreated a chart with existing series', previousChart.series);
+
+        for (let key in previousChart.series) {
+            if (previousChart.series.hasOwnProperty(key)) {
+                let sData = previousChart.series[key].data;
+                for (let idx = 0; idx < sData.length; idx++) {
+                    preloadSeries.push({
+                        y: sData[idx].y,
+                        label: sData[idx].label,
+                        name: sData[idx].name
+                    });
+                }
+            }
+        }
+    }
+    if (preloadSeries.length === 0) {
+        preloadSeries = [
+            {
+                name: 'Imaginary',
+                y: 100
+            }
+        ];
+    }
+
     return Highcharts.chart(id, {
         chart: {
             plotBackgroundColor: null,
@@ -25,12 +52,7 @@
         },
         series: [{
             colorByPoint: true,
-            data: [
-                {
-                    name: 'Imaginary',
-                    y: 100
-                }
-            ]
+            data: preloadSeries
         }]
     });
 }

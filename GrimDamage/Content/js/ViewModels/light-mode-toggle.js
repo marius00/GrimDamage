@@ -2,10 +2,11 @@
 
 class LightModeToggleViewModel {
     constructor(enabled, toggleCallback) {
-        this.enabled = ko.observable(enabled);
+        this.enabled = ko.observable(false);
         const self = this;
         this.toggleCallback = toggleCallback;
-        this.label = ko.observable(enabled ? 'Light mode' : 'Dark mode');
+        //this.label = ko.observable(enabled ? 'Light mode' : 'Dark mode');
+        this.label = ko.observable('Light mode');
         this.defaultTheme = $.extend(true, {}, Highcharts.getOptions(), {});
 
 
@@ -27,7 +28,7 @@ class LightModeToggleViewModel {
             }
         }
 
-        console.log(`Initialize as ${enabled ? 'Dark mode' : 'Light mode'}`);
+        //console.log(`Initialize as ${enabled ? 'Dark mode' : 'Light mode'}`);
     }
 
     resetOptions() {

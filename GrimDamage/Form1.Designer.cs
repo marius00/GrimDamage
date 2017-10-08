@@ -53,9 +53,9 @@
             this.webViewPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.webViewPanel.Location = new System.Drawing.Point(2, 2);
+            this.webViewPanel.Location = new System.Drawing.Point(0, 0);
             this.webViewPanel.Name = "webViewPanel";
-            this.webViewPanel.Size = new System.Drawing.Size(1175, 611);
+            this.webViewPanel.Size = new System.Drawing.Size(1182, 615);
             this.webViewPanel.TabIndex = 3;
             // 
             // btnShowDevtools
@@ -76,10 +76,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(3, 25);
+            this.tabControl1.Location = new System.Drawing.Point(0, 25);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1185, 639);
+            this.tabControl1.Size = new System.Drawing.Size(1191, 639);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage1
@@ -88,7 +88,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1177, 613);
+            this.tabPage1.Size = new System.Drawing.Size(1183, 613);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -128,7 +128,7 @@
             // linkItemAssistant
             // 
             this.linkItemAssistant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkItemAssistant.Location = new System.Drawing.Point(794, 3);
+            this.linkItemAssistant.Location = new System.Drawing.Point(793, -1);
             this.linkItemAssistant.Name = "linkItemAssistant";
             this.linkItemAssistant.Size = new System.Drawing.Size(390, 13);
             this.linkItemAssistant.TabIndex = 10;

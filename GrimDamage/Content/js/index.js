@@ -167,11 +167,16 @@ function recreateGraphs(mode) {
 
     deathTrackerViewModel.damageTakenChart = damageTakenChartDiedPopup;
     deathTrackerViewModel.stepChartDamageTaken = damageTakenAtDeathChart;
+
+
+    damageTakenPieChart = createDamageTakenPieChart('damage-taken-pie-graph', damageTakenPieChart);
+    damageTakenPieHandler.setChart(damageTakenPieChart);
 }
 
 // Light/Dark mode toggle
 let isDarkModeEnabled = window.location.search.toString().toLowerCase().indexOf('darkmode=1') !== -1;
-ko.applyBindings(new LightModeToggleViewModel(isDarkModeEnabled, recreateGraphs), document.getElementById('light-mode-view'));
+const lightModeToggleViewModel = new LightModeToggleViewModel(isDarkModeEnabled, recreateGraphs);
+ko.applyBindings(lightModeToggleViewModel, document.getElementById('light-mode-view'));
 // ===================================================
 
 
@@ -249,3 +254,14 @@ setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageD
 // ===================================================
 
 
+
+
+// ===================================================
+// Enable dark mode if the user settings has defined it.
+// Important to not do this before the LightModeToggleViewModel class has been instanciated, as it copies the 'current view' to define the light mode.
+if (window.location.search.toString().toLowerCase().indexOf('darkmode=1') !== -1) {
+    //setTimeout(() => lightModeToggleViewModel.toggleDarkMode(), 1000);
+    lightModeToggleViewModel.toggleDarkMode();
+
+}
+// ===================================================
