@@ -55,7 +55,7 @@
         innerDiv2M.appendChild(innerDiv32);
 
         const closeButton = document.createElement('input');
-        closeButton.className = 'btn btn-default';
+        closeButton.className = 'btn btn-default link-button';
         closeButton.setAttribute('data-dismiss', 'modal');
         closeButton.setAttribute('type', 'button');
         closeButton.setAttribute('value', 'Close');

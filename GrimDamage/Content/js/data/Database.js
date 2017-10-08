@@ -89,6 +89,14 @@ class Database {
         return this.detailedDamageTaken.filter((e) => e.timestamp > start && e.timestamp <= end);
     }
 
+    getDamageTakenByEntity(entityId) {
+        /// <summary>Get all the damage-taken from a given entity</summary>
+        /// <param name="entityId" type="Number">ID of the attacking entity</param>
+        /// <returns type="[{timestamp: 0, amount: 123.1, damageType: 'chaos'}]"></returns>
+
+        return this.detailedDamageTaken.filter((e) => e.attackerId === entityId);
+    }
+
     getDamageDealt(start, end) {
         /// <summary>Get all the damage-dealt events in a given timespan</summary>
         /// <param name="start" type="Epoch">The start period (exclusive)</param>
