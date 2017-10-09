@@ -21,7 +21,7 @@
         this.colors['chaos'] = '#720b00';
         this.colors['lifeLeech'] = '#ffbd89';
         this.colors['hitpoints'] = '#ff0000';
-        this.colors['raw total'] = '#EBEBEB';
+        this.colors['raw total'] = '#C8BFE7';
     }
 
     color(typeRaw) {

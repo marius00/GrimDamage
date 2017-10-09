@@ -21,14 +21,7 @@ const TYPE_FETCH_LOCATIONS = 9;
 function _itemsReceived() {
     if (tickCallbackMethod) {
         tickCallbackMethod(
-            JSON.parse(data.playersJson),
-            JSON.parse(data.damageDealtJson),
-            JSON.parse(data.damageTakenJson),
-            JSON.parse(data.damageDealtToSingleTargetJson),
-            data.playerLocationName,
-            JSON.parse(data.detailedDamageDealtJson),
-            JSON.parse(data.detailedDamageTakenJson),
-            JSON.parse(data.entitiesJson)
+            JSON.parse(data.damageDealtJson)
         );
     }
 }

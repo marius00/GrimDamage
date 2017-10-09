@@ -42,7 +42,7 @@ namespace GrimDamage.GUI.Browser {
                 Serialize(new List<GrimDawnStateEventJson> { new GrimDawnStateEventJson { Event = GrimState.Dead.ToString(), Timestamp = Timestamp.UTCMillisecondsNow } }
             ));
             documentation.Add("");
-
+            /*
             
 
             documentation.Add($"Example values for {nameof(_js.damageBlockedJson)}:");
@@ -58,7 +58,7 @@ namespace GrimDamage.GUI.Browser {
                 {default(int), new List<SimpleDamageEntryJson> { docDamageEntryJson } }
             }));
             documentation.Add("");
-
+            */
 
             documentation.Add($"Example values for {nameof(_js.damageDealtJson)}:");
             documentation.Add(Serialize(
@@ -67,7 +67,7 @@ namespace GrimDamage.GUI.Browser {
                 })
             );
             documentation.Add("");
-
+            /*
 
             documentation.Add($"Example values for {nameof(_js.detailedDamageTakenJson)}:");
             documentation.Add(Serialize(
@@ -93,7 +93,7 @@ namespace GrimDamage.GUI.Browser {
                 })
             );
             documentation.Add("");
-
+            
             
             documentation.Add($"Example values for {nameof(_js.damageDealtToSingleTargetJson)}:");
             documentation.Add(Serialize(
@@ -118,7 +118,7 @@ namespace GrimDamage.GUI.Browser {
             documentation.Add(Serialize(new List<EntityJson> { docEntity }));
             documentation.Add("");
 
-
+            */
             documentation.Add($"The possible values for state are:");
             documentation.Add(Serialize(Enum.GetValues(typeof(GrimState)).Cast<GrimState>().Select(m => m.ToString())));
             documentation.Add("");
@@ -156,44 +156,10 @@ namespace GrimDamage.GUI.Browser {
         private string Serialize(object o) {
             return JsonConvert.SerializeObject(o, _settings);
         }
-
-
-        public void SetDamageTaken(Dictionary<int, List<SimpleDamageEntryJson>> value) {
-            _js.damageTakenJson = JsonConvert.SerializeObject(value, _settings);
-        }
-
         
-        public void SetDamageBlocked(Dictionary<int, List<DamageBlockedJson>> value) {
-            _js.damageBlockedJson = JsonConvert.SerializeObject(value, _settings);
-        }
         public void SetDamageDealt(Dictionary<int, List<SimpleDamageEntryJson>> value) {
             _js.damageDealtJson = JsonConvert.SerializeObject(value, _settings);
         }
-
-        public void SetDetailedDamageTaken(Dictionary<int, List<DetailedDamageTakenJson>> value) {
-            _js.detailedDamageTakenJson = JsonConvert.SerializeObject(value, _settings);
-        }
-
-        public void SetDetailedDamageDealt(Dictionary<int, List<DetailedDamageDealtJson>> value) {
-            _js.detailedDamageDealtJson = JsonConvert.SerializeObject(value, _settings);
-        }
         
-        public void SetDamageDealtToSingleTarget(Dictionary<int, List<SimpleDamageEntryJson>> value) {
-            _js.damageDealtToSingleTargetJson = JsonConvert.SerializeObject(value, _settings);
-        }
-
-        public void SetPlayers(List<EntityJson> value) {
-            _js.playersJson = JsonConvert.SerializeObject(value, _settings);
-        }
-
-        public void SetEntities(List<EntityJson> value) {
-            _js.entitiesJson = JsonConvert.SerializeObject(value, _settings);
-        }
-
-        public void SetPets(List<EntityJson> value) {
-            _js.petsJson = JsonConvert.SerializeObject(value, _settings);
-        }
-
-
     }
 }

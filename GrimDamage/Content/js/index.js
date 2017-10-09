@@ -185,24 +185,11 @@ ko.applyBindings(lightModeToggleViewModel, document.getElementById('light-mode-v
 // ===================================================
 // Tick handler - This is up for refactoring
 let lastPlayerId = undefined;
-setCsharpTickCallback((players, damageDealt, playerLocationName, detailedDamageDealt, detailedDamageTaken) => {
+setCsharpTickCallback((damageDealt) => {
     if (pauseTracker.isActive) {
-        p.tick(damageDealt,
-            detailedDamageDealt,
-            detailedDamageTaken
-        );
+        p.tick(damageDealt);
 
         const playerId = database.getMainPlayerEntityId();
-
-        /// TODO: This needs to use the new 'database.js' method of doing things
-        if (playerId && detailedDamageTaken && detailedDamageTaken[playerId]) {
-
-            if (playerId !== lastPlayerId) {
-                database.reset();
-            }
-
-            lastPlayerId = playerId;
-        }
         detailedDamageTakenTextVm.update();
 
 

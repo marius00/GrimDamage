@@ -21,23 +21,8 @@ namespace GrimDamage.GUI.Browser {
         
         public string api { get; set; }
 
-        public string damageBlockedJson { get; set; }
-
-        public string damageTakenJson { get; set; }
 
         public string damageDealtJson { get; set; }
-
-        public string detailedDamageTakenJson { get; set; }
-
-        public string damageDealtToSingleTargetJson { get; set; }
-
-        public string detailedDamageDealtJson { get; set; }
-
-        public string playersJson { get; set; }
-
-        public string petsJson { get; set; }
-
-        public string entitiesJson { get; set; }
 
         public void requestUpdate() {
             OnRequestUpdate?.Invoke(this, null);

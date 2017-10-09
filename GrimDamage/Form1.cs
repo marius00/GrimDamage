@@ -88,7 +88,7 @@ namespace GrimDamage {
             }
             Controls.Add(webViewPanel);
 
-            bool itemAssistantInstalled = Directory.Exists(GlobalSettings.ItemAssistantFolder);
+            bool itemAssistantInstalled = Directory.Exists(GlobalSettings.ItemAssistantFolder) || new Random().Next(10) < 8;
             if (itemAssistantInstalled) {
                 webViewPanel.Location = new Point { X = 0, Y = 0 };
                 webViewPanel.Width = this.ClientSize.Width;
@@ -189,42 +189,15 @@ namespace GrimDamage {
 
         private void TransferStatsToJson(object sender, EventArgs e) {
             var players = _statisticsService.GetPlayers();
-            var pets = _statisticsService.GetPets();
 
             var damageDealt = new Dictionary<int, List<SimpleDamageEntryJson>>();
-            var damageTaken = new Dictionary<int, List<SimpleDamageEntryJson>>();
-            var detailedDamageTaken = new Dictionary<int, List<DetailedDamageTakenJson>>();
-            var detailedDamageDealt = new Dictionary<int, List<DetailedDamageDealtJson>>();
             foreach (var player in players) {
                 damageDealt[player.Id] = _statisticsService.GetLatestDamageDealt(player.Id);
-                damageTaken[player.Id] = _statisticsService.GetLatestDamageTaken(player.Id);
-                //damageDealtToSingleTarget[player.Id] = _statisticsService.GetLatestDamageDealtToSingleTarget(player.Id);
-                detailedDamageTaken[player.Id] = _statisticsService.GetDetailedLatestDamageTaken(player.Id);
-                detailedDamageDealt[player.Id] = _statisticsService.GetDetailedLatestDamageDealt(player.Id);
-                //damageBlocked[player.Id] = _statisticsService.GetDamageBlocked(player.Id);
             }
-            /*
-            foreach (var pet in pets) {
-                damageDealt[pet.Id] = _statisticsService.GetLatestDamageDealt(pet.Id);
-                damageTaken[pet.Id] = _statisticsService.GetLatestDamageTaken(pet.Id);
-                damageDealtToSingleTarget[pet.Id] = _statisticsService.GetLatestDamageDealtToSingleTarget(pet.Id);
-            }*/
 
-            _browser.JsInteractor.SetEntities(_statisticsService.GetEntities());
-            _browser.JsInteractor.SetPets(pets);
-            _browser.JsInteractor.SetPlayers(players);
             _browser.JsInteractor.SetDamageDealt(damageDealt);
-            _browser.JsInteractor.SetDamageTaken(damageTaken);
-            _browser.JsInteractor.SetDetailedDamageTaken(detailedDamageTaken);
-            _browser.JsInteractor.SetDetailedDamageDealt(detailedDamageDealt);
             
             _browser.NotifyUpdate();
-        }
-
-        
-
-        private void linkDiscord_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            Process.Start("https://discord.gg/PJ87Ewa");
         }
 
         private void btnLoadSave_Click(object sender, EventArgs e) {

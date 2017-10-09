@@ -49,12 +49,14 @@ function createChartDamageTaken(id, sequenceLength, colors, previousChart) {
 
             });
         }*/
+        const turbo = 0;
         preloadSeries = [
             {
                 name: 'Total',
                 fillOpacity: 0.1,
                 data: Array.from(Array(sequenceLength), () => null),
-                color: colors.color('Total')
+                color: colors.color('Total'),
+                turboThreshold: turbo
             },
             {
                 name: 'Raw Total',
@@ -63,90 +65,103 @@ function createChartDamageTaken(id, sequenceLength, colors, previousChart) {
                 color: colors.color('Raw Total'),
                 tooltip: {
                     pointFormat: 'Received <b>{point.y:,.0f}</b> {series.name} damage'
-                }
+                },
+                turboThreshold: turbo
             },
             {
                 type: 'spline',
                 marker: { enabled: false },
                 name: 'Physical',
                 color: colors.color('Physical'),
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                turboThreshold: turbo
             },
             {
                 type: 'spline',
                 marker: { enabled: false },
                 name: 'Lightning',
                 color: colors.color('Lightning'),
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                turboThreshold: turbo
             },
             {
                 type: 'spline',
                 marker: { enabled: false },
                 name: 'Vitality',
                 color: colors.color('Vitality'),
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                turboThreshold: turbo
             },
             {
                 type: 'spline',
                 marker: { enabled: false },
                 name: 'Aether',
                 color: colors.color('Aether'),
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                turboThreshold: turbo
             },
             {
                 name: 'Bleeding',
                 marker: { enabled: false },
                 color: colors.color('Bleeding'),
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                turboThreshold: turbo
             },
             {
                 type: 'spline',
                 marker: { enabled: false },
                 name: 'Poison',
                 color: colors.color('Acid'),
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                turboThreshold: turbo
             },
             {
                 type: 'spline',
                 marker: { enabled: false },
                 name: 'Pierce',
                 color: colors.color('Pierce'),
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                turboThreshold: turbo
             },
             {
                 type: 'spline',
                 marker: { enabled: false },
                 name: 'Chaos',
                 color: colors.color('Chaos'),
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                turboThreshold: turbo
             },
             {
                 type: 'spline',
                 marker: { enabled: false },
                 name: 'PercentCurrentLife',
                 color: colors.color('PercentCurrentLife'),
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                turboThreshold: turbo
             },
             {
                 type: 'spline',
                 marker: { enabled: false },
                 name: 'LifeLeech',
                 color: colors.color('LifeLeech'),
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                turboThreshold: turbo
             },
             {
                 type: 'spline',
                 marker: { enabled: false },
                 name: 'Cold',
                 color: colors.color('Cold'),
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                turboThreshold: turbo
             },
             {
                 type: 'spline',
                 marker: { enabled: false },
                 name: 'Fire',
                 color: colors.color('Fire'),
-                data: Array.from(Array(sequenceLength), () => null)
+                data: Array.from(Array(sequenceLength), () => null),
+                turboThreshold: turbo
             }
         ];
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using EvilsoftCommons;
 using EvilsoftCommons.DllInjector;
 using EvilsoftCommons.Exceptions;
 using GrimDamage.GD.Dto;
@@ -72,7 +73,38 @@ namespace GrimDamage.GD.Processors {
                 }
             }
 
-            Logger.Warn($"Got a message of type {bt.Type}");
+            if (bt.Type == 999003) {
+                //Logger.Debug($"SkillManager::GetDefenseAttributes called for {IOHelper.GetInt(bt.Data, 0)}");
+                int entityId = IOHelper.GetInt(bt.Data, 0);
+                float fire = IOHelper.GetFloat(bt.Data, 4);
+                float cold = IOHelper.GetFloat(bt.Data, 8);
+                float lightning = IOHelper.GetFloat(bt.Data, 12);
+                float poison = IOHelper.GetFloat(bt.Data, 16);
+                float pierce = IOHelper.GetFloat(bt.Data, 20);
+                float bleed = IOHelper.GetFloat(bt.Data, 24);
+                float vitality = IOHelper.GetFloat(bt.Data, 28);
+                float chaos = IOHelper.GetFloat(bt.Data, 32);
+                float aether = IOHelper.GetFloat(bt.Data, 36);
+                Logger.Debug($"SkillManager::GetDefenseAttributes called for {entityId} with Fire:{fire}, Cold:{cold}, Lightning:{lightning}, Poison:{poison}, Pierce:{pierce}, Bleed:{bleed}, Vitality:{vitality}, Chaos:{chaos}, Aether:{aether}");
+            }
+
+            else if (bt.Type == 999002) {
+                int entityId = IOHelper.GetInt(bt.Data, 0);
+                float fire = IOHelper.GetFloat(bt.Data, 4);
+                float cold = IOHelper.GetFloat(bt.Data, 8);
+                float lightning = IOHelper.GetFloat(bt.Data, 12);
+                float poison = IOHelper.GetFloat(bt.Data, 16);
+                float pierce = IOHelper.GetFloat(bt.Data, 20);
+                float bleed = IOHelper.GetFloat(bt.Data, 24);
+                float vitality = IOHelper.GetFloat(bt.Data, 28);
+                float chaos = IOHelper.GetFloat(bt.Data, 32);
+                float aether = IOHelper.GetFloat(bt.Data, 36);
+                Logger.Debug($"Character::GetAllDefenseAttributes called for {entityId} with Fire:{fire}, Cold:{cold}, Lightning:{lightning}, Poison:{poison}, Pierce:{pierce}, Bleed:{bleed}, Vitality:{vitality}, Chaos:{chaos}, Aether:{aether}");
+            }
+            else {
+
+                Logger.Warn($"Got a message of type {bt.Type}");
+            }
         }
 
         private void InjectorCallback(object sender, ProgressChangedEventArgs e) {

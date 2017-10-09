@@ -120,6 +120,14 @@
             console.log(`Storing series "${s.name}" as index ${idx}`);
             this.series[s.name] = idx;
         }
+
+
+        this.addPoint('Total', new Date().getTime(), 0);
+        /*let self = this;
+        window.setInterval(x => {
+            self.addPoint('Total', new Date().getTime(), Math.round(Math.random() * 200));
+            self.chart.redraw();
+        }, 500);*/
         //this.series['Total'] = 0;
     }
 

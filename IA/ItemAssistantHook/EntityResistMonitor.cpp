@@ -15,6 +15,7 @@ EntityResistMonitor::CharAttributeAccumulator_ExecuteDefensePtr EntityResistMoni
 EntityResistMonitor::SkillBuff_DebufTrap_GetResistancePtr EntityResistMonitor::originalSkillBuff_DebufTrap_GetResistanceMethod;
 EntityResistMonitor::SkillBuff_DebufFreeze_GetResistancePtr EntityResistMonitor::originalSkillBuff_DebufFreeze_GetResistanceMethod;
 EntityResistMonitor::Character_GetAllDefenseAttributesPtr EntityResistMonitor::originalCharacter_GetAllDefenseAttributesMethod;
+EntityResistMonitor::SkillManager_GetDefenseAttributesPtr EntityResistMonitor::originalSkillManager_GetDefenseAttributesMethod;
 int EntityResistMonitor::previousId;
 
 void EntityResistMonitor::EnableHook() {
@@ -30,6 +31,7 @@ void EntityResistMonitor::EnableHook() {
 	
 
 	originalCharacter_GetAllDefenseAttributesMethod = (Character_GetAllDefenseAttributesPtr)GetProcAddress(::GetModuleHandle("Game.dll"), "?GetAllDefenseAttributes@Character@GAME@@QBEXAAVCombatAttributeAccumulator@2@@Z");
+	originalSkillManager_GetDefenseAttributesMethod = (Character_GetAllDefenseAttributesPtr)GetProcAddress(::GetModuleHandle("Game.dll"), "?GetDefenseAttributes@SkillManager@GAME@@QBEXAAVCombatAttributeAccumulator@2@@Z");
 
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
@@ -41,6 +43,7 @@ void EntityResistMonitor::EnableHook() {
 	DetourAttach((PVOID*)&originalSkillBuff_DebufFreeze_GetResistanceMethod, HookedSkillBuff_DebufFreeze_GetResistance);
 
 	DetourAttach((PVOID*)&originalCharacter_GetAllDefenseAttributesMethod, HookedCharacter_GetAllDefenseAttributes);
+	DetourAttach((PVOID*)&originalSkillManager_GetDefenseAttributesMethod, HookedSkillManager_GetDefenseAttributes);
 	
 	DetourTransactionCommit();
 
@@ -118,10 +121,80 @@ void* __fastcall EntityResistMonitor::HookedSkillBuff_DebufFreeze_GetResistance(
 	previousId = 0;
 	return result;
 }
-void* __fastcall EntityResistMonitor::HookedCharacter_GetAllDefenseAttributes(void* This, void* _, void* arg1) {
-	DataItemPtr item(new DataItem(999002, 0, 0));
-	m_dataQueue->push(item);
-	SetEvent(m_hEvent);	
 
-	return originalCharacter_GetAllDefenseAttributesMethod(This, arg1);
+#define Fire 6
+#define Cold 5
+#define Lightning 8
+#define Poison 7
+#define Pierce 4
+#define Bleed 15
+#define Vitality 9
+#define Aether 11
+#define Chaos 10
+void* __fastcall EntityResistMonitor::HookedCharacter_GetAllDefenseAttributes(void* This, void* _, void* arg1) {
+	previousId = GetObjectId((void*)This);
+
+	void* result = originalCharacter_GetAllDefenseAttributesMethod(This, arg1);
+	const size_t bufsize = sizeof(int) + sizeof(float) * 9;
+	char buffer[bufsize] = { 0 };
+	memcpy(&buffer, (char*)&previousId, 4);
+
+	//int resists[] = { Fire, Cold, Lightning, Poison, Pierce, Bleed, Vitality, Aether, Chaos };
+	int resists[] = { Fire };
+	int numResists = sizeof(resists) / sizeof(int);
+	for (int idx = 0; idx < numResists; idx++) {
+		float resist = originalGetTotalDefenseTypeMethod(arg1, resists[idx]);
+		memcpy(&buffer + 4 * (idx+1), (char*)&resist, 4);
+
+	}
+
+	DataItemPtr item(new DataItem(999002, bufsize, (char*)&buffer));
+	m_dataQueue->push(item);
+	SetEvent(m_hEvent);
+	// Call GAME::CombatAttributeAccumulator::GetTotalDefenseType((int)&v216, COERCE_FLOAT(62));
+	// For each desired skill
+	// v16 == 'arg1'
+
+	return result;
+}
+void* __fastcall EntityResistMonitor::HookedSkillManager_GetDefenseAttributes(void* This, void* _, void* a1) {
+	/*
+	DataItemPtr item(new DataItem(999003, sizeof(previousId), (char*)&previousId));
+	m_dataQueue->push(item);
+	SetEvent(m_hEvent);
+	return originalSkillManager_GetDefenseAttributesMethod(This, a1);
+	*/
+	// Call GAME::CombatAttributeAccumulator::GetTotalDefenseType((int)&v216, COERCE_FLOAT(62));
+	// For each desired skill
+	// v16 == 'a1'
+
+
+
+
+
+
+	previousId = GetObjectId((void*)This);
+
+	void* result = originalSkillManager_GetDefenseAttributesMethod(This, a1);
+	const size_t bufsize = sizeof(int) + sizeof(float) * 9;
+	char buffer[bufsize] = { 0 };
+	memcpy(&buffer, (char*)&previousId, 4);
+
+	//int resists[] = { Fire, Cold, Lightning, Poison, Pierce, Bleed, Vitality, Aether, Chaos };
+	int resists[] = { Fire };
+	int numResists = sizeof(resists) / sizeof(int);
+	for (int idx = 0; idx < numResists; idx++) {
+		float resist = HookedGetTotalDefenseType(a1, NULL, resists[idx]);
+		memcpy(&buffer + 4 * (idx + 1), (char*)&resist, 4);
+
+	}
+
+	DataItemPtr item(new DataItem(999003, bufsize, (char*)&buffer));
+	m_dataQueue->push(item);
+	SetEvent(m_hEvent);
+	// Call GAME::CombatAttributeAccumulator::GetTotalDefenseType((int)&v216, COERCE_FLOAT(62));
+	// For each desired skill
+	// v16 == 'arg1'
+
+	return result;
 }
