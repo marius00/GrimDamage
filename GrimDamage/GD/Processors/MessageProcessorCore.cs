@@ -85,7 +85,7 @@ namespace GrimDamage.GD.Processors {
                 float vitality = IOHelper.GetFloat(bt.Data, 28);
                 float chaos = IOHelper.GetFloat(bt.Data, 32);
                 float aether = IOHelper.GetFloat(bt.Data, 36);
-                Logger.Debug($"SkillManager::GetDefenseAttributes called for {entityId} with Fire:{fire}, Cold:{cold}, Lightning:{lightning}, Poison:{poison}, Pierce:{pierce}, Bleed:{bleed}, Vitality:{vitality}, Chaos:{chaos}, Aether:{aether}");
+                //Logger.Debug($"SkillManager::GetDefenseAttributes called for {entityId} with Fire:{fire}, Cold:{cold}, Lightning:{lightning}, Poison:{poison}, Pierce:{pierce}, Bleed:{bleed}, Vitality:{vitality}, Chaos:{chaos}, Aether:{aether}");
             }
 
             else if (bt.Type == 999002) {
@@ -99,7 +99,7 @@ namespace GrimDamage.GD.Processors {
                 float vitality = IOHelper.GetFloat(bt.Data, 28);
                 float chaos = IOHelper.GetFloat(bt.Data, 32);
                 float aether = IOHelper.GetFloat(bt.Data, 36);
-                Logger.Debug($"Character::GetAllDefenseAttributes called for {entityId} with Fire:{fire}, Cold:{cold}, Lightning:{lightning}, Poison:{poison}, Pierce:{pierce}, Bleed:{bleed}, Vitality:{vitality}, Chaos:{chaos}, Aether:{aether}");
+                //Logger.Debug($"Character::GetAllDefenseAttributes called for {entityId} with Fire:{fire}, Cold:{cold}, Lightning:{lightning}, Poison:{poison}, Pierce:{pierce}, Bleed:{bleed}, Vitality:{vitality}, Chaos:{chaos}, Aether:{aether}");
             }
             else {
 

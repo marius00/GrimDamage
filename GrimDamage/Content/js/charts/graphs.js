@@ -207,6 +207,9 @@ function createChartDamageTaken(id, sequenceLength, colors, previousChart) {
                 pointFormat: 'Received <b>{point.y:,.0f}</b> {series.name} damage <br> ({point.extrapolated:,.0f} before resists)'
             },
             plotOptions: {
+                series: {
+                    turboThreshold: 0
+                },
                 area: {
                     animation: false,
                     pointStart: 0,
@@ -329,6 +332,9 @@ function createChartDamageDealt(id, sequenceLength, colors, previousChart) {
                 pointFormat: '{series.name} did <b>{point.y:,.0f}</b><br/>damage'
             },
             plotOptions: {
+                series: {
+                    turboThreshold: 0
+                },
                 area: {
                     animation: false,
                     pointStart: 0,
