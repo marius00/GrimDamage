@@ -1,3 +1,4 @@
+#pragma once
 #include <windows.h>
 #include "DataQueue.h"
 #include "BaseMethodHook.h"
@@ -11,6 +12,8 @@ public:
 	void EnableHook();
 	void DisableHook();
 
+	static int GetPlayerId(int* player);
+
 private:
 	typedef void* (__thiscall *OriginalMethodPtr)(void*, bool b);
 	typedef int (__thiscall *GetObjectIdMethodPtr)(void*);
@@ -18,7 +21,9 @@ private:
 	static OriginalMethodPtr originalMethod;
 	static GetObjectIdMethodPtr GetObjectId;
 	static DataQueue* m_dataQueue;
+	static bool DetectOffset();
 
+	static int m_offset;
 
 	static void* __fastcall HookedMethod(void* This, void* notUsed, bool b);
 	

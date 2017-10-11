@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using GrimDamage.GUI.Browser.dto;
@@ -26,6 +27,25 @@ namespace GrimDamage.GUI.Browser {
 
         public void requestUpdate() {
             OnRequestUpdate?.Invoke(this, null);
+        }
+
+        public string version {
+            get {
+
+                var v = Assembly.GetExecutingAssembly().GetName().Version;
+                DateTime buildDate = new DateTime(2000, 1, 1)
+                    .AddDays(v.Build)
+                    .AddSeconds(v.Revision * 2);
+
+                int daysAgo = (DateTime.UtcNow - buildDate).Days;
+                if (daysAgo > 0) {
+                    return
+                        $"Running version {v.Major}.{v.Minor}.{v.Build}.{v.Revision} released {buildDate:dd/MM/yyyy} ({daysAgo} days ago)";
+                }
+                else {
+                    return $"Running version {v.Major}.{v.Minor}.{v.Build}.{v.Revision} released {buildDate:dd/MM/yyyy} (today)";
+                }
+            }
         }
 
 

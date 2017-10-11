@@ -13,6 +13,7 @@ public:
 
 private:
 	typedef void (__cdecl *OriginalMethodPtr)(void* This, void* priority, char* str, void* args);
+
 	static HANDLE m_hEvent;
 	static OriginalMethodPtr originalMethod;
 	static DataQueue* m_dataQueue;

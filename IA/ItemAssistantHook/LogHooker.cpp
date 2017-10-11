@@ -77,6 +77,9 @@ void __cdecl LoggerHook::HookedMethod(
 	void* _param3,
 	void* _param4,
 	void* _param5) {
+	// Find the main player ID
+
+
 /*
 	{
 		const size_t buffsize = 1 + PointerHelper::size;

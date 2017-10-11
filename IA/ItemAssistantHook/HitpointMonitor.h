@@ -1,6 +1,7 @@
 #include <windows.h>
 #include "DataQueue.h"
 #include "BaseMethodHook.h"
+#include "DetectPlayerId.h"
 
 /************************************************************************
 /************************************************************************/
@@ -18,7 +19,7 @@ private:
 	static OriginalMethodPtr originalMethod;
 	static GetObjectIdMethodPtr GetObjectId;
 	static DataQueue* m_dataQueue;
-
+	static DetectPlayerId m_playerIdDetector;
 
 	static void* __fastcall HookedMethod(void* This, void* notUsed, int val);
 	static bool DetectOffset();

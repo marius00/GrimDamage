@@ -40,8 +40,7 @@ class DamageParser {
         }
     }
 
-    tick(damageDealt) {
-        this.dataReceived(damageDealt); // TODO: OBSOLETE!
+    tick() {
 
         const detailedDamageDealt = this.database.getDamageDealt(this.previousTimestampDamageDealt, TimestampEverything);
         if (detailedDamageDealt.length > 0) {
@@ -54,35 +53,26 @@ class DamageParser {
 
         this.handleEntitiesList();
         this.addDamageDealtToBosses(detailedDamageDealt || []);
-    }
 
-    update() {
-        const playerId = this.database.getMainPlayerEntityId();
-        if (playerId && damageDealt[playerId]) { // TODO:
-            this.addDamageDealt(playerId, damageDealt); // TODO:
-        } // TODO:
+        const aggregated = Enumerable.From(detailedDamageDealt)
+            .GroupBy(
+                (m) => m.damageType,
+                null,
+                (e, g) => { return { damageType: e, amount: Enumerable.From(g.source).Sum(p => p.amount) }; }
+            ).ToArray();
 
-        const detailedDamageDealt = this.database.getDamageDealt(this.previousTimestampDamageDealt, TimestampEverything);
-        if (detailedDamageDealt.length > 0) {
-            try {
-                this.previousTimestampDamageDealt = Enumerable.From(detailedDamageDealt).Max(e => e.timestamp) || this.previousTimestampDamageDealt;
-            } catch (ex) {
-                console.error('Got an error', ex, 'while fetching previous timestamp');
-            }
-        }
-        
-
-        const detailedDamageTaken = this.database.getDamageTaken(this.previousTimestampDamageTaken, TimestampEverything);
-        if (detailedDamageTaken.length > 0) {
-            try {
-                this.previousTimestampDamageTaken = Enumerable.From(detailedDamageTaken).Max(e => e.timestamp) || this.previousTimestampDamageTaken;
-            } catch (ex2) {
-                console.error('Got an error', ex2, 'while fetching previous timestamp');
-            }
+        console.debug('Step chart aggregated:', aggregated);
+        // Step chart
+        let timestamp = (new Date()).getTime();
+        for (let c = 0; c < aggregated.length; c++) {
+            console.log('Adding', aggregated[c].damageType, timestamp, aggregated[c].amount);
+            this.damageDoneStepChart.addPoint(aggregated[c].damageType, timestamp, aggregated[c].amount);
         }
 
-        this.handleEntitiesList();
-        this.addDamageDealtToBosses(detailedDamageDealt);
+        if (detailedDamageDealt.length === 0) {
+            this.damageDoneStepChart.addZeroToAllSeries(timestamp);
+        }
+        this.damageDoneStepChart.redraw();
     }
 
     
@@ -163,26 +153,6 @@ class DamageParser {
 
                 this.bosses[entry.victimId]['dealt'][entry.damageType] += Math.round(entry.amount);
             }
-        }
-    }
-
-    addDamageDealt(id, damageDealt) {
-        if (damageDealt[id]) {
-            /* Add to stepChart */
-            let timestamp = (new Date()).getTime();
-            for (let c = 0; c < damageDealt[id].length; c++) {
-                this.damageDoneStepChart.addPoint(damageDealt[id][c].damageType, timestamp, damageDealt[id][c].amount);
-            }
-            this.damageDoneStepChart.redraw();
-        }
-    }
-
-
-
-    dataReceived(damageDealt) {
-        const playerId = this.database.getMainPlayerEntityId();
-        if (playerId && damageDealt[playerId]) {
-            this.addDamageDealt(playerId, damageDealt);
         }
     }
 

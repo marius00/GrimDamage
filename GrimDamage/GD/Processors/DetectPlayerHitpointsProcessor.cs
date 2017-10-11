@@ -28,7 +28,7 @@ namespace GrimDamage.GD.Processors {
                     Logger.Info("Player health offset has been successfully detected");
                     return true;
 
-                case MessageType.TypeErrorDetectingPlayerHealthOffset:
+                case MessageType.TypeErrorDetectingPlayerHealthOffset: {
                     Logger.Warn("Player health offset could not be detect, health graphs will be unavailable");
                     ExceptionReporter.ReportIssue("No health offset");
 
@@ -38,19 +38,38 @@ namespace GrimDamage.GD.Processors {
                     Logger.Debug(hex.ToString());
 
                     return true;
+                }
 
-                case MessageType.TypeHitpointMonitor: {
+                case MessageType.TYPE_ErrorDetectingPrimaryPlayerIdOffset: 
+                    {
+                    Logger.Warn("Player id offset could not be detect, player id may be unavailable");
+                    ExceptionReporter.ReportIssue("No player id offset");
+
+                    StringBuilder hex = new StringBuilder(data.Length * 2);
+                    foreach (byte b in data)
+                        hex.AppendFormat("{0:x2} ", b);
+                    Logger.Debug(hex.ToString());
+
+                    return true;
+                }
+
+                case MessageType.TypeHitpointMonitor: 
+                    {
                         int entity = IOHelper.GetInt(data, 0);
                         float hp = IOHelper.GetFloat(data, 4);
+                        bool isPrimary = data[8] != 0;
 
                         if (_appSettings.LogEntityHitpointEvent) {
-                            Logger.Info($"Entity {entity} has {hp} hitpoints.");
+                            Logger.Info($"Entity {entity} has {hp} hitpoints, isPrimary: {isPrimary}.");
+                        }
+
+                        if (isPrimary) {
+                            _damageParsingService.SetPlayerInfo(entity, true);
                         }
 
                         _damageParsingService.SetHealth(entity, hp);
-
-                }
-                    return true;
+                        return true;
+                    }
             }
 
             return false;

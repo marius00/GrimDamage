@@ -159,6 +159,14 @@
         ], false);
     }
 
+    addZeroToAllSeries(timestamp) {
+        for (let key in this.series) {
+            if (this.series.hasOwnProperty(key)) {
+                this.chart.series[this.series[key]].addPoint([timestamp, 0], false);
+            }
+        }
+    }
+
     reset() {
         for (let idx = 0; idx < this.chart.series.length; idx++) {
             this.chart.series[idx].setData([], true, false, false);

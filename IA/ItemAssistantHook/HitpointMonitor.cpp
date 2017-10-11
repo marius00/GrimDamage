@@ -10,6 +10,7 @@ DataQueue* HitpointMonitor::m_dataQueue;
 HitpointMonitor::OriginalMethodPtr HitpointMonitor::originalMethod;
 HitpointMonitor::GetObjectIdMethodPtr HitpointMonitor::GetObjectId;
 int HitpointMonitor::m_offset = 0;
+DetectPlayerId HitpointMonitor::m_playerIdDetector;
 
 /*
 GAME::Character::SubtractLife(*(GAME::Character **)(this_ + 4), *(float *)&damageAmount, a5, 0.0, 1);
@@ -105,11 +106,14 @@ void HitpointMonitor::EnableHook() {
 		DetourAttach((PVOID*)&originalMethod, HookedMethod);
 		DetourTransactionCommit();
 	}
+
+	m_playerIdDetector.EnableHook();
 }
 
 HitpointMonitor::HitpointMonitor(DataQueue* dataQueue, HANDLE hEvent) {
 	HitpointMonitor::m_dataQueue = dataQueue;
 	HitpointMonitor::m_hEvent = hEvent;
+	m_playerIdDetector = DetectPlayerId(dataQueue, hEvent);
 }
 
 HitpointMonitor::HitpointMonitor() {
@@ -123,6 +127,8 @@ void HitpointMonitor::DisableHook() {
 		DetourDetach((PVOID*)&originalMethod, HookedMethod);
 		DetourTransactionCommit();
 	}
+
+	m_playerIdDetector.DisableHook();
 }
 
 int lastSend = 0;
@@ -132,12 +138,13 @@ void* __fastcall HitpointMonitor::HookedMethod(void* This, void* notUsed, int va
 	if (lastSend++ > 30) {
 		SIZE_T bytesRead = 0;
 		HANDLE hProcess = GetCurrentProcess();
-		const size_t resultSize = 8;
+		const size_t resultSize = 9;
 		unsigned char result[resultSize] = { 0 };
 
 		if (ReadProcessMemory(hProcess, (char*)This + m_offset, (char*)&result + 4, 4, &bytesRead) != 0) {
 			int id = GetObjectId((void*)This);
 			memcpy(result, &id, sizeof(id));
+			result[8] = m_playerIdDetector.GetPlayerId((int*)This);
 
 			DataItemPtr item(new DataItem(TYPE_HitpointMonitor, resultSize, (char*)&result));
 			m_dataQueue->push(item);

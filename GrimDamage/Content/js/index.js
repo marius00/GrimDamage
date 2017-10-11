@@ -252,3 +252,8 @@ if (window.location.search.toString().toLowerCase().indexOf('darkmode=1') !== -1
 
 }
 // ===================================================
+
+$(document).ready(() => {
+    $('#version-footer').html(data.version);
+});
+

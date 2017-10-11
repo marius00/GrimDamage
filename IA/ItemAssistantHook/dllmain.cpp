@@ -143,7 +143,7 @@ int ProcessAttach(HINSTANCE _hModule) {
 	hooks.push_back(new PauseGameTime(&g_dataQueue, g_hEvent));
 	hooks.push_back(new UnpauseGameTime(&g_dataQueue, g_hEvent));
 	hooks.push_back(new LoggerHook(&g_dataQueue, g_hEvent));
-	hooks.push_back(new DetectPlayerId(&g_dataQueue, g_hEvent));
+	//hooks.push_back(new DetectPlayerId(&g_dataQueue, g_hEvent));
 	hooks.push_back(new IncrementDeaths(&g_dataQueue, g_hEvent));
 	hooks.push_back(new SetLifeState(&g_dataQueue, g_hEvent));
 	
@@ -152,7 +152,7 @@ int ProcessAttach(HINSTANCE _hModule) {
 	hooks.push_back(new DisableMovement(&g_dataQueue, g_hEvent));
 
 	hooks.push_back(new HitpointMonitor(&g_dataQueue, g_hEvent));
-	hooks.push_back(new EntityResistMonitor(&g_dataQueue, g_hEvent));
+	//hooks.push_back(new EntityResistMonitor(&g_dataQueue, g_hEvent));
 	
 	for (unsigned int i = 0; i < hooks.size(); i++) {
 		hooks[i]->EnableHook();

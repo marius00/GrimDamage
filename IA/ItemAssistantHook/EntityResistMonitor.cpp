@@ -173,7 +173,6 @@ void* __fastcall EntityResistMonitor::HookedSkillManager_GetDefenseAttributes(vo
 
 
 
-	previousId = GetObjectId((void*)This);
 
 	void* result = originalSkillManager_GetDefenseAttributesMethod(This, a1);
 	const size_t bufsize = sizeof(int) + sizeof(float) * 9;
