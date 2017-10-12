@@ -64,10 +64,13 @@ class DamageParser {
         console.debug('Step chart aggregated:', aggregated);
         // Step chart
         let timestamp = (new Date()).getTime();
+        let total = 0;
         for (let c = 0; c < aggregated.length; c++) {
+            total += aggregated[c].amount;
             console.log('Adding', aggregated[c].damageType, timestamp, aggregated[c].amount);
             this.damageDoneStepChart.addPoint(aggregated[c].damageType, timestamp, aggregated[c].amount);
         }
+        this.damageDoneStepChart.addPoint("Total", timestamp, total);
 
         if (detailedDamageDealt.length === 0) {
             this.damageDoneStepChart.addZeroToAllSeries(timestamp);
