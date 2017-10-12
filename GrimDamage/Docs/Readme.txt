@@ -11,9 +11,6 @@ Unmapped / uncharted territory:
 * Get player class[es] from in-game? [for pets]		-- unknown, suspect somewhat tricky  // mastery
 
 TODO:
-** Find a way to read primary player on life hit or something, so its not outdated
-** Step chart uses the outdated 'data.' format -- bugged
-
 * Life line not shown on damage taken
 * Resists a bit buggy
 * Graph with the players and boss resist, per second (to track debuffs)

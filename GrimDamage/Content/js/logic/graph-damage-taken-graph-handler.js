@@ -31,7 +31,7 @@ class DamageTakenGraphLogichandler {
     }
 
 
-    addDamageTaken(x, type, amount, extrapolated) {
+    addDamageTaken(type, amount, extrapolated) {
         //console.debug(`AddPoint(${type}, ${amount}, ${extrapolated})`);
         const chart = this.damageTakenGraph.series.filter(s => s.name === type)[0];
         if (amount > 2) {
@@ -82,7 +82,7 @@ class DamageTakenGraphLogichandler {
                     extrapolated = this.extrapolateForResists(elem.amount, resist);
                 }
 
-                this.addDamageTaken(this.lastRunTime, elem.damageType, elem.amount, extrapolated);
+                this.addDamageTaken(elem.damageType, elem.amount, extrapolated);
 
                 total += elem.amount;
                 totalExtrapolated += extrapolated;
@@ -94,13 +94,13 @@ class DamageTakenGraphLogichandler {
             // Fill in zeroes for missing types
             for (let type in this.knownDamageTypes) {
                 if (!damageTypesThisTurn.hasOwnProperty(type) && this.knownDamageTypes.hasOwnProperty(type)) {
-                    this.addDamageTaken(this.lastRunTime, type, 0, 0);
+                    this.addDamageTaken(type, 0, 0);
                 }
             }
 
 
-            this.addDamageTaken(this.lastRunTime, 'Total', total, totalExtrapolated);
-            this.addDamageTaken(this.lastRunTime, 'Raw Total', totalExtrapolated);
+            this.addDamageTaken('Total', total, totalExtrapolated);
+            //this.addDamageTaken('Raw Total', 0, totalExtrapolated);
 
             // Redraw
             this.damageTakenGraph.redraw();
