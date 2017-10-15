@@ -51,7 +51,7 @@ let damageDealtGraphHandler = new DamageDealtGraphLogicHandler(database, chartDa
 
 
 
-setCsharpTickInterval(1000);
+
 setCsharpLoadHistoryCallback((dataset) => { console.log('Load:', dataset); });
 
 
@@ -68,20 +68,6 @@ const deathTrackerViewModel = new DeathTrackerViewModel(
 );
 let deathTracker = new DeathTracker(database, deathTrackerViewModel); // damage parser is the current 'track player id' class, may be split later
 ko.applyBindings(deathTrackerViewModel, document.getElementById('what-killed-me-listing'));
-
-
-
-
-// ===================================================
-// State update callback
-setCsharpRequestCallback((type, dataset) => {
-    if (type === TYPE_STATES) {
-        pauseTracker.process(dataset);
-        deathTracker.process(dataset);
-    }
-});
-// ===================================================
-
 
 
 
@@ -181,16 +167,21 @@ ko.applyBindings(lightModeToggleViewModel, document.getElementById('light-mode-v
 
 
 
+function _notifyStateChanges(dataset) {
+    pauseTracker.process(dataset);
+    deathTracker.process(dataset);
+};
 
 // ===================================================
 // Tick handler - This is up for refactoring
 let lastPlayerId = undefined;
-setCsharpTickCallback((damageDealt) => {
+setInterval(() => {
+    data.requestData(TYPE_STATES, lastStateTimestamp.toString(), TimestampEverything, -1, '_notifyStateChanges');
+
     if (pauseTracker.isActive) {
-        p.tick(damageDealt);
+        p.tick();
 
         const playerId = database.getMainPlayerEntityId();
-        detailedDamageTakenTextVm.update();
 
 
 
@@ -237,7 +228,7 @@ setCsharpTickCallback((damageDealt) => {
         damageTakenPieHandler.update();
     }
     //VM.isZoneUnknown(playerLocationName === 'Unknown');
-});
+}, 1000);
 // ===================================================
 
 

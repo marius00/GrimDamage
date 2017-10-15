@@ -29,10 +29,6 @@ What killed me popup:
 * [JS] if you tab or pause while dying, it will register as another death.
 
 
-Known bugs:
-  highstock.js:58 Error: <path> attribute d: Expected number, "M L L L L L L L L".
-  chart.addPoint(null, shouldRender, true);
-
 Nice to have:
 * Show damage blocked (shield)
 * show stats of enemies, off, def, etc.. -- while this is "neat", does it provide ANY value beyond the ingame "chance to hit/crit"?

@@ -80,6 +80,10 @@ class DetailedDamageTakenTextViewModel {
         }
     }
 
+    triggerRefresh() {
+        this.update();
+    }
+
     triggerPrevPage() {
         console.log('<');
         if (this.currentPageNumber() > 0) {

@@ -46,7 +46,6 @@ namespace GrimDamage {
 
             _messageProcessorCore = new MessageProcessorCore(_damageParsingService, _positionTrackerService, _generalStateService, _appSettings);
             _statisticsService = new StatisticsService(_damageParsingService);
-            _browser.JsPojo.OnRequestUpdate += TransferStatsToJson;
             _browser.JsPojo.OnSave += JsPojoOnOnSave;
             _browser.JsPojo.OnSetLightMode += (sender, args) => {
                 bool isDarkMode = (args as LightModeArgument)?.IsDarkMode ?? false;
@@ -185,20 +184,6 @@ namespace GrimDamage {
         }
 
 
-        
-
-        private void TransferStatsToJson(object sender, EventArgs e) {
-            var players = _statisticsService.GetPlayers();
-
-            var damageDealt = new Dictionary<int, List<SimpleDamageEntryJson>>();
-            foreach (var player in players) {
-                damageDealt[player.Id] = _statisticsService.GetLatestDamageDealt(player.Id);
-            }
-
-            _browser.JsInteractor.SetDamageDealt(damageDealt);
-            
-            _browser.NotifyUpdate();
-        }
 
         private void btnLoadSave_Click(object sender, EventArgs e) {
             var ofd = new OpenFileDialog {

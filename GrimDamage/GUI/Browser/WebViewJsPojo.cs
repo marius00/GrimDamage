@@ -14,7 +14,6 @@ namespace GrimDamage.GUI.Browser {
     // ReSharper disable MemberCanBePrivate.Global
     // ReSharper disable UnusedAutoPropertyAccessor.Global
     public class WebViewJsPojo {
-        public event EventHandler OnRequestUpdate;
         public event EventHandler OnSave;
         public event EventHandler OnLog;
         public event EventHandler OnRequestData;
@@ -22,12 +21,6 @@ namespace GrimDamage.GUI.Browser {
         
         public string api { get; set; }
 
-
-        public string damageDealtJson { get; set; }
-
-        public void requestUpdate() {
-            OnRequestUpdate?.Invoke(this, null);
-        }
 
         public string version {
             get {

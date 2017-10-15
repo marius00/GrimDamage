@@ -60,13 +60,6 @@ namespace GrimDamage.GUI.Browser {
             documentation.Add("");
             */
 
-            documentation.Add($"Example values for {nameof(_js.damageDealtJson)}:");
-            documentation.Add(Serialize(
-                new Dictionary<int, List<SimpleDamageEntryJson>> {
-                    {default(int), new List<SimpleDamageEntryJson> { docDamageEntryJson } }
-                })
-            );
-            documentation.Add("");
             /*
 
             documentation.Add($"Example values for {nameof(_js.detailedDamageTakenJson)}:");
@@ -155,10 +148,6 @@ namespace GrimDamage.GUI.Browser {
 
         private string Serialize(object o) {
             return JsonConvert.SerializeObject(o, _settings);
-        }
-        
-        public void SetDamageDealt(Dictionary<int, List<SimpleDamageEntryJson>> value) {
-            _js.damageDealtJson = JsonConvert.SerializeObject(value, _settings);
         }
         
     }

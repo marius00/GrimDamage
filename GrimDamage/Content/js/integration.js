@@ -1,6 +1,4 @@
-﻿let tickCallbackMethod = undefined;
-let requestCallbackMethod = undefined;
-let saveReceivedCallbackMethod = undefined;
+﻿let saveReceivedCallbackMethod = undefined;
 let intervalID = undefined;
 let lastStateTimestamp = 0;
 
@@ -17,14 +15,7 @@ const TYPE_FETCH_RESISTS_CHECK = 7;
 const TYPE_FETCH_ENTITIES = 8;
 const TYPE_FETCH_LOCATIONS = 9;
 
-// This function is called from C# when a stat update is received
-function _itemsReceived() {
-    if (tickCallbackMethod) {
-        tickCallbackMethod(
-            JSON.parse(data.damageDealtJson)
-        );
-    }
-}
+
 
 
 
@@ -42,44 +33,21 @@ function enableLogToCsharp() {
     }
 }
 
-function setCsharpTickCallback(method) {
-    tickCallbackMethod = method;
-}
 
-function setCsharpRequestCallback(method) {
-    requestCallbackMethod = method;
-}
-
-function _notifyStateChanges(dataset) {
-    if (dataset.length > 0)
-        lastStateTimestamp = dataset[0].timestamp;
-
-    if (requestCallbackMethod) {
-        requestCallbackMethod(TYPE_STATES, dataset);
-    }
-}
 function requestUpdates() {
     // Sending timestamps as strings, as Chromium confuses them with doubles
-    data.requestData(TYPE_STATES, lastStateTimestamp.toString(), TimestampEverything , - 1, '_notifyStateChanges');
-    data.requestUpdate();
-}
-function setCsharpTickInterval(interval) {
-    if (intervalID !== undefined) {
-        clearInterval(intervalID);
-    }
-
-    intervalID = window.setInterval(requestUpdates, interval);
+    
 }
 
 function setCsharpLoadHistoryCallback(method) {
     saveReceivedCallbackMethod = method;
 }
-
+/*
 function sendCsharpNameSuggestion(suggestion) {
     if (suggestion)
         data.suggestLocationName(suggestion);
 }
-
+*/
 function setCsharpLightMode(mode) {
     data.setLightMode(mode);
 }
