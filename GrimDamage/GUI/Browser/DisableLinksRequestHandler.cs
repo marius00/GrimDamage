@@ -14,6 +14,10 @@ namespace GrimDamage.GUI.Browser {
                 Process.Start("https://discord.gg/PJ87Ewa");
                 return true;
             }
+            if (request.Url.StartsWith("relics://")) {
+                Process.Start("http://items.dreamcrash.org/ComponentAssembler?record=d106_relic.dbr ");
+                return true;
+            }
             return request.Url.StartsWith("http:");
         }
 
