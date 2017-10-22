@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.labelHookStatus = new System.Windows.Forms.Label();
             this.webViewPanel = new System.Windows.Forms.Panel();
@@ -33,6 +34,8 @@
             this.panelDebugView = new System.Windows.Forms.Panel();
             this.btnLoadSave = new System.Windows.Forms.Button();
             this.linkItemAssistant = new System.Windows.Forms.LinkLabel();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.trayContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -99,7 +102,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1177, 613);
+            this.tabPage2.Size = new System.Drawing.Size(1183, 613);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Debug";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -137,6 +140,21 @@
             this.linkItemAssistant.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.linkItemAssistant.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkItemAssistant_LinkClicked);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.BalloonTipTitle = "Grim Damage";
+            this.notifyIcon1.ContextMenuStrip = this.trayContextMenuStrip;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Grim Damage";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
+            // trayContextMenuStrip
+            // 
+            this.trayContextMenuStrip.Name = "trayContextMenuStrip";
+            this.trayContextMenuStrip.Size = new System.Drawing.Size(61, 4);
+            this.trayContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.trayContextMenuStrip_Opening);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -171,6 +189,8 @@
         private System.Windows.Forms.Panel panelDebugView;
         private System.Windows.Forms.Button btnLoadSave;
         private System.Windows.Forms.LinkLabel linkItemAssistant;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ContextMenuStrip trayContextMenuStrip;
     }
 }
 

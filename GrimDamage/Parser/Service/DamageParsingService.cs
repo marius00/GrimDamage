@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using GrimDamage.Parser.Config;
 using GrimDamage.Tracking.Model;
@@ -76,11 +77,19 @@ namespace GrimDamage.Parser.Service {
                 .ToList();
 
             foreach (var key in expired) {
-                Entity o;
-                _entities.TryRemove(key, out o);
+                // Just add a zeroed out version, keep the entity itself for now.
+                _entities[key] = new Entity {
+                    Id = _entities[key].Id,
+                    Name = _entities[key].Name,
+                    Type = _entities[key].Type,
+                };
+            }
+
+            if (expired.Count > 0) {
+                Logger.Debug($"Cleaned up {expired.Count} expired entries");
             }
         }
-
+ 
         public void SetPlayerInfo(int id, bool isPrimary) {
             if (isPrimary) {
                 _primaryId = id;

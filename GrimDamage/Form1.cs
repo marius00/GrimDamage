@@ -23,6 +23,8 @@ using Newtonsoft.Json;
 namespace GrimDamage {
     public partial class Form1 : Form {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Form1));
+        private FormWindowState _previousWindowState = FormWindowState.Normal;
+        private System.Timers.Timer _timerReportUsage;
 
         private readonly StatisticsService _statisticsService;
         private readonly DamageParsingService _damageParsingService = new DamageParsingService();
@@ -115,6 +117,20 @@ namespace GrimDamage {
 #else
             linkItemAssistant.Hide();
 #endif
+
+
+
+            _timerReportUsage = new System.Timers.Timer();
+            _timerReportUsage.Start();
+            _timerReportUsage.Elapsed += (a1, a2) => {
+                if (Thread.CurrentThread.Name == null)
+                    Thread.CurrentThread.Name = "CleanupThread";
+
+                _damageParsingService.Cleanup();
+            };
+            _timerReportUsage.Interval = 60 * 1000;
+            _timerReportUsage.AutoReset = true;
+            _timerReportUsage.Start();
         }
 
         private void JsPojoOnOnSave(object sender, EventArgs eventArgs) {
@@ -166,10 +182,15 @@ namespace GrimDamage {
             _autoUpdateUtility.StartReportUsageTimer();
 
             this.FormClosing += OnFormClosing;
+            this.SizeChanged += Form1_SizeChanged;
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs formClosingEventArgs) {
+            this.SizeChanged -= Form1_SizeChanged;
             _autoUpdateUtility.Dispose();
+            _timerReportUsage?.Stop();
+            _timerReportUsage?.Dispose();
+            _timerReportUsage = null;
         }
 
 
@@ -213,6 +234,35 @@ namespace GrimDamage {
 
         private void linkItemAssistant_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             Process.Start("http://grimdawn.dreamcrash.org/ia/");
+        }
+
+        private void Form1_SizeChanged(object sender, EventArgs e) {
+            try {
+                if (WindowState == FormWindowState.Minimized) {
+                    Hide();
+                    notifyIcon1.Visible = true;
+                }
+                else /*if (this.WindowState == FormWindowState.Normal)*/ {
+                    notifyIcon1.Visible = false;
+                    _previousWindowState = WindowState;
+                }
+                
+            }
+            catch (Exception ex) {
+                Logger.Warn(ex.Message);
+                Logger.Warn(ex.StackTrace);
+            }
+        }
+
+        private void trayContextMenuStrip_Opening(object sender, CancelEventArgs e) {
+            e.Cancel = false;
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e) {
+
+            Visible = true;
+            notifyIcon1.Visible = false;
+            WindowState = _previousWindowState;
         }
     }
 }
