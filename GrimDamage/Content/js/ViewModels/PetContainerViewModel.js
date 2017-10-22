@@ -64,6 +64,21 @@ class PetContainerViewModel {
         console.log(aggregated);
         // Calculate total pet damage
         this.totalPetDamage = Enumerable.From(aggregated).Sum(x => x.amount);
+
+        // Insert the damage back in as "player dealt"
+        if (this.includePets()) {
+            for (let idx = 0; idx < newPetDamage.length; idx++) {
+                const d = newPetDamage[idx];
+                database.addDetailedDamageDealt([
+                    {
+                        victimId: d.victimId,
+                        damageType: 'Pet/Minion',
+                        amount: d.amount,
+                        timestamp: d.timestamp
+                    }
+                ]);
+            }
+        }
     }
 
 

@@ -234,10 +234,10 @@ setInterval(() => {
 
 
         // Tick/update for damage dealt graph
+        petContainerVm.update(); // Let this be first, it modifies damage entries in database
         damageDealtGraphHandler.update();
         damageTakenGraphLogichandler.update();
         damageTakenPieHandler.update();
-        petContainerVm.update();
     }
     //VM.isZoneUnknown(playerLocationName === 'Unknown');
 }, 1000);

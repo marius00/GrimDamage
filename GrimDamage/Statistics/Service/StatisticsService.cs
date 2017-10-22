@@ -110,7 +110,8 @@ namespace GrimDamage.Statistics.Service {
                             DamageType = m.Type.ToString(),
                             Amount = m.Amount,
                             EntityId = pet.Id,
-                            Timestamp = Timestamp.ToUtcMilliseconds(m.Time)
+                            Timestamp = Timestamp.ToUtcMilliseconds(m.Time),
+                            VictimId = m.Target
                         })
                     );
                 }
