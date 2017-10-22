@@ -11,6 +11,8 @@ Unmapped / uncharted territory:
 * Get player class[es] from in-game? [for pets]		-- unknown, suspect somewhat tricky  // mastery
 
 TODO:
+** Get pets shown as its own graph
+** Get pets shown as its own damage type [toggle if pets should be included]
 * Life line not shown on damage taken
 * Resists a bit buggy
 * Graph with the players and boss resist, per second (to track debuffs)

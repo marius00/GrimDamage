@@ -55,6 +55,10 @@ namespace GrimDamage.Parser.Service {
                 return null;
         }
 
+        public List<Entity> GetPets() {
+            return _entities.Values.Where(m => m.Type == EntityType.Pet).ToList();
+        }
+
         public void SetHealth(int id, float amount) {
             var entity = GetOrCreate(id);
             entity.Health.Add(new EntityHealthEntry {
@@ -65,7 +69,9 @@ namespace GrimDamage.Parser.Service {
 
         // TODO: Call regularly, every minute or so.
         public void Cleanup() {
-            var expired = _entities.Values.Where(m => (DateTime.UtcNow - m.LastSeen).Minutes > NameCacheDuration)
+            var expired = _entities.Values
+                .Where(m => ((DateTime.UtcNow - m.LastSeen).Minutes > NameCacheDuration)
+                || ((DateTime.UtcNow - m.LastSeen).Minutes > NameCacheDuration/2 && (m.Type == EntityType.Pet || m.Type == EntityType.Monster)))
                 .Select(m => m.Id)
                 .ToList();
 

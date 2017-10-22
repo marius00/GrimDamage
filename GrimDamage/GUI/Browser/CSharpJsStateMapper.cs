@@ -101,6 +101,10 @@ namespace GrimDamage.GUI.Browser {
                     }
                     break;
 
+                    case DataRequestType.FetchPetDamageDealt:
+                        TransferPetDamageDealt(start, end, callback);
+                    break;
+
                 default:
                     Logger.Warn($"Data request for {data} was not handled, unknown type.");
                     break;
@@ -110,10 +114,15 @@ namespace GrimDamage.GUI.Browser {
         private void TransferHealth(int entityId, long start, long end, string callback) {
             _browser.JsCallback(callback, Serialize(_statisticsService.GetEntityHealth(entityId, start, end)));
         }
+
         private void TransferSimpleDamageDealt(int entityId, long start, long end, string callback) {
             _browser.JsCallback(callback, Serialize(_statisticsService.GetSimpleDamageDealt(entityId, start, end)));
         }
 
+        private void TransferPetDamageDealt(long start, long end, string callback) {
+            _browser.JsCallback(callback, Serialize(_statisticsService.GetSimpleDamageDealtForPets(start, end)));
+        }
+        
         private void TransferSimpleDamageTaken(int entityId, long start, long end, string callback) {
             _browser.JsCallback(callback, Serialize(_statisticsService.GetSimpleDamageTaken(entityId, start, end)));
         }

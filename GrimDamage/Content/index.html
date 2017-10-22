@@ -50,7 +50,8 @@
 <script src="js/logic/graph-damage-dealt-single-aoe.js"></script>
 <script src="js/logic/graph-damage-taken-graph-handler.js"></script>
 
-<script src="js/logic/resist-graph-logic-handler.js"></script>
+    <script src="js/logic/resist-graph-logic-handler.js"></script>
+    <script src="js/ViewModels/PetContainerViewModel.js"></script>
 
 
 <nav class="navbar fixed-top navbar-light bg-light">
@@ -113,10 +114,10 @@
             </div>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-3" id="pet-container">
             <div class="x_panel tile overflow_hidden">
                 <div class="x_title">
-                    <h2 class="placeholder-text">Top Damage Dealt</h2>
+                    <h2>Recent pets</h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -128,44 +129,18 @@
                     <div class="clearfix"></div>
                 </div>
 
-                <div class="x_content">
+                <div class="x_content" data-bind="foreach: pets">
                     <div class="col-sm-12 col-xs-6">
                         <div>
-                            <p class="placeholder-text">Chaos</p>
-                            <div class="">
-                                <div class="progress progress_sm" style="width: 76%;">
-                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <p class="placeholder-text">Aether</p>
-                            <div class="">
-                                <div class="progress progress_sm" style="width: 76%;">
-                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="60"></div>
-                                </div>
-                            </div>
+                            Name: <span data-bind="text: name"></span>
+                            <br/>
+                            DPS: <span data-bind="text: amount"></span>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xs-6">
-                        <div>
-                            <p class="placeholder-text">Physical</p>
-                            <div class="">
-                                <div class="progress progress_sm" style="width: 76%;">
-                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="40"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <p class="placeholder-text">Fire</p>
-                            <div class="">
-                                <div class="progress progress_sm" style="width: 76%;">
-                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <hr/>
                 </div>
+                <button type="button" class="btn btn-sm btn-danger btn-pets" data-bind="visible: includePets(), click: togglePetInclusion">Remove pet damage</button>
+                <button type="button" class="btn btn-sm btn-success btn-pets" data-bind="visible: !includePets(), click: togglePetInclusion">Include pet damage</button>
             </div>
         </div>
         <div class="col-sm-4">

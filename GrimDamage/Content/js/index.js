@@ -8,12 +8,13 @@
 /// <reference path="charts/step-chart.js" />
 /// <reference path="vendor/jquery-3.2.1.min.js" />
 /// <reference path="vendor/knockout-3.4.0.js" />
-/// <reference path="light-mode-toggle.js" />
+/// <reference path="ViewModels/light-mode-toggle.js" />
 /// <reference path="logic/pie-chart-damage-taken-processor.js" />
 /// <reference path="data/Database.js" />
 /// <reference path="ViewModels/death-tracker-viewmodel.js" />
 /// <reference path="logic/graph-damage-dealt-single-aoe.js" />
 /// <reference path="logic/graph-damage-taken-graph-handler.js" />
+/// <reference path="ViewModels/PetContainerViewModel.js" />
 
 enableLogToCsharp();
 
@@ -123,6 +124,11 @@ ko.applyBindings(detailedDamageTakenTextVm, document.getElementById('damage-take
 // ===================================================
 
 
+// ===================================================
+// Text view - each damage hit taken
+const petContainerVm = new PetContainerViewModel(database);
+ko.applyBindings(petContainerVm, document.getElementById('pet-container'));
+// ===================================================
 
 
 
@@ -199,12 +205,17 @@ setInterval(() => {
                 playerId,
                 'database.addDetailedDamageDealt');
 
-
             data.requestData(TYPE_FETCH_RESISTS_CHECK,
                 database.getHighestResistTimestamp().toString(),
                 TimestampEverything,
                 playerId,
                 'database.addResists');
+
+            data.requestData(TYPE_FETCH_SIMPLE_PET_DAMAGE,
+                database.getHighestPetDamageTimestamp().toString(),
+                TimestampEverything,
+                0,
+                'database.addSimplePetDamage');
         }
 
 
@@ -226,6 +237,7 @@ setInterval(() => {
         damageDealtGraphHandler.update();
         damageTakenGraphLogichandler.update();
         damageTakenPieHandler.update();
+        petContainerVm.update();
     }
     //VM.isZoneUnknown(playerLocationName === 'Unknown');
 }, 1000);

@@ -8,6 +8,9 @@ class Database {
         this.detailedDamageDealt = [];
         this.detailedDamageDealtMaxTimestamp = 0;
 
+        this.simplePetDamageDealt = [];
+        this.simplePetDamageDealtMaxTimestamp = 0;
+
         this.resists = [];
         this.resistsMaxTimestamp = 0;
 
@@ -32,6 +35,21 @@ class Database {
                 this.resistsMaxTimestamp = elements[idx].timestamp;
             }
         }
+    }
+
+    addSimplePetDamage(elements) {
+        /// <summary>Add damage dealt by pets to the DB</summary>
+        this.simplePetDamageDealt = this.simplePetDamageDealt.concat(elements);
+        for (let idx = 0; idx < elements.length; idx++) {
+            if (elements[idx].timestamp > this.simplePetDamageDealtMaxTimestamp) {
+                this.simplePetDamageDealtMaxTimestamp = elements[idx].timestamp;
+            }
+        }
+    }
+    
+
+    getHighestPetDamageTimestamp() {
+        return this.simplePetDamageDealtMaxTimestamp;
     }
 
     getHighestResistTimestamp() {
@@ -78,6 +96,15 @@ class Database {
     setPlayerLocation(location) {
         /// <param name="location" type="Array">The current location of the player</param>
         this.playerLocation = location;
+    }
+
+    getPetDamage(start, end) {
+        /// <summary>Get all the pet damage in a given timespan</summary>
+        /// <param name="start" type="Epoch">The start period (exclusive)</param>
+        /// <param name="end" type="Epoch">The start period (inclusive)</param>
+        /// <returns type="[{timestamp: 0, amount: 123.1, damageType: 'chaos'}]"></returns>
+
+        return this.simplePetDamageDealt.filter((e) => e.timestamp > start && e.timestamp <= end);
     }
 
     getDamageTaken(start, end) {

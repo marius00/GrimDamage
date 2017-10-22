@@ -95,6 +95,30 @@ namespace GrimDamage.Statistics.Service {
                 return result;
             }
         }
+
+        public List<PetDamageDealt> GetSimpleDamageDealtForPets(long start, long end) {
+            var entities = _damageParsingService.GetPets();
+            var result = new List<PetDamageDealt>();
+
+            if (entities.Count > 0) {
+                var from = Timestamp.ToDateTimeFromMilliseconds(start);
+                var to = Timestamp.ToDateTimeFromMilliseconds(end);
+                foreach (var pet in entities) {
+                    result.AddRange(pet.DamageDealt
+                        .Where(dmg => dmg.Time > from && dmg.Time < to)
+                        .Select(m => new PetDamageDealt {
+                            DamageType = m.Type.ToString(),
+                            Amount = m.Amount,
+                            EntityId = pet.Id,
+                            Timestamp = Timestamp.ToUtcMilliseconds(m.Time)
+                        })
+                    );
+                }
+            }
+
+            return result;
+        }
+
         public List<SimpleDamageEntryJson> GetSimpleDamageDealt(int playerId, long start, long end) {
             var player = _damageParsingService.GetEntity(playerId);
 
