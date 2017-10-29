@@ -114,6 +114,11 @@ faqViewModel.questions(faqElements);
 
 
 
+// ===================================================
+// Pet damage dealt graph
+let petDamageDealtChart = createChartPetDamageDealt('container-pet-damage-dealt', 120, colors);
+const petDamageDealtGraphHandler = new PetDamageDealtGraphHandler(database, petDamageDealtChart);
+// ===================================================
 
 
 
@@ -164,6 +169,9 @@ function recreateGraphs(mode) {
 
     damageTakenPieChart = createDamageTakenPieChart('damage-taken-pie-graph', damageTakenPieChart);
     damageTakenPieHandler.setChart(damageTakenPieChart);
+
+    petDamageDealtChart = createChartPetDamageDealt('graph-pet-damage-dealt', 120, colors, petDamageDealtChart);
+    petDamageDealtGraphHandler.setGraph(petDamageDealtChart);
 }
 
 // Light/Dark mode toggle
@@ -171,6 +179,8 @@ let isDarkModeEnabled = window.location.search.toString().toLowerCase().indexOf(
 const lightModeToggleViewModel = new LightModeToggleViewModel(isDarkModeEnabled, recreateGraphs);
 ko.applyBindings(lightModeToggleViewModel, document.getElementById('light-mode-view'));
 // ===================================================
+
+
 
 
 
@@ -249,6 +259,7 @@ setInterval(() => {
         damageDealtGraphHandler.update();
         damageTakenGraphLogichandler.update();
         damageTakenPieHandler.update();
+        petDamageDealtGraphHandler.update();
     }
     //VM.isZoneUnknown(playerLocationName === 'Unknown');
 }, 1000);
