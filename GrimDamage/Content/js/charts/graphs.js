@@ -204,7 +204,8 @@ function createChartDamageTaken(id, sequenceLength, colors, previousChart) {
                 }
             },
             tooltip: {//
-                pointFormat: 'Received <b>{point.y:,.0f}</b> {series.name} damage <br> ({point.extrapolated:,.0f} before resists)'
+                //pointFormat: 'Received <b>{point.y:,.0f}</b> {series.name} damage <br> ({point.extrapolated:,.0f} before resists)'
+                pointFormat: 'Received <b>{point.y:,.0f}</b> {series.name} damage'
             },
             plotOptions: {
                 series: {

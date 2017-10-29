@@ -216,6 +216,11 @@ class DeathTrackerViewModel {
 
         this.deaths.push(d);
         this.showDeath(d);
+
+        // Only store the previous 100 deaths (think memory constraints when running for several days)
+        if (this.deaths().length > 100) {
+            this.deaths.splice(0, 1);
+        }
     }
 
 
