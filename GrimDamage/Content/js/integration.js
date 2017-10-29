@@ -1,6 +1,5 @@
 ﻿let saveReceivedCallbackMethod = undefined;
 let intervalID = undefined;
-let lastStateTimestamp = 0;
 
 const TimestampEverything = '2527282800000';
 

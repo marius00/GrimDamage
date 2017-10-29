@@ -15,6 +15,7 @@
 /// <reference path="logic/graph-damage-dealt-single-aoe.js" />
 /// <reference path="logic/graph-damage-taken-graph-handler.js" />
 /// <reference path="ViewModels/PetContainerViewModel.js" />
+/// <reference path="vendor/linq.min.js" />
 
 enableLogToCsharp();
 
@@ -173,9 +174,13 @@ ko.applyBindings(lightModeToggleViewModel, document.getElementById('light-mode-v
 
 
 
+let lastStateTimestamp = 0;
 function _notifyStateChanges(dataset) {
     pauseTracker.process(dataset);
     deathTracker.process(dataset);
+    if (dataset.length > 0) {
+        lastStateTimestamp = Enumerable.From(dataset).Max(x => x.timestamp) || lastStateTimestamp;
+    }
 };
 
 // ===================================================
@@ -183,7 +188,7 @@ function _notifyStateChanges(dataset) {
 let lastPlayerId = undefined;
 setInterval(() => {
     data.requestData(TYPE_STATES, lastStateTimestamp.toString(), TimestampEverything, -1, '_notifyStateChanges');
-
+    
     if (pauseTracker.isActive) {
         p.tick();
 
@@ -216,6 +221,12 @@ setInterval(() => {
                 TimestampEverything,
                 0,
                 'database.addSimplePetDamage');
+
+            data.requestData(TYPE_HEALTH_CHECK,
+                database.getHighestHitpointsTimestamp().toString(),
+                TimestampEverything,
+                playerId,
+                'database.addHitpoints');
         }
 
 
@@ -244,6 +255,13 @@ setInterval(() => {
 // ===================================================
 
 
+
+// ===================================================
+// Remove old entries to keep memory usage log and search time fast
+setInterval(() => {
+    database.removeExpiredEntries();
+}, 3 * 60 * 1000);
+// ===================================================
 
 
 // ===================================================

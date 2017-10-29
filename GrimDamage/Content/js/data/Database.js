@@ -11,6 +11,9 @@ class Database {
         this.simplePetDamageDealt = [];
         this.simplePetDamageDealtMaxTimestamp = 0;
 
+        this.hitpoints = [];
+        this.hitpointsMaxTimestamp = 0;
+
         this.resists = [];
         this.resistsMaxTimestamp = 0;
 
@@ -25,6 +28,15 @@ class Database {
         this.entitiesRaw = [];
     }
 
+    removeExpiredEntries() {
+        const expirationThreshold = 10 * 60 * 1000; // 10 Min
+        console.debug(`Removing expired entries with threshold set at ${expirationThreshold}ms`);
+
+        this.detailedDamageTaken = this.detailedDamageTaken.filter(m => m.timestamp > this.detailedDamageTakenMaxTimestamp - expirationThreshold);
+        this.detailedDamageDealt = this.detailedDamageDealt.filter(m => m.timestamp > this.detailedDamageDealtMaxTimestamp - expirationThreshold);
+        this.simplePetDamageDealt = this.simplePetDamageDealt.filter(m => m.timestamp > this.simplePetDamageDealtMaxTimestamp - expirationThreshold);
+        this.resists = this.resists.filter(m => m.timestamp > this.resistsMaxTimestamp - expirationThreshold);
+    }
 
 
     addResists(elements) {
@@ -46,7 +58,11 @@ class Database {
             }
         }
     }
-    
+
+
+    getHighestHitpointsTimestamp() {
+        return this.hitpointsMaxTimestamp;
+    }
 
     getHighestPetDamageTimestamp() {
         return this.simplePetDamageDealtMaxTimestamp;
@@ -70,6 +86,16 @@ class Database {
         for (let idx = 0; idx < elements.length; idx++) {
             if (elements[idx].timestamp > this.detailedDamageDealtMaxTimestamp) {
                 this.detailedDamageDealtMaxTimestamp = elements[idx].timestamp;
+            }
+        }
+    }
+
+    addHitpoints(elements) {
+        /// <summary>Add new hitpoint entries to the DB</summary>
+        this.hitpoints = this.hitpoints.concat(elements);
+        for (let idx = 0; idx < elements.length; idx++) {
+            if (elements[idx].timestamp > this.hitpointsMaxTimestamp) {
+                this.hitpointsMaxTimestamp = elements[idx].timestamp; // TODO :Linq?
             }
         }
     }
@@ -107,6 +133,15 @@ class Database {
         return this.simplePetDamageDealt.filter((e) => e.timestamp > start && e.timestamp <= end);
     }
 
+    getHitpoints(start, end) {
+        /// <summary>Get all the hitpoint entries in a given timespan</summary>
+        /// <param name="start" type="Epoch">The start period (exclusive)</param>
+        /// <param name="end" type="Epoch">The start period (inclusive)</param>
+        /// <returns type="[{timestamp: 0, amount: 123.1, id: 123}]"></returns>
+
+        return this.hitpoints.filter((e) => e.timestamp > start && e.timestamp <= end);
+    }
+    
     getDamageTaken(start, end) {
         /// <summary>Get all the damage-taken events in a given timespan</summary>
         /// <param name="start" type="Epoch">The start period (exclusive)</param>

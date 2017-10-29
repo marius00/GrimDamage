@@ -9,37 +9,31 @@ class DeathTrackerViewModel {
         this.deaths = ko.observableArray([]);
         this.currentlyDisplayedDeath = 0;
         this.showModal = showModal;
-
+        this.timespan = 10;
 
         this.damageTakenChart = chartDamageTaken;
         this.stepChartDamageTaken = stepChartDamageTaken;
-
+        this.deathData = {};
 
         this.calculateGraphPosition = function(timestamp) {
-            const startingPoint = this.currentlyDisplayedDeath - 10 * 1000;
+            const startingPoint = this.currentlyDisplayedDeath - self.timespan * 1000;
             const series = Math.floor((timestamp - startingPoint) / 1000);
             return series;
         }
 
-        this._health = ko.observableArray([]);
-        this.health = ko.pureComputed({
-            read: function () {
-                return self._health;
-            },
-            write: function (value) {
-                /// <summary>Responsible for rendering the player health line on the chart</summary>  
-                self._health(value);
+        this.health = function(value) {
+            /// <summary>Responsible for rendering the player health line on the chart</summary>  
 
-                for (let idx = 0; idx < value.length; idx++) {
-                    self.stepChartDamageTaken.addPoint('hitpoints', value[idx].timestamp, value[idx].amount);
-                }
-                console.debug('Received life data for death:', value);
+            for (let idx = 0; idx < value.length; idx++) {
+                self.stepChartDamageTaken.addPoint('hitpoints', value[idx].timestamp, value[idx].amount);
+            }
+            console.debug('Received life data for death:', value);
 
-                self.stepChartDamageTaken.redraw();
+            self.stepChartDamageTaken.redraw();
 
-                if (value.length > 0) {
-                    let dataPoints = [];
-                    dataPoints = value.reduce(function (res, val) {
+            if (value.length > 0) {
+                let dataPoints = [];
+                dataPoints = value.reduce(function(res, val) {
                         const xAxis = self.calculateGraphPosition(val.timestamp);
 
                         if (!res[xAxis]) {
@@ -49,110 +43,100 @@ class DeathTrackerViewModel {
 
                         res[xAxis] = { x: parseInt(xAxis), y: val.amount };
                         return res;
-                    },{});
+                    },
+                    {});
 
-                    let points = Object.keys(dataPoints).map(function (key) {
-                        return dataPoints[key];
-                    });
+                const points = Object.keys(dataPoints).map(function(key) {
+                    return dataPoints[key];
+                });
 
-                    const series = self.damageTakenChart.series.filter(s => s.name === 'Hitpoints')[0];
-                    if (!series) {
-                        console.log('Hitpoints series not found, creating now..');
-                        self.damageTakenChart.addSeries(
-                            {
-                                type: 'spline',
-                                dashStyle: 'Dash',
-                                name: 'Hitpoints',
-                                color: '#ff0000',
-                                data: points,
-                                tooltip: {
-                                    pointFormat: '<b>{point.y:,.0f}</b> life remaining'
-                                }
-                            });
-
-                    } else {
-                        series.setData(points, true, false, false);
-                    }
-                    console.log('Settings points', points, 'for series hitpoints');
-
-                }
-            },
-            owner: this
-        });
-
-
-        this._detailedDamagePoints = ko.observableArray([]);
-        this.detailedDamagePoints = ko.pureComputed({
-            read: function () {
-                return self._detailedDamagePoints;
-            },
-            write: function (value) {
-                /// <summary>Responsible for rendering the damage types the player has taken</summary>  
-                self._detailedDamagePoints(value);
-                console.log('Update the graph with the following data please:', value);
-
-
-
-                if (value.length > 0) {
-                    self.addOrUpdatePie(value);
-                    console.log('Pizza pie:', self.getPieChartDataPoints(value));
-
-
-                    for (let idx = 0; idx < value.length; idx++) {
-                        /*console.log('self.stepChartDamageTaken.addPoint',
-                            value[idx].damageType,
-                            value[idx].timestamp,
-                            value[idx].amount);
-                            */
-
-                        const resist = self.database.getResists(value[idx].damageType, value[idx].timestamp);
-                        const extrapolated = this.extrapolateForResists(value[idx].amount, resist);
-                        self.stepChartDamageTaken.addPoint(value[idx].damageType, value[idx].timestamp, value[idx].amount, extrapolated);
-                    }
-                    console.debug('Received damage data for death:', value);
-
-                    self.stepChartDamageTaken.redraw();
-
-                    //console.log('Pie graph data points:', this.getPieChartDataPoints(value));
-
-                    const lineChartPoints = this.getLineChartDataPoints(value);
-                    console.log('Line graph points:', lineChartPoints, 'Length:', lineChartPoints.length);
-
-                    // Convert the dictionary to single x/y paired elements
-                    let points = {};
-                    const xRange = 10;
-
-                    for (let damageType in lineChartPoints) {
-                        if (!points[damageType])
-                            points[damageType] = [];
-
-                        for (let x = 0; x < xRange; x++) {
-                            if (lineChartPoints[damageType][x]) {
-                                points[damageType].push({ x: x, y: lineChartPoints[damageType][x] });
-                                //console.log('Inserting', damageType, 'x=', x, 'y=', lineChartPoints[damageType][x]);
-                            } else {
-                                points[damageType].push({ x: x, y: 0 });
-                                //console.log('Inserting', damageType, 'x=', x, 'y=', 0);
+                const series = self.damageTakenChart.series.filter(s => s.name === 'Hitpoints')[0];
+                if (!series) {
+                    console.log('Hitpoints series not found, creating now..');
+                    self.damageTakenChart.addSeries(
+                        {
+                            type: 'spline',
+                            dashStyle: 'Dash',
+                            name: 'Hitpoints',
+                            color: '#ff0000',
+                            data: points,
+                            tooltip: {
+                                pointFormat: '<b>{point.y:,.0f}</b> life remaining'
                             }
-                        }
-                    }
+                        });
 
-                    // Set the datapoints on the graph
-                    for (let damageType in points) {
-                        const series = self.damageTakenChart.series.filter(s => s.name === damageType)[0];
-                        if (series) {
-                            series.setData(points[damageType], true, false, false);
-                            console.log('Settings points', points[damageType], 'for series', damageType);
+                } else {
+                    series.setData(points, true, false, false);
+                }
+                console.log('Settings points', points, 'for series hitpoints');
+
+            }
+        };
+
+
+        this.detailedDamagePoints = function(value) {
+            /// <summary>Responsible for rendering the damage types the player has taken</summary>  
+            console.log('Update the graph with the following data please:', value);
+
+
+            if (value.length > 0) {
+                self.addOrUpdatePie(value);
+                console.log('Pizza pie:', self.getPieChartDataPoints(value));
+
+
+                for (let idx = 0; idx < value.length; idx++) {
+                    /*console.log('self.stepChartDamageTaken.addPoint',
+                        value[idx].damageType,
+                        value[idx].timestamp,
+                        value[idx].amount);
+                        */
+
+                    const resist = self.database.getResists(value[idx].damageType, value[idx].timestamp);
+                    const extrapolated = this.extrapolateForResists(value[idx].amount, resist);
+                    self.stepChartDamageTaken.addPoint(value[idx].damageType, value[idx].timestamp, value[idx].amount, extrapolated);
+                }
+                console.debug('Received damage data for death:', value);
+
+                self.stepChartDamageTaken.redraw();
+
+                //console.log('Pie graph data points:', this.getPieChartDataPoints(value));
+
+                const lineChartPoints = this.getLineChartDataPoints(value);
+                console.log('Line graph points:', lineChartPoints, 'Length:', lineChartPoints.length);
+
+                // Convert the dictionary to single x/y paired elements
+                let points = {};
+                const xRange = 10;
+
+                for (let damageType in lineChartPoints) {
+                    if (!points[damageType])
+                        points[damageType] = [];
+
+                    for (let x = 0; x < xRange; x++) {
+                        if (lineChartPoints[damageType][x]) {
+                            points[damageType].push({ x: x, y: lineChartPoints[damageType][x] });
+                            //console.log('Inserting', damageType, 'x=', x, 'y=', lineChartPoints[damageType][x]);
                         } else {
-                            console.log(`Could not find series ${damageType}`);
+                            points[damageType].push({ x: x, y: 0 });
+                            //console.log('Inserting', damageType, 'x=', x, 'y=', 0);
                         }
                     }
-
                 }
 
-            },
-            owner: this
-        });
+                // Set the datapoints on the graph
+                for (let damageType in points) {
+                    const series = self.damageTakenChart.series.filter(s => s.name === damageType)[0];
+                    if (series) {
+                        series.setData(points[damageType], true, false, false);
+                        console.log('Settings points', points[damageType], 'for series', damageType);
+                    } else {
+                        console.log(`Could not find series ${damageType}`);
+                    }
+                }
+
+            }
+
+        };
 
 
         this.addOrUpdatePie = function(value) {
@@ -199,30 +183,39 @@ class DeathTrackerViewModel {
         
 
         this.showDeath = function (death) {
-            const period = 10 * 1000; // TODO: The number '10' is used many places, consider making a constant
-            self.resetGraph(10);
+            self.resetGraph(self.timespan);
             self.stepChartDamageTaken.reset();
             self.currentlyDisplayedDeath = death.timestamp;
-            self.detailedDamagePoints([]);
             console.log(death);
 
-            // This is really unfortunate, but i have no better solution yet.
-            const hardcodedClassVarName = 'deathTrackerViewModel';
-            data.requestData(TYPE_DETAILED_DAMAGE_TAKEN,
-                (death.timestamp - period).toString(),
-                death.timestamp.toString(),
-                death.entityId,
-                `${hardcodedClassVarName}.detailedDamagePoints`);
-
-
-            data.requestData(TYPE_HEALTH_CHECK,
-                (death.timestamp - period).toString(),
-                death.timestamp.toString(),
-                death.entityId,
-                `${hardcodedClassVarName}.health`);
+            self.detailedDamagePoints(death.detailedDamageTaken);
+            self.health(death.health);
 
             self.showModal();
         }
+    }
+    add(death) {
+        /// <summary>Add a death</summary>  
+        const labelTimestamp = new Date(death.timestamp).toLocaleTimeString();
+        const murdererId = this.getPrimaryAttackerId(death.timestamp);
+        const murdererName = this.database.getEntity(murdererId).name;
+        const locations = this.database.getPlayerLocation(0, death.timestamp).sort(e => e.timestamp);
+        const location = locations[locations.length - 1] || { location: 'Unknown' };
+
+        const damageTaken = this.database.getDamageTaken(death.timestamp - this.timespan * 1000, death.timestamp);
+        const healthPoints = this.database.getHitpoints(death.timestamp - this.timespan * 1000, death.timestamp);
+        const d = {
+            label: location.location,
+            labelTimestamp: labelTimestamp,
+            timestamp: death.timestamp,
+            entityId: death.entityId,
+            attackerName: murdererName,
+            detailedDamageTaken: damageTaken,
+            health: healthPoints
+        };
+
+        this.deaths.push(d);
+        this.showDeath(d);
     }
 
 
@@ -305,25 +298,6 @@ class DeathTrackerViewModel {
         return k;
     }
 
-    add(death) {
-        /// <summary>Add a death</summary>  
-        const labelTimestamp = new Date(death.timestamp).toLocaleTimeString();
-        const murdererId = this.getPrimaryAttackerId(death.timestamp);
-        const murdererName = this.database.getEntity(murdererId).name;
-        const locations = this.database.getPlayerLocation(0, death.timestamp).sort(e => e.timestamp);
-        const location = locations[locations.length - 1] || { location: 'Unknown' };
-
-        const d = {
-            label: location.location,
-            labelTimestamp: labelTimestamp,
-            timestamp: death.timestamp,
-            entityId: death.entityId,
-            attackerName: murdererName
-        };
-
-        this.deaths.push(d);
-        this.showDeath(d);
-    }
 
     extrapolateForResists(damage, resists) {
         /// <summary>Extrapolate how much damage was really taken, before resists</summary>  

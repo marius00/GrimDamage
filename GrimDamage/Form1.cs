@@ -128,7 +128,7 @@ namespace GrimDamage {
 
                 _damageParsingService.Cleanup();
             };
-            _timerReportUsage.Interval = 60 * 1000;
+            _timerReportUsage.Interval = 60 * 1000 * 5;
             _timerReportUsage.AutoReset = true;
             _timerReportUsage.Start();
         }
