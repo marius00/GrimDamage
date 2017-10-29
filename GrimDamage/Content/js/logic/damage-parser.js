@@ -1,6 +1,7 @@
 ﻿// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 class DamageParser {
     constructor(damageDoneStepChart, database) {
+        /// <summary>Apparantly responsible both for the damage taken step chart, and for the bosses tab</summary>  
         this.damageDoneStepChart = damageDoneStepChart;
         this.players = [];
         this.bosses = {};
@@ -10,7 +11,7 @@ class DamageParser {
         this.bosschart = this.modals.addBossModal();
 
         this.previousTimestampDamageDealt = new Date().getTime();
-        this.previousTimestampDamageTaken = new Date().getTime();
+        this.previousTimestampDamageTaken = 0;
 
         this.bossList = ko.observableArray([]);
 
@@ -28,7 +29,7 @@ class DamageParser {
                 return { name: data, y: dealtTemp[data], color: colors.color(data) };
             });
 
-            const takenTemp = self.aggregateDamageTaken(self.database.getDamageTakenByEntity(bossid));
+            const takenTemp = self.bosses[bossid]['taken']; //self.aggregateDamageTaken(self.bosses[bossid]['taken']);
             const taken = Object.keys(takenTemp).map(function (data) {
                 return {name: data, y: takenTemp[data], color: colors.color(data)};
             });
@@ -41,6 +42,17 @@ class DamageParser {
     }
 
     tick() {
+        const detailedDamageTaken = this.database.getDamageTaken(this.previousTimestampDamageTaken, TimestampEverything);
+        console.debug('bosses taken', detailedDamageTaken);
+        if (detailedDamageTaken.length > 0) {
+            try {
+                this.previousTimestampDamageTaken = Enumerable.From(detailedDamageTaken).Max(e => e.timestamp) || this.previousTimestampDamageTaken;
+            } catch (ex) {
+                console.error('Got an error', ex, 'while fetching previous timestamp');
+            }
+
+            this.addDamageTakenFromBosses(detailedDamageTaken);
+        }
 
         const detailedDamageDealt = this.database.getDamageDealt(this.previousTimestampDamageDealt, TimestampEverything);
         if (detailedDamageDealt.length > 0) {
@@ -108,11 +120,11 @@ class DamageParser {
         for (let c = 0; c < entities.length; c++) {
             /* check if id is already set */
             let entity = entities[c];
-            this.bosses[entity.id] = [];
+            this.bosses[entity.id] = {};
             this.bosses[entity.id]['type'] = entity.type;
             this.bosses[entity.id]['name'] = entity.name;
-            this.bosses[entity.id]['dealt'] = [];
-            this.bosses[entity.id]['taken'] = [];
+            this.bosses[entity.id]['dealt'] = {};
+            this.bosses[entity.id]['taken'] = {};
             //this.dataTable.row.add({ "DT_RowId": entity.id, "encountered": now.format('HH:mm:ss'), "name": entity.name }).draw(false);
 
             this.bossList.push({
@@ -155,6 +167,26 @@ class DamageParser {
                 }
 
                 this.bosses[entry.victimId]['dealt'][entry.damageType] += Math.round(entry.amount);
+            }
+        }
+    }
+
+
+    addDamageTakenFromBosses(data) {
+        const length = data.length;
+        for (let c = 0; c < length; c++) {
+            const entry = data[c];
+
+            /* Is it a boss? */
+            if (this.bosses.hasOwnProperty(entry.attackerId)) {
+                console.debug('Adding entry for boss', entry);
+
+                /* First time we're seeing this damage-type on boss? */
+                if (!this.bosses[entry.attackerId]['taken'].hasOwnProperty(entry.damageType)) {
+                    this.bosses[entry.attackerId]['taken'][entry.damageType] = 0;
+                }
+
+                this.bosses[entry.attackerId]['taken'][entry.damageType] += Math.round(entry.amount);
             }
         }
     }
