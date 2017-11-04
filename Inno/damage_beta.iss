@@ -41,7 +41,7 @@ PrivilegesRequired=admin
 DisableWelcomePage=Yes
 AlwaysShowDirOnReadyPage=Yes
 DisableDirPage=No
-OutputBaseFilename=GrimDamageInstaller
+OutputBaseFilename=GrimDamageInstaller-{#ApplicationVersion}
 LicenseFile=license.txt
 
 [UninstallDelete]
