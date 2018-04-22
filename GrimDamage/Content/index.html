@@ -66,17 +66,14 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#death">What killed me?</a>
         </li>
-        <li class="nav-item">
+        <!-- ><li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#faq">Faq</a>
-        </li>
+        </li>-->
         <li class="nav-item" id="light-mode-view" data-bind="click: toggleDarkMode">
             <a class="nav-link" href="#"><span data-bind="text: label"></span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="relics://">Relics</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="discord://">Help / Discord</a>
         </li>
     </ul>
 </nav>
@@ -343,6 +340,22 @@
 <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="profile-tab">
     <div id="accordion" role="tablist" aria-multiselectable="true">
         <div class="card">
+            <div class="card-header" role="tab" id="headingDeprecated">
+                <h5 class="mb-0">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseDeprecated" aria-expanded="true" aria-controls="collapseDeprecated">
+                        Will feature X ever be implmented?
+                    </a>
+                </h5>
+            </div>
+
+            <div id="collapseDeprecated" class="collapse show" role="tabpanel" aria-labelledby="headingDeprecated">
+                <div class="card-block">
+                    No, this tool has been deprecated due to a lack of user interest.<br />
+                    Only critical updates will be provided. (when it breaks due to a GD patch)
+                </div>
+            </div>
+        </div>
+        <div class="card">
             <div class="card-header" role="tab" id="headingOne">
                 <h5 class="mb-0">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -351,7 +364,7 @@
                 </h5>
             </div>
 
-            <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+            <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
                 <div class="card-block">
                     No.
                 </div>

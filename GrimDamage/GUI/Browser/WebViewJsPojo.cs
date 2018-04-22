@@ -29,15 +29,17 @@ namespace GrimDamage.GUI.Browser {
                 DateTime buildDate = new DateTime(2000, 1, 1)
                     .AddDays(v.Build)
                     .AddSeconds(v.Revision * 2);
-
+                /*
                 int daysAgo = (DateTime.UtcNow - buildDate).Days;
                 if (daysAgo > 0) {
-                    return
-                        $"Running version {v.Major}.{v.Minor}.{v.Build}.{v.Revision} released {buildDate:dd/MM/yyyy} ({daysAgo} days ago)";
+                    return $"Running version {v.Major}.{v.Minor}.{v.Build}.{v.Revision} released {buildDate:dd/MM/yyyy} ({daysAgo} days ago)";
                 }
                 else {
                     return $"Running version {v.Major}.{v.Minor}.{v.Build}.{v.Revision} released {buildDate:dd/MM/yyyy} (today)";
                 }
+                */
+
+                return $"Running version {v.Major}.{v.Minor}.{v.Build}.{v.Revision} - Final release - Tool discontinued";
             }
         }
 

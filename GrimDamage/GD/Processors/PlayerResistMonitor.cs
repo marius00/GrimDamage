@@ -30,7 +30,9 @@ namespace GrimDamage.GD.Processors {
                 _damageParsingService.SetResist(entityId, resistType, amount);
 
                 if (_appSettings.LogResistEntries) {
-                    Logger.Debug($"Got a resist entry for {entityId}, {resistType}, {amount}");
+                    if (resistType != ResistType.Unknown1 && resistType != ResistType.Unknown2) {
+                        Logger.Debug($"Got a resist entry for {entityId}, {resistType}, {amount}");
+                    }
                 }
                 return true;
             }

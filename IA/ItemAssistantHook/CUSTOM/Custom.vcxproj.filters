@@ -25,6 +25,9 @@
     <Filter Include="HookedMethods\GameState">
       <UniqueIdentifier>{a36d8d98-dce9-4dd7-9a51-0375a40e5992}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HookedMethods\Experimental">
+      <UniqueIdentifier>{927be81a-16c7-432e-a12d-31f144396ec9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\DataQueue.cpp">
@@ -92,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="..\EntityResistMonitor.cpp">
       <Filter>HookedMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ApplyDamageHook.cpp">
+      <Filter>HookedMethods\Experimental</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="..\EntityResistMonitor.h">
       <Filter>HookedMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ApplyDamageHook.h">
+      <Filter>HookedMethods\Experimental</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\ApplyDamageHook.cpp" />
     <ClCompile Include="..\BaseMethodHook.cpp" />
     <ClCompile Include="..\ControllerPlayerStateIdleRequestInteractableAction.cpp" />
     <ClCompile Include="..\ControllerPlayerStateIdleRequestNpcAction.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="..\UnpauseGameTime.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ApplyDamageHook.h" />
     <ClInclude Include="..\BaseMethodHook.h" />
     <ClInclude Include="..\ControllerPlayerStateIdleRequestInteractableAction.h" />
     <ClInclude Include="..\ControllerPlayerStateIdleRequestNpcAction.h" />

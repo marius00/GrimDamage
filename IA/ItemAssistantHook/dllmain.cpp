@@ -24,6 +24,7 @@
 #include "SetLifeState.h"
 #include "HitpointMonitor.h"
 #include "EntityResistMonitor.h"
+#include "ApplyDamageHook.h"
 
 
 #pragma region Variables
@@ -132,7 +133,7 @@ void EndWorkerThread() {
 
 std::vector<BaseMethodHook*> hooks;
 int ProcessAttach(HINSTANCE _hModule) {
-	g_hEvent = CreateEvent(NULL,FALSE,FALSE,"IA_Worker");
+	g_hEvent = CreateEvent(NULL, FALSE, FALSE, "IA_Worker");
 
 	hooks.push_back(new ControllerPlayerStateIdleRequestInteractableAction(&g_dataQueue, g_hEvent));
 	hooks.push_back(new ControllerPlayerStateIdleRequestNpcAction(&g_dataQueue, g_hEvent));
@@ -146,13 +147,15 @@ int ProcessAttach(HINSTANCE _hModule) {
 	//hooks.push_back(new DetectPlayerId(&g_dataQueue, g_hEvent));
 	hooks.push_back(new IncrementDeaths(&g_dataQueue, g_hEvent));
 	hooks.push_back(new SetLifeState(&g_dataQueue, g_hEvent));
+
+	hooks.push_back(new ApplyDamageHook(&g_dataQueue, g_hEvent)); // Experimental
 	
 	hooks.push_back(new ControllerPlayerStateStunned(&g_dataQueue, g_hEvent));
 	hooks.push_back(new ControllerPlayerStateTrapped(&g_dataQueue, g_hEvent));
 	hooks.push_back(new DisableMovement(&g_dataQueue, g_hEvent));
 
 	hooks.push_back(new HitpointMonitor(&g_dataQueue, g_hEvent));
-	//hooks.push_back(new EntityResistMonitor(&g_dataQueue, g_hEvent));
+	hooks.push_back(new EntityResistMonitor(&g_dataQueue, g_hEvent));
 	
 	for (unsigned int i = 0; i < hooks.size(); i++) {
 		hooks[i]->EnableHook();

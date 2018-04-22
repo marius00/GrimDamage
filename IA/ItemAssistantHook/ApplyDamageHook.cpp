@@ -1,15 +1,15 @@
+#include "stdafx.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "../MessageType.h"
 #include <detours.h>
-#include "LoggerHook.h"
+#include "ApplyDamageHook.h"
 
-HANDLE LoggerHook::m_hEvent;
-DataQueue* LoggerHook::m_dataQueue;
-LoggerHook::OriginalMethodPtr LoggerHook::originalMethod;
+HANDLE ApplyDamageHook::m_hEvent;
+DataQueue* ApplyDamageHook::m_dataQueue;
+ApplyDamageHook::OriginalMethodPtr ApplyDamageHook::originalMethod;
+int CharacterApplyDamage = 10101012;
 
-
-void LoggerHook::EnableHook() {
+void ApplyDamageHook::EnableHook() {
 
 	// double __userpurge GAME::CombatManager::ApplyDamage@<st0>(int a1@<eax>, int _this@<ecx>, double result@<st0>, double st6_0@<st1>, double st5_0@<st2>, double st4_0@<st3>, double st3_0@<st4>, double a8@<st5>, int a4, struct GAME::PlayStatsDamageType *a5, int a6, int a7)
 	// bool GAME::CombatManager::ApplyDamage(float,struct GAME::PlayStatsDamageType const &,enum GAME::CombatAttributeType,class mem::vector<unsigned int> const &)
@@ -22,23 +22,23 @@ void LoggerHook::EnableHook() {
 
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
-	DetourAttach((PVOID*)&originalMethod, func_hook);
+	DetourAttach((PVOID*)&originalMethod, HookedMethod);
 	DetourTransactionCommit();
 }
 
-LoggerHook::LoggerHook(DataQueue* dataQueue, HANDLE hEvent) {
+ApplyDamageHook::ApplyDamageHook(DataQueue* dataQueue, HANDLE hEvent) {
 	m_dataQueue = dataQueue;
 	m_hEvent = hEvent;
 }
 
-LoggerHook::LoggerHook() {
+ApplyDamageHook::ApplyDamageHook() {
 	m_hEvent = NULL;
 }
 
-void LoggerHook::DisableHook() {
+void ApplyDamageHook::DisableHook() {
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
-	DetourDetach((PVOID*)&originalMethod, func_hook);
+	DetourDetach((PVOID*)&originalMethod, HookedMethod);
 	DetourTransactionCommit();
 }
 
@@ -59,37 +59,26 @@ void LoggerHook::DisableHook() {
 *  )
 * */
 // bool GAME::CombatManager::ApplyDamage(float,struct GAME::PlayStatsDamageType const &,enum GAME::CombatAttributeType,class mem::vector<unsigned int> const &)
-void* __fastcall LoggerHook::HookedMethod(void* This, void* _, float f, int PlayStatsDamageType, int CombatAttributeType, void* Vector) {
-	const int buffsize = sizeof(void*) + sizeof(float) + sizeof(int) + sizeof(int);
+void* __fastcall ApplyDamageHook::HookedMethod(void* This, void* _, float f, int* PlayStatsDamageType, int CombatAttributeType, void* Vector) {
+	const int buffsize = sizeof(float) + sizeof(int) + sizeof(int);
 	char buffer[buffsize] = { 0 };
 
-	int ptr = 0;
+	// float, struct, enum, vector<int>
 
+	int pos = 0;
 
-	memcpy(&buffer + ptr, (char*)&f, sizeof(float));
-	ptr += 4;
+	SIZE_T bytesRead = 0;
+	HANDLE hProcess = GetCurrentProcess();
 
-	memcpy(&buffer + ptr, (char*)&PlayStatsDamageType, sizeof(int));
-	ptr += 4;
+	ReadProcessMemory(hProcess, (void*)&f, (char*)&buffer + pos, 4, &bytesRead);
+	pos += 4;
 
-	int attr = 0;
-	__asm {
-		push eax
-		mov eax, [esp + 94h]
-		mov attr, eax
-		pop eax
-	}
+	ReadProcessMemory(hProcess, (void*)PlayStatsDamageType, (char*)&buffer + pos, 4, &bytesRead);
+	pos += 4;
 
-	memcpy(&buffer + ptr, (char*)&attr, sizeof(int));
-	ptr += 4;
+	ReadProcessMemory(hProcess, (void*)&CombatAttributeType, (char*)&buffer + pos, 4, &bytesRead);
 
-	int _this = -1;
-	__asm {
-		mov _this, ecx
-	}
-	memcpy(&buffer + ptr, (char*)&_this, sizeof(int));
-	ptr += sizeof(_this);
-
+	// OBS: Vector ignored
 
 	DataItemPtr item(new DataItem(CharacterApplyDamage, buffsize, (char*)&buffer));
 	m_dataQueue->push(item);
